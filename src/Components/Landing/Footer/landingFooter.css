@@ -1,0 +1,39 @@
+
+
+
+
+footer{
+    border:1px solid green;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.landing-footer-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border:1px solid red;
+    min-height: 20vh;
+
+}
+.landing-footer-top section{
+    border:1px solid black;
+    width:20%;
+    
+
+}
+.landing-footer-bottom{
+    border:1px solid red;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-height: 8vh;
+
+}
+.landing-footer-bottom section{
+    border:1px solid black;
+    width:50%;
+   
+
+}

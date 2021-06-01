@@ -1,0 +1,31 @@
+
+
+
+
+
+.landing-header{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:4%;
+    min-height: 8vh;
+    border: 1px solid blue;
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+}
+.landing-header-logo{
+    width:20%;
+    border: 1px solid red;
+
+}
+.landing-header-navigation{
+    width:100%;
+    border: 1px solid red;
+
+}
+.landing-header-login{
+    width:20%;
+    border: 1px solid red;
+
+}
