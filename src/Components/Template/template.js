@@ -9,8 +9,6 @@ import Header from '../../Components/Header/header';
 import Footer from '../../Components/Footer/footer';
 import LeftSideBar from '../LeftSideBar/leftSideBar';
 import RightSideBar from '../RightSideBar/rightSideBar';
-import Notifications from '../Notifications/notifications';
-import Connections from '../Connections/connections';
 import './template.css';
 
 
@@ -50,9 +48,9 @@ export function InsideLoginTemplate(props) {
     return (
         <>
         <Header/>
-        <LeftSideBar top={props.top} center={props.center} bottom={props.bottom} />
+        <LeftSideBar top={props.leftSideBarTop} center={props.leftSideBarCenter} bottom={props.leftSideBarBottom} />
         <InsideLoginTemplateChildren children={props.children} />
-        <RightSideBar topComponent={<Notifications/>} bottomComponent={<Connections/>} />
+        <RightSideBar topComponent={props.rightSideBarTop} bottomComponent={props.rightSideBarBottom} />
         </>
     )
 }

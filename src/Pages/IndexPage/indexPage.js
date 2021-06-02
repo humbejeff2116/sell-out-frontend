@@ -11,12 +11,21 @@ import IndexSideNav from '../../Components/IndexSideNav/indexSideNav';
 import IndexFooter from '../../Components/IndexFooter/indexFooter';
 
 
+import Notifications from '../../Components/Notifications/notifications';
+import Connections from '../../Components/Connections/connections';
+
 
 
 
 export default function IndexPage() {
     return (
-        <InsideLoginTemplate top={<ProfileAvatar/>} center={<IndexSideNav/>} bottom={<IndexFooter/>} >
+        <InsideLoginTemplate 
+        leftSideBarTop={<ProfileAvatar/>} 
+        leftSideBarCenter={<IndexSideNav/>} 
+        leftSideBarBottom={<IndexFooter/>}
+        rightSideBarTop={<Notifications/>}
+        rightSideBarBottom={<Connections/>} 
+        >
             <Index/>
         </InsideLoginTemplate>
     )
