@@ -86,6 +86,21 @@
     color:red;
    
 }
+
+.login-form-error{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.2%;
+    width:99%;
+    border:2px solid yellow;
+}
+.login-form-error span{
+    margin-right: 1%;
+    color:red;
+   
+}
+
+
 .login-form-group label{
     font-size: 0.781em;
     font-weight: bold;

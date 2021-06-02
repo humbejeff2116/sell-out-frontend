@@ -55,15 +55,21 @@ export default class Login extends React.Component {
 
                         <div className="login-form-group">
                             <label htmlFor="email address">EMAIL ADDRESS</label>
+                        </div>
+                        <input type="text" placeholder="example@gmail.com"   name="email"  onChange={this.handleInputChange}/>
+                        {/* error reporting div */}
+                        <div className="login-form-error">
                             <span className="login-error">this is a username error</span>
                         </div>
-                        <input type="text"   name="email"  onChange={this.handleInputChange}/>
 
                         <div className="login-form-group">
                             <label htmlFor="password">PASSWORD</label>
-                            <span className="login-error">this is a password error</span>
                         </div>
                         <input type="password" name="password"  onChange={this.handleInputChange}/>
+                        {/* error reporting */}
+                        <div className="login-form-error">
+                            <span className="login-error">this is a password error</span>
+                        </div>
 
 
                         <div className="login-forgot-pass">
