@@ -1,0 +1,43 @@
+
+
+
+.right-side-bar-container{
+
+
+    z-index:1;
+    display:flex;
+    flex-direction: column;
+   justify-content: center;
+  
+    margin-left:auto;
+    padding:0;
+    position:fixed;
+    right:0;
+    top:8vh;
+    /* background-color: #1d2c3f; */
+    height:92vh;
+    width:33%;
+    overflow-x: none;
+    transition: width 0.3s ease;
+    border:1px solid green;
+}
+
+.right-side-bar-content{
+    border:1px solid red;
+    width:60%;
+    margin-left: auto;
+    margin-right: auto;
+    height:92vh;
+    overflow-x: none;
+    overflow-y: auto;
+}
+
+.right-side-bar-top{
+    border:1px solid black;
+    min-height: 20vh;
+}
+
+.right-side-bar-bottom{
+    border:1px solid blue;
+    min-height: 71vh;   
+}

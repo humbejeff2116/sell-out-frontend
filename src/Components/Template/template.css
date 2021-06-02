@@ -26,3 +26,15 @@
     width:20%
 
 }
+
+
+.inside-login-template-container{
+    border: 1px solid blue;
+    position: relative;
+    top: 8vh;
+    margin-left:33%;
+    margin-right:33%;
+   
+    min-height: 150vh;
+
+}

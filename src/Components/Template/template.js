@@ -7,6 +7,10 @@
 import React from 'react';
 import Header from '../../Components/Header/header';
 import Footer from '../../Components/Footer/footer';
+import LeftSideBar from '../LeftSideBar/leftSideBar';
+import RightSideBar from '../RightSideBar/rightSideBar';
+import Notifications from '../Notifications/notifications';
+import Connections from '../Connections/connections';
 import './template.css';
 
 
@@ -40,4 +44,27 @@ export function LoginAndSignupTemplate(props) {
             </div>
         </div>
     )
+}
+
+export function InsideLoginTemplate(props) {
+    return (
+        <>
+        <Header/>
+        <LeftSideBar top={props.top} center={props.center} bottom={props.bottom} />
+        <InsideLoginTemplateChildren children={props.children} />
+        <RightSideBar topComponent={<Notifications/>} bottomComponent={<Connections/>} />
+        </>
+    )
+}
+
+
+function InsideLoginTemplateChildren(props) {
+    return (
+        <div className="inside-login-template-container">
+            <div className="inside-login-template-center">
+                {props.children}
+            </div>
+        </div>
+    )
+
 }

@@ -3,4 +3,28 @@
 
 .header-container{
     border:1px solid black;
+    min-height:8vh;
+    position:fixed;
+    top:0;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:99.85%;
+}
+
+.header-logo{
+    width:33%;
+    border:1px solid red;
+
+
+}
+.header-main-navigation{
+    border:1px solid green;
+    width:33%;
+
+}
+.header-search-bar{
+    border:1px solid blue;
+    width:33%;
+
 }
