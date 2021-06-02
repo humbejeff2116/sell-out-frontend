@@ -52,21 +52,27 @@ export default class Signup extends React.Component{
                         {/* signup email */}
                         <div className="signup-form-group">
                             <label htmlFor="email address">EMAIL ADDRESS</label>
-                            <span className="signup-error">this is a email error</span>
                         </div>
                         <input type="text"   name="email"  onChange={this.handleInputChange}/>
+                        <div className="signup-form-error">
+                            <span className="signup-error">this is a email error</span>
+                        </div>
                         {/* signup full name */}
                         <div className="signup-form-group">
                             <label htmlFor="full name">FULL NAMES</label>
-                            <span className="signup-error">this is a full name error</span>
                         </div>
                         <input type="text" name="fullname"  onChange={this.handleInputChange}/>
+                        <div className="signup-form-error">
+                            <span className="signup-error">this is a full name error</span>
+                        </div>
                         {/* signup full name */}
                         <div className="signup-form-group">
                             <label htmlFor="password">PASSWORD</label>
-                            <span className="signup-error">this is a full name error</span>
                         </div>
                         <input type="password" name="password"  onChange={this.handleInputChange}/>
+                        <div className="signup-form-error">
+                            <span className="signup-error">this is a full name error</span>
+                        </div>
                         {/* date of birth */}
 
 

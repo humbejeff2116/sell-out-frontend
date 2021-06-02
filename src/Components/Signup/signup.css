@@ -95,6 +95,16 @@
     color:red;
    
 }
+.signup-form-error{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.2%;
+    width:99%;
+    border:2px solid yellow;
+}
+.signup-form-error span{
+    color:red; 
+}
 .signup-form-group label{
     font-size: 0.781em;
     font-weight: bold;
