@@ -7,6 +7,7 @@ import { Route,Switch, useLocation } from 'react-router-dom';
 
 const LandingPage = React.lazy(()=> import('../Pages/LandingPage/landingPage'));
 const LoginPage = React.lazy(()=> import('../Pages/LoginPage/loginPage'));
+const SignupPage = React.lazy(()=> import('../Pages/SignupPage/signupPage'));
 
 
 
@@ -14,6 +15,7 @@ const LoginPage = React.lazy(()=> import('../Pages/LoginPage/loginPage'));
 export default function App() {
    
     return (
+        
         <Switch >
 
             <Route exact  path="/">
@@ -25,6 +27,12 @@ export default function App() {
             <Route exact  path="/login">
                 <Suspense fallback={<div>loading...</div>}>
                     <LoginPage/>
+                </Suspense>
+            </Route>
+
+            <Route exact  path="/signup">
+                <Suspense fallback={<div>loading...</div>}>
+                    <SignupPage/>
                 </Suspense>
             </Route>
 

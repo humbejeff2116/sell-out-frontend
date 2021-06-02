@@ -25,13 +25,6 @@ export default class Login extends React.Component {
     handleInputChange = (e) =>
         this.setState({[e.target.name]: e.target.value})
 
-    toggleBlur = (e) => {
-        if (e.target.value.length > 0) {
-            return e.target.classList.add('not-empty');
-        }
-        return e.target.classList.remove('not-empty');
-    }
-
     submitLogin = (e) => {
         e.preventDefault();
     }
