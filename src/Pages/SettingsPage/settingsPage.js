@@ -10,7 +10,7 @@
 import React, {useEffect} from 'react';
 import { InsideLoginTemplate } from '../../Components/Template/template';
 import Settings from '../../Components/Settings/settings';
-import ProfileAvatar from '../../Components/Profile/profile';
+import ProfileAvatar from '../../Components/Profile/profileAvatar';
 import SettingsFooter from '../../Components/SettingsFooter/settingsFooter';
 import SettingsSideNav from '../../Components/SettingsSideNav/settingsSideNav';
 

@@ -13,7 +13,7 @@
     top:8vh;
     /* background-color: #1d2c3f; */
     height:92vh;
-    width:33%;
+    width:28%;
     overflow-x: none;
     transition: width 0.3s ease;
     border:1px solid green;
@@ -23,7 +23,7 @@
     border:1px solid red;
     width:60%;
     margin-left: auto;
-    margin-right: auto;
+    /* margin-right: auto; */
     height:92vh;
     overflow-x: none;
   
@@ -31,6 +31,10 @@
 .left-side-bar-top{
     border:1px solid black;
     min-height: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
 }
 .left-side-bar-center{

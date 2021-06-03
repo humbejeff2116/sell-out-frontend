@@ -15,7 +15,7 @@
 }
 .login-template-center{
     border:1px solid black;
-    width:50%;
+    width:10%;
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -32,8 +32,8 @@
     border: 1px solid blue;
     position: relative;
     top: 8vh;
-    margin-left:33%;
-    margin-right:33%;
+    margin-left:28%;
+    margin-right:28%;
    
     min-height: 150vh;
 
