@@ -53,7 +53,7 @@ export default class Signup extends React.Component{
                         <div className="signup-form-group">
                             <label htmlFor="email address">EMAIL ADDRESS</label>
                         </div>
-                        <input type="text"   name="email"  onChange={this.handleInputChange}/>
+                        <input type="text" placeholder="example@gmail.com"  name="email"  onChange={this.handleInputChange}/>
                         <div className="signup-form-error">
                             <span className="signup-error">this is a email error</span>
                         </div>
@@ -61,7 +61,7 @@ export default class Signup extends React.Component{
                         <div className="signup-form-group">
                             <label htmlFor="full name">FULL NAMES</label>
                         </div>
-                        <input type="text" name="fullname"  onChange={this.handleInputChange}/>
+                        <input type="text" placeholder="e.g John Doe" name="fullname"  onChange={this.handleInputChange}/>
                         <div className="signup-form-error">
                             <span className="signup-error">this is a full name error</span>
                         </div>

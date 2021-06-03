@@ -106,13 +106,13 @@
 
 .login-panel form input{
 
-    padding:12px;
-    border-radius: 3px;
+    padding:12px 12px 12px 5px;
+    border-radius: 4px;
     outline:none;
    
     /* height:49px; */
-    font-size: 0.95em;
-    font-family: 'acme';
+    /* font-size: 0.95em; */
+    
     font-weight: bold;
    
     border:2px solid #222;
