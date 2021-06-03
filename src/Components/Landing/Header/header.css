@@ -51,13 +51,6 @@
 
 
 
-
-/* .landing-nav-item > .landing-link-active{
-    background-color:#283649;
-    color:#ffffff; 
-    border-left:1px solid #ffffff ; 
-} */
-
 .landing-nav-link{   
     display:flex;
     flex-direction: row;
@@ -78,7 +71,24 @@
 
 
 .landing-header-login{
+    display: flex;
+    justify-content: center;
     width:20%;
     border: 1px solid red;
 
+}
+.landing-login-item{
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    width:100%;
+}
+
+.landing-login-item button{
+    height:40px;
+    width:55%;
+    /* border:0;   */
 }

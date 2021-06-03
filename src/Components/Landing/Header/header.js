@@ -13,8 +13,8 @@ import './header.css';
 const landingMainLinks = [
     { name: "Home", href: "/", icon: <BiHome className="nav-icon" /> },
     { name: "About", href: "/about", icon: <BiUser className="nav-icon"/> },
-    { name: "Events", href: "/events", icon: <BiFolder className="nav-icon"/> },
     { name: "Community", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+    { name: "Support", href: "/support", icon: <BiFolder className="nav-icon"/> },
     { name: "Contact", href: "/contact", icon: <RiContactsBookLine className="nav-icon"/> }
 ]
 
@@ -38,7 +38,9 @@ export default function Header(props) {
             </div>
             {/* login/signup */}
             <div className="landing-header-login">
-                login/signup
+                <div className="landing-login-item" >
+                    <button>Login</button>
+                </div>
             </div>
         </header>
     )
