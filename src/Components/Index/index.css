@@ -5,5 +5,152 @@
 
 .index-container{
     border:1px solid red;
+    min-height: 92vh;
+    display:flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+.index-post-container{
+    border:1px solid green;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 2%;
+    margin-bottom: 2%;
+
+}
+
+.index-post-writeup-container{
+    border:1px solid red;
+    width:70%;
+    /* margin:1%; */
+
+}
+.index-post-writeup{
+    border:1px solid black;
+    width:90%;
+    margin-left:auto;
+    margin-right:auto;
+
+
+}
+.index-post-upload{
+    border:1px solid blue;
+    width:30%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.index-post-upload button{
+    height:45px;
    
+
+}
+.index-search-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    border:1px solid black;
+    /* background-color: yellow; */
+    min-height:65vh;
+    margin-bottom: 2%;
+
+
+}
+.index-search-select{
+    border:1px solid blue;
+    min-height:10vh;
+    display:flex;
+    justify-content: center;
+
+}
+
+.index-search-select-btn{
+    border:1px solid red;
+    width:30%;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.index-search-select-btn select{
+    /* border:1px solid red; */
+    outline: none;
+    /* border: 0; */
+    width:60%;
+    height:30px;
+    padding-left: 7%;
+    /* border-radius: 6px; */
+}
+
+.index-search-form{
+    border:1px solid blue;
+    min-height:15vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.index-search-form form{
+    border:1px solid blue;
+    width:100%;
+    display:flex;
+    justify-content: center; 
+}
+.index-search-form form input[type="search"]{
+   
+    outline: none;
+    /* border: 0; */
+    width:70%;
+    height: 38px;
+    /* border-radius: 14px; */
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding-left: 1.5%;
+   
+}
+.index-search-form form button{
+    margin-top: 1%;
+    margin-left: 1%;
+    margin-bottom: 1%;
+    /* border-radius: 4px; */
+    outline: none;
+    /* border: 0; */
+    
+}
+.index-search-form-error{
+    width:100%;
+    border:1px solid blue;
+    display: flex;
+    justify-content: center;
+
+}
+.index-search-form-error span{
+    border:1px solid red;
+ 
+  
+
+}
+
+.index-products-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border:1px solid black;
+    /* background-color: green; */
+    min-height:30vh;
+
+}
+.index-product{
+    border:1px solid black;
+    width:48%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
 }
