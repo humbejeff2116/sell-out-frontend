@@ -34,3 +34,17 @@ export default function LandingComponent(props) {
         </section>
     )
 }
+
+export function NotFoundTemplate(props) {
+    return (
+        <section className="landing-container">
+            <div className="landing-top" >
+                <Header/>
+               {props.notFoundComponent}
+            </div>
+            <div className="landing-footer" >
+                <LandingFooter/>
+            </div>
+        </section>
+    )
+}

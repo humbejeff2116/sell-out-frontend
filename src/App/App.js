@@ -10,6 +10,7 @@ const LoginPage = React.lazy(()=> import('../Pages/LoginPage/loginPage'));
 const SignupPage = React.lazy(()=> import('../Pages/SignupPage/signupPage'));
 const IndexPage = React.lazy(()=> import('../Pages/IndexPage/indexPage'));
 const Settingspage = React.lazy(()=> import('../Pages/SettingsPage/settingsPage'));
+const NotFoundPage = React.lazy(()=> import('../Pages/NotFoundPage/notFoundPage'));
 
 
 
@@ -49,6 +50,12 @@ export default function App() {
                     <Settingspage/>
                 </Suspense>
             </Route>
+
+            <Route path="*">
+                <Suspense fallback={ <div>loading...</div>}>
+                    <NotFoundPage />
+                </Suspense>
+            </Route> 
 
         </Switch>
 
