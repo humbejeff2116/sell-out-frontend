@@ -39,7 +39,7 @@ export default function Header(props) {
             {/* login/signup */}
             <div className="landing-header-login">
                 <div className="landing-login-item" >
-                    <button>Login</button>
+                    <button onClick={()=> props.showLoginModal(true)}>Login</button>
                 </div>
             </div>
         </header>

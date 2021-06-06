@@ -130,9 +130,25 @@ function DisplayProducts(props) {
 function DisplayedProduct(props) {
     return (
         <div className="index-product">
-            <span>{props.name}</span>
+            {/* <span>{props.name}</span>
             <span>{props.price}</span>
-            <span>{props.number}</span>
+            <span>{props.number}</span> */}
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            
         </div>
     )
 }

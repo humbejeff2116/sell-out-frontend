@@ -1,9 +1,17 @@
 
 
 
-import React from 'react';
+import React, {useState} from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
-export default function LandingInfoCard(){
+export default function LandingInfoCard() {
+    const [redirect, setRedirect] = useState('');
+
+    if(redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
+    }
     return (
         <div className="landing-info-card-contr" >
             {/* info text */}
@@ -14,11 +22,11 @@ export default function LandingInfoCard(){
             <div className="landing-info-card-button">
                 {/* login */}
                 <div className="landing-info-card-login">
-                    <button>login</button>
+                    <Link to="/login"><button> Login </button></Link>
                 </div>
                 {/* signup */}
                 <div className="landing-info-card-signup">
-                    <button>Signup</button>
+                <Link to="/signup"><button> Sign up </button></Link>
                 </div>
 
             </div>

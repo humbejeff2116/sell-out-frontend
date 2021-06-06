@@ -1,0 +1,330 @@
+
+
+
+
+
+
+
+  .login-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index:1;
+    overflow:auto;
+
+  }
+
+  .login-modal-main{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    position:fixed;
+    background: white;
+    width:40%;
+    min-height: 80vh;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    z-index:1;
+    animation-name:animateLoginModal;
+    animation-duration:0.9s;
+    /* background-color: #1d2c3f; */
+  }
+
+  .login-modal-close-cntr{
+      min-height: 8vh;
+      display:flex;
+      justify-content: center;
+      border:1px solid red;
+      width:98%;
+      margin:auto auto auto auto;
+
+  }
+  .login-modal-close{
+    border:1px solid green;
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    width:90%;
+
+}
+  .login-modal-close button{
+   height:45px;
+   width:10%;
+  }
+
+
+
+
+  
+
+
+/* @keyframes animateLoginModal{
+    from{
+        right: -12px;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        right:0px;
+        opacity:1;
+        transition:all;
+    }
+} */
+/* @keyframes animateLoginModal{
+    from{
+      top: -400px;
+      opacity:0;
+      transition:all;
+    }
+} */
+
+
+.login-modal-form-container{
+    scroll-behavior:smooth;
+    display:flex;
+    flex-direction:column;
+    min-height: 60vh;
+    border:1px solid red;
+    width:98%;
+    margin:auto auto auto auto;
+}
+
+.login-modal-panel{
+    display:flex;
+    flex-direction:column;
+    width:90%;
+    min-height:50vh;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top:2.5%;
+    margin-bottom:2%;
+    position:relative;
+    /* box-shadow:0 0 5px rgba(117, 116, 116, 0.6); */
+}
+
+.login-modal-panel-heading{
+    background-color:#ffffff;
+    text-align: center;
+    border:1px solid black;
+    margin-bottom:2%;
+}
+
+.login-modal-panel-body{
+    display:flex;
+    flex-direction:column;
+    /* justify-content: center;
+    align-items: center; */
+    /* min-height:50vh; */
+    border:1px solid green;
+}
+
+.login-modal-panel-body form{
+    position:relative;
+    width:100%;
+    min-height:40vh;
+    display:flex;
+    flex-direction: column;
+     border:1px solid blue;
+}
+
+.login-modal-form-group{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2.5%;
+    margin-top:2%;
+    width:99%;
+    border:2px solid yellow;
+}
+.login-modal-form-group span{
+    margin-right: 1%;
+    color:red;
+   
+}
+
+.login-modal-form-error{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.2%;
+    width:99%;
+    border:2px solid yellow;
+}
+.login-modal-form-error span{
+    color:red;  
+}
+
+
+.login-modal-form-group label{
+    font-size: 0.781em;
+    font-weight: bold;
+}
+
+.login-modal-panel form input{
+
+    padding:12px 12px 12px 5px;
+    border-radius: 4px;
+    outline:none;
+   
+    /* height:49px; */
+    /* font-size: 0.95em; */
+    
+    /* font-weight: bold; */
+   
+    border:2px solid #222;
+    transition: border-color 0.3s ease;
+
+}
+
+.login-modal-button{
+    border:1px solid red;
+    margin-bottom: 2%;
+}
+.login-modal-panel button{
+    width:100%;
+    height: 45px;
+    border:none;
+    font-size: 1em;
+    font-family:'acme';
+    font-weight: bold;
+    transition:all 0.3s ease-in-out;
+  
+}
+
+.login-modal-panel button:hover{
+   
+}
+
+
+
+.signup-modal-link span a{
+    text-decoration:none;
+    color:rgb(218, 152, 218);
+    font-weight: bold;
+}
+
+.signup-modal-link span a:hover{
+    text-decoration: underline;
+}
+
+.login-modal-forgot-pass{
+}
+
+.login-modal-forgot-pass p{
+    position: relative;
+   
+}
+
+.login-modal-forgot-pass p:hover{
+   text-decoration: underline;
+   cursor:pointer;
+}
+
+.login-modal-signup-panel{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width:90%;
+    margin-left:auto;
+    margin-right: auto;
+    border:1px solid red;
+    margin-bottom:2%;
+
+}
+.signup-modal-link{
+    display:flex;
+    flex-direction: row;
+    border:1px solid green;
+
+}
+.signup-modal-link-text{
+    border:1px solid green;
+    width:50%;
+    
+
+}
+.signup-modal-link-text p{
+    text-align: center;
+   
+}
+.signup-modal-link-button{
+    border:1px solid green;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    width:50%;
+
+}
+.signup-modal-link-button a{
+    border:1px solid green;
+  
+    width:70%;
+    margin:0 auto 0 auto;
+}
+.signup-modal-link-button button{
+    height:45px;
+    width:100%;
+    margin:0 auto 0 auto;
+}
+
+
+
+
+
+
+
+/* skeleton loader  */
+.login-modal-loader-form-container{
+    scroll-behavior:smooth;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    border:1px solid red;
+    width:98%;
+    margin:auto auto auto auto;
+}
+.login-modal-loader-container{
+    width:100%;
+    /* min-height:100vh; */
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+    flex-direction: column;                          
+    border:0;
+    justify-content: center;
+    /* background-color: wh;  */
+}
+  
+  .login-modal-loader {           
+    border: 7px solid #ffffff;
+    border-radius: 50%;
+    border-top: 7px solid black;
+    border-bottom: 7px solid black;
+    width:1.8rem;
+    height: 1.8rem;
+    margin-left:auto;
+    margin-right:auto;
+    -webkit-animation: skel-spin 2s linear infinite;
+    animation: skel-spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes skel-spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes skel-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  /* style for loader ends here */
+  
+    @media  only screen and (max-width:600px){
+     .login-modal-loader {         
+      margin-top:-40%;
+    }   
+  }
