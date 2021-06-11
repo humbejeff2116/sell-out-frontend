@@ -6,6 +6,7 @@
 
 
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './index.css';
 
 
@@ -49,7 +50,7 @@ function PostProduct(props) {
                 </div>
             </div>
             <div className="index-post-upload">
-                <button>Upload Details</button>
+            <Link to="/upload-product"><button>Upload Details</button></Link>
             </div>
         </div>
     )
@@ -92,6 +93,28 @@ function SearchProducts(props) {
                     }
                     </select>
                 </div>
+
+
+                <div className="index-search-select-btn">
+                   
+                   <select>
+                   <option>
+                       Category
+                   </option>
+                       <option>
+                           All
+                       </option>
+                       <option>
+                           Electronics
+                       </option>
+                       <option>
+                           Furniture
+                       </option>
+                   </select>
+               </div>
+
+
+
 
             </div>
             <div className="index-search-form">

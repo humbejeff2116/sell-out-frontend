@@ -74,13 +74,14 @@
         transition:all;
     }
 } */
-/* @keyframes animateLoginModal{
+@keyframes animateLoginModal{
     from{
       top: -400px;
       opacity:0;
       transition:all;
+      
     }
-} */
+}
 
 
 .login-modal-form-container{

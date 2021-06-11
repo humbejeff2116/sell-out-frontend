@@ -1,0 +1,217 @@
+
+.upload-product-container{
+    border:1px solid green;
+    min-height: 92vh;
+
+
+}
+.upload-details-type{
+    display:flex;
+    flex-direction: column;
+
+
+}
+.upload-details-heading{
+    min-height:15vh;
+    border:1px solid red;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.upload-details-buttons{
+    display:flex;
+    justify-content: center;
+    margin-top:4%;
+
+}
+.upload-details-buttons button{
+   height:45px;
+   width:100%;
+}
+.upload-product-button{
+    border:1px solid red;
+    width: 30%;
+    margin-right:4%;
+
+}
+.upload-service-button{
+    border:1px solid red;
+    width: 30%;
+    margin-left:4%;
+
+}
+.upload-product-or{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:1px solid red;
+    width: 10%;
+
+}
+
+
+/*  loader  */
+.upload-form-loader-panel{
+    border:1px solid red;
+    min-height: 60vh;
+  
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.upload-form-loader-container{
+    width:100%;
+   
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+    flex-direction: column;                          
+    border:0;
+    justify-content: center;
+    /* background-color: wh;  */
+}
+  
+  .upload-form-loader{           
+    border: 7px solid #ffffff;
+    border-radius: 50%;
+    border-top: 7px solid black;
+    border-bottom: 7px solid black;
+    width:1.8rem;
+    height: 1.8rem;
+    margin-left:auto;
+    margin-right:auto;
+    -webkit-animation: upload-form-spin 2s linear infinite;
+    animation: upload-form-spin 2s linear infinite;
+  }
+
+  /*  loader  */
+.upload-form-loader-panel{
+    border:1px solid red;
+    min-height: 60vh;
+  
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.upload-form-select-loader-container{
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+    flex-direction: column;                          
+    border:0;
+    justify-content: center;
+    /* background-color: wh;  */
+}
+  
+.upload-form-select-loader{           
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    width:1.3rem;
+    height: 1.3rem;
+    margin-left:auto;
+    margin-right:auto;
+    -webkit-animation: upload-form-spin 2s linear infinite;
+    animation: upload-form-spin 2s linear infinite;
+}
+  
+  /* style for loader ends here */
+  
+  @-webkit-keyframes upload-form-spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes upload-form-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+
+
+
+
+  /* style for loader ends here */
+  
+  /* upload product form styles */
+  .upload-form-container{
+    border:1px solid red;
+    min-height: 60vh;
+    margin-top:4%;
+}
+.upload-form-panel{
+    display:flex;
+    flex-direction: column;
+
+}
+.upload-form-panel-heading{
+    border:1px solid green;
+    display:flex;
+    justify-content: center;
+
+}
+
+.upload-form-panel-body{
+    display: flex;
+    flex-direction: column;
+    margin-top:2%;
+
+}
+.upload-form-panel-body form{
+    position:relative;
+    width:100%;
+    min-height:40vh;
+    display:flex;
+    flex-direction: column;
+     border:1px solid blue;
+}
+.upload-form-group{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border:1px solid blue;
+    min-height:12vh;
+}
+.upload-form-group-child{
+    border:1px solid red;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:30%;
+
+}
+.upload-form-group-row{
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+ 
+}
+.input{
+    width:70%;
+
+}
+.upload-form-button{
+    border:1px solid red;
+    display: flex;
+    margin-top: 4%;
+    justify-content: flex-end;
+    min-height:9vh;
+
+}
+.upload-form-button button{
+   height: 45px;
+   width:20%;
+}

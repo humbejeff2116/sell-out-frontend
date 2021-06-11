@@ -31,3 +31,18 @@ export default function IndexPage() {
     )
 
 }
+
+export  function IndexPageTemplate(props) {
+    return (
+        <InsideLoginTemplate 
+        leftSideBarTop={<ProfileAvatar/>} 
+        leftSideBarCenter={<IndexSideNav/>} 
+        leftSideBarBottom={<IndexFooter/>}
+        rightSideBarTop={<Notifications/>}
+        rightSideBarBottom={<Connections/>} 
+        >
+           {props.children}
+        </InsideLoginTemplate>
+    )
+
+}
