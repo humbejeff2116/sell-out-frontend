@@ -7,7 +7,7 @@ import React,{useState, Suspense, useEffect} from 'react';
 import Header from './Header/header';
 import LandingInfoCard from './InfoCard/landingInfoCard';
 import LandingFooter from './Footer/landingFooter';
-import LandingProduct from './Product/product';
+import LandingProduct, {LandingServices} from './Product/product';
 import './landing.css';
 
 import LoginModal from '../LoginModal/loginModal';
@@ -49,16 +49,8 @@ export default function LandingComponent(props) {
                 <LandingInfoCard/>
             </div>
             <div className="landing-center">
-                <div  className="landing-product-container">
-                {
-                    products.map((prod,i) =>
-                    <LandingProduct  key={i} {...prod} />
-                    )
-                }
-                </div>
-                <div>fdfdf</div>
-                
-
+                <LandingProduct products={products} />
+                <LandingServices products={products} />
             </div>
 
             <div className="landing-footer" >
