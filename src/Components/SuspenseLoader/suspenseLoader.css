@@ -1,0 +1,48 @@
+
+
+.suspense-container{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    min-height: 92vh;
+    border:1px solid red;
+    width:100%;
+}
+.index-suspense-loader-container {
+    width:100%;
+    /* min-height:100vh; */
+    margin-left:auto;
+    margin-right:auto;
+    display:flex;
+    flex-direction: column;                          
+    border:0;
+    justify-content: center;
+    /* background-color: wh;  */
+
+}
+
+.index-suspense-loader{
+    border: 7px solid #ffffff;
+    border-radius: 50%;
+    border-top: 7px solid black;
+    border-bottom: 7px solid black;
+    width:1.8rem;
+    height: 1.8rem;
+    margin-left:auto;
+    margin-right:auto;
+    -webkit-animation: suspense-spin 2s linear infinite;
+    animation: suspense-spin 2s linear infinite;
+
+}
+
+  
+  @-webkit-keyframes suspense-spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes suspense-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

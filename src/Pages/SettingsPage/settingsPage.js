@@ -30,3 +30,15 @@ export default function SettingsPage() {
     )
 
 }
+export function SettingsPageTemplate(props) {
+    return (
+        <InsideLoginTemplate 
+        leftSideBarTop={<ProfileAvatar/>} 
+        leftSideBarCenter={<SettingsSideNav/>} 
+        leftSideBarBottom={<SettingsFooter/>} 
+        >
+           {props.children}
+        </InsideLoginTemplate>
+
+    )
+}

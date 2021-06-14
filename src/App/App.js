@@ -4,6 +4,7 @@
 
 import React, {Suspense} from 'react';
 import { Route, Switch} from 'react-router-dom';
+import {SettingsSuspenseLoader, InsideLoginSuspenseLoader, OutsideLoginSuspenseLoader, LoginAndSignupSuspenseLoader } from '../Components/SuspenseLoader/suspenseLoader';
 
 const LandingPage = React.lazy(()=> import('../Pages/LandingPage/landingPage'));
 const LoginPage = React.lazy(()=> import('../Pages/LoginPage/loginPage'));
@@ -23,37 +24,37 @@ export default function App() {
         <Switch >
 
             <Route exact  path="/">
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={<OutsideLoginSuspenseLoader/>}>
                     <LandingPage/>
                 </Suspense>
             </Route>
 
             <Route exact  path="/login">
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={<LoginAndSignupSuspenseLoader/>}>
                     <LoginPage/>
                 </Suspense>
             </Route>
 
             <Route exact  path="/signup">
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={<LoginAndSignupSuspenseLoader/>}>
                     <SignupPage/>
                 </Suspense>
             </Route>
 
             <Route exact  path="/home">
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={<InsideLoginSuspenseLoader/>}>
                     <IndexPage/>
                 </Suspense>
             </Route>
 
             <Route exact  path="/settings">
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={<SettingsSuspenseLoader/>}>
                     <Settingspage/>
                 </Suspense>
             </Route>
 
             <Route exact  path="/upload-product">
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={<InsideLoginSuspenseLoader/>}>
                     <UploadProductOrServicePage/>
                 </Suspense>
             </Route>

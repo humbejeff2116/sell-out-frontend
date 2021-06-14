@@ -23,10 +23,79 @@
 .header-main-navigation{
     border:1px solid green;
     width:33%;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
 
+}
+.header-main-navigation nav{
+    width:100%;
+    border: 1px solid yellow;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.main-nav-item{
+    border: 1px solid black;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:15%;
+}
+.nav-icon{
+    width: 1.2em;
+    height:1.2em;
+ 
+}
+
+
+
+.main-nav-link{   
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    transition:all 0.3s ease;
+}
+
+.main-nav-link i{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding :0.2rem;
+    /* border: 1px solid black; */
 }
 .header-search-bar{
     border:1px solid blue;
     width:33%;
+    display: flex;
+    justify-content: center;
+}
 
+.header-search-bar-form-panel{
+    border:1px solid red;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+}
+
+.header-search-bar-form-panel form{
+    width:90%;
+    /* border:1px solid green; */
+    display:flex;
+    justify-content: center;
+    
+}
+.header-search-bar-form-panel form input{
+    width:70%;
+    height: 35px;  
+}
+.header-search-bar-form-panel form button{
+    height: 35px;
+    width:20%;
+       
 }

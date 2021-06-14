@@ -64,5 +64,5 @@ function InsideLoginTemplateChildren(props) {
             </div>
         </div>
     )
-
+    
 }

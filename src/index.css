@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root{
+  --sidenav-bg-color: #233143;
+  --prim-color: #79a2d4;
+  --sec-color: #55759c;
+  --prim-border-color: #79a2d4;
+  --sec-border-color: #55759c;
+  /* color: #8fb1da;
+  color: #e7e7e7;
+  color: #79a2d4;
+  color: #8fb1da;  */
+}

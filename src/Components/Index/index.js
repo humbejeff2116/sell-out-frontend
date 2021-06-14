@@ -67,6 +67,16 @@ const states =[
 function SearchProducts(props) {
     return (
         <div className="index-search-container">
+            <div className="index-search-header-panel">
+                <div className="index-search-header">
+                    <h5>
+                        Select any option below to filter your search, 
+                        or leave as is to use default search behaviour
+
+
+                    </h5>
+                </div>
+            </div>
             <div className="index-search-select">
 
                 <div className="index-search-select-btn">
