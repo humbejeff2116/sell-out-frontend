@@ -13,9 +13,10 @@ import Settings from '../../Components/Settings/settings';
 import ProfileAvatar from '../../Components/Profile/profileAvatar';
 import SettingsFooter from '../../Components/SettingsFooter/settingsFooter';
 import SettingsSideNav from '../../Components/SettingsSideNav/settingsSideNav';
+import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 
 
-export default function SettingsPage() {
+function SettingsPageComp() {
     useEffect(()=> {
         window.scrollTo(0,0);
     },[]);
@@ -30,6 +31,12 @@ export default function SettingsPage() {
     )
 
 }
+function isAuthenticated() {
+    return true;
+}
+const SettingsPage = RequireAuthentication(SettingsPageComp, isAuthenticated);
+export default SettingsPage;
+
 export function SettingsPageTemplate(props) {
     return (
         <InsideLoginTemplate 

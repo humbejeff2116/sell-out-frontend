@@ -31,7 +31,6 @@ export default function Index() {
            <PostProduct/>
            <SearchProducts/>
            <DisplayProducts/>
-
         </div>
     )
 }

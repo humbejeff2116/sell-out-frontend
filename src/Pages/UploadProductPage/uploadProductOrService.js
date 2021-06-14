@@ -9,12 +9,13 @@
 import React, {useEffect} from 'react';
 import UploadProductOrService from '../../Components/UploadProductOrService/uploadProduct';
 import {IndexPageTemplate} from '../IndexPage/indexPage';
+import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 
 
 
 
 
-export default function UploadProductOrServicePage() {
+function UploadProductOrServicePageComp() {
     useEffect(()=>{
         window.scrollTo(0,0);
     },[]);
@@ -24,3 +25,10 @@ export default function UploadProductOrServicePage() {
         </IndexPageTemplate>
     )
 }
+
+function isAuthenticated() {
+    return true;
+}
+
+const  UploadProductOrServicePage = RequireAuthentication(UploadProductOrServicePageComp, isAuthenticated);
+export default  UploadProductOrServicePage;

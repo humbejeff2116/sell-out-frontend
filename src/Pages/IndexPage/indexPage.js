@@ -9,6 +9,7 @@ import {InsideLoginTemplate} from '../../Components/Template/template';
 import ProfileAvatar from '../../Components/Profile/profileAvatar';
 import IndexSideNav from '../../Components/IndexSideNav/indexSideNav';
 import IndexFooter from '../../Components/IndexFooter/indexFooter';
+import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 
 
 import Notifications from '../../Components/Notifications/notifications';
@@ -17,7 +18,7 @@ import Connections from '../../Components/Connections/connections';
 
 
 
-export default function IndexPage() {
+ function IndexPageComp() {
     return (
         <InsideLoginTemplate 
         leftSideBarTop={<ProfileAvatar/>} 
@@ -31,6 +32,11 @@ export default function IndexPage() {
     )
 
 }
+function isAuthenticated() {
+    return true;
+}
+const IndexPage = RequireAuthentication(IndexPageComp, isAuthenticated);
+export default IndexPage;
 
 export  function IndexPageTemplate(props) {
     return (
