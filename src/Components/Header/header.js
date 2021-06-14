@@ -23,7 +23,9 @@ const mainLinks = [
 export default function Header(props) {
     return (
         <header className="header-container" >
-            <section className="header-logo">logo</section>
+            <section className="header-logo">
+                <div className="header-logo-img">logo</div>
+            </section>
             <section className="header-main-navigation">
                 <MainNavigation mainLinks={mainLinks}/>
             </section>

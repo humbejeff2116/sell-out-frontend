@@ -30,7 +30,7 @@ export function LoginAndSignupTemplate(props) {
         <div className="login-template-container">
 
             <div className="login-template-left">
-                <section>logo</section>
+                <section className="login-template-logo">logo</section>
             </div>
 
             <div className="login-template-center">
@@ -64,5 +64,5 @@ function InsideLoginTemplateChildren(props) {
             </div>
         </div>
     )
-    
+
 }

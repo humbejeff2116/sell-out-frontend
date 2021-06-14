@@ -1,0 +1,47 @@
+
+
+
+
+
+
+
+.settings-side-nav{
+    border:1px solid green;
+    min-height: 50vh;
+    display:flex;
+    flex-direction: column;
+   justify-content: center;
+    
+
+}
+.settings-side-nav-item{
+    /* border:1px solid red; */
+    height: 8vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+
+}
+.settings-side-link-active{
+
+}
+.settings-side-nav-link{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    transition:all 0.3s ease;
+
+}
+.settings-side-nav-link i{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding :0.2rem;
+}
+.settings-side-nav-icon{
+    width: 1.2em;
+    height:1.2em;
+ 
+}

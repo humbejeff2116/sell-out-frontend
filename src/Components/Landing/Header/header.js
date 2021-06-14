@@ -24,7 +24,7 @@ export default function Header(props) {
         <header className="landing-header">
             {/* logo */}
             <div className="landing-header-logo">
-                logo
+                <div  className="landing-header-logo-img">logo</div>
             </div>
             {/* main navigation */}
             <div className="landing-header-navigation">

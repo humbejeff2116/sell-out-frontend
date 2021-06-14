@@ -17,7 +17,14 @@
 .landing-header-logo{
     width:20%;
     border: 1px solid red;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
+}
+.landing-header-logo-img{
+    
 }
 .landing-header-navigation{
     width:100%;

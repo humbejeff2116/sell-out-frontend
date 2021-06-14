@@ -17,7 +17,15 @@
 .header-logo{
     width:33%;
     border:1px solid red;
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.header-logo-img{
+    border:1px solid red;
+    width:33%;
+    display: flex;
+    justify-content: center;
 
 }
 .header-main-navigation{

@@ -1,0 +1,39 @@
+
+
+
+
+.settings-footer{
+    border:1px solid green;
+    height: 19vh;
+    display:flex;
+    flex-direction: column;
+   /* justify-content: center; */
+
+}
+
+.settings-footer-item{
+    /* border:1px solid red; */
+    height: 5vh;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.settings-footer-active{
+
+}
+.settings-footer-link{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    transition:all 0.3s ease;
+
+}
+.settings-footer-link i{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding :0.2rem;
+    
+}

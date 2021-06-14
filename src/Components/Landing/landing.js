@@ -7,10 +7,25 @@ import React,{useState, Suspense, useEffect} from 'react';
 import Header from './Header/header';
 import LandingInfoCard from './InfoCard/landingInfoCard';
 import LandingFooter from './Footer/landingFooter';
+import LandingProduct from './Product/product';
 import './landing.css';
 
 import LoginModal from '../LoginModal/loginModal';
 // const LoginModal = React.lazy(()=> import('../LoginModal/loginModal'));
+const products = [
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+    {name:""},
+]
 
 
 export default function LandingComponent(props) {
@@ -28,16 +43,22 @@ export default function LandingComponent(props) {
                 <Header showLoginModal={setShowLoginModal}/>
                 {
                     showLoginModal && (
-                        <LoginModal show={showLoginModal} handleClose={closeLoginModal} />
+                        <LoginModal show={showLoginModal} handleClose={closeLoginModal}/>
                     )
                 }
                 <LandingInfoCard/>
             </div>
-            {/* flex row contains three divs 100vh */}
-            <div className="landing-center" >
-                <div className="landing-center-1">1</div>
-                <div className="landing-center-2">2</div>
-                <div className="landing-center-3">3</div>
+            <div className="landing-center">
+                <div  className="landing-product-container">
+                {
+                    products.map((prod,i) =>
+                    <LandingProduct  key={i} {...prod} />
+                    )
+                }
+                </div>
+                <div>fdfdf</div>
+                
+
             </div>
 
             <div className="landing-footer" >
@@ -60,4 +81,22 @@ export function NotFoundTemplate(props) {
             </div>
         </section>
     )
+}
+
+export function LandingSuspenseTemplate(props) {
+    return (
+        <section className="landing-container">   
+            <div className="landing-top" >
+                <Header/>
+                <div className="landing-center">
+                    {props.children}
+                </div>
+            </div>
+            <div className="landing-footer" >
+                <LandingFooter/>
+            </div>
+
+        </section>
+    )
+
 }

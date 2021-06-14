@@ -13,6 +13,17 @@
     width:20%
 
 }
+.login-template-logo{
+
+    border:1px solid red;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height:10vh;
+    margin-top:5%;
+
+}
 .login-template-center{
     border:1px solid black;
     width:60%;

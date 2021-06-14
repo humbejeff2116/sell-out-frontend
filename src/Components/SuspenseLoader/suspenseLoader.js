@@ -11,6 +11,7 @@ import Template from '../Template/template';
 import {LoginAndSignupTemplate} from '../Template/template';
 import { IndexPageTemplate } from '../../Pages/IndexPage/indexPage';
 import {SettingsPageTemplate} from '../../Pages/SettingsPage/settingsPage';
+import {LandingSuspenseTemplate} from '../../Components/Landing/landing';
 import { Loader } from '../Loader/loader';
 import './suspenseLoader.css';
 
@@ -47,14 +48,14 @@ export function SettingsSuspenseLoader(props) {
 // outside index, about, contact etc suspense
 export function OutsideLoginSuspenseLoader() {
     return (
-        <Template>
+        <LandingSuspenseTemplate>
             <div  className="suspense-container">
             <Loader
             loaderContainer={"index-suspense-loader-container"}
             loader={"index-suspense-loader"}
             />
             </div>
-        </Template>
+        </LandingSuspenseTemplate>
     )
 }
 // login, signup suspense

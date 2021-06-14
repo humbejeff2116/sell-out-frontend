@@ -79,25 +79,26 @@
     border:1px solid red;
     min-height: 100vh;
     display:flex;
+    flex-direction: column;
+}
+.landing-product-container{
+    border:1px solid green;
+    min-height: 100vh;
+    display:flex;
     flex-direction: row;
     justify-content: space-around;
+    flex-wrap: wrap;
+   
+}
+.landing-product-panel{
+    border:1px solid black;
+    display:flex;
+    width:15%;
+    min-height: 20vh;
+    margin-top:2%; 
+    margin-bottom:2%; 
+}
 
-}
-.landing-center-1{
-    border:1px solid black;
-    width:30%;
-  
-}
-.landing-center-2{
-    border:1px solid black;
-    width:30%;
-  
-}
-.landing-center-3{
-    border:1px solid black;
-    width:30%;
-  
-}
 .landing-footer{
     margin-top: 2%;
     border:1px solid purple;
