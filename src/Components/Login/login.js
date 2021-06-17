@@ -40,6 +40,7 @@ export default function Login() {
                 <Form>
                 <LoginTextInput
                     label="EMAIL ADDRESS"
+                    labelClassName="login-form-group"
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
@@ -47,6 +48,7 @@ export default function Login() {
                 />
                 <LoginPasswordInput
                     label="PASSWORD"
+                    labelClassName="login-form-group"
                     name="password"
                     type="password"
                     errorClassName="login-form-error"

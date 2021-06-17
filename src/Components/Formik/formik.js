@@ -18,7 +18,7 @@ export const LoginTextInput = ({ label, ...props }) => {
   return (
 
     <>
-        <div className="login-form-group">
+        <div className={props.labelClassName}>
             <label htmlFor={props.id || props.name}>{label}</label>
         </div>
             <input className="password-input" {...field} {...props} />
@@ -42,7 +42,7 @@ export const LoginPasswordInput = ({ label, ...props }) => {
     return (
   
       <>
-          <div className="login-form-group">
+          <div className={props.labelClassName}>
             <label htmlFor={props.id || props.name}>{label}</label>
           </div>
               <input className="text-input" {...field} {...props} />

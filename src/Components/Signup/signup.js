@@ -45,6 +45,7 @@ export default function Signup() {
                 <Form>
                 <LoginTextInput
                     label="EMAIL ADDRESS"
+                    labelClassName="signup-form-group"
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
@@ -52,6 +53,7 @@ export default function Signup() {
                 />
                    <LoginTextInput
                     label="FULL NAMES"
+                    labelClassName="signup-form-group"
                     name="fullname"
                     type="text"
                     placeholder="e.g John Doe"
@@ -59,6 +61,7 @@ export default function Signup() {
                 />
                 <LoginPasswordInput
                     label="PASSWORD"
+                    labelClassName="signup-form-group"
                     name="password"
                     type="password"
                     errorClassName="signup-form-error"
