@@ -9,7 +9,7 @@ import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import {LoginTextInput, LoginPasswordInput} from '../Formik/formik';
+import {TextInput, PasswordInput} from '../Formik/formik';
 import './signup.css';
 
 export default function Signup() {
@@ -43,7 +43,7 @@ export default function Signup() {
                     }}
                 >
                 <Form>
-                <LoginTextInput
+                <TextInput
                     label="EMAIL ADDRESS"
                     labelClassName="signup-form-group"
                     name="email"
@@ -51,7 +51,7 @@ export default function Signup() {
                     placeholder="example@gmail.com"
                     errorClassName="signup-form-error"
                 />
-                   <LoginTextInput
+                   <TextInput
                     label="FULL NAMES"
                     labelClassName="signup-form-group"
                     name="fullname"
@@ -59,7 +59,7 @@ export default function Signup() {
                     placeholder="e.g John Doe"
                     errorClassName="signup-form-error"
                 />
-                <LoginPasswordInput
+                <PasswordInput
                     label="PASSWORD"
                     labelClassName="signup-form-group"
                     name="password"

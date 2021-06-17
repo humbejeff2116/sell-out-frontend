@@ -11,7 +11,7 @@ import { ImWarning } from 'react-icons/im'
 
 
 
-export const LoginTextInput = ({ label, ...props }) => {
+export const TextInput = ({ label, ...props }) => {
 
   const [field, meta] = useField(props);
 
@@ -35,7 +35,7 @@ export const LoginTextInput = ({ label, ...props }) => {
 
 };
 
-export const LoginPasswordInput = ({ label, ...props }) => {
+export const PasswordInput = ({ label, ...props }) => {
 
     const [field, meta] = useField(props);
   
@@ -61,7 +61,7 @@ export const LoginPasswordInput = ({ label, ...props }) => {
 
 
 
-export const MyCheckbox = ({ children, ...props }) => {
+export const Checkbox = ({ children, ...props }) => {
 
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
@@ -82,7 +82,7 @@ export const MyCheckbox = ({ children, ...props }) => {
 
 
 
-export const MySelect = ({ label, ...props }) => {
+export const Select = ({ label, ...props }) => {
 
   const [field, meta] = useField(props);
 

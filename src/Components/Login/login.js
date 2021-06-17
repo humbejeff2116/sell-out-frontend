@@ -6,7 +6,7 @@
    import { Link } from 'react-router-dom';
    import { Formik, Form } from 'formik';
    import * as Yup from 'yup';
-   import {LoginTextInput, LoginPasswordInput} from '../Formik/formik';
+   import {TextInput, PasswordInput} from '../Formik/formik';
    import './login.css';
 
 export default function Login() {
@@ -38,7 +38,7 @@ export default function Login() {
                     }}
                 >
                 <Form>
-                <LoginTextInput
+                <TextInput
                     label="EMAIL ADDRESS"
                     labelClassName="login-form-group"
                     name="email"
@@ -46,7 +46,7 @@ export default function Login() {
                     placeholder="example@gmail.com"
                     errorClassName="login-form-error"
                 />
-                <LoginPasswordInput
+                <PasswordInput
                     label="PASSWORD"
                     labelClassName="login-form-group"
                     name="password"
