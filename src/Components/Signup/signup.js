@@ -5,101 +5,86 @@
 
 
 
-import React from 'react';
-import {Redirect, Link} from 'react-router-dom';
+import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import {LoginTextInput, LoginPasswordInput} from '../Formik/formik';
 import './signup.css';
 
-
-export default class Signup extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            fullname: '',
-            valErrors: [],
-            errMessage: '',
-            redirect : '',
-            signingUp: false
-
-        }
-    }
-    handleInputChange = (e) =>
-        this.setState({[e.target.name]: e.target.value})
-
-    submitSignup = (e) => { 
-        e.preventDefault();
-    }
-
-    componentDidMount(){
-
-    }
-
-    render(){
-        if (this.state.redirect) {
-            return(
-                <Redirect to={this.state.redirect} />
-            )
-        }
-        return (
-            <div className="signup-container">
-                <div className="signup-panel ">
-                    <div className="signup-panel-heading">
-                        <h2> Create Account </h2>
-                    </div>
-                    <div className="signup-panel-body">
-                        <form action="signup" onSubmit={this.submitSignup} method="POST" autoComplete="off">
-                        {/* signup email */}
-                        <div className="signup-form-group">
-                            <label htmlFor="email address">EMAIL ADDRESS</label>
-                        </div>
-                        <input type="text" placeholder="example@gmail.com"  name="email"  onChange={this.handleInputChange}/>
-                        <div className="signup-form-error">
-                            <span className="signup-error">this is a email error</span>
-                        </div>
-                        {/* signup full name */}
-                        <div className="signup-form-group">
-                            <label htmlFor="full name">FULL NAMES</label>
-                        </div>
-                        <input type="text" placeholder="e.g John Doe" name="fullname"  onChange={this.handleInputChange}/>
-                        <div className="signup-form-error">
-                            <span className="signup-error">this is a full name error</span>
-                        </div>
-                        {/* signup full name */}
-                        <div className="signup-form-group">
-                            <label htmlFor="password">PASSWORD</label>
-                        </div>
-                        <input type="password" name="password"  onChange={this.handleInputChange}/>
-                        <div className="signup-form-error">
-                            <span className="signup-error">this is a full name error</span>
-                        </div>
-                        {/* date of birth */}
-
-
-                        <div className="signup-button">
-                            <button type="submit" className="btn btn-success">
-                            {this.state.signingUp ? 'Creating Account...' : 'Create Account'}
-                            </button>
-                        </div>
-
-                        </form>
-                    </div>
+export default function Signup() {
+    const [signingUp, setSigningUp] = useState(false);
+    return (
+        <div className="signup-container">
+            <div className="signup-panel ">
+                <div className="signup-panel-heading">
+                    <h2> Create Account </h2>
                 </div>
+                <div className="signup-panel-body">
+                <Formik
+                    initialValues = {{
+                        email: '',
+                        fullname:'',
+                        password: '',
+                       
+                    }}
 
-                <div className="signup-login-panel">
-                    <div className="login-link">
-                        <div className="login-link-text">
-                            <p>Already have an account ? </p>
-                        </div>
+                    validationSchema = { Yup.object({
+                        email: Yup.string().email('Invalid email address').required('Your email is Required'),
+                        fullname: Yup.string().required('Your full names are Required'),
+                        password: Yup.string().required('Your password is required'),
+                    })}
 
-                        <div className="login-link-button">
-                            <Link to="/login"><button> Login </button></Link>
-                        </div>
-                        
-                    </div>    
+                    onSubmit = {(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                            alert(JSON.stringify(values, null, 2));
+                            setSubmitting(false);
+                        }, 400);
+                    }}
+                >
+                <Form>
+                <LoginTextInput
+                    label="EMAIL ADDRESS"
+                    name="email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    errorClassName="signup-form-error"
+                />
+                   <LoginTextInput
+                    label="FULL NAMES"
+                    name="fullname"
+                    type="text"
+                    placeholder="e.g John Doe"
+                    errorClassName="signup-form-error"
+                />
+                <LoginPasswordInput
+                    label="PASSWORD"
+                    name="password"
+                    type="password"
+                    errorClassName="signup-form-error"
+                />
+                <div className="signup-button">
+                    <button type="submit" className="btn btn-success">
+                    {signingUp ? 'Creating Account...' : 'Create Account'}
+                    </button>
+                </div>
+                </Form>
+                </Formik>
                 </div>
             </div>
 
-        )
-    }
+            <div className="signup-login-panel">
+                <div className="login-link">
+                    <div className="login-link-text">
+                        <p>Already have an account ? </p>
+                    </div>
+
+                    <div className="login-link-button">
+                        <Link to="/login"><button> Login </button></Link>
+                    </div>
+                    
+                </div>    
+            </div>
+        </div>
+    )
 }

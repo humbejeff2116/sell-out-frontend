@@ -2,103 +2,80 @@
 
 
 
-   import React from 'react';
-   import { Link, Redirect } from 'react-router-dom';
+   import React, {useState} from 'react';
+   import { Link } from 'react-router-dom';
+   import { Formik, Form } from 'formik';
+   import * as Yup from 'yup';
+   import {LoginTextInput, LoginPasswordInput} from '../Formik/formik';
    import './login.css';
 
+export default function Login() {
+    const [loginIn, setLoginIn] = useState(false);
+    return (
+        <>
+        <div className="login-container">
+        <div className="login-panel ">
+            <div className="login-panel-heading">
+                <h2>Login </h2>
+            </div>
+            <div className="login-panel-body">                            
+                <Formik
+                    initialValues = {{
+                        email: '',
+                        password: '',
+                    }}
 
+                    validationSchema = { Yup.object({
+                        email: Yup.string().email('Invalid email address').required('Email is Required'),
+                        password: Yup.string().required('password is required'),
+                    })}
 
-export default class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            valErrors: [],
-            errMessage: '',
-            blur: false,
-            redirect : '',
-            loginIn:false
-        }
-    }
-
-    handleInputChange = (e) =>
-        this.setState({[e.target.name]: e.target.value})
-
-    submitLogin = (e) => {
-        e.preventDefault();
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentWillUnmount() {
-
-    }
-
-    render() {
-        if (this.state.redirect) {
-            return(
-                <Redirect to={this.state.redirect} />
-            )
-        }
-        return (
-         
-            <div className="login-container">
-                <div className="login-panel ">
-                    <div className="login-panel-heading">
-                        <h2>Login </h2>
-                    </div>
-                    <div className="login-panel-body">
-                        <form action="login" onSubmit={this.submitLogin} method="POST" autoComplete="off">
-
-                        <div className="login-form-group">
-                            <label htmlFor="email address">EMAIL ADDRESS</label>
-                        </div>
-                        <input type="text" placeholder="example@gmail.com"   name="email"  onChange={this.handleInputChange}/>
-                        {/* error reporting div */}
-                        <div className="login-form-error">
-                            <span className="login-error">this is a username error</span>
-                        </div>
-
-                        <div className="login-form-group">
-                            <label htmlFor="password">PASSWORD</label>
-                        </div>
-                        <input type="password" name="password"  onChange={this.handleInputChange}/>
-                        {/* error reporting */}
-                        <div className="login-form-error">
-                            <span className="login-error">this is a password error</span>
-                        </div>
-
-
-                        <div className="login-forgot-pass">
-                            <p>forgot your password?</p>
-                        </div>
-
-                        <div className="login-button">
-                            <button type="submit" className="btn btn-success">
-                            {this.state.loginIn ? 'Loging in...' : 'Log in'}
-                            </button>
-                        </div>
-
-                        </form>
-                    </div>
+                    onSubmit = {(values, { setSubmitting }) => {
+                        setTimeout(() => {
+                            alert(JSON.stringify(values, null, 2));
+                            setSubmitting(false);
+                        }, 400);
+                    }}
+                >
+                <Form>
+                <LoginTextInput
+                    label="EMAIL ADDRESS"
+                    name="email"
+                    type="email"
+                    placeholder="example@gmail.com"
+                    errorClassName="login-form-error"
+                />
+                <LoginPasswordInput
+                    label="PASSWORD"
+                    name="password"
+                    type="password"
+                    errorClassName="login-form-error"
+                />
+                <div className="login-forgot-pass">
+                    <p>forgot your password?</p>
                 </div>
 
+                <div className="login-button">
+                    <button type="submit" className="btn btn-success">
+                    {loginIn ? 'Loging in...' : 'Log in'}
+                    </button>
+                </div>
+                </Form>
+                </Formik>
+            </div>
+                </div>
                 <div className="login-signup-panel">
                     <div className="signup-link">
                         <div className="signup-link-text">
                             <p>dont have an account yet ? </p>
                         </div>
-
                         <div className="signup-link-button">
                             <Link to="/signup"><button> sign up </button></Link>
-                        </div>
-                        
+                        </div>  
                     </div>    
                 </div>
             </div>
-        )
-    }
+        </>
+
+    )
 }

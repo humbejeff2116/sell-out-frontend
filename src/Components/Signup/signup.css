@@ -100,7 +100,8 @@
     justify-content: space-between;
     padding-top: 0.2%;
     width:99%;
-    border:2px solid yellow;
+    border:2px solid red;
+    min-height: 25px;
 }
 .signup-form-error span{
     color:red; 
