@@ -44,14 +44,14 @@ export default function Login() {
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
-                    errorClassName="login-form-error"
+                    errorClass="login-form-error"
                 />
                 <PasswordInput
                     label="PASSWORD"
                     labelClassName="login-form-group"
                     name="password"
                     type="password"
-                    errorClassName="login-form-error"
+                    errorClass="login-form-error"
                 />
                 <div className="login-forgot-pass">
                     <p>forgot your password?</p>

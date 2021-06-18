@@ -49,7 +49,7 @@ export default function Signup() {
                     name="email"
                     type="email"
                     placeholder="example@gmail.com"
-                    errorClassName="signup-form-error"
+                    errorClass="signup-form-error"
                 />
                    <TextInput
                     label="FULL NAMES"
@@ -57,14 +57,14 @@ export default function Signup() {
                     name="fullname"
                     type="text"
                     placeholder="e.g John Doe"
-                    errorClassName="signup-form-error"
+                    errorClass="signup-form-error"
                 />
                 <PasswordInput
                     label="PASSWORD"
                     labelClassName="signup-form-group"
                     name="password"
                     type="password"
-                    errorClassName="signup-form-error"
+                    errorClass="signup-form-error"
                 />
                 <div className="signup-button">
                     <button type="submit" className="btn btn-success">

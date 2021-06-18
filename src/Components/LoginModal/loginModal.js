@@ -49,7 +49,7 @@ function LoginModalTemplate(props) {
     const [ showForm, setShowForm] = useState(false);
 
     useEffect(()=> {
-        let timer
+        let timer;
         timer = setTimeout(()=> {
             return setShowForm(true)
         }, 1000);
@@ -104,14 +104,14 @@ function LoginModalTemplate(props) {
                         name="email"
                         type="email"
                         placeholder="example@gmail.com"
-                        errorClassName="login-modal-form-error"
+                        errorClass="login-modal-form-error"
                     />
                     <PasswordInput
                         label="PASSWORD"
                         labelClassName="login-modal-form-group"
                         name="password"
                         type="password"
-                        errorClassName="login-modal-form-error"
+                        errorClass="login-modal-form-error"
                     />
                    <div className="login-modal-forgot-pass">
                         <p>forgot your password?</p>
