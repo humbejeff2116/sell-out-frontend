@@ -4,6 +4,7 @@
 
 import React, {Suspense} from 'react';
 import { Route, Switch} from 'react-router-dom';
+import ContextProvider from '../Components/Context/contextProvider';
 import {SettingsSuspenseLoader, InsideLoginSuspenseLoader, OutsideLoginSuspenseLoader, LoginAndSignupSuspenseLoader } from '../Components/SuspenseLoader/suspenseLoader';
 
 const LandingPage = React.lazy(()=> import('../Pages/LandingPage/landingPage'));
@@ -20,7 +21,7 @@ const UploadProductOrServicePage = React.lazy(()=>import('../Pages/UploadProduct
 export default function App() {
    
     return (
-
+        <ContextProvider>
         <Switch >
 
             <Route exact  path="/">
@@ -66,6 +67,7 @@ export default function App() {
             </Route> 
 
         </Switch>
+        </ContextProvider>
 
     )
 }

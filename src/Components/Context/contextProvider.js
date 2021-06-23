@@ -5,8 +5,9 @@
 
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import MyContext from './context';
+import socket from '../Socket/socket';
 
 
 
@@ -26,6 +27,7 @@ export default function ContextProvider(props) {
     return(
         <MyContext.Provider
             value={{
+                socket
                 
             }}
         >

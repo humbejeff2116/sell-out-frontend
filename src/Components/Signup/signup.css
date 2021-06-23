@@ -63,6 +63,11 @@
     border:1px solid black;
     margin-bottom:2%;
 }
+.signup-panel-error{
+    display:flex;
+    justify-content: center;
+    
+}
 
 .signup-panel-body{
     display:flex;
