@@ -3,14 +3,61 @@
 
 
    import React, {useState} from 'react';
-   import { Link } from 'react-router-dom';
+   import { Link, Redirect } from 'react-router-dom';
    import { Formik, Form } from 'formik';
    import * as Yup from 'yup';
    import {TextInput, PasswordInput} from '../Formik/formik';
+   import socket from '../Socket/socket';
    import './login.css';
 
 export default function Login() {
     const [loginIn, setLoginIn] = useState(false);
+    const [loginResponse, setLoginResponse] = useState({});
+    const [redirect, setRedirect] = useState('');
+
+    function handleSubmit  (values) {
+        try{
+            setLoginIn(true);
+            const loginData = values;
+            socket.emit('login', loginData);
+
+            socket.on('userNotFound', function(response) {
+                console.log(response);
+                setLoginResponse(response);
+                setLoginIn(false);
+            })
+
+            socket.on('passwordError', function(response) {
+                setLoginResponse(response);
+                setLoginIn(false);   
+            });
+
+            socket.on('passwordMatchNotFound', function(response) {
+                setLoginResponse(response);
+                setLoginIn(false);    
+            })
+
+            socket.on('userFound', function(response) {
+                const TOKEN = response.token;
+                localStorage.setItem('newUser',response.data );
+                localStorage.setItem('x-access-token', TOKEN);
+                localStorage.setItem('x-access-token-expiration',  Date.now() + 2 * 60 * 60 * 1000);
+                setLoginResponse(response);
+                setLoginIn(false);
+                setRedirect('/home'); 
+            })
+
+        } catch(e) {
+       
+
+        }     
+    }
+ 
+    if(redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
+    }
     return (
         <>
         <div className="login-container">
@@ -18,6 +65,13 @@ export default function Login() {
             <div className="login-panel-heading">
                 <h2>Login </h2>
             </div>
+            <div className="login-panel-error">
+                    {
+                        loginResponse.message && (
+                            <span>{loginResponse.message}</span>
+                        )
+                    }
+                </div>
             <div className="login-panel-body">                            
                 <Formik
                     initialValues = {{
@@ -30,12 +84,7 @@ export default function Login() {
                         password: Yup.string().required('password is required'),
                     })}
 
-                    onSubmit = {(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 400);
-                    }}
+                    onSubmit = { handleSubmit }
                 >
                 <Form>
                 <TextInput

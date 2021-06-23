@@ -5,16 +5,13 @@
 
 
 
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {TextInput, PasswordInput} from '../Formik/formik';
 import './signup.css';
-// import socket from '../Socket/socket';
-import MyContext from '../Context/context';
-
-
+import socket from '../Socket/socket';
 
 
 
@@ -25,25 +22,23 @@ export default function Signup() {
     const [creatingAccount, setCreatingAccount] = useState(false);
     const [signingUpResponse, setSigningUpResponse] = useState({});
     const [redirect, setRedirect] =useState('');
-    const socket = useContext(MyContext);
+    // const socket = useContext(MyContext);
     
 
     useEffect(() => {
-       
-                 
+               
         return () => {
-           socket.off('signUp')
+        //    socket.off('signUp')
         }
-    }, [socket]);
+    }, []);
 
     function handleSubmit  (values) {
         try{
             setCreatingAccount(true);
             socket.emit("signUp",values);
             socket.on('userAlreadyExist', function (response) {
-                setCreatingAccount(false);
                 setSigningUpResponse(response);
-             
+                setCreatingAccount(false);
             })
             socket.on('userSignedUp', function(response) {
                 const TOKEN = response.token;
@@ -93,7 +88,7 @@ export default function Signup() {
                         password: Yup.string().required('Password is required'),
                     })}
 
-                    onSubmit = {handleSubmit}
+                    onSubmit = { handleSubmit }
                 >
                 <Form>
                 <TextInput
