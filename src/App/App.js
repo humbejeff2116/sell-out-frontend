@@ -4,7 +4,7 @@
 
 import React, {Suspense} from 'react';
 import { Route, Switch} from 'react-router-dom';
-import ContextProvider from '../Components/Context/contextProvider';
+import ContextProvider from '../Context/contextProvider';
 import {SettingsSuspenseLoader, InsideLoginSuspenseLoader, OutsideLoginSuspenseLoader, LoginAndSignupSuspenseLoader } from '../Components/SuspenseLoader/suspenseLoader';
 
 const LandingPage = React.lazy(()=> import('../Pages/LandingPage/landingPage'));

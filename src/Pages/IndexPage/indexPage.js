@@ -10,6 +10,7 @@ import ProfileAvatar from '../../Components/Profile/profileAvatar';
 import IndexSideNav from '../../Components/IndexSideNav/indexSideNav';
 import IndexFooter from '../../Components/IndexFooter/indexFooter';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
+import { isAuthenticated } from '../../Services/services';
 
 
 import Notifications from '../../Components/Notifications/notifications';
@@ -32,9 +33,7 @@ import Connections from '../../Components/Connections/connections';
     )
 
 }
-function isAuthenticated() {
-    return true;
-}
+
 const IndexPage = RequireAuthentication(IndexPageComp, isAuthenticated);
 export default IndexPage;
 
