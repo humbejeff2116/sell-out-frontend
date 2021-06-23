@@ -4,6 +4,7 @@
 
    import React, {useState} from 'react';
    import { Link, Redirect } from 'react-router-dom';
+   import { ImWarning } from 'react-icons/im';
    import { Formik, Form } from 'formik';
    import * as Yup from 'yup';
    import {TextInput, PasswordInput} from '../Formik/formik';
@@ -12,6 +13,7 @@
 
 export default function Login() {
     const [loginIn, setLoginIn] = useState(false);
+    const [loginError, setLoginError] = useState(false);
     const [loginResponse, setLoginResponse] = useState({});
     const [redirect, setRedirect] = useState('');
 
@@ -24,30 +26,34 @@ export default function Login() {
             socket.on('userNotFound', function(response) {
                 console.log(response);
                 setLoginResponse(response);
+                setLoginError(true)
                 setLoginIn(false);
             })
 
             socket.on('passwordError', function(response) {
                 setLoginResponse(response);
+                setLoginError(true)
                 setLoginIn(false);   
             });
 
             socket.on('passwordMatchNotFound', function(response) {
                 setLoginResponse(response);
+                setLoginError(true)
                 setLoginIn(false);    
             })
 
             socket.on('userFound', function(response) {
                 const TOKEN = response.token;
-                localStorage.setItem('newUser',response.data );
+                localStorage.setItem('newUser',JSON.stringify(response.data));
                 localStorage.setItem('x-access-token', TOKEN);
                 localStorage.setItem('x-access-token-expiration',  Date.now() + 2 * 60 * 60 * 1000);
-                setLoginResponse(response);
+                setLoginError(false)
                 setLoginIn(false);
                 setRedirect('/home'); 
             })
 
         } catch(e) {
+            setLoginError(true)
        
 
         }     
@@ -108,7 +114,7 @@ export default function Login() {
 
                 <div className="login-button">
                     <button type="submit" className="btn btn-success">
-                    {loginIn ? 'Loging in...' : 'Log in'}
+                    {loginIn ? 'Loging in...' : loginError ? <><ImWarning/> Log in</> : 'Log in'}
                     </button>
                 </div>
                 </Form>
