@@ -8,10 +8,12 @@
 
 
 import React, {useState, useEffect} from 'react';
-import {Loader} from '../Loader/loader';
+import { Redirect } from 'react-router-dom';
+import { ImWarning } from 'react-icons/im';
+import { Loader } from '../Loader/loader';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import {TextInput, AnimSelect, Select} from '../Formik/formik';
+import { TextInput, AnimSelect, Select } from '../Formik/formik';
 import './uploadProduct.css';
 
 
@@ -63,11 +65,11 @@ export default function UploadProductOrService(props) {
 const categoryDataSet = [
     {
         category:"Electronics",
-        type:[{name:"phones"},{name:"laptop"},{name:"appliances"}]
+        type:[{name:"--Select--"},{name:"phones"},{name:"laptop"},{name:"appliances"}]
     },
     {
         category:"Furniture",
-        type:[{name:"chairs"},{name:"table"},{name:"stool"}]
+        type:[{name:"--Select--"},{name:"chairs"},{name:"table"},{name:"stool"}]
     },
     {
         category:"Clothes",
@@ -90,6 +92,9 @@ function ProductForm () {
     const [formValues, setFormValues] = useState({});
     const [type , setType] = useState([]);
     const [uploadingProduct , setUploadingProduct ] = useState(false);
+    const [uploadingError , setUploadingError] = useState(false);
+    const [response, setResponse] = useState('');
+    const [redirect, setRedirect] =useState('');
     
 
     useEffect(() => {
@@ -125,6 +130,24 @@ function ProductForm () {
         return callback(type);
     }
 
+    function handleSubmit  (values) {
+        try {
+            setUploadingProduct(true);
+            const productValue = values;
+            productValue.productCategory = formValues.productCategory;
+
+            setTimeout(() => {
+                alert(JSON.stringify(productValue, null, 2));
+            }, 400);  
+
+        } catch(e) {
+            
+
+        } finally {
+            setUploadingProduct(true)
+        }    
+    }
+
     if(!showForm ) {
         return (
             <div className="upload-form-loader-panel">
@@ -133,6 +156,11 @@ function ProductForm () {
                 loader={"upload-form-loader"} 
                 />
             </div> 
+        )
+    }
+    if(redirect) {
+        return (
+            <Redirect to={redirect} />
         )
     }
     return (
@@ -157,35 +185,27 @@ function ProductForm () {
                 validationSchema = { Yup.object({
                     productType: Yup.string().required('product type is Required'),
                     productName: Yup.string().required('product name is Required'),
-                    productCountry: Yup.string().required('Your country is required'),
-                    productState: Yup.string().required('Your password is required'),
-                    productUsage: Yup.string().required('Your password is required'),
-                    productCurrency: Yup.string().required('Your password is required'),
-                    productPrice: Yup.string().required('Your password is required'),
-                    contactNumber: Yup.string().required('Your password is required'),
+                    productCountry: Yup.string().required('Field is required'),
+                    productState: Yup.string().required('State is required'),
+                    productUsage: Yup.string().required('usage duration is required'),
+                    productCurrency: Yup.string().required('currency is required'),
+                    productPrice: Yup.string().required('price is required'),
+                    contactNumber: Yup.string().required('contact number is required'),
                 })}
 
-                onSubmit =  {(values, { setSubmitting }) => {
-                    alert("submitting")
-                    const productValue = values;
-                    productValue.productCategory = formValues.productCategory;
-
-                    setTimeout(() => {
-                        alert(JSON.stringify(productValue, null, 2));
-                        setSubmitting(false);
-                    }, 400);  
-                }}
+                onSubmit =  {handleSubmit}
             >
                 <Form>
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">                     
                         <Select 
-                        label="Category" 
+                        label="product Category" 
                         onChange={handleInputChange} 
                         name="productCategory" 
                         value={formValues.productCategory} 
                         errorClass="upload-form-error"
                         >
+                            <option value="">--Select--</option>
                             <option value="Electronics">Electronics</option>
                             <option value="Furniture">Furniture</option>
                             <option  value="Books">Books</option>
@@ -194,7 +214,7 @@ function ProductForm () {
                     </div>
                     <div className="upload-form-group-child input">
                         <TextInput
-                        label="Name"
+                        label="Product Name"
                         labelClassName="upload-label"
                         name="productName"
                         type="text"
@@ -207,15 +227,16 @@ function ProductForm () {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <Select label="productCountry" name="productCountry" errorClass="upload-form-error">
+                        <Select label="product Country" name="productCountry" errorClass="login-modal-form-error">
+                            <option value="">--Select--</option>
                             <option value="Nigeria">Nigeria</option>
-                            <option value="Nigeria">Ghana</option>
-                            <option value="Nigeria">Congo</option>
-                            <option value="Nigeria">Clothes</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Congo">Congo</option>
                         </Select>   
                     </div>
                     <div className="upload-form-group-child">
-                        <Select label="productState" name="productState" errorClass="upload-form-error">
+                        <Select label="product State" name="productState" errorClass="upload-form-error">
+                            <option value="">--Select--</option>
                             <option value="Abia">Abia</option>
                             <option value="Abia">Furniture</option>
                             <option value="Abia">Book</option>
@@ -223,7 +244,8 @@ function ProductForm () {
                         </Select> 
                     </div>
                     <div className="upload-form-group-child">
-                        <Select label="productUsage" name="productUsage" errorClass="upload-form-error">
+                        <Select label="product Usage" name="productUsage" errorClass="upload-form-error">
+                            <option value="">--Select--</option>
                             <option value="Never used">Never used</option>
                             <option value="Fairly used">Fairly used</option>
                             <option value="2 years +">2 years +</option>
@@ -240,23 +262,25 @@ function ProductForm () {
                     <div className="upload-form-group-child">
                     { 
                         (type.length > 0 ) && (
-                        < AnimSelect
-                        loader= {
-                            <Loader 
-                                loaderContainer={"upload-form-select-loader-container"} 
-                                loader={"upload-form-select-loader"} 
-                             />
+                            < AnimSelect
+                            loader= {
+                                <Loader 
+                                    loaderContainer={"upload-form-select-loader-container"} 
+                                    loader={"upload-form-select-loader"} 
+                                />
                             }
-                            label="Type"
-                            name="productType"
-                            errorClass="upload-form-error"
-                        >
-                        {
-                            type.map((val,i) =>                                      
-                                <option key={i} value={val.name}>{val.name}</option>   
-                            )
-                        }
-                        </AnimSelect>
+                                label="Product type"
+                                name="productType"
+                                errorClass="upload-form-error"
+                            >
+                            {
+                                type.map((val,i) =>
+                                    (val.name ==="--Select--") ?                                      
+                                    <option key={i} value="">{val.name}</option> :
+                                    <option key={i} value={val.name}>{val.name}</option>  
+                                )
+                            }
+                            </AnimSelect>
                         )
                     }                            
                     </div>   
@@ -264,10 +288,11 @@ function ProductForm () {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <Select label="productCurrency" name="productCurrency" errorClass="upload-form-error">
+                        <Select label="product Currency" name="productCurrency" errorClass="upload-form-error">
+                            <option value="">--Select--</option>
                             <option value="Naira">Naira</option>
-                            <option value="Naira"> British Pounds</option>
-                            <option value="Naira">U.S Dollar</option>
+                            <option value="pounds"> British Pounds</option>
+                            <option value="dollar">U.S Dollar</option>
                         </Select>
                     </div>
                     <div className="upload-form-group-child input">
@@ -308,7 +333,11 @@ function ProductForm () {
 
                 <div className="upload-form-button">
                     <button type="submit">
-                    {uploadingProduct ? 'uploading...' : 'Upload'}
+                    {
+                        uploadingProduct ? 'uploading...' : 
+                        uploadingError ? <><ImWarning/> Upload</> :
+                        'Upload'
+                    }
                     </button>
                 </div>
                 </Form>
@@ -327,6 +356,9 @@ function ServiceForm(props) {
     const [formValues, setFormValues] = useState({});
     const [uploadingProduct , setUploadingProduct ] = useState(false);
     const [type , setType] = useState([]);
+    const [uploadingError , setUploadingError] = useState(false);
+    const [response, setResponse] = useState('');
+    const [redirect, setRedirect] =useState('');
     
     useEffect(()=> {
         let timer = null;
