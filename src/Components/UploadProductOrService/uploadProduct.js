@@ -14,6 +14,7 @@ import { Loader } from '../Loader/loader';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, AnimSelect, Select } from '../Formik/formik';
+import socket from '../Socket/socket';
 import './uploadProduct.css';
 
 
@@ -138,7 +139,16 @@ function ProductForm () {
 
             setTimeout(() => {
                 alert(JSON.stringify(productValue, null, 2));
-            }, 400);  
+            }, 400);
+
+            socket.emit('createProduct',productValue);
+            socket.on('createProductUserError', function (res) {
+
+            });
+            socket.on('productCreated', function (res) {
+
+            });
+              
 
         } catch(e) {
             
@@ -354,7 +364,7 @@ function ProductForm () {
 function ServiceForm(props) {
     const [showForm , setShowForm ] = useState(false);
     const [formValues, setFormValues] = useState({});
-    const [uploadingProduct , setUploadingProduct ] = useState(false);
+    const [uploadingService , setUploadingService ] = useState(false);
     const [type , setType] = useState([]);
     const [uploadingError , setUploadingError] = useState(false);
     const [response, setResponse] = useState('');
@@ -371,7 +381,7 @@ function ServiceForm(props) {
         }
     },[])
 
-      const submitProduct = function() {
+      const handleSubmit = function() {
 
     }
     const handleInputChange = function(e) {
@@ -409,6 +419,11 @@ function ServiceForm(props) {
             </div> 
         )
     }
+    if(redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
+    }
 
     return (
        <div className="upload-form-panel">
@@ -417,73 +432,89 @@ function ServiceForm(props) {
             </div>
 
             <div className="upload-form-panel-body">
-                <form action="upload-product" onSubmit={submitProduct} method="POST" autoComplete="off">
-                {/* row */}
+            <Formik
+                initialValues = {{
+                    productName:'',
+                    productCountry: '',
+                    productState: '',
+                    productUsage:'',
+                    productCurrency:'',
+                    productPrice:'',
+                    contactNumber:'',
+                    productType:'',    
+                }}
+
+                validationSchema = { Yup.object({
+                    productType: Yup.string().required('product type is Required'),
+                    productName: Yup.string().required('product name is Required'),
+                    productCountry: Yup.string().required('Field is required'),
+                    productState: Yup.string().required('State is required'),
+                    productUsage: Yup.string().required('usage duration is required'),
+                    productCurrency: Yup.string().required('currency is required'),
+                    productPrice: Yup.string().required('price is required'),
+                    contactNumber: Yup.string().required('contact number is required'),
+                })}
+
+                onSubmit =  {handleSubmit}
+            >
+                <Form>
                 <div className="upload-form-group">
-                    <div className="upload-form-group-child">
-                        <div>
-                        <label htmlFor="email address">Category</label>   
-                        </div>
-                        <div>
-                            <select onChange={handleInputChange} name="category" value={formValues.category}>
-                                <option>Electronics</option>
-                                <option>Furniture</option>
-                                <option>Books</option>
-                                <option>Clothes</option>
-                            </select>
-                        </div>
+                    <div className="upload-form-group-child">                     
+                        <Select 
+                        label="product Category" 
+                        onChange={handleInputChange} 
+                        name="productCategory" 
+                        value={formValues.productCategory} 
+                        errorClass="upload-form-error"
+                        >
+                            <option value="">--Select--</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Furniture">Furniture</option>
+                            <option  value="Books">Books</option>
+                            <option  value="Clothes">Clothes</option>
+                        </Select>
                     </div>
                     <div className="upload-form-group-child input">
-                        <div>
-                        <label htmlFor="email address">Name</label>   
-                        </div>
-                        <input type="text" name="productName" placeholder="e.g Nokia 3310" />
+                        <TextInput
+                        label="Product Name"
+                        labelClassName="upload-label"
+                        name="productName"
+                        type="text"
+                        placeholder="e.g Nokia 3310"
+                        errorClass="login-modal-form-error"
+                        />
                     </div>
                    
                 </div>
-                {/* row */}
+
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <div>
-                        <label htmlFor="email address">Country</label>   
-                        </div>
-                        <div>
-                            <select>
-                                <option>Nigeria</option>
-                                <option>Ghana</option>
-                                <option>Congo</option>
-                                <option>Clothes</option>
-                            </select>
-                        </div>
-                        
+                        <Select label="product Country" name="productCountry" errorClass="login-modal-form-error">
+                            <option value="">--Select--</option>
+                            <option value="Nigeria">Nigeria</option>
+                            <option value="Ghana">Ghana</option>
+                            <option value="Congo">Congo</option>
+                        </Select>   
                     </div>
                     <div className="upload-form-group-child">
-                        <div>
-                        <label htmlFor="email address">State</label>   
-                        </div>
-                        <div>
-                            <select>
-                                <option>Abia</option>
-                                <option>Furniture</option>
-                                <option>Book</option>
-                                <option>Clothes</option>
-                            </select>
-                        </div>
+                        <Select label="product State" name="productState" errorClass="upload-form-error">
+                            <option value="">--Select--</option>
+                            <option value="Abia">Abia</option>
+                            <option value="Abia">Furniture</option>
+                            <option value="Abia">Book</option>
+                            <option value="Abia">Clothes</option>
+                        </Select> 
                     </div>
                     <div className="upload-form-group-child">
-                        <div>
-                        <label htmlFor="email address">Usage</label>   
-                        </div>
-                        <div>
-                            <select>
-                                <option>Never used</option>
-                                <option>Fairly used</option>
-                                <option>2 years +</option>
-                            </select>
-                        </div>
+                        <Select label="product Usage" name="productUsage" errorClass="upload-form-error">
+                            <option value="">--Select--</option>
+                            <option value="Never used">Never used</option>
+                            <option value="Fairly used">Fairly used</option>
+                            <option value="2 years +">2 years +</option>
+                        </Select>
                     </div>
                 </div>
-                {/* row */}
+
                 <div className="upload-form-group">
                     <div className="upload-form-group-child input">
                         <div>
@@ -492,57 +523,80 @@ function ServiceForm(props) {
                     </div>
                     <div className="upload-form-group-child">
                     { 
-                        (type.length > 0) && ( <Select type={type} /> )
+                        (type.length > 0 ) && (
+                            < AnimSelect
+                            loader= {
+                                <Loader 
+                                    loaderContainer={"upload-form-select-loader-container"} 
+                                    loader={"upload-form-select-loader"} 
+                                />
+                            }
+                                label="Product type"
+                                name="productType"
+                                errorClass="upload-form-error"
+                            >
+                            {
+                                type.map((val,i) =>
+                                    (val.name ==="--Select--") ?                                      
+                                    <option key={i} value="">{val.name}</option> :
+                                    <option key={i} value={val.name}>{val.name}</option>  
+                                )
+                            }
+                            </AnimSelect>
+                        )
                     }                            
-                    </div>
-                    
+                    </div>   
                 </div>
-
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <div>
-                        <label htmlFor="email address">Currency</label>   
-                        </div>
-                        <div>
-                            <select>
-                                <option>Naira</option>
-                                <option> British Pounds</option>
-                                <option>U.S Dollar</option>
-                               
-                            </select>
-                        </div>
+                        <Select label="product Currency" name="productCurrency" errorClass="upload-form-error">
+                            <option value="">--Select--</option>
+                            <option value="Naira">Naira</option>
+                            <option value="pounds"> British Pounds</option>
+                            <option value="dollar">U.S Dollar</option>
+                        </Select>
                     </div>
                     <div className="upload-form-group-child input">
-                        <div>
-                        <label htmlFor="email address">Price</label>   
-                        </div>
-                        <input type="text" name="price" placeholder="e.g 2000" />
-                    </div>
-                   
+                        <TextInput
+                            label="Price"
+                            labelClassName="upload-label"
+                            name="productPrice"
+                            type="text"
+                            placeholder="e.g 2000"
+                            errorClass="login-modal-form-error"
+                        />
+                    </div> 
                 </div>
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child input">
-                        <div>
-                        <label htmlFor="email address">Contact number</label>   
-                        </div>
-                        <input type="text" name="contact" placeholder="e.g +2348010000000" />
+                        <TextInput
+                            label="Contact number"
+                            labelClassName="upload-label"
+                            name="contactNumber"
+                            type="text"
+                            placeholder="e.g +2348010000000"
+                            errorClass="login-modal-form-error"
+                        />
                     </div>
                     <div className="upload-form-group-child ">
-                        <div>
-                        <label htmlFor="email address">2</label>   
-                        </div>
+                       
                     </div>
                    
                 </div>
 
                 <div className="upload-form-button">
-                    <button type="submit" className="btn btn-success">
-                    {uploadingProduct ? 'uploading...' : 'Upload'}
+                    <button type="submit">
+                    {
+                        uploadingService  ? 'uploading...' : 
+                        uploadingError ? <><ImWarning/> Upload</> :
+                        'Upload'
+                    }
                     </button>
                 </div>
-                </form>
+                </Form>
+            </Formik> 
             </div>        
         </div>
     )
