@@ -9,27 +9,18 @@ import './settings.css';
 
 
 export default function Settings(props) {
-    const [user, setUser] = useState({});
+    // const [user, setUser] = useState({});
     const [isNewUser, setisNewUser] = useState(false);
-    const { userData } = useAuth();
+    const { user } = useAuth();
 
     useEffect(() => {
-        getState();
-
-    },[]);
-
-    function getState() {
-        const userData =  localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-        const isNewUser = userData ?  userData.newUser : null;
-        if(userData && isNewUser) {
-            setUser(userData);
+            const isNewUser = user ?  user?.newUser : null;
             setisNewUser(isNewUser);
-            return true;
-        }
-        return false; 
-    }
+    }, [user]);
 
-    function removeWelcome(user) {
+   
+
+    const removeWelcome = (user) => {
 
     }
 
@@ -40,7 +31,7 @@ export default function Settings(props) {
             (isNewUser) && (
                 <div onClick={()=>removeWelcome(user)}>
                     <div>
-                        <p>{`welcome ${user.fullName} `}</p>
+                        <p>{`welcome ${user.userName} `}</p>
                     </div>
                 </div>
 

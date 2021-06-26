@@ -12,6 +12,7 @@ import * as Yup from 'yup';
 import {TextInput, PasswordInput} from '../Formik/formik';
 import './signup.css';
 import socket from '../Socket/socket';
+import useAuth from '../../Context/context';
 
 
 
@@ -22,7 +23,7 @@ export default function Signup() {
     const [creatingAccount, setCreatingAccount] = useState(false);
     const [signingUpResponse, setSigningUpResponse] = useState({});
     const [redirect, setRedirect] =useState('');
-    // const socket = useContext(MyContext);
+    const { setUserData, setTokenData } = useAuth();
     
 
     useEffect(() => {
@@ -42,9 +43,8 @@ export default function Signup() {
             })
             socket.on('userSignedUp', function(response) {
                 const TOKEN = response.token;
-                localStorage.setItem('user', JSON.stringify(response.data));
-                localStorage.setItem('x-access-token', TOKEN);
-                localStorage.setItem('x-access-token-expiration',  Date.now() + 2 * 60 * 60 * 1000);
+                setUserData(response.data)
+                setTokenData(TOKEN);
                 setCreatingAccount(false);
                 setRedirect('/settings');
             })

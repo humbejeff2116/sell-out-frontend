@@ -9,6 +9,7 @@
    import * as Yup from 'yup';
    import {TextInput, PasswordInput} from '../Formik/formik';
    import socket from '../Socket/socket';
+   import useAuth from '../../Context/context';
    import './login.css';
 
 export default function Login() {
@@ -16,6 +17,7 @@ export default function Login() {
     const [loginError, setLoginError] = useState(false);
     const [loginResponse, setLoginResponse] = useState({});
     const [redirect, setRedirect] = useState('');
+    const {setUserData, setTokenData} = useAuth();
 
     function handleSubmit  (values) {
         try{
@@ -44,9 +46,8 @@ export default function Login() {
 
             socket.on('userFound', function(response) {
                 const TOKEN = response.token;
-                localStorage.setItem('newUser',JSON.stringify(response.data));
-                localStorage.setItem('x-access-token', TOKEN);
-                localStorage.setItem('x-access-token-expiration',  Date.now() + 2 * 60 * 60 * 1000);
+                setUserData(response.data)
+                setTokenData(TOKEN)
                 setLoginError(false)
                 setLoginIn(false);
                 setRedirect('/home'); 
@@ -54,8 +55,6 @@ export default function Login() {
 
         } catch(e) {
             setLoginError(true)
-       
-
         }     
     }
  
