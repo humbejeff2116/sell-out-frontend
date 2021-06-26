@@ -27,11 +27,15 @@ export default function Signup() {
     
 
     useEffect(() => {
+        socket.on('userSignedUp', function(response) {
+            const TOKEN = response.token;
+            setUserData(response.data)
+            setTokenData(TOKEN);
+            setCreatingAccount(false);
+            setRedirect('/settings');
+        });
                
-        return () => {
-        //    socket.off('signUp')
-        }
-    }, []);
+    }, [setUserData, setTokenData]);
 
     function handleSubmit  (values) {
         try{
@@ -41,13 +45,7 @@ export default function Signup() {
                 setSigningUpResponse(response);
                 setCreatingAccount(false);
             })
-            socket.on('userSignedUp', function(response) {
-                const TOKEN = response.token;
-                setUserData(response.data)
-                setTokenData(TOKEN);
-                setCreatingAccount(false);
-                setRedirect('/settings');
-            })
+           
 
         } catch(e) {
 
