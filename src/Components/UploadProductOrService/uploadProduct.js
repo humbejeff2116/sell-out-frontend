@@ -15,12 +15,14 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, AnimSelect, Select } from '../Formik/formik';
 import socket from '../Socket/socket';
+import useAuth from '../../Context/context';
 import './uploadProduct.css';
 
 
 export default function UploadProductOrService(props) {
     const [showProductForm, setShowProductForm]= useState(false);
     const [showServiceForm, setShowServiceForm] = useState(false);
+    const { user } = useAuth();
 
     const displayProductForm = function() {
         setShowProductForm(true);
@@ -96,6 +98,7 @@ function ProductForm () {
     const [uploadingError , setUploadingError] = useState(false);
     const [response, setResponse] = useState('');
     const [redirect, setRedirect] =useState('');
+    const { user } = useAuth();
     
 
     useEffect(() => {
@@ -134,14 +137,17 @@ function ProductForm () {
     function handleSubmit  (values) {
         try {
             setUploadingProduct(true);
-            const productValue = values;
-            productValue.productCategory = formValues.productCategory;
+            values.productCategory = formValues.productCategory;
+            const productData = {
+                productValue: values,
+                user: user
+            }
 
             setTimeout(() => {
-                alert(JSON.stringify(productValue, null, 2));
+                alert(JSON.stringify(productData, null, 2));
             }, 400);
 
-            socket.emit('createProduct',productValue);
+            socket.emit('createProduct',productData);
             socket.on('createProductUserError', function (res) {
 
             });
