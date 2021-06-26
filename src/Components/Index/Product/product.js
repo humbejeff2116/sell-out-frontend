@@ -25,8 +25,8 @@ export default function DisplayProducts(props) {
     return (
         <div className="index-products-container">
             {
-                products.map((prod,i) =>
-                <DisplayedProduct key={i}  {...prod} />
+                products.map((product,i) =>
+                <DisplayedProduct key={i}  product={product} />
                 )
             }
         </div>
@@ -38,6 +38,7 @@ export  function DisplayedProduct(props) {
     const [stars, setStars] = useState('');
     const [showComment, setShowComment] = useState(false);
     const { product } = props;
+    
     const {user} = useAuth();
 
     useEffect(() => {
@@ -192,8 +193,7 @@ function CommentBox(props) {
 }
 
 function Review(props) {
-    const { review } = props;
-    const { reviewName, reviewId, reviewProfileImage, reviewMessage } = review;
+    const { reviewName, reviewId, reviewProfileImage, reviewMessage } = props;
 
     const viewProfile = () => {
         // TODO save revieId in a context or local storage and redirect to view profile page
