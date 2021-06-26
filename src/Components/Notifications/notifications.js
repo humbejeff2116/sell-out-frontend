@@ -6,19 +6,22 @@
 import React, {useState, useEffect} from 'react';
 import './notifications.css';
 import socket from '../Socket/socket';
+import useAuth from '../../Context/context';
 
 export default function Notifications(props) {
     const [initialNotificationLength, setInitialNotificationsLength] = useState();
     const [notifications, setNotifications] = useState([]);
     const [ showNotifications, setShowNotifications ] = useState(false);
+    const {user} = useAuth();
+
     // TODO... uncomment useEffect when finished with the backend code
+
     // useEffect(()=> {
-    //     //TODO... get the user from context and pass to getNotifictions function
-    //     getInitialNotifications();
+    //     getInitialNotifications(user);
     //     socket.on('notificationsDataChange', function() {
-    //         getNotifications();
+    //         getNotifications(user);
     //     })
-    // })
+    // }, [user])
     const getInitialNotifications = (user) => {
         socket.emit('getNotificationsInitialData', user);
         socket.on('notificationsInitialData', function (response) {
@@ -31,7 +34,7 @@ export default function Notifications(props) {
     const getNotifications = (user) => {
         socket.emit('getNotificationsInitialData', user);
         socket.on('notificationsInitialData', function (response) {
-            const {data} = response;
+            const { data } = response;
             setNotifications(data);
         });
     }
@@ -58,8 +61,7 @@ export default function Notifications(props) {
     )
 }
 function NotificationsBox(props) {
-    const { notification } = props;
-    const {userName, userId, userProfileImage, notificationMessage} = notification;
+    const {userName, userId, userProfileImage, notificationMessage} = props;
 
     const viewProfile =() => {
 
