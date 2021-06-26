@@ -6,7 +6,7 @@
 
 
 import React, { useEffect } from 'react';
-import MyContext from './context';
+import { MyContext } from './context';
 import socket from '../Components/Socket/socket';
 
 

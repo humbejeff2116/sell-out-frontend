@@ -3,6 +3,7 @@
 
 
 import React, {useEffect, useState} from 'react';
+import useAuth from '../../Context/context';
 import './settings.css';
 
 
@@ -10,6 +11,7 @@ import './settings.css';
 export default function Settings(props) {
     const [user, setUser] = useState({});
     const [isNewUser, setisNewUser] = useState(false);
+    const { userData } = useAuth();
 
     useEffect(() => {
         getState();
@@ -17,7 +19,7 @@ export default function Settings(props) {
     },[]);
 
     function getState() {
-        const userData =  localStorage.getItem('newUser') ? JSON.parse(localStorage.getItem('newUser')) : null;
+        const userData =  localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         const isNewUser = userData ?  userData.newUser : null;
         if(userData && isNewUser) {
             setUser(userData);

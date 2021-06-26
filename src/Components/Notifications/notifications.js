@@ -5,21 +5,20 @@
 
 import React, {useState, useEffect} from 'react';
 import './notifications.css';
-
-
-const socket= 'hdjf';
+import socket from '../Socket/socket';
 
 export default function Notifications(props) {
     const [initialNotificationLength, setInitialNotificationsLength] = useState();
     const [notifications, setNotifications] = useState([]);
     const [ showNotifications, setShowNotifications ] = useState(false);
-    useEffect(()=> {
-        //TODO... get the user from context and pass to getNotifictions function
-        getInitialNotifications();
-        socket.on('notificationsDataChange', function() {
-            getNotifications();
-        })
-    })
+    // TODO... uncomment useEffect when finished with the backend code
+    // useEffect(()=> {
+    //     //TODO... get the user from context and pass to getNotifictions function
+    //     getInitialNotifications();
+    //     socket.on('notificationsDataChange', function() {
+    //         getNotifications();
+    //     })
+    // })
     const getInitialNotifications = (user) => {
         socket.emit('getNotificationsInitialData', user);
         socket.on('notificationsInitialData', function (response) {

@@ -42,7 +42,7 @@ export default function Signup() {
             })
             socket.on('userSignedUp', function(response) {
                 const TOKEN = response.token;
-                localStorage.setItem('newUser', JSON.stringify(response.data));
+                localStorage.setItem('user', JSON.stringify(response.data));
                 localStorage.setItem('x-access-token', TOKEN);
                 localStorage.setItem('x-access-token-expiration',  Date.now() + 2 * 60 * 60 * 1000);
                 setCreatingAccount(false);
