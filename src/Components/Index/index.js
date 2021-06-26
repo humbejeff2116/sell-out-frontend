@@ -5,8 +5,9 @@
 
 
 
-import React from 'react';
+import React,{useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import socket from '../Socket/socket';
 import { DisplayedProduct } from '../Product/product';
 import './index.css';
 
@@ -147,15 +148,30 @@ function SearchProducts(props) {
 
 
 
-function DisplayProducts(props) {
+
+
+ function DisplayProducts(props) {
+    // const [products, setProducts] = useState([]);
+   
+    useEffect(()=> {
+        socket.emit('getProducts');
+        socket.on('gottenProducts', function(response) {
+            const products = response.data;
+            // setProducts(products);
+        })
+    },[])
+
     return (
         <div className="index-products-container">
             {
-                products.map((prod,i) =>
-                <DisplayedProduct key={i}  {...prod} />
+                products.map((product,i) =>
+                    <DisplayedProduct 
+                    key={i}  
+                    product={product} 
+                    panelClassName="index-product-panel"
+                    />
                 )
             }
-
         </div>
     )
 }

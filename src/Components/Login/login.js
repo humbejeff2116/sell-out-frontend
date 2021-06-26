@@ -26,7 +26,6 @@ export default function Login() {
             socket.emit('login', loginData);
 
             socket.on('userNotFound', function(response) {
-                console.log(response);
                 setLoginResponse(response);
                 setLoginError(true)
                 setLoginIn(false);

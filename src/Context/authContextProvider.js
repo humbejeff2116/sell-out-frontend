@@ -19,8 +19,8 @@ export function AuthContextProvider(props) {
     }, [user, token, tokenExpiration]);
 
     const setStateOnload = ( ) => {
-        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {};
-        const token = localStorage.getItem('x-access-token') ? JSON.parse(localStorage.getItem('x-access-token')): null;
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {};
+        const token = localStorage.getItem('x-access-token') ? localStorage.getItem('x-access-token') : null;
         const tokenExpiration = localStorage.getItem('x-access-token-expiration') ? 
         JSON.parse(localStorage.getItem('x-access-token-expiration')): null;
         setUser(user);

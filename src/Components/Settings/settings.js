@@ -31,7 +31,7 @@ export default function Settings(props) {
             (isNewUser) && (
                 <div onClick={()=>removeWelcome(user)}>
                     <div>
-                        <p>{`welcome ${user.userName} `}</p>
+                        <p>{`welcome ${user.userEmail} `}</p>
                     </div>
                 </div>
 

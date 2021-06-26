@@ -10,33 +10,6 @@ import useAuth from '../../Context/context';
 
 
 
-
-export default function DisplayProducts(props) {
-    const [products, setProducts] = useState([]);
-   
-    useEffect(()=> {
-        socket.emit('getProducts');
-        socket.on('gottenProducts', function(response) {
-            const products = response.data;
-            setProducts(products);
-        })
-    },[])
-
-    return (
-        <div className="index-products-container">
-            {
-                products.map((product,i) =>
-                    <DisplayedProduct 
-                    key={i}  
-                    product={product} 
-                    panelClassName="index-product-panel"
-                    />
-                )
-            }
-        </div>
-    )
-}
-
 export  function DisplayedProduct(props) {
     const [starCount, setStarCount] = useState(null);
     const [stars, setStars] = useState('');
