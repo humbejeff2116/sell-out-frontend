@@ -2,11 +2,15 @@
 
 
 
-import React, {Suspense} from 'react';
-import { Route, Switch} from 'react-router-dom';
-import ContextProvider from '../Context/contextProvider';
-import { AuthContextProvider } from '../Context/context';
-import {SettingsSuspenseLoader, InsideLoginSuspenseLoader, OutsideLoginSuspenseLoader, LoginAndSignupSuspenseLoader } from '../Components/SuspenseLoader/suspenseLoader';
+import React, { Suspense } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { AuthContextProvider } from '../Context/authContextProvider';
+import {
+    SettingsSuspenseLoader, 
+    InsideLoginSuspenseLoader, 
+    OutsideLoginSuspenseLoader, 
+    LoginAndSignupSuspenseLoader 
+} from '../Components/SuspenseLoader/suspenseLoader';
 
 const LandingPage = React.lazy(()=> import('../Pages/LandingPage/landingPage'));
 const LoginPage = React.lazy(()=> import('../Pages/LoginPage/loginPage'));
@@ -68,7 +72,7 @@ export default function App() {
             </Route> 
 
         </Switch>
-        </ AuthContextProvider >
+        </AuthContextProvider > 
 
     )
 }

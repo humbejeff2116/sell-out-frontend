@@ -3,6 +3,7 @@
 
 
 import React from 'react';
+import { DisplayedProduct } from '../../Product/product';
 import './product.css';
 
 
@@ -10,31 +11,6 @@ import './product.css';
 
 
 
-
-
- function Product(props) {
-
-    return (
-        <div className="landing-product-panel">
-        <div className="landing-product-profile-panel">
-            <div className="landing-product-profile">profile info</div>
-            <div className="landing-product-profile-star">star seller</div>
-        </div>
-
-        <div className="landing-product-image-panel">
-            <div className="landing-product-image">product images</div>
-            <div className="landing-product-image-details">product details</div>
-        </div>
-
-        <div className="landing-product-reaction-panel">
-            <div className="landing-product-reaction-star">star product</div>
-
-            <div className="landing-product-reaction-comments">comments</div>
-        </div>
-
-    </div>
-    )
-}
 
 function Service(props) {
 
@@ -68,8 +44,12 @@ export default function LandingProducts(props) {
         </div>
         <div  className="landing-product-container">
         {
-            props.products.map((prod,i) =>
-            <Product  key={i} {...prod} />
+            props.products.map((product,i) =>
+                <DisplayedProduct 
+                key={i} 
+                product={product} 
+                panelClassName="landing-product-panel"
+                />
             )
         }
         </div>
@@ -88,8 +68,8 @@ export function LandingServices(props) {
         </div>
         <div  className="landing-product-container">
         {
-            props.products.map((prod,i) =>
-            <Service  key={i} {...prod} />
+            props.services.map((service ,i) =>
+            <Service  key={i} service={service} />
             )
         }
         </div>

@@ -16,12 +16,15 @@ export default function Notifications(props) {
 
     // TODO... uncomment useEffect when finished with the backend code
 
-    // useEffect(()=> {
-    //     getInitialNotifications(user);
-    //     socket.on('notificationsDataChange', function() {
-    //         getNotifications(user);
-    //     })
-    // }, [user])
+    useEffect(()=> {
+        socket.on('connect', function() {
+            getInitialNotifications(user);
+        });
+        
+        socket.on('notificationsDataChange', function() {
+            getNotifications(user);
+        });
+    }, [user]);
     const getInitialNotifications = (user) => {
         socket.emit('getNotificationsInitialData', user);
         socket.on('notificationsInitialData', function (response) {

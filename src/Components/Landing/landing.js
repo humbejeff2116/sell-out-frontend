@@ -50,7 +50,7 @@ export default function LandingComponent(props) {
             </div>
             <div className="landing-center">
                 <LandingProduct products={products} />
-                <LandingServices products={products} />
+                <LandingServices services={products} />
             </div>
 
             <div className="landing-footer" >

@@ -4,8 +4,8 @@
 
 
 import React, {useState, useEffect} from 'react';
-import socket from '../../Socket/socket';
-import useAuth from '../../../Context/context';
+import socket from '../Socket/socket';
+import useAuth from '../../Context/context';
 
 
 
@@ -20,13 +20,17 @@ export default function DisplayProducts(props) {
             const products = response.data;
             setProducts(products);
         })
-    })
+    },[])
 
     return (
         <div className="index-products-container">
             {
                 products.map((product,i) =>
-                <DisplayedProduct key={i}  product={product} />
+                    <DisplayedProduct 
+                    key={i}  
+                    product={product} 
+                    panelClassName="index-product-panel"
+                    />
                 )
             }
         </div>
@@ -42,11 +46,13 @@ export  function DisplayedProduct(props) {
     const {user} = useAuth();
 
     useEffect(() => {
-        getSellerStars(product);
+        socket.on('connect', function() {
+            getSellerStars(product);
+        });
         socket.on('starDataChange', function() {
             getSellerStars(product);
         });
-    })
+    }, [product]);
 
     const getSellerStars = (product) => {
         let { sellerName, sellerId, ...rest } = product;
@@ -87,7 +93,7 @@ export  function DisplayedProduct(props) {
         )
     }
     return (
-        <div className="index-product-panel">
+        <div className={props.panelClassName}>
             <div className="index-product-profile-panel">
                 <ProfileAvatar product={product} />
                <Star
