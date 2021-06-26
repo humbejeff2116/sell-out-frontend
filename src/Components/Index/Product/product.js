@@ -5,6 +5,7 @@
 
 import React, {useState, useEffect} from 'react';
 import socket from '../../Socket/socket';
+import useAuth from '../../../Context/context';
 
 
 
@@ -13,7 +14,6 @@ import socket from '../../Socket/socket';
 export default function DisplayProducts(props) {
     const [products, setProducts] = useState([]);
    
-
     useEffect(()=> {
         socket.emit('getProducts');
         socket.on('gottenProducts', function(response) {
@@ -37,8 +37,8 @@ export  function DisplayedProduct(props) {
     const [starCount, setStarCount] = useState(null);
     const [stars, setStars] = useState('');
     const [showComment, setShowComment] = useState(false);
-    const [hideProduct, setHideProduct] = useState(false);
     const { product } = props;
+    const {user} = useAuth();
 
     useEffect(() => {
         getSellerStars(product);
@@ -49,6 +49,7 @@ export  function DisplayedProduct(props) {
 
     const getSellerStars = (product) => {
         let { sellerName, sellerId, ...rest } = product;
+
         socket.emit('getInitialStarData', product )
         socket.on('initialStarData', function(response) {
             const { data } = response;
@@ -59,16 +60,15 @@ export  function DisplayedProduct(props) {
         if(star) {
             return setStarCount(prevState => prevState - 1);
         }
-        setStarCount(prevState => ++prevState );
-        let data ={
+        setStarCount(prevState => ++prevState);
+
+        const data = {
             product,
             user,
             starCount
         }
         socket.emit('starSeller', data );
         socket.on('starDataChange')
-        
-
     }
     const openCommentBox = () => {
         setShowComment(true);
@@ -79,7 +79,10 @@ export  function DisplayedProduct(props) {
 
     if(showComment) {
         return (
-            <CommentBox closeCommentBox={closeCommentBox} />
+            <CommentBox 
+            product={product}
+            closeCommentBox={closeCommentBox}
+             />
         )
     }
     return (
@@ -88,7 +91,7 @@ export  function DisplayedProduct(props) {
                 <ProfileAvatar product={product} />
                <Star
                product={product}
-            //    user = {}
+               user = {user}
                 stars={stars}
                 starCount={starCount}
                 starSeller={starSeller}
@@ -113,43 +116,49 @@ function CommentBox(props) {
     const [reviewValue, setReviewValue] = useState('');
     const [reviews, setReviews] = useState('');
     const [reviewError,  setReviewError] = useState(null);
-    // TODO... collect user from user context
-    const { product, user } = props;
+    const {user} = useAuth();
+
     useEffect(() => {
-        getReviews(product);
+        getReviews(props.product);
         socket.on('reviewDataChange', function() {
-            getReviews(product);
+            getReviews(props.product);
         });
 
-    })
+    }, [props.product]);
+
     const getReviews = (product) => { 
         const { sellerId } = product;
+
         socket.emit('getInitialReviewData', sellerId);
         socket.on('initialReviewData', function(response) {
             const { data } = response;
             setReviews(data)
         })
     }
+
     const makeReview = (product, user, reviewMessage) => {
         const message = reviewMessage.trim();
         if (!message.length) {
             return setReviewError('error')
         }
-       
+
         const data = {
-            product,
-            user,
-            reviewMessage
+            product: product,
+            user: user,
+            reviewMessage: reviewMessage
         }
+
         socket.emit('reviewproduct', data);
         socket.on('reviewProductSuccess', function(response) {
-            let { data, message } = response;
+            const { data, message } = response;
             setReviews(data);
-        })
+        });
     }
+
     const handleInputChange = (e) => {
         setReviewValue( e.target.value )
     }
+
     return (
         <div className="index-product-panel">
             <div>
@@ -174,9 +183,8 @@ function CommentBox(props) {
                }
             </div>
             <div>
-                {/* comment input here */}
                 <textarea name="reviewMessage" onChange={handleInputChange} />
-                <button type="button" onClick={()=>makeReview(product, user, reviewValue)}> Review</button>
+                <button type="button" onClick={()=>makeReview(props.product, user, reviewValue)}> Review</button>
             </div>
         </div>
         
@@ -186,9 +194,11 @@ function CommentBox(props) {
 function Review(props) {
     const { review } = props;
     const { reviewName, reviewId, reviewProfileImage, reviewMessage } = review;
+
     const viewProfile = () => {
         // TODO save revieId in a context or local storage and redirect to view profile page
     }
+
     return (
         <div>
             <div>
@@ -221,9 +231,10 @@ function Star(props) {
 function ProfileAvatar(props) {
     const { product } = props;
     const viewSeller = (product) => {
+        // TODO.. call view context function to save view id and redirec to view page
         const { sellerId } = product;
-
     }
+
     return (
         <div className="index-product-profile">
             <img src={product.sellerProfilePicture} alt="product iamge" width="100%" height="auto" />
