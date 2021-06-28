@@ -91,7 +91,7 @@ export default function Login() {
                     {
                         ( <span>{loginResponse.message || '' }</span> )
                     }
-                </div>
+            </div>
             <div className="login-panel-body">                            
                 <Formik
                     initialValues = {{

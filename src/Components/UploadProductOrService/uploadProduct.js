@@ -103,14 +103,42 @@ function ProductForm () {
 
     useEffect(() => {
         let timer = null;
+        let mounted = true;
         timer = setTimeout(()=> setShowForm(true), 1000);
+        socket.on('createProductUserError', function (response) {   
+            if(mounted) {
+                setUploadingError(true);
+                setResponse(response.message);
+                setUploadingProduct(false);
+            }
+        });
+
+        socket.on('createProductNetworkError', function(response) {
+            if(mounted) {
+                setUploadingError(true);
+                setResponse(response.message);
+                setUploadingProduct(false);
+            }
+        });
+
+        socket.on('productCreated', function (response) {
+            if(mounted) {
+                setUploadingError(false);
+                setUploadingProduct(false);
+                setResponse(response.message);
+               timer = setTimeout(()=> setRedirect('/home'), 2000);
+            }
+
+        });
+
         return ()=> {
+            mounted = false;
             if(timer) {
                 setShowForm(false);
                 return  clearTimeout(timer);
             }
         }
-    },[])
+    },[]);
 
     const handleInputChange = function(e) {
         setFormValues(prevValues => ({
@@ -136,31 +164,21 @@ function ProductForm () {
 
     function handleSubmit  (values) {
         try {
+             setUploadingError(false);
             setUploadingProduct(true);
+            setResponse('');
             values.productCategory = formValues.productCategory;
             const productData = {
-                productValue: values,
+                product: values,
                 user: user
             }
-
-            setTimeout(() => {
-                alert(JSON.stringify(productData, null, 2));
-            }, 400);
-
             socket.emit('createProduct',productData);
-            socket.on('createProductUserError', function (res) {
-
-            });
-            socket.on('productCreated', function (res) {
-
-            });
-              
-
         } catch(e) {
+            setUploadingError(true);
+            setResponse("An error occured please wait and try again");
             
-
         } finally {
-            setUploadingProduct(true)
+
         }    
     }
 
@@ -346,8 +364,13 @@ function ProductForm () {
                     </div>
                    
                 </div>
-
+               
                 <div className="upload-form-button">
+                    <div className="upload-product-message">
+                    {
+                        ( <span>{response || '' }</span> )
+                    }
+                    </div>
                     <button type="submit">
                     {
                         uploadingProduct ? 'uploading...' : 
