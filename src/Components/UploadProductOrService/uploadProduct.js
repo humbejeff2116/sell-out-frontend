@@ -106,7 +106,7 @@ function ProductForm () {
         let mounted = true;
         timer = setTimeout(()=> setShowForm(true), 1000);
         socket.on('createProductUserError', function (response) {   
-            if(mounted) {
+            if (mounted) {
                 setUploadingError(true);
                 setResponse(response.message);
                 setUploadingProduct(false);
@@ -114,7 +114,7 @@ function ProductForm () {
         });
 
         socket.on('createProductNetworkError', function(response) {
-            if(mounted) {
+            if (mounted) {
                 setUploadingError(true);
                 setResponse(response.message);
                 setUploadingProduct(false);
@@ -122,13 +122,12 @@ function ProductForm () {
         });
 
         socket.on('productCreated', function (response) {
-            if(mounted) {
+            if (mounted) {
                 setUploadingError(false);
                 setUploadingProduct(false);
                 setResponse(response.message);
-               timer = setTimeout(()=> setRedirect('/home'), 2000);
+               timer = setTimeout(()=> setRedirect('/home'), 3000);
             }
-
         });
 
         return ()=> {
@@ -212,7 +211,7 @@ function ProductForm () {
                     productUsage:'',
                     productCurrency:'',
                     productPrice:'',
-                    contactNumber:'',
+                    productContactNumber:'',
                     productType:'',    
                 }}
 
@@ -224,7 +223,7 @@ function ProductForm () {
                     productUsage: Yup.string().required('usage duration is required'),
                     productCurrency: Yup.string().required('currency is required'),
                     productPrice: Yup.string().required('price is required'),
-                    contactNumber: Yup.string().required('contact number is required'),
+                    productContactNumber: Yup.string().required('contact number is required'),
                 })}
 
                 onSubmit =  {handleSubmit}
@@ -346,7 +345,7 @@ function ProductForm () {
                         <TextInput
                             label="Contact number"
                             labelClassName="upload-label"
-                            name="contactNumber"
+                            name="productContactNumber"
                             type="text"
                             placeholder="e.g +2348010000000"
                             errorClass="login-modal-form-error"
