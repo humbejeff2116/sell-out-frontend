@@ -149,17 +149,24 @@ function SearchProducts(props) {
 
 
 
-
+// TODO... uncomment code below to use products
  function DisplayProducts(props) {
     // const [products, setProducts] = useState([]);
    
     useEffect(()=> {
-        // socket.emit('getProducts');
-        // socket.on('gottenProducts', function(response) {
-        //     const products = response.data;
-        //     setProducts(products);
-        // })
-    },[])
+        getProductsData();
+        socket.on('productsDataChange', function() {
+            getProductsData();  
+        });
+    },[]);
+    const getProductsData = ( ) => { 
+        socket.emit('getProducts');
+        socket.on('gottenProducts', function(response) {
+            const products = response.data;
+            alert(products.length);
+            // setProducts(products);
+        })
+    }
 
     return (
         <div className="index-products-container">
