@@ -19,6 +19,7 @@ import Connections from '../../Components/Connections/connections';
 
 
 
+
  function IndexPageComp() {
     return (
         <InsideLoginTemplate 

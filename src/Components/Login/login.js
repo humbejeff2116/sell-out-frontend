@@ -2,7 +2,7 @@
 
 
 
-   import React, {useState} from 'react';
+   import React, {useState, useEffect} from 'react';
    import { Link, Redirect } from 'react-router-dom';
    import { ImWarning } from 'react-icons/im';
    import { Formik, Form } from 'formik';
@@ -19,45 +19,63 @@ export default function Login() {
     const [redirect, setRedirect] = useState('');
     const {setUserData, setTokenData} = useAuth();
 
+    useEffect(() => {
+        let isMounted = true;
+
+        socket.on('userNotFound', function(response) {
+            if(isMounted) {
+                setLoginResponse(response);
+                setLoginError(true);
+                setLoginIn(false);
+            }
+        })
+
+        socket.on('passwordError', function(response) {
+            if(isMounted) {
+                setLoginResponse(response);
+                setLoginError(true);
+                setLoginIn(false);
+            }   
+        });
+
+        socket.on('passwordMatchNotFound', function(response) {
+            if(isMounted) {
+            setLoginResponse(response);
+            setLoginError(true);
+            setLoginIn(false); 
+            }   
+        });
+
+        socket.on('userFound', function(response) {
+                    const TOKEN = response.token;
+                    if(isMounted) {
+                        setUserData(response.data)
+                        setTokenData(TOKEN);
+                        setLoginError(false);
+                        setLoginIn(false);
+                        setLoginResponse({});
+                        setRedirect('/home');
+                    } 
+        });
+
+    
+        return ()=> {
+            isMounted = false
+        }         
+    }, [setUserData, setTokenData]);
+
     function handleSubmit  (values) {
         try{
             setLoginIn(true);
             const loginData = values;
             socket.emit('login', loginData);
 
-            socket.on('userNotFound', function(response) {
-                setLoginResponse(response);
-                setLoginError(true)
-                setLoginIn(false);
-            })
-
-            socket.on('passwordError', function(response) {
-                setLoginResponse(response);
-                setLoginError(true)
-                setLoginIn(false);   
-            });
-
-            socket.on('passwordMatchNotFound', function(response) {
-                setLoginResponse(response);
-                setLoginError(true)
-                setLoginIn(false);    
-            })
-
-            socket.on('userFound', function(response) {
-                const TOKEN = response.token;
-                setUserData(response.data)
-                setTokenData(TOKEN)
-                setLoginError(false)
-                setLoginIn(false);
-                setRedirect('/home'); 
-            })
-
         } catch(e) {
             setLoginError(true)
         }     
     }
  
-    if(redirect) {
+    if (redirect) {
         return (
             <Redirect to={redirect} />
         )
@@ -71,9 +89,7 @@ export default function Login() {
             </div>
             <div className="login-panel-error">
                     {
-                        loginResponse.message && (
-                            <span>{loginResponse.message}</span>
-                        )
+                        ( <span>{loginResponse.message || '' }</span> )
                     }
                 </div>
             <div className="login-panel-body">                            

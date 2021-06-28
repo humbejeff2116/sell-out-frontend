@@ -154,11 +154,11 @@ function SearchProducts(props) {
     // const [products, setProducts] = useState([]);
    
     useEffect(()=> {
-        socket.emit('getProducts');
-        socket.on('gottenProducts', function(response) {
-            const products = response.data;
-            // setProducts(products);
-        })
+        // socket.emit('getProducts');
+        // socket.on('gottenProducts', function(response) {
+        //     const products = response.data;
+        //     setProducts(products);
+        // })
     },[])
 
     return (
@@ -175,29 +175,3 @@ function SearchProducts(props) {
         </div>
     )
 }
-
-// function DisplayedProduct(props) {
-//     return (
-//         <div className="index-product-panel">
-//             {/* <span>{props.name}</span>
-//             <span>{props.price}</span>
-//             <span>{props.number}</span> */}
-//             <div className="index-product-profile-panel">
-//                 <div className="index-product-profile">profile info</div>
-//                 <div className="index-product-profile-star">star seller</div>
-//             </div>
-
-//             <div className="index-product-image-panel">
-//                 <div className="index-product-image">product images</div>
-//                 <div className="index-product-image-details">product details</div>
-//             </div>
-
-//             <div className="index-product-reaction-panel">
-//                 <div className="index-product-reaction-star">star product</div>
-
-//                 <div className="index-product-reaction-comments">comments</div>
-//             </div>
-
-//         </div>
-//     )
-// }

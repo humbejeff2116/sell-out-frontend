@@ -22,7 +22,7 @@ export function AuthContextProvider(props) {
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {};
         const token = localStorage.getItem('x-access-token') ? localStorage.getItem('x-access-token') : null;
         const tokenExpiration = localStorage.getItem('x-access-token-expiration') ? 
-        JSON.parse(localStorage.getItem('x-access-token-expiration')): null;
+        localStorage.getItem('x-access-token-expiration') : null;
         setUser(user);
         setToken(token);
         setTokenExpiration(tokenExpiration);
@@ -39,12 +39,13 @@ export function AuthContextProvider(props) {
         setTokenExpiration(expirationTime);
     }
     const isAuthenticated = ( ) => { 
-        const accessToken = token;
-        const accessTokenExpirationTime = tokenExpiration;
-        if (!accessToken) {
+        const token = localStorage.getItem('x-access-token') ? localStorage.getItem('x-access-token') : null;
+        const tokenExpiration = localStorage.getItem('x-access-token-expiration') ? 
+        localStorage.getItem('x-access-token-expiration') : null;
+        if (!token) {
             return false;
         }
-        if ( (accessToken) && (accessTokenExpirationTime > Date.now()) ) {
+        if ( (token) && (tokenExpiration > Date.now()) ) {
             return true;
         }
         return false;  
