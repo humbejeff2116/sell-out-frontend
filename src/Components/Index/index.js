@@ -32,7 +32,7 @@ export default function Index() {
         <div className="index-container">
            <PostProduct/>
            <SearchProducts/>
-           <DisplayProducts/>
+           <ToggleProductsOrServices/>
         </div>
     )
 }
@@ -151,21 +151,34 @@ function SearchProducts(props) {
 
 // TODO... uncomment code below to use products
  function DisplayProducts(props) {
-    // const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
    
     useEffect(()=> {
-        getProductsData();
-        socket.on('productsDataChange', function() {
-            getProductsData();  
-        });
-    },[]);
-    const getProductsData = ( ) => { 
-        socket.emit('getProducts');
+        let mounted = true;
+        if(mounted) {
+            getProductsData();
+        }
         socket.on('gottenProducts', function(response) {
             const products = response.data;
-            alert(products.length);
-            // setProducts(products);
-        })
+            if(mounted){
+                setProducts(products);
+            }
+            
+  
+        });
+       
+        socket.on('productsDataChange', function() {
+            if(mounted){
+                getProductsData(); 
+            }
+             
+        });
+        return ()=> {
+            mounted = false
+        }
+    }, []);
+    const getProductsData = ( ) => { 
+        socket.emit('getProducts');
     }
 
     return (
@@ -180,5 +193,85 @@ function SearchProducts(props) {
                 )
             }
         </div>
+    )
+}
+
+function DisplayServices(props) {
+    const [services, setServices] = useState([]);
+   
+    useEffect(()=> {
+        let mounted = true;
+        if(mounted){
+            getServicesData();
+        }
+        socket.on('gottenServices', function(response) {
+            const services = response.data;
+            if(mounted) {
+                setServices(services);
+            }
+            
+        })
+        socket.on('serviceDataChange', function() {
+            if(mounted){
+                getServicesData(); 
+            }    
+        });
+        return ()=> {
+            mounted = false
+        } 
+    },[]);
+    const getServicesData = ( ) => {  
+        socket.emit('getServices');
+
+    }
+
+    return (
+        <div className="index-products-container">
+            {
+                services.map((product,i) =>
+                    <DisplayedProduct 
+                    key={i}  
+                    product={product} 
+                    panelClassName="index-product-panel"
+                    />
+                )
+            }
+        </div>
+    )
+}
+
+function ToggleProductsOrServices() {
+    const [showProducts, setShowProducts]= useState(false);
+    const [showServices, setShowServices] = useState(false);
+
+    useEffect(()=> {
+        setShowProducts(true);
+        setShowServices(false);
+    }, []);
+
+    const displayProducts = function() {
+        setShowProducts(true);
+        setShowServices(false);
+    }
+    const displayServices = function() {
+        setShowServices(true);
+        setShowProducts(false);    
+    }
+    return (
+        <>
+        <div className="index-toggle-buttons">
+            <div className="index-product-button">
+                <button onClick={()=> displayProducts()}>View products</button>
+            </div>
+            <div className="index-service-button">
+                <button onClick ={()=> displayServices()}>View services</button>
+            </div>
+        </div>
+        {
+            ( showProducts && !showServices ) ? ( <DisplayProducts/> ) : 
+            (!showProducts && showServices) ? ( <DisplayServices/> ) : ''
+        }
+        </>
+               
     )
 }

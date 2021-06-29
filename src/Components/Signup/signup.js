@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import { ImWarning } from 'react-icons/im';
 import * as Yup from 'yup';
 import {TextInput, PasswordInput} from '../Formik/formik';
 import './signup.css';
@@ -21,6 +22,7 @@ import useAuth from '../../Context/context';
 
 export default function Signup() {
     const [creatingAccount, setCreatingAccount] = useState(false);
+    const [creatingAccountError, setCreatingAccountError] = useState(false);
     const [signingUpResponse, setSigningUpResponse] = useState({});
     const [redirect, setRedirect] =useState('');
     const { setUserData, setTokenData } = useAuth();
@@ -29,6 +31,7 @@ export default function Signup() {
     useEffect(() => {
         socket.on('userSignedUp', function(response) {
             const TOKEN = response.token;
+            setCreatingAccountError(false);
             setUserData(response.data)
             setTokenData(TOKEN);
             setCreatingAccount(false);
@@ -40,8 +43,10 @@ export default function Signup() {
     function handleSubmit  (values) {
         try{
             setCreatingAccount(true);
+            setCreatingAccountError(false);
             socket.emit("signUp",values);
             socket.on('userAlreadyExist', function (response) {
+                setCreatingAccountError(true);
                 setSigningUpResponse(response);
                 setCreatingAccount(false);
             })
@@ -118,7 +123,11 @@ export default function Signup() {
                 />
                  <div className="signup-button">
                     <button type="submit" >
-                    {creatingAccount ? 'Creating Account...' : 'Create Account'}
+                    {
+                        creatingAccount ? 'Creating Account...' : 
+                        creatingAccountError ? <><ImWarning/> <span>Create Account</span></> : 
+                        'Create Account'
+                    }
                     </button>
                 </div>
                

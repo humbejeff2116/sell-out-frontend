@@ -22,7 +22,6 @@ import './uploadProduct.css';
 export default function UploadProductOrService(props) {
     const [showProductForm, setShowProductForm]= useState(false);
     const [showServiceForm, setShowServiceForm] = useState(false);
-    const { user } = useAuth();
 
     const displayProductForm = function() {
         setShowProductForm(true);
@@ -397,27 +396,74 @@ function ServiceForm(props) {
     const [uploadingError , setUploadingError] = useState(false);
     const [response, setResponse] = useState('');
     const [redirect, setRedirect] =useState('');
+    const { user } = useAuth();
     
-    useEffect(()=> {
+
+    useEffect(() => {
         let timer = null;
+        let mounted = true;
         timer = setTimeout(()=> setShowForm(true), 1000);
+        socket.on('createServiceUserError', function (response) {   
+            if (mounted) {
+                setUploadingError(true);
+                setResponse(response.message);
+                setUploadingService(false);
+            }
+        });
+
+        socket.on('createServiceNetworkError', function(response) {
+            if (mounted) {
+                setUploadingError(true);
+                setResponse(response.message);
+                setUploadingService(false);
+            }
+        });
+
+        socket.on('serviceCreated', function (response) {
+            if (mounted) {
+                setUploadingError(false);
+                setUploadingService(false);
+                setResponse(response.message);
+               timer = setTimeout(()=> setRedirect('/home'), 3000);
+            }
+        });
+
         return ()=> {
+            mounted = false;
             if(timer) {
                 setShowForm(false);
                 return  clearTimeout(timer);
             }
         }
-    },[])
+    },[]);
 
-      const handleSubmit = function() {
+    function handleSubmit  (values) {
+        try {
+             setUploadingError(false);
+             setUploadingService(true);
+            setResponse('');
+            values.serviceCategory = formValues.serviceCategory;
+            const productData = {
+                service: values,
+                user: user
+            }
+            socket.emit('createService',productData);
+            // setTimeout(() => alert(JSON.stringify(productData, null, 2)) , 400);
+        } catch(e) {
+            setUploadingService(true);
+            setUploadingError(true);
+            setResponse("An error occured please wait and try again");
+            
+        } finally {
 
+        }    
     }
     const handleInputChange = function(e) {
         setFormValues(prevValues => ({
             ...prevValues,
             [e.target.name] :e.target.value
         }))
-        if (e.target.name === "category") {
+        if (e.target.name === "serviceCategory") {
             if (e.target.value) {
                 setTypeOptions(e.target.value, categoryDataSet, setType);
 
@@ -462,25 +508,20 @@ function ServiceForm(props) {
             <div className="upload-form-panel-body">
             <Formik
                 initialValues = {{
-                    productName:'',
-                    productCountry: '',
-                    productState: '',
-                    productUsage:'',
-                    productCurrency:'',
-                    productPrice:'',
-                    contactNumber:'',
-                    productType:'',    
+                    serviceName:'',
+                    serviceCountry: '',
+                    serviceState: '',
+                    serviceType:'', 
+                    serviceContactNumber: '',
+                    serviceImages: '', 
                 }}
 
                 validationSchema = { Yup.object({
-                    productType: Yup.string().required('product type is Required'),
-                    productName: Yup.string().required('product name is Required'),
-                    productCountry: Yup.string().required('Field is required'),
-                    productState: Yup.string().required('State is required'),
-                    productUsage: Yup.string().required('usage duration is required'),
-                    productCurrency: Yup.string().required('currency is required'),
-                    productPrice: Yup.string().required('price is required'),
-                    contactNumber: Yup.string().required('contact number is required'),
+                    serviceType: Yup.string().required('product type is Required'),
+                    serviceName: Yup.string().required('product name is Required'),
+                    serviceCountry: Yup.string().required('Field is required'),
+                    serviceState: Yup.string().required('State is required'),
+                    serviceContactNumber: Yup.string().required('contact number is required'),
                 })}
 
                 onSubmit =  {handleSubmit}
@@ -489,10 +530,10 @@ function ServiceForm(props) {
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">                     
                         <Select 
-                        label="product Category" 
+                        label="service Category" 
                         onChange={handleInputChange} 
-                        name="productCategory" 
-                        value={formValues.productCategory} 
+                        name="serviceCategory" 
+                        value={formValues.serviceCategory} 
                         errorClass="upload-form-error"
                         >
                             <option value="">--Select--</option>
@@ -504,9 +545,9 @@ function ServiceForm(props) {
                     </div>
                     <div className="upload-form-group-child input">
                         <TextInput
-                        label="Product Name"
+                        label="service Name"
                         labelClassName="upload-label"
-                        name="productName"
+                        name="serviceName"
                         type="text"
                         placeholder="e.g Nokia 3310"
                         errorClass="login-modal-form-error"
@@ -517,7 +558,7 @@ function ServiceForm(props) {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <Select label="product Country" name="productCountry" errorClass="login-modal-form-error">
+                        <Select label="service Country" name="serviceCountry" errorClass="login-modal-form-error">
                             <option value="">--Select--</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="Ghana">Ghana</option>
@@ -525,7 +566,7 @@ function ServiceForm(props) {
                         </Select>   
                     </div>
                     <div className="upload-form-group-child">
-                        <Select label="product State" name="productState" errorClass="upload-form-error">
+                        <Select label="service State" name="serviceState" errorClass="upload-form-error">
                             <option value="">--Select--</option>
                             <option value="Abia">Abia</option>
                             <option value="Abia">Furniture</option>
@@ -534,12 +575,7 @@ function ServiceForm(props) {
                         </Select> 
                     </div>
                     <div className="upload-form-group-child">
-                        <Select label="product Usage" name="productUsage" errorClass="upload-form-error">
-                            <option value="">--Select--</option>
-                            <option value="Never used">Never used</option>
-                            <option value="Fairly used">Fairly used</option>
-                            <option value="2 years +">2 years +</option>
-                        </Select>
+                        empty
                     </div>
                 </div>
 
@@ -559,8 +595,8 @@ function ServiceForm(props) {
                                     loader={"upload-form-select-loader"} 
                                 />
                             }
-                                label="Product type"
-                                name="productType"
+                                label="service type"
+                                name="serviceType"
                                 errorClass="upload-form-error"
                             >
                             {
@@ -578,22 +614,10 @@ function ServiceForm(props) {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <Select label="product Currency" name="productCurrency" errorClass="upload-form-error">
-                            <option value="">--Select--</option>
-                            <option value="Naira">Naira</option>
-                            <option value="pounds"> British Pounds</option>
-                            <option value="dollar">U.S Dollar</option>
-                        </Select>
+                        empty
                     </div>
                     <div className="upload-form-group-child input">
-                        <TextInput
-                            label="Price"
-                            labelClassName="upload-label"
-                            name="productPrice"
-                            type="text"
-                            placeholder="e.g 2000"
-                            errorClass="login-modal-form-error"
-                        />
+                        empty
                     </div> 
                 </div>
 
@@ -602,7 +626,7 @@ function ServiceForm(props) {
                         <TextInput
                             label="Contact number"
                             labelClassName="upload-label"
-                            name="contactNumber"
+                            name="serviceContactNumber"
                             type="text"
                             placeholder="e.g +2348010000000"
                             errorClass="login-modal-form-error"
@@ -615,10 +639,15 @@ function ServiceForm(props) {
                 </div>
 
                 <div className="upload-form-button">
+                <div className="upload-product-message">
+                    {
+                        ( <span>{response || '' }</span> )
+                    }
+                    </div>
                     <button type="submit">
                     {
                         uploadingService  ? 'uploading...' : 
-                        uploadingError ? <><ImWarning/> Upload</> :
+                        uploadingError ? <><ImWarning/> <span>Upload</span></> :
                         'Upload'
                     }
                     </button>
