@@ -20,8 +20,6 @@ import { DisplayedProduct } from '../Product/product';
             if(mounted){
                 setProducts(products);
             }
-            
-  
         });
        
         socket.on('productsDataChange', function() {

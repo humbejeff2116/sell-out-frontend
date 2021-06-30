@@ -6,50 +6,65 @@
 import React, {useState, useEffect} from 'react';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
+import {CommentBox} from './commentBox';
 
 
 
 
 export  function DisplayedProduct(props) {
-    const [starCount, setStarCount] = useState(null);
-    const [stars, setStars] = useState('');
+    let [starCount, setStarCount] = useState(0);
+    const [stars, setStars] = useState(null);
+    const [gotStars, setGotStars] = useState(false)
     const [showComment, setShowComment] = useState(false);
     const { product } = props;
-    
-    const {user} = useAuth();
+    const { user } = useAuth();
 
     useEffect(() => {
-        socket.on('connect', function() {
-            getSellerStars(product);
-        });
-        socket.on('starDataChange', function() {
-            getSellerStars(product);
-        });
-    }, [product]);
+        setStar(user, product, setStarCount);
+    }, [product, user]);
 
-    const getSellerStars = (product) => {
-        let { sellerName, sellerId, ...rest } = product;
 
-        socket.emit('getInitialStarData', product )
-        socket.on('initialStarData', function(response) {
-            const { data } = response;
-            setStars(data);
-        })
-    }
-    const starSeller = (product, user, star) => {
-        if(star) {
-            return setStarCount(prevState => prevState - 1);
+    const setStar = (user, product, callback) => {
+        const sellerEmail = product.userEmail;
+        const starsUserGave = user.starsUserGave;
+        let starCount = 0;
+        if (starsUserGave) {
+            for (let i = 0; i < starsUserGave.length; i++) {
+                if (starsUserGave[i].userEmail === sellerEmail) {
+                   starCount = 1;
+                   break;
+                }
+            }
+            // if (starCount) {
+            //     return callback(starCount);
+            // }
+            return callback(starCount);
         }
-        setStarCount(prevState => ++prevState);
+    }
 
+   
+    const starSeller = (product, user, star) => {
+        if(!star) {
+            setStarCount(++starCount);
+            const data = {
+                product,
+                user,
+                starCount: starCount
+            }
+            socket.emit('starSeller', data );
+            // setTimeout(()=> alert(JSON.stringify(data)));
+            return;
+        }
+        setStarCount(--starCount);
         const data = {
             product,
             user,
-            starCount
+            starCount: starCount
         }
         socket.emit('starSeller', data );
-        socket.on('starDataChange')
+        // setTimeout(()=> alert(JSON.stringify(data)));
     }
+    
     const openCommentBox = () => {
         setShowComment(true);
     }
@@ -62,6 +77,7 @@ export  function DisplayedProduct(props) {
             <CommentBox 
             product={product}
             closeCommentBox={closeCommentBox}
+            panelClassName={props.panelClassName}
              />
         )
     }
@@ -73,6 +89,7 @@ export  function DisplayedProduct(props) {
                product={product}
                user = {user}
                 stars={stars}
+                gotStars ={gotStars}
                 starCount={starCount}
                 starSeller={starSeller}
                />
@@ -85,107 +102,7 @@ export  function DisplayedProduct(props) {
 
             <div className="index-product-reaction-panel">
                 <div className="index-product-reaction-star">star product</div>
-                <Comment openCommentBox={openCommentBox} />
-            </div>
-        </div>
-    )
-}
-
-
-function CommentBox(props) {
-    const [reviewValue, setReviewValue] = useState('');
-    const [reviews, setReviews] = useState('');
-    const [reviewError,  setReviewError] = useState(null);
-    const {user} = useAuth();
-
-    useEffect(() => {
-        getReviews(props.product);
-        socket.on('reviewDataChange', function() {
-            getReviews(props.product);
-        });
-
-    }, [props.product]);
-
-    const getReviews = (product) => { 
-        const { sellerId } = product;
-
-        socket.emit('getInitialReviewData', sellerId);
-        socket.on('initialReviewData', function(response) {
-            const { data } = response;
-            setReviews(data)
-        })
-    }
-
-    const makeReview = (product, user, reviewMessage) => {
-        const message = reviewMessage.trim();
-        if (!message.length) {
-            return setReviewError('error')
-        }
-
-        const data = {
-            product: product,
-            user: user,
-            reviewMessage: reviewMessage
-        }
-
-        socket.emit('reviewproduct', data);
-        socket.on('reviewProductSuccess', function(response) {
-            const { data, message } = response;
-            setReviews(data);
-        });
-    }
-
-    const handleInputChange = (e) => {
-        setReviewValue( e.target.value )
-    }
-
-    return (
-        <div className="index-product-panel">
-            <div>
-                <div>
-                    <button onClick={props.closeCommentBox}>Close</button>
-                </div>
-            </div>
-            <div>
-                <div>
-                    {
-                         reviewError && (
-                            <span> {reviewError} </span>
-                        )
-                    } 
-                </div>
-            </div>
-            <div>
-               {
-                    reviews.map((review, i) =>
-                        <Review key={i} {...review} />
-                    )
-               }
-            </div>
-            <div>
-                <textarea name="reviewMessage" onChange={handleInputChange} />
-                <button type="button" onClick={()=>makeReview(props.product, user, reviewValue)}> Review</button>
-            </div>
-        </div>
-        
-    )
-}
-
-function Review(props) {
-    const { reviewName, reviewId, reviewProfileImage, reviewMessage } = props;
-
-    const viewProfile = () => {
-        // TODO save revieId in a context or local storage and redirect to view profile page
-    }
-
-    return (
-        <div>
-            <div>
-                <img src={reviewProfileImage} alt="profile" />
-                 <span onClick={()=>viewProfile(reviewId)}>{reviewName}</span>
-            </div>
-            <div>
-                <p> {reviewMessage} </p>
+                <Comment openCommentBox={openCommentBox}  />
             </div>
         </div>
     )
@@ -200,9 +117,11 @@ function Comment(props) {
 }
 
 function Star(props) {
+    const className =  props.starCount ? "star filled" : "star";
+    let starslength 
     return (
         <div className="index-product-profile-star" onClick={()=> props.starSeller(props.product, props.user,props.starCount)}>
-            {props.stars}
+           stars {props.product.starsUserRecieved ? props.product.starsUserRecieved.length + props.starCount : ''}
         </div>
     )
 }
@@ -210,14 +129,14 @@ function Star(props) {
 function ProfileAvatar(props) {
     const { product } = props;
     const viewSeller = (product) => {
-        // TODO.. call view context function to save view id and redirec to view page
-        const { sellerId } = product;
+        // TODO.. call view context function to save view id and redirect to view page
+        const { userId } = product;
     }
 
     return (
         <div className="index-product-profile">
-            <img src={product.sellerProfilePicture} alt="product iamge" width="100%" height="auto" />
-            <span onClick={viewSeller(product)}>{product.sellerName}</span>
+            <img src={product.sellerProfilePicture} alt="seller" width="100%" height="auto" />
+            <span onClick={viewSeller(product)}>{product.userName}</span>
         </div>
     )
 }
