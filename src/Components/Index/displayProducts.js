@@ -67,7 +67,7 @@ export function DisplayServices(props) {
             }
             
         })
-        socket.on('serviceDataChange', function() {
+        socket.on('productDataChange', function() {
             if(mounted){
                 getServicesData(); 
             }    

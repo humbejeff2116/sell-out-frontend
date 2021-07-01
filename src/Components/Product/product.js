@@ -20,9 +20,7 @@ export  function DisplayedProduct(props) {
     const { user } = useAuth();
 
     useEffect(() => {
-       
-       
-
+    
         if (user) { 
             setStar(user, product, setStarCount)
         };
