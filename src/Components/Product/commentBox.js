@@ -21,9 +21,8 @@ export function CommentBox(props) {
     }, [props.product]);
 
     const getReviews = (product) => { 
-        const { sellerId } = product;
 
-        socket.emit('getInitialReviewData', sellerId);
+        socket.emit('getInitialReviewData', product);
         socket.on('initialReviewData', function(response) {
             const { data } = response;
             setReviews(data)
