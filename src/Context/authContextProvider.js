@@ -6,7 +6,7 @@ import {AuthContext } from './context';
 
 
 export function AuthContextProvider(props) {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [token, setToken] =  useState(0);
     const [tokenExpiration, setTokenExpiration] = useState(0);
    
@@ -19,7 +19,7 @@ export function AuthContextProvider(props) {
     }, [user, token, tokenExpiration]);
 
     const setStateOnload = ( ) => {
-        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {};
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         const token = localStorage.getItem('x-access-token') ? localStorage.getItem('x-access-token') : null;
         const tokenExpiration = localStorage.getItem('x-access-token-expiration') ? 
         localStorage.getItem('x-access-token-expiration') : null;

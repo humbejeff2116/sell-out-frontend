@@ -22,7 +22,7 @@ import { DisplayedProduct } from '../Product/product';
             }
         });
        
-        socket.on('productsDataChange', function() {
+        socket.on('productDataChange', function() {
             if(mounted){
                 getProductsData(); 
             }

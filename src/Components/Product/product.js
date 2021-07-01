@@ -14,37 +14,44 @@ import {CommentBox} from './commentBox';
 export  function DisplayedProduct(props) {
     let [starCount, setStarCount] = useState(0);
     const [stars, setStars] = useState(null);
-    const [gotStars, setGotStars] = useState(false)
+    const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const { product } = props;
     const { user } = useAuth();
 
     useEffect(() => {
-        setStar(user, product, setStarCount);
+       
+       
+
+        if (user) { 
+            setStar(user, product, setStarCount)
+        };
+
     }, [product, user]);
 
 
     const setStar = (user, product, callback) => {
-        const sellerEmail = product.userEmail;
-        const starsUserGave = user.starsUserGave;
+        const userEmail = user.userEmail;
+        const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved: null;
+        
         let starCount = 0;
-        if (starsUserGave) {
-            for (let i = 0; i < starsUserGave.length; i++) {
-                if (starsUserGave[i].userEmail === sellerEmail) {
-                   starCount = 1;
-                   break;
+        if(starsUserRecieved) {
+            for (let i = 0; i < starsUserRecieved.length; i++) {
+                if (starsUserRecieved[i].starGiverEmail === userEmail) {
+                    starCount = starsUserRecieved[i].star;
+                    break;
                 }
             }
-            // if (starCount) {
-            //     return callback(starCount);
-            // }
             return callback(starCount);
+
         }
+        
     }
 
    
     const starSeller = (product, user, star) => {
         if(!star) {
+            setStarClicked(true);
             setStarCount(++starCount);
             const data = {
                 product,
@@ -55,6 +62,7 @@ export  function DisplayedProduct(props) {
             // setTimeout(()=> alert(JSON.stringify(data)));
             return;
         }
+        setStarClicked(false);
         setStarCount(--starCount);
         const data = {
             product,
@@ -89,8 +97,8 @@ export  function DisplayedProduct(props) {
                product={product}
                user = {user}
                 stars={stars}
-                gotStars ={gotStars}
                 starCount={starCount}
+                starClicke={starClicked}
                 starSeller={starSeller}
                />
             </div>
@@ -121,7 +129,11 @@ function Star(props) {
     let starslength 
     return (
         <div className="index-product-profile-star" onClick={()=> props.starSeller(props.product, props.user,props.starCount)}>
-           stars {props.product.starsUserRecieved ? props.product.starsUserRecieved.length + props.starCount : ''}
+           stars { 
+           (props.product.starsUserRecieved && props.starClicked)  ? 
+           props.product.starsUserRecieved.length + props.starCount : 
+           props.product.starsUserRecieved ? props.product.starsUserRecieved.length : ''
+           }
         </div>
     )
 }
