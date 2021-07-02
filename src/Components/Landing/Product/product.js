@@ -2,41 +2,47 @@
 
 
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { DisplayedProduct } from '../../Product/product';
+import socket from '../../Socket/socket';
 import './product.css';
 
 
 
 
 
-
-
-function Service(props) {
-
-    return (
-        <div className="landing-product-panel">
-        <div className="landing-product-profile-panel">
-            <div className="landing-product-profile">profile info</div>
-            <div className="landing-product-profile-star">star seller</div>
-        </div>
-
-        <div className="landing-product-image-panel">
-            <div className="landing-product-image">product images</div>
-            <div className="landing-product-image-details">product details</div>
-        </div>
-
-        <div className="landing-product-reaction-panel">
-            <div className="landing-product-reaction-star">star product</div>
-
-            <div className="landing-product-reaction-comments">comments</div>
-        </div>
-
-    </div>
-    )
-}
-
 export default function LandingProducts(props) {
+    const [products, setProducts] = useState([]);
+    const { setErrorMessage } = props;
+   
+    useEffect(()=> {
+        let mounted = true;
+        if(mounted) {
+            getProductsData();
+        }
+        socket.on('gottenProducts', function(response) {
+            const products = response.data;
+            if(mounted){
+                setProducts(products);
+            }
+        });
+       
+        socket.on('productDataChange', function() {
+            if(mounted){
+                getProductsData(); 
+            }
+             
+        });
+        socket.on('unRegisteredUser', function(response) {
+            setErrorMessage(response.message)
+        });
+        return ()=> {
+            mounted = false
+        }
+    }, [setErrorMessage]);
+    const getProductsData = ( ) => { 
+        socket.emit('getProducts');
+    }
     return (
         <>
         <div  className="landing-product-heading">
@@ -44,7 +50,7 @@ export default function LandingProducts(props) {
         </div>
         <div  className="landing-product-container">
         {
-            props.products.map((product,i) =>
+            products.map((product,i) =>
                 <DisplayedProduct 
                 key={i} 
                 product={product} 
@@ -61,6 +67,37 @@ export default function LandingProducts(props) {
 }
 
 export function LandingServices(props) {
+    const [services, setServices] = useState([]);
+    const { setErrorMessage } = props;
+   
+    useEffect(()=> {
+        let mounted = true;
+        if(mounted){
+            getServicesData();
+        }
+        socket.on('gottenServices', function(response) {
+            const services = response.data;
+            if(mounted) {
+                setServices(services);
+            }
+            
+        })
+        socket.on('productDataChange', function() {
+            if(mounted){
+                getServicesData(); 
+            }    
+        });
+        socket.on('unRegisteredUser', function(response) {
+            setErrorMessage(response.message)
+        })
+        return ()=> {
+            mounted = false
+        } 
+    }, [setErrorMessage]);
+    const getServicesData = ( ) => {  
+        socket.emit('getServices');
+
+    }
     return (
         <>
         <div className="landing-product-heading">
@@ -68,8 +105,12 @@ export function LandingServices(props) {
         </div>
         <div  className="landing-product-container">
         {
-            props.services.map((service ,i) =>
-            <Service  key={i} service={service} />
+            services.map((service ,i) =>
+            <DisplayedProduct 
+                key={i} 
+                product={service} 
+                panelClassName="landing-product-panel"
+                />
             )
         }
         </div>

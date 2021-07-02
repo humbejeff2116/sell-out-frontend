@@ -8,28 +8,15 @@ import Header from './Header/header';
 import LandingInfoCard from './InfoCard/landingInfoCard';
 import LandingFooter from './Footer/landingFooter';
 import LandingProduct, {LandingServices} from './Product/product';
+import { ErrorModal } from '../ModalBox/errorModal';
 import './landing.css';
 
 import LoginModal from '../LoginModal/loginModal';
 // const LoginModal = React.lazy(()=> import('../LoginModal/loginModal'));
-const products = [
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-    {name:""},
-]
-
 
 export default function LandingComponent(props) {
     const [showLoginModal, setShowLoginModal] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
    
 
     const closeLoginModal = function() {
@@ -38,7 +25,6 @@ export default function LandingComponent(props) {
 
     return (
         <section className="landing-container">
-            {/* 100vh */}
             <div className="landing-top" >
                 <Header showLoginModal={setShowLoginModal}/>
                 {
@@ -46,11 +32,21 @@ export default function LandingComponent(props) {
                         <LoginModal show={showLoginModal} handleClose={closeLoginModal}/>
                     )
                 }
+                {
+                    errorMessage && (
+                        <ErrorModal 
+                        errorMessage={errorMessage}
+                        errorContainerClassName={"landing-error-container"}
+                        panelClassName = {"landing-error-modal"}
+                        />
+                    )
+
+                }
                 <LandingInfoCard/>
             </div>
             <div className="landing-center">
-                <LandingProduct products={products} />
-                <LandingServices services={products} />
+                <LandingProduct setErrorMessage={setErrorMessage}/>
+                <LandingServices setErrorMessage={setErrorMessage} />
             </div>
 
             <div className="landing-footer" >

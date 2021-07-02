@@ -88,3 +88,14 @@
 
 
 }
+
+.landing-error-container{
+    border:1px solid red;
+    position: fixed;
+
+}
+
+.landing-error-modal{
+    border:1px solid red;
+
+}

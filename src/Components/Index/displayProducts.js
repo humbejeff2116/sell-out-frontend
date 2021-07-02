@@ -84,10 +84,10 @@ export function DisplayServices(props) {
     return (
         <div className="index-products-container">
             {
-                services.map((product,i) =>
+                services.map((service, i) =>
                     <DisplayedProduct 
                     key={i}  
-                    product={product} 
+                    product={service} 
                     panelClassName="index-product-panel"
                     />
                 )

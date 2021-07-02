@@ -9,7 +9,7 @@
 }
 .landing-product-container{
     border:1px solid green;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     display:flex;
     flex-direction: row;
     justify-content: space-around;
@@ -18,7 +18,7 @@
 }
 
 .landing-product-panel{
-    border:1px solid black;
+    border:2px solid black;
     display:flex;
     flex-direction: column;
     width:22%;
