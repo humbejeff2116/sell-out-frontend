@@ -20,7 +20,6 @@ export  function DisplayedProduct(props) {
     const { user } = useAuth();
 
     useEffect(() => {
-    
         if (user) { 
             setStar(user, product, setStarCount)
         };
@@ -57,7 +56,6 @@ export  function DisplayedProduct(props) {
                 starCount: starCount
             }
             socket.emit('starSeller', data );
-            // setTimeout(()=> alert(JSON.stringify(data)));
             return;
         }
         setStarClicked(false);
@@ -68,7 +66,6 @@ export  function DisplayedProduct(props) {
             starCount: starCount
         }
         socket.emit('starSeller', data );
-        // setTimeout(()=> alert(JSON.stringify(data)));
     }
     
     const openCommentBox = () => {
@@ -123,10 +120,9 @@ function Comment(props) {
 }
 
 function Star(props) {
-    const className =  props.starCount ? "star filled" : "star";
-    let starslength 
+    const className =  props.starCount ? "index-profile-star filled" : "index-profile-star";
     return (
-        <div className="index-product-profile-star" onClick={()=> props.starSeller(props.product, props.user,props.starCount)}>
+        <div className={className} onClick={()=> props.starSeller(props.product, props.user, props.starCount)}>
            stars { 
            (props.product.starsUserRecieved && props.starClicked)  ? 
            props.product.starsUserRecieved.length + props.starCount : 
@@ -139,7 +135,7 @@ function Star(props) {
 function ProfileAvatar(props) {
     const { product } = props;
     const viewSeller = (product) => {
-        // TODO.. call view context function to save view id and redirect to view page
+        // TODO... call view context function to save view id and redirect to view page
         const { userId } = product;
     }
 

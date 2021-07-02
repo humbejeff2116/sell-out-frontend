@@ -8,33 +8,15 @@ import useAuth from '../../Context/context';
 
 export function CommentBox(props) {
     const [reviewValue, setReviewValue] = useState('');
-    const [reviews, setReviews] = useState([]);
     const [reviewError,  setReviewError] = useState(null);
-    const {user} = useAuth();
+    const { user } = useAuth();
+
+    const textBox = React.createRef();
 
     useEffect(() => {
-        let mounted = true;
-        if(mounted) {
-            getReviews(props.product);
-        }
         
-        socket.on('reviewDataChange', function() {
-            getReviews(props.product);
-        });
-        socket.on('gottenReviews', function(response) {
-            const { data } = response;
-            setReviews(data)
-        });
         
-        return ()=> {
-            mounted = false;
-        }
-
-    }, [props.product]);
-
-    const getReviews = (product) => { 
-        socket.emit('getInitialReviewData', product); 
-    }
+    }, []);
 
     const makeReview = (product, user, reviewMessage) => {
         const message = reviewMessage.trim();
@@ -43,12 +25,13 @@ export function CommentBox(props) {
         }
 
         const data = {
-            product: product,
+            productOrService: product,
             user: user,
             reviewMessage: reviewMessage
         }
 
-        socket.emit('reviewproductOrService', data);
+        socket.emit('reviewProductOrService', data);
+        textBox.current.value = '';
     }
 
     const handleInputChange = (e) => {
@@ -73,14 +56,14 @@ export function CommentBox(props) {
             </div>
             <div>
                {
-                    ( reviews.length > 0 )  && 
-                    (reviews.map((review, i) =>
+                    ( props.product.reviews.length > 0 )  && 
+                    (props.product.reviews.map((review, i) =>
                         <Review key={i} {...review} />
                     ))
                 }
             </div>
             <div>
-                <textarea name="reviewMessage" onChange={handleInputChange} />
+                <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
                 <button type="button" onClick={()=>makeReview(props.product, user, reviewValue)}> Review</button>
             </div>
         </div>
@@ -89,20 +72,20 @@ export function CommentBox(props) {
 }
 
 function Review(props) {
-    const { reviewName, reviewId, reviewProfileImage, reviewMessage } = props;
+    const { userName, userId, profileImage, review } = props;
 
     const viewProfile = () => {
-        // TODO save revieId in a context or local storage and redirect to view profile page
+        // TODO... save revieId in a context or local storage and redirect to view profile page
     }
 
     return (
         <div>
             <div>
-                <img src={reviewProfileImage} alt="profile" />
-                 <span onClick={()=>viewProfile(reviewId)}>{reviewName}</span>
+                <img src={profileImage} alt="profile" />
+                 <span onClick={()=>viewProfile(userId)}>{userName}</span>
             </div>
             <div>
-                <p> {reviewMessage} </p>
+                <p> {review} </p>
             </div>
         </div>
     )
