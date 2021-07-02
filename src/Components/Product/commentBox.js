@@ -13,20 +13,27 @@ export function CommentBox(props) {
     const {user} = useAuth();
 
     useEffect(() => {
-        getReviews(props.product);
+        let mounted = true;
+        if(mounted) {
+            getReviews(props.product);
+        }
+        
         socket.on('reviewDataChange', function() {
             getReviews(props.product);
         });
+        socket.on('gottenReviews', function(response) {
+            const { data } = response;
+            setReviews(data)
+        });
+        
+        return ()=> {
+            mounted = false;
+        }
 
     }, [props.product]);
 
     const getReviews = (product) => { 
-
-        socket.emit('getInitialReviewData', product);
-        socket.on('initialReviewData', function(response) {
-            const { data } = response;
-            setReviews(data)
-        })
+        socket.emit('getInitialReviewData', product); 
     }
 
     const makeReview = (product, user, reviewMessage) => {
@@ -41,11 +48,7 @@ export function CommentBox(props) {
             reviewMessage: reviewMessage
         }
 
-        socket.emit('reviewproduct', data);
-        socket.on('reviewProductSuccess', function(response) {
-            const { data, message } = response;
-            setReviews(data);
-        });
+        socket.emit('reviewproductOrService', data);
     }
 
     const handleInputChange = (e) => {
