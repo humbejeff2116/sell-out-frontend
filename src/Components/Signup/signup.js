@@ -29,15 +29,30 @@ export default function Signup() {
     
 
     useEffect(() => {
+        let mounted = true;
         socket.on('userSignedUp', function(response) {
-            const TOKEN = response.token;
+            if(mounted) {
+                const TOKEN = response.token;
             setCreatingAccountError(false);
             setUserData(response.data)
             setTokenData(TOKEN);
             setCreatingAccount(false);
             setRedirect('/settings');
+
+            }
+            
         });
-               
+        socket.on('userAlreadyExist', function (response) {
+            if(mounted) {
+                setCreatingAccountError(true);
+                setSigningUpResponse(response);
+                setCreatingAccount(false);
+
+            }  
+        });
+        return () => {
+            mounted = false;
+        }         
     }, [setUserData, setTokenData]);
 
     function handleSubmit  (values) {
@@ -45,13 +60,7 @@ export default function Signup() {
             setCreatingAccount(true);
             setCreatingAccountError(false);
             socket.emit("signUp",values);
-            socket.on('userAlreadyExist', function (response) {
-                setCreatingAccountError(true);
-                setSigningUpResponse(response);
-                setCreatingAccount(false);
-            })
-           
-
+            
         } catch(e) {
 
             

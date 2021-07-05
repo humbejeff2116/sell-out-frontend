@@ -56,9 +56,9 @@ export function CommentBox(props) {
             </div>
             <div>
                {
-                    ( props.product.reviews.length > 0 )  && 
-                    (props.product.reviews.map((review, i) =>
-                        <Review key={i} {...review} />
+                    ( props.product.comments.length > 0 )  && 
+                    (props.product.comments.map((comment, i) =>
+                        <Comment key={i} {...comment} />
                     ))
                 }
             </div>
@@ -71,22 +71,112 @@ export function CommentBox(props) {
     )
 }
 
-function Review(props) {
-    const { userName, userId, profileImage, review } = props;
-
+function Comment(props) {
+    const { user } = useAuth();
+    const [showReplies, setShowReplies] = useState(false);
+    const [replyMessage, setReplyMessage] = useState('');
+    const textBox = React.createRef();
+    const { userName, userId, profileImage, comment, _id, replies, likesCommentRecieved, unLikesCommentRecieved } = props;
     const viewProfile = () => {
         // TODO... save revieId in a context or local storage and redirect to view profile page
     }
+    const replyComment = (commentId, user, replyMessage) => {
+        const replyReviewData = {
+            commentId,
+            user,
+            replyMessage
+        }
+
+        socket.emit("replyReviewProductOrServic", replyReviewData)
+
+    }
+    const handleInputChange = (e) => {
+        setReplyMessage( e.target.value )
+    }
+    const toggleReply = () => {
+       
+        return setShowReplies(state => !state);
+    }
 
     return (
-        <div>
+        <div className="review-container">
+        {/* flex row */}
+        <div className="review-info">
             <div>
                 <img src={profileImage} alt="profile" />
                  <span onClick={()=>viewProfile(userId)}>{userName}</span>
             </div>
             <div>
-                <p> {review} </p>
+                <span> {comment} </span>
             </div>
         </div>
+        {/* flex row */}
+        <div className="review-buttons">
+            <div>
+                <button><i>like</i></button><span>
+                    {likesCommentRecieved && likesCommentRecieved.length > 0 ? likesCommentRecieved.length : ''}
+                    </span>
+            </div>
+            <div>
+                <button><i>unlike</i></button><span>
+                    {unLikesCommentRecieved && unLikesCommentRecieved.length > 0 ? unLikesCommentRecieved.length : ''}</span>
+            </div>
+            <div>
+                <button onClick={()=> toggleReply()}><i>reply</i></button>
+            </div>
+
+        </div>
+        {
+            (showReplies) && (
+                <Replies
+                id ={_id}
+                handleInputChange={handleInputChange}
+                replyComment={replyComment}
+                repliesCommentRecieved={replies}
+                user={user}
+                replyMessage={replyMessage}
+                textBox={textBox}
+                />
+            )   
+        }
+        </div>
+    )
+}
+
+function Replies(props) {
+   
+    return (
+        <div>
+            {
+                ( props.repliesCommentRecieved && props.repliesCommentRecieved.length > 0 ) && (
+                    <div>
+                    {
+                        props.repliesCommenRecieved.map((replies, i)=>
+                            <Reply key={i} {...replies} />
+                        )
+                    }     
+                    </div>
+                )
+
+            } 
+            <div>
+                <textarea name="reviewMessage" onChange={props.handleInputChange} ref= {props.textBox} />
+                <button type="button" 
+                onClick={()=>props.replyComment(props.id, props.user, props.replyMessage)}
+                > 
+                Reply
+                </button>
+            </div>
+           
+        </div>
+    )
+}
+
+function Reply (props) {
+    let{replyMessage} = props
+    return (
+        <span>
+            {replyMessage}
+        </span>
     )
 }

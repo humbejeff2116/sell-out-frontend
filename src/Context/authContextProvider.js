@@ -7,8 +7,8 @@ import {AuthContext } from './context';
 
 export function AuthContextProvider(props) {
     const [user, setUser] = useState(null);
-    const [token, setToken] =  useState(0);
-    const [tokenExpiration, setTokenExpiration] = useState(0);
+    const [token, setToken] =  useState(null);
+    const [tokenExpiration, setTokenExpiration] = useState(null);
    
 
     useEffect(()=> {
@@ -33,6 +33,9 @@ export function AuthContextProvider(props) {
             setTokenExpiration(tokenExpiration);
             return true;
         }
+        setUser(null);
+        setToken(null);
+        setTokenExpiration(null);
         return false;   
     }
     const setUserData = (user) => {
