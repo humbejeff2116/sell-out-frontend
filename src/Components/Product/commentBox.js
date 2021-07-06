@@ -75,8 +75,20 @@ function Comment(props) {
     const { user } = useAuth();
     const [showReplies, setShowReplies] = useState(false);
     const [replyMessage, setReplyMessage] = useState('');
+    const [likedComment, setLikedComment] = useState(false);
+    const [unLikedComment, setUnLikedComment] = useState(false);
     const textBox = React.createRef();
     const { userName, userId, profileImage, comment, _id, replies, likesCommentRecieved, unLikesCommentRecieved } = props;
+    
+
+    useEffect(() => {
+        if (user) { 
+            setLike(user, likesCommentRecieved, setLikedComment);
+            setUnLike(user, unLikesCommentRecieved, setUnLikedComment) 
+        };
+
+    }, [user, likesCommentRecieved, unLikesCommentRecieved]);
+    
     const viewProfile = () => {
         // TODO... save revieId in a context or local storage and redirect to view profile page
     }
@@ -86,16 +98,70 @@ function Comment(props) {
             user,
             replyMessage
         }
-
         socket.emit("replyReviewProductOrServic", replyReviewData)
-
     }
     const handleInputChange = (e) => {
         setReplyMessage( e.target.value )
     }
     const toggleReply = () => {
-       
         return setShowReplies(state => !state);
+    }
+
+    const setLike = (user, likesCommentRecieved, callback) => {
+        const userEmail = user.userEmail;
+        const commentLikes = likesCommentRecieved ? likesCommentRecieved: null;
+        
+        let likedComment = false;
+        if(commentLikes) {
+            for (let i = 0; i < commentLikes.length; i++) {
+                if (commentLikes[i].userEmail === userEmail) {
+                    likedComment = true;
+                    break;
+                }
+            }
+            return callback(likedComment);
+        }  
+    }
+    const setUnLike = (user, unLikesCommentRecieved, callback) => {
+        const userEmail = user.userEmail;
+        const commentUnLikes = unLikesCommentRecieved ? unLikesCommentRecieved : null;
+        
+        let unLikedComment = false;
+        if(commentUnLikes) {
+            for (let i = 0; i < commentUnLikes.length; i++) {
+                if (commentUnLikes[i].userEmail === userEmail) {
+                    unLikedComment = true;
+                    break;
+                }
+            }
+            return callback(unLikedComment);
+        }  
+    }
+
+    const likeComment = (commentId, user) => {
+        if(likedComment) {
+            return;
+        }
+        const data = {
+           commentId: commentId,
+            user: user,
+        }
+        
+        socket.emit('likeComment', data );
+        setLikedComment(true);
+    }
+
+    const unLikeComment = (commentId, user) => {
+        if(unLikedComment) {
+            return;
+        }
+        const data = {
+           commentId: commentId,
+            user: user,
+        }
+        
+        socket.emit('unLikeComment', data);
+        setUnLikedComment(true);
     }
 
     return (
@@ -113,12 +179,12 @@ function Comment(props) {
         {/* flex row */}
         <div className="review-buttons">
             <div>
-                <button><i>like</i></button><span>
+                <button onClick={()=> likeComment(_id, user)}><i>like</i></button><span>
                     {likesCommentRecieved && likesCommentRecieved.length > 0 ? likesCommentRecieved.length : ''}
                     </span>
             </div>
             <div>
-                <button><i>unlike</i></button><span>
+                <button onClick={()=> unLikeComment(_id, user)}><i>unlike</i></button><span>
                     {unLikesCommentRecieved && unLikesCommentRecieved.length > 0 ? unLikesCommentRecieved.length : ''}</span>
             </div>
             <div>
@@ -151,7 +217,7 @@ function Replies(props) {
                 ( props.repliesCommentRecieved && props.repliesCommentRecieved.length > 0 ) && (
                     <div>
                     {
-                        props.repliesCommenRecieved.map((replies, i)=>
+                        props.repliesCommentRecieved.map((replies, i)=>
                             <Reply key={i} {...replies} />
                         )
                     }     
