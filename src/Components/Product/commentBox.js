@@ -78,16 +78,16 @@ function Comment(props) {
     const [likedComment, setLikedComment] = useState(false);
     const [unLikedComment, setUnLikedComment] = useState(false);
     const textBox = React.createRef();
-    const { userName, userId, profileImage, comment, _id, replies, likesCommentRecieved, unLikesCommentRecieved } = props;
+    const { userName, userId, profileImage, comment, _id, replies, likesCommentRecieved, unlikesCommentRecieved } = props;
     
 
     useEffect(() => {
         if (user) { 
             setLike(user, likesCommentRecieved, setLikedComment);
-            setUnLike(user, unLikesCommentRecieved, setUnLikedComment) 
-        };
+            setUnLike(user, unlikesCommentRecieved, setUnLikedComment) 
+        }
 
-    }, [user, likesCommentRecieved, unLikesCommentRecieved]);
+    }, [user, likesCommentRecieved, unlikesCommentRecieved]);
     
     const viewProfile = () => {
         // TODO... save revieId in a context or local storage and redirect to view profile page
@@ -98,7 +98,7 @@ function Comment(props) {
             user,
             replyMessage
         }
-        socket.emit("replyReviewProductOrServic", replyReviewData)
+        socket.emit("replyReviewProductOrService", replyReviewData)
     }
     const handleInputChange = (e) => {
         setReplyMessage( e.target.value )
@@ -109,33 +109,34 @@ function Comment(props) {
 
     const setLike = (user, likesCommentRecieved, callback) => {
         const userEmail = user.userEmail;
-        const commentLikes = likesCommentRecieved ? likesCommentRecieved: null;
+        const commentLikes = likesCommentRecieved ;
         
         let likedComment = false;
         if(commentLikes) {
             for (let i = 0; i < commentLikes.length; i++) {
-                if (commentLikes[i].userEmail === userEmail) {
+                if (commentLikes[i].likeGiverEmail === userEmail) {
                     likedComment = true;
                     break;
                 }
             }
-            return callback(likedComment);
-        }  
+           
+        } 
+         return callback(likedComment); 
     }
     const setUnLike = (user, unLikesCommentRecieved, callback) => {
         const userEmail = user.userEmail;
-        const commentUnLikes = unLikesCommentRecieved ? unLikesCommentRecieved : null;
+        const commentUnLikes = unLikesCommentRecieved;
         
         let unLikedComment = false;
         if(commentUnLikes) {
             for (let i = 0; i < commentUnLikes.length; i++) {
-                if (commentUnLikes[i].userEmail === userEmail) {
+                if (commentUnLikes[i].unlikeGiverEmail === userEmail) {
                     unLikedComment = true;
                     break;
                 }
-            }
-            return callback(unLikedComment);
+            } 
         }  
+        return callback(unLikedComment);
     }
 
     const likeComment = (commentId, user) => {
@@ -146,7 +147,6 @@ function Comment(props) {
            commentId: commentId,
             user: user,
         }
-        
         socket.emit('likeComment', data );
         setLikedComment(true);
     }
@@ -179,13 +179,22 @@ function Comment(props) {
         {/* flex row */}
         <div className="review-buttons">
             <div>
-                <button onClick={()=> likeComment(_id, user)}><i>like</i></button><span>
-                    {likesCommentRecieved && likesCommentRecieved.length > 0 ? likesCommentRecieved.length : ''}
-                    </span>
+                <button onClick={()=> likeComment(_id, user)}><i>like</i></button>
+                <span>
+                {
+                    (likesCommentRecieved && likesCommentRecieved.length > 0) ? 
+                    likesCommentRecieved.length : ''
+                }
+                </span>
             </div>
             <div>
-                <button onClick={()=> unLikeComment(_id, user)}><i>unlike</i></button><span>
-                    {unLikesCommentRecieved && unLikesCommentRecieved.length > 0 ? unLikesCommentRecieved.length : ''}</span>
+                <button onClick={()=> unLikeComment(_id, user)}><i>unlike</i></button>
+                <span>
+                {
+                    (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? 
+                    unlikesCommentRecieved.length : ''
+                }
+                </span>
             </div>
             <div>
                 <button onClick={()=> toggleReply()}><i>reply</i></button>

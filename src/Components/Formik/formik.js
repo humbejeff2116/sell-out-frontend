@@ -153,3 +153,27 @@ export const  AnimSelect = ({ label, errorClass, labelClassName, ...props }) => 
         </>
     )
 }
+
+export const FileInput = ({ label, errorClass, labelClassName, ...props }) => {
+
+    const [field, meta] = useField(props);
+  
+    return (
+  
+      <>
+          <div className={labelClassName}>
+              <label htmlFor={props.id || props.name}>{label}</label>
+          </div>
+              <input className="product-images" {...field} {...props} />
+              <div className={errorClass}>
+              {
+                  (meta.touched && meta.error ) ? (
+                      <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                  ) : null
+              }
+              </div>
+      </>
+  
+    );
+  
+  };

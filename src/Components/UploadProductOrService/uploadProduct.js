@@ -13,7 +13,7 @@ import { ImWarning } from 'react-icons/im';
 import { Loader } from '../Loader/loader';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput, AnimSelect, Select } from '../Formik/formik';
+import { TextInput,FileInput, AnimSelect, Select } from '../Formik/formik';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 import './uploadProduct.css';
@@ -141,7 +141,10 @@ function ProductForm () {
     const handleInputChange = function(e) {
         setFormValues(prevValues => ({
             ...prevValues,
-            [e.target.name] :e.target.value
+            [e.target.name] : 
+            (e.target.type === "file" && e.currentTarget.files.length) ? e.currentTarget.files :
+            (e.target.type === "file" && e.currentTarget.files.length < 1 ) ? e.currentTarget.files[0] :
+            e.target.value
         }))
         if (e.target.name === "productCategory") {
             if (e.target.value) {
@@ -149,6 +152,9 @@ function ProductForm () {
             }
         }
     }
+
+       
+    
     const setTypeOptions = function setTypeOptions(category, categoryDataSet, callback) {
         let type;
         for (let i = 0; i < categoryDataSet.length; i++) {
@@ -165,11 +171,17 @@ function ProductForm () {
              setUploadingError(false);
             setUploadingProduct(true);
             setResponse('');
-            values.productCategory = formValues.productCategory;
+            values.productCategory = formValues.productCategory; 
+            const formData = new FormData();
+            const formValuesArr = Object.keys(values).map( keys => ({name: keys, value: values[keys]}));
+            for (let i = 0; i < formValuesArr.length; i++) {
+                formData.append(formValuesArr[i].name , formValuesArr[i].value);
+            }
             const productData = {
                 product: values,
                 user: user
             }
+            // TODO... send data to backend using fetch API
             socket.emit('createProduct',productData);
         } catch(e) {
             setUploadingError(true);
@@ -287,9 +299,16 @@ function ProductForm () {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child input">
-                        <div>
-                        <label htmlFor="email address">Picture</label>   
-                        </div>
+                    <FileInput
+                        label="Product Image"
+                        labelClassName="upload-label"
+                        name="productImages"
+                        type="file"
+                        multiple ="multiple"
+                        onChange ={handleInputChange}
+                        placeholder="images*"
+                        errorClass="login-modal-form-error"
+                        />
                     </div>
                     <div className="upload-form-group-child">
                     { 
@@ -461,7 +480,7 @@ function ServiceForm(props) {
     const handleInputChange = function(e) {
         setFormValues(prevValues => ({
             ...prevValues,
-            [e.target.name] :e.target.value
+            [e.target.name] :e.target.type ==="file" ? e.currentTarget.value : e.target.value
         }))
         if (e.target.name === "serviceCategory") {
             if (e.target.value) {
