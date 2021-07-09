@@ -9,7 +9,7 @@ import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 
 export default function Notifications(props) {
-    const [initialNotificationLength, setInitialNotificationsLength] = useState();
+    const [initialNotificationLength, setInitialNotificationsLength] = useState(0);
     const [notifications, setNotifications] = useState([]);
     const [ showNotifications, setShowNotifications ] = useState(false);
     const {user} = useAuth();
@@ -17,27 +17,23 @@ export default function Notifications(props) {
 
     useEffect(()=> {
         socket.on('connect', function() {
-            getInitialNotifications(user);
-            socket.on('notificationsInitialData', function (response) {
-                const {data} = response;
-                setNotifications(data);
-                setInitialNotificationsLength(data.length);  
-            });
-            socket.on('notificationsDataChange', function() {
-                getNotifications(user);
-            });
-            socket.on('notificationsInitialData', function (response) {
+            getNotifications(user);
+            socket.on('getNotificationsSuccess', function (response) {
                 const { data } = response;
+                let setNotificationsLength;
                 setNotifications(data);
+                setNotificationsLength = initialNotificationLength ?? setInitialNotificationsLength(data.length); 
+                return setNotificationsLength;   
+            });
+            socket.on('productDataChange', function() {
+                getNotifications(user);
             });
         });
           
-    }, [user]);
-    const getInitialNotifications = (user) => {
-        socket.emit('getNotificationsInitialData', user);   
-    }
+    }, [user, initialNotificationLength]);
+  
     const getNotifications = (user) => {
-        socket.emit('getNotificationsInitialData', user);
+        socket.emit('getNotifications', user);
     }
     const toggleNotifications = () => {
         setShowNotifications(prevState => !prevState)
@@ -77,7 +73,7 @@ function Notification(props) {
 }
 
 function NotificationsBox(props) {
-    const {userName, userId, userProfileImage, notificationMessage} = props;
+    const {userName, userId, userProfileImage, action} = props;
 
     const viewProfile =() => {
 
@@ -89,7 +85,7 @@ function NotificationsBox(props) {
              <span onClick={()=>viewProfile(userId)}>{userName}</span>
         </div>
         <div>
-            <p> {notificationMessage} </p>
+            <p> {action} </p>
         </div>
     </div>
     )
