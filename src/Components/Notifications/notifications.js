@@ -14,32 +14,30 @@ export default function Notifications(props) {
     const [ showNotifications, setShowNotifications ] = useState(false);
     const {user} = useAuth();
 
-    // TODO... uncomment useEffect when finished with the backend code
 
     useEffect(()=> {
         socket.on('connect', function() {
             getInitialNotifications(user);
+            socket.on('notificationsInitialData', function (response) {
+                const {data} = response;
+                setNotifications(data);
+                setInitialNotificationsLength(data.length);  
+            });
+            socket.on('notificationsDataChange', function() {
+                getNotifications(user);
+            });
+            socket.on('notificationsInitialData', function (response) {
+                const { data } = response;
+                setNotifications(data);
+            });
         });
-        
-        socket.on('notificationsDataChange', function() {
-            getNotifications(user);
-        });
+          
     }, [user]);
     const getInitialNotifications = (user) => {
-        socket.emit('getNotificationsInitialData', user);
-        socket.on('notificationsInitialData', function (response) {
-            const {data} = response;
-            setNotifications(data);
-            setInitialNotificationsLength(data.length);
-            
-        });
+        socket.emit('getNotificationsInitialData', user);   
     }
     const getNotifications = (user) => {
         socket.emit('getNotificationsInitialData', user);
-        socket.on('notificationsInitialData', function (response) {
-            const { data } = response;
-            setNotifications(data);
-        });
     }
     const toggleNotifications = () => {
         setShowNotifications(prevState => !prevState)
@@ -55,7 +53,7 @@ export default function Notifications(props) {
         </div>
         {
             showNotifications && (
-                notifications.map((notification,i) =>
+                notifications.map((notification, i) =>
                     <NotificationsBox key={i} {...notification} />
                 )     
             )
@@ -63,6 +61,21 @@ export default function Notifications(props) {
         </>
     )
 }
+
+function Notification(props) {
+    return (
+        <div className="notifications" onClick={props.openNotifications}>
+            <i>icon</i>
+            <span>
+                {
+                    (props.notifications.length > props.initialNotificationLength ) ?
+                    (props.notifications.length - props.initialNotificationLength) : ''
+                }
+            </span>
+        </div>
+    )
+}
+
 function NotificationsBox(props) {
     const {userName, userId, userProfileImage, notificationMessage} = props;
 
@@ -82,16 +95,3 @@ function NotificationsBox(props) {
     )
 }
 
-function Notification(props) {
-    return (
-        <div className="notifications" onClick={props.openNotifications}>
-            <i>icon</i>
-            <span>
-                {
-                    (props.notifications.length > props.initialNotificationLength ) ?
-                    (props.notifications.length - props.initialNotificationLength) : ''
-                }
-            </span>
-        </div>
-    )
-}

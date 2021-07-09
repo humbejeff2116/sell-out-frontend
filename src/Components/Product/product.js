@@ -104,7 +104,8 @@ export  function DisplayedProduct(props) {
             </div>
 
             <div className="index-product-reaction-panel">
-                <div className="index-product-reaction-star">star product</div>
+                <div className="index-product-reaction-star">heart</div>
+                <div className="index-product-reaction-star">interested</div>
                 <Comment openCommentBox={openCommentBox}  />
             </div>
         </div>
