@@ -14,6 +14,7 @@ import {CommentBox} from './commentBox';
 export  function DisplayedProduct(props) {
     let [starCount, setStarCount] = useState(0);
     const [stars, setStars] = useState(null);
+    const [interested, setInterested] = useState(false);
     const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const { product } = props;
@@ -21,13 +22,14 @@ export  function DisplayedProduct(props) {
 
     useEffect(() => {
         if (user) { 
-            setStar(user, product, setStarCount)
+            setStarOnLoad(user, product, setStarCount);
+            setInterestOnLoad(user, product, setInterested);
         };
 
     }, [product, user]);
 
 
-    const setStar = (user, product, callback) => {
+    const setStarOnLoad = (user, product, callback) => {
         const userEmail = user.userEmail;
         const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved: null;
         
@@ -74,6 +76,41 @@ export  function DisplayedProduct(props) {
     const closeCommentBox = () => {
         setShowComment(false);
     }
+    const showInterest = (product, user, isInterested ) => {
+        if(!isInterested) {
+            setInterested(true);
+            const data = {
+                product,
+                user,
+                interested: true
+            }
+            socket.emit('showInterest', data );
+            return;
+        }
+         setInterested(false);
+        const data = {
+            product,
+            user,
+            interested: false
+        }
+        socket.emit('showInterest', data );
+    }
+    const setInterestOnLoad = (user, product, callback) => {
+        const userEmail = user.userEmail;
+        const interestProductRecieved = (product.interests && product.interests.length) ? product.interests: null;
+        
+        let interested = false;
+        if(interestProductRecieved) {
+            for (let i = 0; i < interestProductRecieved.length; i++) {
+                if (interestProductRecieved[i].userEmail === userEmail) {
+                    interested = true;
+                    break;
+                }
+            }
+            return callback(interested);
+        }
+        return callback(interested);   
+    }
 
     if(showComment) {
         return (
@@ -91,7 +128,7 @@ export  function DisplayedProduct(props) {
                <Star
                product={product}
                user = {user}
-                stars={stars}
+                // stars={stars}
                 starCount={starCount}
                 starClicke={starClicked}
                 starSeller={starSeller}
@@ -105,7 +142,14 @@ export  function DisplayedProduct(props) {
 
             <div className="index-product-reaction-panel">
                 <div className="index-product-reaction-star">heart</div>
-                <div className="index-product-reaction-star">interested</div>
+                <div className="index-product-reaction-star">
+                    <i onClick={()=> showInterest( product, user, interested)}>
+                        intrested 
+                        {
+                            (product.interests && product.interests.length) ? product.interests.length: ''
+                        }
+                    </i>
+                    </div>
                 <Comment openCommentBox={openCommentBox}  />
             </div>
         </div>
@@ -124,11 +168,11 @@ function Star(props) {
     const className =  props.starCount ? "index-profile-star filled" : "index-profile-star";
     return (
         <div className={className} onClick={()=> props.starSeller(props.product, props.user, props.starCount)}>
-           stars { 
-           (props.product.starsUserRecieved && props.starClicked)  ? 
-           props.product.starsUserRecieved.length + props.starCount : 
-           props.product.starsUserRecieved ? props.product.starsUserRecieved.length : ''
-           }
+            stars 
+            { 
+                (props.product.starsUserRecieved && props.product.starsUserRecieved.length) ? 
+                props.product.starsUserRecieved.length : ''
+            }
         </div>
     )
 }

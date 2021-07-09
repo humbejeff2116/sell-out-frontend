@@ -140,27 +140,23 @@ function Comment(props) {
     }
 
     const likeComment = (commentId, user) => {
-        if(likedComment) {
-            return;
-        }
         const data = {
            commentId: commentId,
             user: user,
         }
         socket.emit('likeComment', data );
         setLikedComment(true);
+        setUnLikedComment(false);
     }
 
     const unLikeComment = (commentId, user) => {
-        if(unLikedComment) {
-            return;
-        }
         const data = {
            commentId: commentId,
             user: user,
         }
         
         socket.emit('unLikeComment', data);
+        setLikedComment(false);
         setUnLikedComment(true);
     }
 
@@ -248,10 +244,13 @@ function Replies(props) {
 }
 
 function Reply (props) {
-    let{replyMessage} = props
+    let{replyMessage, userName} = props
     return (
+        <>
+        <span>{userName}</span>
         <span>
             {replyMessage}
         </span>
+        </>
     )
 }
