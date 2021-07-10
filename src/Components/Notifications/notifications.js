@@ -9,27 +9,34 @@ import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 
 export default function Notifications(props) {
-    const [initialNotificationLength, setInitialNotificationsLength] = useState(0);
+    const [initialNotificationLength, setInitialNotificationsLength] = useState();
     const [notifications, setNotifications] = useState([]);
     const [ showNotifications, setShowNotifications ] = useState(false);
     const {user} = useAuth();
 
 
     useEffect(()=> {
-        socket.on('connect', function() {
-            getNotifications(user);
+        let mounted = true;
+            if(user && mounted) {
+                getNotifications(user);
+            }
             socket.on('getNotificationsSuccess', function (response) {
                 const { data } = response;
                 let setNotificationsLength;
-                setNotifications(data);
-                setNotificationsLength = initialNotificationLength ?? setInitialNotificationsLength(data.length); 
-                return setNotificationsLength;   
+                if (mounted) {
+                    setNotifications(data);
+                    setNotificationsLength = initialNotificationLength ?? setInitialNotificationsLength(data.length); 
+                    return setNotificationsLength;   
+                }  
             });
             socket.on('productDataChange', function() {
-                getNotifications(user);
+                if (mounted) {
+                    getNotifications(user);
+                }   
             });
-        });
-          
+            return () => {
+                mounted = false;
+            }    
     }, [user, initialNotificationLength]);
   
     const getNotifications = (user) => {

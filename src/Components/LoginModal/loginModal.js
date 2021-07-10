@@ -4,11 +4,14 @@
 
 import React, {useState, useEffect} from 'react';
 import './loginModal.css';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {TextInput, PasswordInput} from '../Formik/formik';
 import { Loader } from '../Loader/loader';
+import socket from '../Socket/socket';
+import useAuth from '../../Context/context';
+import { ImWarning } from 'react-icons/im';
 
 
 
@@ -47,20 +50,79 @@ function LoginModalTemplate(props) {
  function Login() {
     const [loginIn, setLoginIn] = useState(false);
     const [ showForm, setShowForm] = useState(false);
+    const [loginError, setLoginError] = useState(false);
+    const [loginResponse, setLoginResponse] = useState({});
+    const [redirect, setRedirect] = useState('');
+    const {setUserData, setTokenData} = useAuth();
+
 
     useEffect(()=> {
         let timer;
+        let isMounted = true;
         timer = setTimeout(()=> {
             return setShowForm(true)
         }, 1000);
 
+
+        socket.on('userNotFound', function(response) {
+            if(isMounted) {
+                setLoginResponse(response);
+                setLoginError(true);
+                setLoginIn(false);
+            }
+        })
+
+        socket.on('passwordError', function(response) {
+            if(isMounted) {
+                setLoginResponse(response);
+                setLoginError(true);
+                setLoginIn(false);
+            }   
+        });
+
+        socket.on('passwordMatchNotFound', function(response) {
+            if(isMounted) {
+            setLoginResponse(response);
+            setLoginError(true);
+            setLoginIn(false); 
+            }   
+        });
+
+        socket.on('userFound', function(response) {
+                    const TOKEN = response.token;
+                    if(isMounted) {
+                        setUserData(response.data)
+                        setTokenData(TOKEN);
+                        setLoginError(false);
+                        setLoginIn(false);
+                        setLoginResponse({});
+                        setRedirect('/home');
+                    } 
+        });
+
         return ()=>{
+            isMounted = false
             if(timer) {
                 clearTimeout(timer);
             }
-
         }
-    },[])
+    },[setUserData, setTokenData]);
+    const handleSubmit = (values) => {
+        try{
+            setLoginIn(true);
+            const loginData = values;
+            socket.emit('login', loginData);
+
+        } catch(e) {
+            setLoginError(true)
+        }     
+    }
+    if (redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
+    }
+
     if(!showForm ) {
         return (
         <div className="login-modal-loader-form-container">
@@ -78,6 +140,11 @@ function LoginModalTemplate(props) {
                 <div className="login-modal-panel-heading">
                     <h2>Login </h2>
                 </div>
+                <div className="login-panel-error">
+                    {
+                        ( <span>{loginResponse.message || '' }</span> )
+                    }
+            </div>
                 <div className="login-modal-panel-body">
                 <Formik
                     initialValues = {{
@@ -90,12 +157,7 @@ function LoginModalTemplate(props) {
                         password: Yup.string().required('password is required'),
                     })}
 
-                    onSubmit = {(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 400);
-                    }}
+                    onSubmit = { handleSubmit }
                 >
                 <Form>
                     <TextInput
@@ -119,7 +181,7 @@ function LoginModalTemplate(props) {
 
                     <div className="login-modal-button">
                         <button type="submit" className="btn btn-success">
-                        {loginIn ? 'Loging in...' : 'Log in'}
+                        {loginIn ? 'Loging in...' : loginError ? <><ImWarning/> Log in</> : 'Log in'}
                     </button>
                     </div>
                 </Form>
