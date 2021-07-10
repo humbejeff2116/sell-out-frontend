@@ -21,6 +21,7 @@ const NotFoundPage = React.lazy(()=> import('../Pages/NotFoundPage/notFoundPage'
 const UploadProductOrServicePage = React.lazy(()=>import('../Pages/UploadProductPage/uploadProductOrService'));
 const InterestPage = React.lazy(()=> import('../Pages/InterestPage/interestPage'));
 const ConfirmationsPage = React.lazy(()=> import('../Pages/ConfirmationsPage/confirmationsPage'));
+const NotificationsPage = React.lazy(()=> import('../Pages/NotificationsPage/notificationsPage'));
 
 
 
@@ -77,6 +78,13 @@ export default function App() {
                     <ConfirmationsPage/>
                 </Suspense>
             </Route>
+
+            <Route exact  path="/notifications">
+                <Suspense fallback={<InsideLoginSuspenseLoader/>}>
+                    <NotificationsPage/>
+                </Suspense>
+            </Route>
+
 
             <Route path="*">
                 <Suspense fallback={ <div>loading...</div>}>

@@ -3,22 +3,17 @@
 
 
 
-
-
-
 import React from 'react';
 import { IndexPageTemplate } from '../IndexPage/indexPage';
-import Interests from '../../Components/Interests/interest';
+import Notifications from '../../Components/Notifications/notifications';
 
 
 
 
-
-export default function InterestPage() {
+export default function NotificationsPage() {
     return (
         <IndexPageTemplate>
-            <Interests />
+            <Notifications/>
         </IndexPageTemplate>
-
     )
 }

@@ -13,7 +13,7 @@ import RequireAuthentication from '../../Components/Authentication/requireAuthen
 import { isAuthenticated } from '../../Services/services';
 
 
-import Notifications from '../../Components/Notifications/notifications';
+import Notifications from '../../Components/NotificationsDropdown/notifications';
 import Connections from '../../Components/Connections/connections';
 
 
