@@ -56,9 +56,19 @@ export default function Notifications(props) {
         </div>
         {
             showNotifications && (
-                notifications.map((notification, i) =>
-                    <NotificationsBox key={i} {...notification} />
-                )     
+                <div className="notifications-dropdown-container">
+                    {
+                        notifications.length ? notifications.map((notification, i) =>
+                            <NotificationsBox key={i}  {...notification} />
+                        ) : (
+                            <div>
+                            <p>no notifications yet</p>
+                            </div>
+                        )
+                       
+                    }
+                
+                </div>    
             )
         }
         </>
@@ -86,15 +96,15 @@ function NotificationsBox(props) {
 
     }
     return (
-        <div>
-        <div>
-            <img src={userProfileImage} alt="profile" />
-             <span onClick={()=>viewProfile(userId)}>{userName}</span>
+        <div className="notifications-dropdown-container">
+            <div>
+                <img src={userProfileImage} alt="profile" />
+                <span onClick={()=>viewProfile(userId)}>{userName}</span>
+            </div>
+            <div>
+                <p> {action} </p>
+            </div>
         </div>
-        <div>
-            <p> {action} </p>
-        </div>
-    </div>
     )
 }
 

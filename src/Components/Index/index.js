@@ -6,15 +6,45 @@
 
 
 import React,{useState, useEffect} from 'react';
+import socket from '../Socket/socket';
 import { DisplayProducts, DisplayServices } from './displayProducts';
 import { SearchProducts } from './searchProductsOrServices';
 import {PostProduct} from './postProduct';
+import { ErrorModal } from '../ModalBox/errorModal';
 import './index.css';
 
 
 export default function Index() {
+    const [insideLoginError, setinsideLoginError] = useState('');
+    useEffect(()=> {
+        let timer = null;
+        socket.on('insideLoginError', function(response) {
+            const { message } = response;
+            setinsideLoginError(message);
+        });
+        if (insideLoginError) {
+            timer = setTimeout(() => {
+                setinsideLoginError('');   
+            }, 12000);
+        }
+        return ()=> {
+            if (timer) {
+                clearTimeout(timer)
+            }   
+        }  
+    }, [insideLoginError]);
     return (
         <div className="index-container">
+            {
+                    insideLoginError && (
+                        <ErrorModal 
+                        errorMessage={insideLoginError}
+                        errorContainerClassName={"index-error-container"}
+                        panelClassName = {"index--error-modal"}
+                        />
+                    )
+
+            }
            <PostProduct/>
            <SearchProducts/>
            <ToggleProductsOrServices/>

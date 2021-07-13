@@ -243,3 +243,15 @@
     width:50%;
 
 }
+
+
+.index-error-container{
+    border:1px solid red;
+    position: fixed;
+
+}
+
+.index-error-modal{
+    border:1px solid red;
+
+}
