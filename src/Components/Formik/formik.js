@@ -21,7 +21,7 @@ export const TextInput = ({ label, errorClass, labelClassName, ...props }) => {
         <div className={labelClassName}>
             <label htmlFor={props.id || props.name}>{label}</label>
         </div>
-            <input className="password-input" {...field} {...props} />
+            <input className="text-input" {...field} {...props} />
             <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
@@ -35,6 +35,30 @@ export const TextInput = ({ label, errorClass, labelClassName, ...props }) => {
 
 };
 
+export const TextAreaInput = ({ label, errorClass, labelClassName, ...props }) => {
+
+    const [field, meta] = useField(props);
+  
+    return (
+  
+      <>
+          <div className={labelClassName}>
+              <label htmlFor={props.id || props.name}>{label}</label>
+          </div>
+              <textarea className="text-area-input" {...field} {...props} />
+              <div className={errorClass}>
+              {
+                  (meta.touched && meta.error ) ? (
+                      <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                  ) : null
+              }
+              </div>
+      </>
+  
+    );
+  
+  };
+
 export const PasswordInput = ({ label, errorClass, labelClassName, ...props }) => {
 
     const [field, meta] = useField(props);
@@ -45,7 +69,7 @@ export const PasswordInput = ({ label, errorClass, labelClassName, ...props }) =
           <div className={labelClassName}>
             <label htmlFor={props.id || props.name}>{label}</label>
           </div>
-              <input className="text-input" {...field} {...props} />
+              <input className="password-input" {...field} {...props} />
                   <div className={errorClass}>
                     {
                         (meta.touched && meta.error ) ? (
