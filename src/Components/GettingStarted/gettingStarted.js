@@ -5,11 +5,11 @@
 import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../Context/context';
-import './settings.css';
+import './gettingStarted.css';
 
 
 
-export default function Settings(props) {
+export default function GettingStarted({match}) {
     // const [user, setUser] = useState({});
     const [isNewUser, setisNewUser] = useState(true);
     const { user } = useAuth();
@@ -17,6 +17,7 @@ export default function Settings(props) {
     useEffect(() => {
             const isNewUser = user ?  user?.newUser : null;
             // setisNewUser(isNewUser);
+            window.scrollTo(0,0);
     }, [user]);
 
    
@@ -49,7 +50,7 @@ export default function Settings(props) {
                         </div>
                         <div className="welcome-body-bottom">
                             <div className="welcome-body-link"><p>only wish to buy products?</p></div>
-                            <div className="welcome-body-bttn"><button><Link to="/">Get started</Link></button></div>
+                            <div className="welcome-body-bttn"><button><Link to="/getting-started/contact">Get started</Link></button></div>
                         </div>
                     </div>
                 </div>

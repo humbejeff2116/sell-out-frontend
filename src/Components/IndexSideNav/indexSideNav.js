@@ -24,7 +24,9 @@ export default function IndexSideNav(props) {
     return (
         <nav  className="index-side-nav">
             {
-                landingMainLinks.map((link, i) =>
+               (props.links) ? props.links.map((link, i) =>
+                <NavLinks key={i} {...link} />
+               ) : landingMainLinks.map((link, i) =>
                     <NavLinks key={i} {...link} />
                 )
             }
@@ -33,7 +35,7 @@ export default function IndexSideNav(props) {
 }
 
 
-function NavLinks(props) {
+function NavLinks({ match, ...props}) {
     return (
         <div className="index-side-nav-item" >
             <NavLink
