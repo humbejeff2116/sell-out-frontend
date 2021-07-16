@@ -26,7 +26,7 @@ const initialGetStartedContext = {
     isProfileDataSet: false,
     setIsContactDataSet: ()=> {},
     setIsLocationDataSet: ()=> {},
-    setisProfileDataSet: ()=> {},
+    setIsProfileDataSet: ()=> {},
     setContact: ()=> {},
     setLocation: ()=> {},
     setProfile: ()=> {},

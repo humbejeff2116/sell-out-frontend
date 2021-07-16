@@ -33,7 +33,7 @@ export function GetStartedContextProvider(props) {
         setIsProfileDataSet(true);
     }
     // TODO... merge all data and send to server
-    const submitGettingStartedData = () => {
+    const submitGettingStartedData = (profileImage) => {
 
     }
 

@@ -4,8 +4,6 @@
 
 footer{
     border:1px solid green;
-    display: flex;
-    flex-direction: column;
     margin-top: 2%;
     margin-bottom: 2%;
 }
