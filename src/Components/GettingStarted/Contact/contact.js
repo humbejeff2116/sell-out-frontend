@@ -15,7 +15,7 @@ import './contact.css';
 
 
 
-export default function UserContact(props) {
+export default function Contact(props) {
     const [redirect, setRedirect] = useState('');
 
     useEffect(() => {  
@@ -47,8 +47,8 @@ export default function UserContact(props) {
             <div className="getting-started-contact-body">                            
                 <Formik
                     initialValues = {{
-                        email: '',
-                        password: '',
+                        contactEmail: '',
+                        contactNumber: '',
                     }}
 
                     validationSchema = { Yup.object({

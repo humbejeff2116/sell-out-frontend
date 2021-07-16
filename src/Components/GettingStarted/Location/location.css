@@ -1,0 +1,58 @@
+.location-form-address{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.location-form-country{
+    width:46%;
+    border:1px solid red;
+}
+.location-form-state{
+    width:46%;
+    border:1px solid red;
+}
+
+.getting-started-location-body form select{
+
+    padding:12px 12px 12px 5px;
+    border-radius: 4px;
+    outline:none;  
+    font-weight: bold;
+    width:100%;
+    border:2px solid #222;
+    transition: border-color 0.3s ease;
+}
+.getting-started-location-body form textarea{
+
+    /* padding:12px 12px 12px 5px; */
+    border-radius: 4px;
+    outline:none;  
+    font-weight: bold;
+    width: 90%;
+    border:2px solid #222;
+    transition: border-color 0.3s ease;
+    display:flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.location-form-group{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2.5%;
+    margin-top:2%;
+    width:99%;
+    border:2px solid purple;
+}
+.contact-form-error{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.2%;
+    width:99%;
+    border:2px solid red;
+    min-height: 25px;
+
+}
+.contact-form-error span{
+    color:red;  
+}

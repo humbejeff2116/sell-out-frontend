@@ -8,7 +8,7 @@
 
 
 import React, {useEffect} from 'react';
-import { InsideLoginTemplate } from '../../Components/Template/template';
+import { InsideLoginTemplate, GettingStartedTemplate } from '../../Components/Template/template';
 import {Route, Switch } from 'react-router-dom';
 import GettingStarted from '../../Components/GettingStarted/gettingStarted';
 import ProfileAvatar from '../../Components/Profile/profileAvatar';
@@ -34,7 +34,7 @@ function GettingStartedPageComp({match}) {
         window.scrollTo(0,0);
     },[]);
     return (
-        <InsideLoginTemplate 
+        <GettingStartedTemplate
         leftSideBarTop={<ProfileAvatar/>} 
         leftSideBarCenter={<IndexSideNav links ={links}/>} 
         leftSideBarBottom={<SettingsFooter/>} 
@@ -45,7 +45,7 @@ function GettingStartedPageComp({match}) {
             <Route  path="/getting-started/location" component={Location} />
             <Route exact path="/getting-started/profile-image" component={ProfileImage} /> 
             </Switch>
-        </InsideLoginTemplate>   
+        </GettingStartedTemplate>   
     )
 }
 

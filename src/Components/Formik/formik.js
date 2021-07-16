@@ -106,14 +106,14 @@ export const Checkbox = ({ children, errorClass, labelClassName, ...props }) => 
 
 
 
-export const Select = ({ label, errorClass, ...props }) => {
+export const Select = ({ label, errorClass, labelClassName, ...props }) => {
 
   const [field, meta] = useField(props);
 
   return (
 
    <>
-        <div>
+        <div className={labelClassName ? labelClassName : ''}>
             <label htmlFor={props.id || props.name}>{label}</label> 
         </div>
 

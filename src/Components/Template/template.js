@@ -5,10 +5,11 @@
 
 
 import React from 'react';
-import Header from '../../Components/Header/header';
-import Footer from '../../Components/Footer/footer';
+import Header from '../Header/header';
+import Footer from '../Footer/footer';
 import LeftSideBar from '../LeftSideBar/leftSideBar';
 import RightSideBar from '../RightSideBar/rightSideBar';
+import LandingFooter from '../Landing/Footer/landingFooter';
 import './template.css';
 
 
@@ -48,18 +49,52 @@ export function InsideLoginTemplate(props) {
     return (
         <>
         <Header/>
-        <LeftSideBar top={props.leftSideBarTop} center={props.leftSideBarCenter} bottom={props.leftSideBarBottom} />
+        <LeftSideBar 
+        fixed={true}
+        top={props.leftSideBarTop} 
+        center={props.leftSideBarCenter} 
+        bottom={props.leftSideBarBottom} 
+        />
         <InsideLoginTemplateChildren children={props.children} />
         <RightSideBar topComponent={props.rightSideBarTop} bottomComponent={props.rightSideBarBottom} />
         </>
     )
 }
 
-
 function InsideLoginTemplateChildren(props) {
     return (
         <div className="inside-login-template-container">
             <div className="inside-login-template-center">
+                {props.children}
+            </div>
+        </div>
+    )
+
+}
+
+export function GettingStartedTemplate(props) {
+    return (
+        <>
+        <Header dontShowMainNav={true}/>
+        <GettingStartedTemplateChildren
+        leftSideBarTop={props.leftSideBarTop}
+        leftSideBarCenter={props.leftSideBarCenter}
+        leftSideBarBottom={props.leftSideBarBottom} 
+        children={props.children} />
+        <LandingFooter/>
+        </>
+    )
+}
+
+function GettingStartedTemplateChildren(props) {
+    return (
+        <div className="getting-started-template-container">
+            <LeftSideBar 
+            top={props.leftSideBarTop} 
+            center={props.leftSideBarCenter} 
+            bottom={props.leftSideBarBottom} 
+            />
+            <div className="getting-started-template-center">
                 {props.children}
             </div>
         </div>

@@ -49,3 +49,21 @@
     min-height: 150vh;
 
 }
+
+.getting-started-template-container{
+    display:flex;
+    flex-direction: row;
+    position: relative; 
+    margin-top: 8vh;
+    border: 1px solid red 
+}
+.getting-started-template-nav{
+    border: 1px solid black;
+    width:28%;
+}
+
+.getting-started-template-center{
+    border: 1px solid red;
+    width:45%;
+
+}

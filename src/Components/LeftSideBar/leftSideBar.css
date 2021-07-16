@@ -9,14 +9,18 @@
    /* justify-content: center; */
     margin:0;
     padding:0;
-    position:fixed;
+    /* position:fixed; */
     top:8vh;
     /* background-color: #1d2c3f; */
-    height:92vh;
+    min-height:92vh;
     width:28%;
     overflow-x: none;
     transition: width 0.3s ease;
     border:1px solid green;
+}
+.fixed{
+     position:fixed;
+
 }
 
 .left-side-bar-content{

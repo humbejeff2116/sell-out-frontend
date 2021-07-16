@@ -27,7 +27,7 @@ export default function Header(props) {
                 <div className="header-logo-img">logo</div>
             </section>
             <section className="header-main-navigation">
-                <MainNavigation mainLinks={mainLinks}/>
+               { (props.dontShowMainNav) ? '' : <MainNavigation mainLinks={mainLinks}/> }
             </section>
             <section className="header-search-bar">
                 <SearchBar/>
