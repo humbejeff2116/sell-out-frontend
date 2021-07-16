@@ -4,11 +4,12 @@
 
 
 import React, {useState, useEffect} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation, useHistory  } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import {TextInput, PasswordInput, TextAreaInput} from '../../Formik/formik';
-import socket from '../../Socket/socket';
+import { TextInput } from '../../Formik/formik';
+// import socket from '../../Socket/socket';
+import { useGetStartedContext } from '../../../Context/context';
 
 import './contact.css';
 
@@ -17,14 +18,32 @@ import './contact.css';
 
 export default function Contact(props) {
     const [redirect, setRedirect] = useState('');
+    const {contactData, setContact, setIsContactDataSet} = useGetStartedContext();
+    const location = useLocation();
+    const history = useHistory();
+
 
     useEffect(() => {  
         window.scrollTo(0, 0);
     }, []);
     
 
-    function handleSubmit  (values) {
-           
+    const handleSubmit = (values) => {
+        setContact(values);
+        history.push(location.pathname);
+        setRedirect('/getting-started/location');    
+    }
+
+    const goBack = ( ) => { 
+        setIsContactDataSet(false);
+        history.push(location.pathname);
+        setRedirect('/getting-started');   
+    }
+
+    if(redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
     }
     return (
        
@@ -47,8 +66,8 @@ export default function Contact(props) {
             <div className="getting-started-contact-body">                            
                 <Formik
                     initialValues = {{
-                        contactEmail: '',
-                        contactNumber: '',
+                        contactEmail: contactData ?  contactData?.contactEmail : '',
+                        contactNumber: contactData ? contactData?.contactNumber : '',
                     }}
 
                     validationSchema = { Yup.object({
@@ -58,15 +77,17 @@ export default function Contact(props) {
 
                     onSubmit = { handleSubmit }
                 >
-                <Form>
+                <Form id="contactForm">
                 <TextInput
                     label="Contact Email"
                     labelClassName="contact-form-group"
                     name="contactEmail"
                     type="email"
+                   
                     placeholder="contactme@yahoo.com"
                     errorClass="contact-form-error"
                 />
+               
                 <TextInput
                     label="Contact Number"
                     labelClassName="contact-form-group"
@@ -78,10 +99,11 @@ export default function Contact(props) {
 
                 <div className="getting-started-contact-buttons">
                 <div className="getting-started-contact-back-button">
-                    <button type="submit" >
+                    <button onClick={()=> goBack()}>
                         Back
                     </button>
                 </div>
+                
 
                 <div className="getting-started-contact-next-button">
                     <button type="submit" >

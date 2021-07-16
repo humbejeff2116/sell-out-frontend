@@ -5,13 +5,13 @@ import socket from '../Components/Socket/socket';
 import { GetStartedContext } from './context';
 
 
-export function AuthContextProvider(props) {
+export function GetStartedContextProvider(props) {
     const [contactData, setContactData] = useState(null);
     const [locationData, setLocationData] =  useState(null);
     const [profileImage, setProfileImage] = useState(null);
-    const [contactDataSet, setContactDataSet] = useState(false);
-    const [locationDataSet, setLocationDataSet] = useState(false);
-    const [profileDataSet, setprofileDataSet] = useState(false);
+    const [isContactDataSet, setIsContactDataSet] = useState(false);
+    const [isLocationDataSet, setIsLocationDataSet] = useState(false);
+    const [isProfileDataSet, setIsProfileDataSet] = useState(false);
    
 
     useEffect(()=> {
@@ -22,15 +22,15 @@ export function AuthContextProvider(props) {
 
     const setContact = (data) => {
         setContactData(data);
-        setContactDataSet(true);
+        setIsContactDataSet(true);
     }
     const setLocation = (data) => {
         setLocationData(data);
-        setLocationDataSet(true);
+        setIsLocationDataSet(true);
     }
     const setProfile = (data) => { 
         setProfileImage(data);
-        setprofileDataSet(true);
+        setIsProfileDataSet(true);
     }
     // TODO... merge all data and send to server
     const submitGettingStartedData = () => {
@@ -41,12 +41,15 @@ export function AuthContextProvider(props) {
         contactData: contactData,
         locationData: locationData,
         profileImage: profileImage,
-        contactDataSet: contactDataSet,
-        locationDataSet: locationDataSet,
-        profileDataSet: profileDataSet,
+        isContactDataSet: isContactDataSet,
+        isLocationDataSet: isLocationDataSet,
+        isProfileDataSet: isProfileDataSet,
         setContact: setContact,
         setLocation: setLocation,
-        setProfile: setProfile
+        setProfile: setProfile,
+        setIsContactDataSet: setIsContactDataSet,
+        setIsLocationDataSet: setIsLocationDataSet,
+        setIsProfileDataSet: setIsProfileDataSet
     }
 
     return(

@@ -50,7 +50,7 @@ export default function GettingStarted({match}) {
                         </div>
                         <div className="welcome-body-bottom">
                             <div className="welcome-body-link"><p>only wish to buy products?</p></div>
-                            <div className="welcome-body-bttn"><button><Link to="/getting-started/contact">Get started</Link></button></div>
+                            <div className="welcome-body-bttn"><button><Link to="/getting-started/contact">Set Profile</Link></button></div>
                         </div>
                     </div>
                 </div>

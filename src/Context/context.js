@@ -21,12 +21,15 @@ const initialGetStartedContext = {
     contactData: null,
     locationData: null,
     profileimage: null,
-    contactDataSet: false,
-    locationDataSet: false,
-    profileDataSet: false,
-    setContact: ()=>{},
-    setLocation: () =>{},
-    setProfile: ()=>{},
+    isContactDataSet: false,
+    isLocationDataSet: false,
+    isProfileDataSet: false,
+    setIsContactDataSet: ()=> {},
+    setIsLocationDataSet: ()=> {},
+    setisProfileDataSet: ()=> {},
+    setContact: ()=> {},
+    setLocation: ()=> {},
+    setProfile: ()=> {},
 }
 
 export const AuthContext = createContext(initialAuthContext);

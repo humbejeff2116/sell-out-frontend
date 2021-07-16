@@ -8,11 +8,12 @@
 
 
 import React, {useState, useEffect} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {TextAreaInput,Select} from '../../Formik/formik';
 import socket from '../../Socket/socket';
+import { useGetStartedContext } from '../../../Context/context';
 
 import './location.css';
 import '../Contact/contact.css';
@@ -22,14 +23,30 @@ import '../Contact/contact.css';
 
 export default function Location(props) {
     const [redirect, setRedirect] = useState('');
+    const {locationData, setLocation, setIsContactDataSet } = useGetStartedContext();
+    const location = useLocation();
+    const history = useHistory();
 
     useEffect(() => {  
         window.scrollTo(0, 0);
     }, []);
     
 
-    function handleSubmit  (values) {
-           
+    const handleSubmit =  (values) => {
+        setLocation(values);
+        history.push(location.pathname);
+        setRedirect('/getting-started/profile-image');     
+    }
+
+    const goBack = () => {  
+        setIsContactDataSet(false);
+        history.push(location.pathname);
+        setRedirect('/getting-started/contact');   
+    }
+    if(redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
     }
     return (
        
@@ -52,13 +69,14 @@ export default function Location(props) {
             <div className="getting-started-location-body">                            
                 <Formik
                     initialValues = {{
-                        email: '',
-                        password: '',
+                        country: locationData ? locationData?.country : '',
+                        city: locationData ? locationData?.city : '',
+                        address: locationData ? locationData?.address : '',
                     }}
 
                     validationSchema = { Yup.object({
                         country: Yup.string().required('Country is required'),
-                        state: Yup.string().required('State is required'),
+                        city: Yup.string().required('City is required'),
                         address: Yup.string().required('Address is required') 
                     })}
 
@@ -71,8 +89,6 @@ export default function Location(props) {
                         label="Country"
                         labelClassName="location-form-group"
                         name="country"
-                        type="email"
-                        placeholder="e.g Nigeria"
                         errorClass="contact-form-error"
                         >
                             <option value="">--Select--</option>
@@ -86,15 +102,13 @@ export default function Location(props) {
                             <Select
                             label="City"
                             labelClassName="location-form-group"
-                            name="state"
-                            type="text"
-                            placeholder="e.g Lagos"
+                            name="city"
                             errorClass="contact-form-error"
                             >
                                 <option value="">--Select--</option>
-                                <option value="Nigeria">Abuja</option>
-                                <option value="Ghana">Abia</option>
-                                <option value="Congo">Adamawa</option>
+                                <option value="Abuja">Abuja</option>
+                                <option value="Abia">Abia</option>
+                                <option value="Adamawa">Adamawa</option>
                             </Select>
                         </div>
                     
@@ -109,7 +123,7 @@ export default function Location(props) {
                 />
                 <div className="getting-started-contact-buttons">
                 <div className="getting-started-contact-back-button">
-                    <button type="submit" >
+                    <button onClick={()=>goBack()} >
                         Back
                     </button>
                 </div>

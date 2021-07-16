@@ -5,6 +5,7 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { AuthContextProvider } from '../Context/authContextProvider';
+import { GetStartedContextProvider } from '../Context/gettingStartedContextProvider';
 import {
     SettingsSuspenseLoader, 
     InsideLoginSuspenseLoader, 
@@ -30,6 +31,7 @@ export default function App() {
    
     return (
         <AuthContextProvider >
+        <GetStartedContextProvider>
         <Switch >
 
             <Route exact  path="/">
@@ -98,6 +100,7 @@ export default function App() {
             </Route> 
 
         </Switch>
+        </GetStartedContextProvider>
         </AuthContextProvider > 
 
     )
