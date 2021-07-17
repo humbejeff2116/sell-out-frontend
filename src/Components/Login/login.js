@@ -3,7 +3,7 @@
 
 
    import React, {useState, useEffect} from 'react';
-   import { Link, Redirect } from 'react-router-dom';
+   import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
    import { ImWarning } from 'react-icons/im';
    import { Formik, Form } from 'formik';
    import * as Yup from 'yup';
@@ -17,6 +17,8 @@ export default function Login() {
     const [loginError, setLoginError] = useState(false);
     const [loginResponse, setLoginResponse] = useState({});
     const [redirect, setRedirect] = useState('');
+    const location = useLocation();
+    const history = useHistory();
     const {setUserData, setTokenData} = useAuth();
 
     useEffect(() => {
@@ -48,12 +50,22 @@ export default function Login() {
 
         socket.on('userFound', function(response) {
                     const TOKEN = response.token;
-                    if(isMounted) {
+                    
+                    if (isMounted) {
+                        if (response.data.isNewUser) {
+                            setUserData(response.data)
+                            history.push(location.pathname);
+                            setLoginError(false);
+                            setLoginIn(false);
+                            setLoginResponse({});
+                            return setRedirect('/getting-started');
+                        }
                         setUserData(response.data)
                         setTokenData(TOKEN);
                         setLoginError(false);
                         setLoginIn(false);
                         setLoginResponse({});
+                        history.push(location.pathname);
                         setRedirect('/home');
                     } 
         });
@@ -62,7 +74,7 @@ export default function Login() {
         return ()=> {
             isMounted = false
         }         
-    }, [setUserData, setTokenData]);
+    }, [setUserData, history, location, setTokenData]);
 
     function handleSubmit  (values) {
         try{

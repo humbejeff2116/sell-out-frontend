@@ -6,6 +6,7 @@
 import React, {useEffect, useState} from 'react';
 import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useGetStartedContext } from '../../../Context/context';
+import useAuth from '../../../Context/context';
 import './profileImage.css';
 
 
@@ -17,6 +18,7 @@ export default function ProfileImage(props) {
     const [profileError, setProfileError] = useState('')
     const location = useLocation();
     const history = useHistory();
+    const {setUserData, setTokenData} = useAuth();
     const {profileImage, setProfile, setIsLocationDataSet, setIsProfileDataSet, handleSubmit} = useGetStartedContext();
     useEffect(() => {  
         window.scrollTo(0, 0);
@@ -37,6 +39,13 @@ export default function ProfileImage(props) {
     const profileImageError = (errorMssg) => {
         window.scrollTo(0, 0)
         setProfileError(errorMssg)
+    }
+    const userUpdatedSuccessful = (response) => {
+        const { data, token } = response;
+        history.push(location.pathname);
+        setUserData(data)
+        setTokenData(token);
+        setRedirect('/home');
     }
     
 
@@ -80,7 +89,7 @@ export default function ProfileImage(props) {
                    <button onClick={()=> goBack()}>Go Back</button>
                </div>
                <div className="getting-started-profile-image-upload-button">
-                   <button onClick={ ()=> handleSubmit(profile, profileImageError)}>Upload Profile</button>
+                   <button onClick={ ()=> handleSubmit(profile, profileImageError, userUpdatedSuccessful)}>Upload Profile</button>
                </div>
 
            </div>

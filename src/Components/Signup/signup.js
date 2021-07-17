@@ -6,7 +6,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { ImWarning } from 'react-icons/im';
 import * as Yup from 'yup';
@@ -25,35 +25,33 @@ export default function Signup() {
     const [creatingAccountError, setCreatingAccountError] = useState(false);
     const [signingUpResponse, setSigningUpResponse] = useState({});
     const [redirect, setRedirect] =useState('');
+    const location = useLocation();
+    const history = useHistory();
     const { setUserData, setTokenData } = useAuth();
     
 
     useEffect(() => {
         let mounted = true;
         socket.on('userSignedUp', function(response) {
-            if(mounted) {
-                const TOKEN = response.token;
-            setCreatingAccountError(false);
-            setUserData(response.data)
-            setTokenData(TOKEN);
-            setCreatingAccount(false);
-            setRedirect('/settings');
-
-            }
-            
+            if(mounted) {  
+                setCreatingAccountError(false);
+                setUserData(response.data)
+                setCreatingAccount(false);
+                history.push(location.pathname);
+                setRedirect('/getting-started');
+            }   
         });
         socket.on('userAlreadyExist', function (response) {
             if(mounted) {
                 setCreatingAccountError(true);
                 setSigningUpResponse(response);
                 setCreatingAccount(false);
-
             }  
         });
         return () => {
             mounted = false;
         }         
-    }, [setUserData, setTokenData]);
+    }, [setUserData, location, history, setTokenData]);
 
     function handleSubmit  (values) {
         try{

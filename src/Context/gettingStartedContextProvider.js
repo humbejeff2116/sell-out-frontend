@@ -2,6 +2,7 @@
 
 import {useEffect, useState } from 'react';
 import { GetStartedContext } from './context';
+import {updateUser} from '../Utils/http.services';
 
 
 export function GetStartedContextProvider(props) {
@@ -31,9 +32,9 @@ export function GetStartedContextProvider(props) {
         setProfileImage(data);  
     }
 
-    const handleSubmit = (profileImage, callback) => {
+    const handleSubmit = (profileImage, errorCallback, successCallback) => {
         if (!profileImage) {
-            return  callback("please provide a profile picture")
+            return  errorCallback("please provide a profile picture")
         }
         const values = {...contactData,...locationData,...profileImage}
         const formData = new FormData();
@@ -46,6 +47,15 @@ export function GetStartedContextProvider(props) {
             const userData = {
                 product: values 
             }
+            updateUser(userData)
+            .then(response => {
+
+            })
+            .then(user => {
+                // TODO... pass user response to succescallback here
+
+            })
+            .catch(e => console.error(e.stack));
     }
 
     const values = {

@@ -33,6 +33,9 @@ export function AuthContextProvider(props) {
             setTokenExpiration(tokenExpiration);
             return true;
         }
+        if (user && !token) {
+            return setUser(user);
+        }
         setUser(null);
         setToken(null);
         setTokenExpiration(null);
