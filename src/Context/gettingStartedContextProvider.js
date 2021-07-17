@@ -1,7 +1,6 @@
 
 
 import {useEffect, useState } from 'react';
-import socket from '../Components/Socket/socket';
 import { GetStartedContext } from './context';
 
 
@@ -29,12 +28,24 @@ export function GetStartedContextProvider(props) {
         setIsLocationDataSet(true);
     }
     const setProfile = (data) => { 
-        setProfileImage(data);
-        setIsProfileDataSet(true);
+        setProfileImage(data);  
     }
-    // TODO... merge all data and send to server
-    const submitGettingStartedData = (profileImage) => {
 
+    const handleSubmit = (profileImage, callback) => {
+        if (!profileImage) {
+            return  callback("please provide a profile picture")
+        }
+        const values = {...contactData,...locationData,...profileImage}
+        const formData = new FormData();
+            const formValuesArr = Object.keys(values).map( keys => ({name: keys, value: values[keys]}));
+            console.log("values are",formValuesArr)
+            for (let i = 0; i < formValuesArr.length; i++) {
+                formData.append(formValuesArr[i].name , formValuesArr[i].value);
+            }
+        //    TODO send data to server using axios
+            const userData = {
+                product: values 
+            }
     }
 
     const values = {
@@ -49,7 +60,8 @@ export function GetStartedContextProvider(props) {
         setProfile: setProfile,
         setIsContactDataSet: setIsContactDataSet,
         setIsLocationDataSet: setIsLocationDataSet,
-        setIsProfileDataSet: setIsProfileDataSet
+        setIsProfileDataSet: setIsProfileDataSet,
+        handleSubmit: handleSubmit
     }
 
     return(

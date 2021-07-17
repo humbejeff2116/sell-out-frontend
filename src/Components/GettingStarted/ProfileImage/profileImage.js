@@ -13,10 +13,11 @@ import './profileImage.css';
 
 export default function ProfileImage(props) {
     const [redirect, setRedirect] = useState('');
-    const [profile, setProfileImage] = useState(null)
+    const [profile, setProfileImage] = useState(null);
+    const [profileError, setProfileError] = useState('')
     const location = useLocation();
     const history = useHistory();
-    const {profileImage, setProfile,setIsLocationDataSet, setIsProfileDataSet} = useGetStartedContext();
+    const {profileImage, setProfile, setIsLocationDataSet, setIsProfileDataSet, handleSubmit} = useGetStartedContext();
     useEffect(() => {  
         window.scrollTo(0, 0);
     }, []);
@@ -29,9 +30,16 @@ export default function ProfileImage(props) {
     }
     const handleImageChange = (e) => {
         setProfileImage({
-            [e.target.name] : (e.currentTarget.files.length > 0) ? e.currentTarget.files : e.currentTarget.files[0] 
+            [e.target.name] : e.currentTarget.files[0] 
         });
+        setProfileError('')
     }
+    const profileImageError = (errorMssg) => {
+        window.scrollTo(0, 0)
+        setProfileError(errorMssg)
+    }
+    
+
 
     if(redirect) {
         return (
@@ -47,7 +55,10 @@ export default function ProfileImage(props) {
                    <img src="" alt="profile avatar"/>
                </div>
                <div>
-               <input type="file" multiple ="multiple" name="profileImage" onChange={ handleImageChange } placeholder="images*"  />
+               <input type="file"  name="profileImage" onChange={ handleImageChange } placeholder="images*" />
+               </div>
+               <div>
+                {profileError || ''}
                </div>
 
            </div>
@@ -63,13 +74,13 @@ export default function ProfileImage(props) {
                </div>
 
            </div>
-           {/* upload button */}
+          
            <div className="getting-started-profile-image-buttons">
                <div className="getting-started-profile-image-back-button">
                    <button onClick={()=> goBack()}>Go Back</button>
                </div>
                <div className="getting-started-profile-image-upload-button">
-                   <button onClick={ f => f }>Upload Profile</button>
+                   <button onClick={ ()=> handleSubmit(profile, profileImageError)}>Upload Profile</button>
                </div>
 
            </div>

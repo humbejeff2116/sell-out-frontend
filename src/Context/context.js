@@ -30,6 +30,7 @@ const initialGetStartedContext = {
     setContact: ()=> {},
     setLocation: ()=> {},
     setProfile: ()=> {},
+    handleSubmit: ()=> {}
 }
 
 export const AuthContext = createContext(initialAuthContext);

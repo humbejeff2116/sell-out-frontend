@@ -62,7 +62,7 @@
   
 
 
-/* @keyframes animateLoginModal{
+@keyframes animateLoginModal{
     from{
         right: -12px;
         opacity:0;
@@ -73,15 +73,15 @@
         opacity:1;
         transition:all;
     }
-} */
-@keyframes animateLoginModal{
+}
+/* @keyframes animateLoginModal{
     from{
       top: -400px;
       opacity:0;
       transition:all;
       
     }
-}
+} */
 
 
 .login-modal-form-container{
