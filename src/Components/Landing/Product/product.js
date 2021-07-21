@@ -13,7 +13,6 @@ import './product.css';
 
 export default function LandingProducts(props) {
     const [products, setProducts] = useState([]);
-    const { setErrorMessage } = props;
    
     useEffect(()=> {
         let mounted = true;
@@ -33,13 +32,10 @@ export default function LandingProducts(props) {
             }
              
         });
-        socket.on('unRegisteredUser', function(response) {
-            setErrorMessage(response.message)
-        });
         return ()=> {
             mounted = false
         }
-    }, [setErrorMessage]);
+    }, []);
     const getProductsData = ( ) => { 
         socket.emit('getProducts');
     }
@@ -68,7 +64,6 @@ export default function LandingProducts(props) {
 
 export function LandingServices(props) {
     const [services, setServices] = useState([]);
-    const { setErrorMessage } = props;
    
     useEffect(()=> {
         let mounted = true;
@@ -87,13 +82,11 @@ export function LandingServices(props) {
                 getServicesData(); 
             }    
         });
-        socket.on('unRegisteredUser', function(response) {
-            setErrorMessage(response.message)
-        })
+       
         return ()=> {
             mounted = false
         } 
-    }, [setErrorMessage]);
+    }, []);
     const getServicesData = ( ) => {  
         socket.emit('getServices');
 

@@ -7,6 +7,7 @@ import React, {useState, useEffect} from 'react';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 import {CommentBox} from './commentBox';
+import './product.css';
 
 
 

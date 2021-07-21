@@ -1,0 +1,53 @@
+
+
+
+
+
+.index-product-profile-panel{
+    display:flex;
+    border: 1px solid black;
+    min-height:7vh;
+
+
+}
+.index-product-profile{
+    width:70%;
+    border: 1px solid red;
+
+}
+.index-product-profile-star{
+    width:30%;
+    border: 1px solid red;
+
+}
+.index-product-image-panel{
+    min-height:30vh;
+    border: 1px solid green;
+
+}
+.index-product-image{
+    border: 1px solid black;
+    min-height:30vh;
+
+}
+.index-product-image-details{
+    border: 1px solid black;
+    min-height:20vh;
+    
+}
+.index-product-reaction-panel{
+    border: 1px solid red;
+    display:flex;
+    min-height:7vh;
+
+}
+.index-product-reaction-star{
+    border: 1px solid black;
+    width:50%;
+
+}
+.index-product-reaction-comments{
+    border: 1px solid black;
+    width:50%;
+
+}

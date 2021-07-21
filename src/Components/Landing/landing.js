@@ -3,20 +3,31 @@
 
 
 
-import React,{useState, Suspense, useEffect} from 'react';
+import React,{useState, useEffect} from 'react';
+import socket from '../Socket/socket';
 import Header from './Header/header';
 import LandingInfoCard from './InfoCard/landingInfoCard';
 import LandingFooter from './Footer/landingFooter';
 import LandingProduct, {LandingServices} from './Product/product';
 import { ErrorModal } from '../ModalBox/errorModal';
 import './landing.css';
-
 import LoginModal from '../LoginModal/loginModal';
-// const LoginModal = React.lazy(()=> import('../LoginModal/loginModal'));
+
 
 export default function LandingComponent(props) {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    useEffect(()=> {
+        let mounted = true;
+        socket.on('unRegisteredUser', function(response) {
+            if(mounted){
+                setErrorMessage(response.message)
+            }    
+        });
+        return ()=> {
+            mounted = false
+        }
+    }, []);
    
 
     const closeLoginModal = function() {
@@ -45,8 +56,8 @@ export default function LandingComponent(props) {
                 <LandingInfoCard/>
             </div>
             <div className="landing-center">
-                <LandingProduct setErrorMessage={setErrorMessage}/>
-                <LandingServices setErrorMessage={setErrorMessage} />
+                <LandingProduct />
+                <LandingServices  />
             </div>
 
             <div className="landing-footer" >
