@@ -24,6 +24,10 @@ export default function LandingComponent(props) {
                 setErrorMessage(response.message)
             }    
         });
+        socket.on('showInterestError', function(response) {
+            const { message } = response;
+            setErrorMessage(message)
+        });
         return ()=> {
             mounted = false
         }

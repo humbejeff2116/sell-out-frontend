@@ -8,6 +8,7 @@ import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 import {CommentBox} from './commentBox';
 import './product.css';
+import image from '../../Images/avatar.jpg';
 
 
 
@@ -118,7 +119,7 @@ export  function DisplayedProduct(props) {
             <CommentBox 
             product={product}
             closeCommentBox={closeCommentBox}
-            panelClassName={props.panelClassName}
+            commentBoxPanelClassName={props.panelClassName}
              />
         )
     }
@@ -145,7 +146,7 @@ export  function DisplayedProduct(props) {
                 <div className="index-product-reaction-star">heart</div>
                 <div className="index-product-reaction-star">
                     <i onClick={()=> showInterest( product, user, interested)}>
-                        intrested 
+                        Intrested 
                         {
                             (product.interests && product.interests.length) ? product.interests.length: ''
                         }
@@ -166,7 +167,7 @@ function Comment(props) {
 }
 
 function Star(props) {
-    const className =  props.starCount ? "index-profile-star filled" : "index-profile-star";
+    const className =  props.starCount ? "index-product-profile-star filled" : "index-product-profile-star";
     return (
         <div className={className} onClick={()=> props.starSeller(props.product, props.user, props.starCount)}>
             stars 
@@ -187,7 +188,7 @@ function ProfileAvatar(props) {
 
     return (
         <div className="index-product-profile">
-            <img src={product.sellerProfilePicture} alt="seller" width="100%" height="auto" />
+            <img src={image} alt="seller" width="100%" height="auto" />
             <span onClick={viewSeller(product)}>{product.userName}</span>
         </div>
     )

@@ -1,3 +1,13 @@
+
+
+
+.getting-started-location-heading{  
+    width:100%;
+    border:1px solid green;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
 .location-form-address{
     display:flex;
     flex-direction: row;
@@ -12,6 +22,7 @@
     border:1px solid red;
 }
 
+
 .getting-started-location-body form select{
 
     padding:12px 12px 12px 5px;
@@ -23,12 +34,10 @@
     transition: border-color 0.3s ease;
 }
 .getting-started-location-body form textarea{
-
-    /* padding:12px 12px 12px 5px; */
     border-radius: 4px;
     outline:none;  
     font-weight: bold;
-    width: 90%;
+    width: 98%;
     border:2px solid #222;
     transition: border-color 0.3s ease;
     display:flex;

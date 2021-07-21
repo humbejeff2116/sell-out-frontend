@@ -18,7 +18,7 @@ export default function Index() {
     const [insideLoginError, setinsideLoginError] = useState('');
     useEffect(()=> {
         let timer = null;
-        socket.on('insideLoginError', function(response) {
+        socket.on('showInterestError', function(response) {
             const { message } = response;
             setinsideLoginError(message);
         });

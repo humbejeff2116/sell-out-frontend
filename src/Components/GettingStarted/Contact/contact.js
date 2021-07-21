@@ -10,6 +10,8 @@ import * as Yup from 'yup';
 import { TextInput } from '../../Formik/formik';
 // import socket from '../../Socket/socket';
 import { useGetStartedContext } from '../../../Context/context';
+import image from '../../../Images/avatar.jpg'
+import useAuth from '../../../Context/context';
 
 import './contact.css';
 
@@ -19,6 +21,7 @@ import './contact.css';
 export default function Contact(props) {
     const [redirect, setRedirect] = useState('');
     const {contactData, setContact, setIsContactDataSet} = useGetStartedContext();
+    const { user } = useAuth();
     const location = useLocation();
     const history = useHistory();
 
@@ -52,11 +55,9 @@ export default function Contact(props) {
             {/* flex row */}
             <div className="getting-started-contact-avatar">
                 <div className="getting-started-contact-img">
-                    <div><img src="" alt="avatar" /></div>
+                    <div><img src={image} alt="avatar" /></div>
                 </div>
-                 <div className="getting-started-contact-hr">
-                    
-                 </div>
+                
             </div>
 
             <div className="getting-started-contact-heading">
@@ -66,7 +67,8 @@ export default function Contact(props) {
             <div className="getting-started-contact-body">                            
                 <Formik
                     initialValues = {{
-                        contactEmail: contactData ?  contactData?.contactEmail : '',
+                        contactEmail: (user && !contactData) ? user.userEmail :
+                         contactData ?  contactData?.contactEmail : '',
                         contactNumber: contactData ? contactData?.contactNumber : '',
                     }}
 

@@ -31,22 +31,22 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    width:60%;
+    width:100%;
     border: 1px solid red;
-
 }
-.getting-started-contact-hr{
-    min-height: 20vh;
-    /* display:flex;
-    flex-direction: column; */
-    /* justify-content: center;
-    align-items: center; */
-    width:40%;
-    border: 1px solid red;
 
+.getting-started-contact-img img{
+    
+    border-radius: 50%; 
+    height:180px;
+    width:180px;
+    object-fit: cover;
+    object-position: center;
+    border:1px solid red;
+    /* border:1px solid red; */
 }
+
 .getting-started-contact-heading{
-    min-height: 15vh;
     width:100%;
     border:1px solid green;
     display:flex;

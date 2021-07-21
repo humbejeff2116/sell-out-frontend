@@ -14,6 +14,7 @@ import * as Yup from 'yup';
 import {TextAreaInput,Select} from '../../Formik/formik';
 import socket from '../../Socket/socket';
 import { useGetStartedContext } from '../../../Context/context';
+import image from '../../../Images/avatar.jpg'
 
 import './location.css';
 import '../Contact/contact.css';
@@ -55,14 +56,14 @@ export default function Location(props) {
            
             <div className="getting-started-contact-avatar">
                 <div className="getting-started-contact-img">
-                    <div><img src="" alt="avatar" /></div>
+                    <img src={image} alt="avatar" />
                 </div>
-                 <div className="getting-started-contact-hr">
+                 {/* <div className="getting-started-contact-hr">
                     
-                 </div>
+                 </div> */}
             </div>
 
-            <div className="getting-started-contact-heading">
+            <div className="getting-started-location-heading">
                 <p>Kindly enter your address details below</p>
             </div>
             
@@ -113,14 +114,16 @@ export default function Location(props) {
                         </div>
                     
                     
-                    </div> 
-                <TextAreaInput
+                    </div>
+                   
+                    <TextAreaInput
                     label="Address"
                     labelClassName="location-form-group"
                     name="address"
                     type="text"
                     errorClass="contact-form-error"
-                />
+                /> 
+                
                 <div className="getting-started-contact-buttons">
                 <div className="getting-started-contact-back-button">
                     <button onClick={()=>goBack()} >

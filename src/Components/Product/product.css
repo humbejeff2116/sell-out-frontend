@@ -5,17 +5,33 @@
 
 .index-product-profile-panel{
     display:flex;
+    
     border: 1px solid black;
     min-height:7vh;
-
-
 }
 .index-product-profile{
+    display:flex;
+    /* justify-content: center; */
+    align-items: center;
     width:70%;
+    margin-left:1%;
     border: 1px solid red;
 
 }
+.index-product-profile img{
+    border-radius: 50%; 
+    height:30px;
+    width:30px;
+    /* padding-left: 2%; */
+    object-fit: cover;
+    object-position: center;
+    
+
+}
 .index-product-profile-star{
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width:30%;
     border: 1px solid red;
 
@@ -43,11 +59,168 @@
 }
 .index-product-reaction-star{
     border: 1px solid black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width:50%;
 
 }
 .index-product-reaction-comments{
     border: 1px solid black;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width:50%;
+
+}
+
+
+.product-comment-container{
+    border: 1px solid yellow;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.product-comment-close-bttn-contr{
+    border: 1px solid yellow;
+    display: flex;
+    justify-content: flex-end;
+
+}
+.product-comment-close-bttn{
+    width:20%;
+    border: 1px solid black;
+    
+
+}
+.product-comment-error{
+
+}
+
+.product-comment-close-bttn button{
+    width:100%;
+    /* height:10px; */
+
+}
+.product-comments-container{
+    border: 3px solid black;
+    height:40vh;
+    overflow-y: scroll;
+
+}
+.product-comment-input{
+    display:flex;
+    flex-direction: column;
+
+}
+
+.product-comment-input textarea{
+    margin:2% 0 2% 0;
+   
+}
+.product-comment-input-bttn{
+    border: 1px solid black;
+    display: flex;
+    justify-content: flex-end;
+   
+}
+.product-comment-input-bttn button{
+   width:100%;
+   height:35px;
+}
+
+.product-comment-panel{
+    border: 1px solid black;
+    margin:4% 0 4% 0;
+
+}
+.product-comment-info{
+    border: 1px solid red;
+
+}
+.product-comment-profile{
+    border: 1px solid black;
+    display:flex;
+    /* justify-content: center; */
+    align-items: center;
+
+}
+.product-comment-profile img{
+    border: 1px solid black;
+    border-radius: 50%; 
+    height:25px;
+    width:25px;
+    object-fit: cover;
+    object-position: center;
+    
+}
+.product-comment-message{
+    border: 1px solid black;
+    width:89%;
+    margin-left: auto;
+
+}
+.product-comment-buttons-cntr{
+    justify-content: flex-end;
+    display: flex ;
+    border: 1px solid green;
+    padding-bottom: 2%;
+
+}
+.product-comment-bttn{
+    display: flex ;
+    justify-content: center;
+    /* border: 1px solid red; */
+    /* width:30%; */
+    margin-left: 2%;
+
+}
+.product-comment-bttn button{
+    /* width:100%; */
+   
+}
+.product-comment-reply-container{
+    border: 1px solid green;
+    margin:4% 0 4% 0;
+    width:90%;
+    margin-left: auto;
+
+}
+.product-comment-reply-input{
+    display:flex;
+    flex-direction: column;
+
+}
+.product-comment-reply-input button{
+    height: 30px;
+    
+   
+}
+.product-comment-replies{
+    border: 1px solid red;
+
+}
+.product-comment-reply-profile{
+    border: 1px solid black;
+    display:flex;
+    /* justify-content: center; */
+    align-items: center;
+
+}
+.product-comment-reply-profile img{
+    border: 1px solid black;
+    border-radius: 50%; 
+    height:20px;
+    width:20px;
+    object-fit: cover;
+    object-position: center;
+
+}
+.product-comment-reply-message{
+    border: 1px solid black;
+    width:89%;
+    margin-left: auto;
 
 }
