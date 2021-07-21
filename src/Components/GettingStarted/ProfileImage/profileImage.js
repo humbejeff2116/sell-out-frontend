@@ -3,9 +3,10 @@
 
 
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useGetStartedContext } from '../../../Context/context';
+import { ImWarning } from 'react-icons/im';
 import useAuth from '../../../Context/context';
 import './profileImage.css';
 
@@ -14,26 +15,29 @@ import './profileImage.css';
 
 export default function ProfileImage(props) {
     const [redirect, setRedirect] = useState('');
-    const [profile, setProfileImage] = useState(null);
-    const [profileError, setProfileError] = useState('')
+    const [imageFile, setImageFile] = useState(null);
+    const [displayImage, setDisplayImage] = useState(null);
+    const [profileError, setProfileError] = useState('');
     const location = useLocation();
     const history = useHistory();
-    const {setUserData, setTokenData} = useAuth();
-    const {profileImage, setProfile, setIsLocationDataSet, setIsProfileDataSet, handleSubmit} = useGetStartedContext();
+    const {user, setUserData, setTokenData} = useAuth();
+    const {profileImage, setProfile, setIsLocationDataSet, setIsProfileDataSet, handleSubmit, getDetails} = useGetStartedContext();
     useEffect(() => {  
         window.scrollTo(0, 0);
     }, []);
     const goBack = ( ) => {
         setIsLocationDataSet(false)
         setIsProfileDataSet(false)
-        setProfile(profile); 
+        setProfile(displayImage); 
         history.push(location.pathname);
         setRedirect('/getting-started/location');   
     }
     const handleImageChange = (e) => {
-        setProfileImage({
+        setImageFile({
             [e.target.name] : e.currentTarget.files[0] 
         });
+        setDisplayImage(URL.createObjectURL(e.currentTarget.files[0]))
+        setProfile(URL.createObjectURL(e.currentTarget.files[0]));
         setProfileError('')
     }
     const profileImageError = (errorMssg) => {
@@ -48,38 +52,49 @@ export default function ProfileImage(props) {
         setRedirect('/home');
     }
     
-
-
     if(redirect) {
         return (
             <Redirect to={redirect} />
         )
     }
+    const imageError = (<><ImWarning/>{profileError}</>);
+    const formDetails = getDetails();
 
     return (
         <div className="getting-started-profile-image-container">
             {/* profile avatar */}
            <div className="getting-started-profile-image">
-               <div>
-                   <img src="" alt="profile avatar"/>
+               <div className="getting-started-image">
+                   <img 
+                    src={
+                       displayImage ? displayImage : 
+                       profileImage ? profileImage : ""
+                    } 
+                    alt="profile avatar"
+                   />
                </div>
-               <div>
-               <input type="file"  name="profileImage" onChange={ handleImageChange } placeholder="images*" />
+               <div className="getting-started-input">
+               <input type="file"  name="profileImage" onChange={ handleImageChange }  />
                </div>
-               <div>
-                {profileError || ''}
+               <div className="getting-started-error">
+                <span>{ profileError ? imageError : ''}</span>
                </div>
 
            </div>
            {/* profile details */}
            <div className="getting-started-profile-image-info-contr">
                <div className="getting-started-profile-image-info">
-                 <span>full name</span>
-                 <span>email</span>
-                 <span>contact number</span>
-                 <span>country</span>
-                 <span>city</span>
-                 <span>address</span>
+                {
+                    <>
+                    <div><span className="getting-started-info-group">Full Name: </span><span>{user?.fullName}</span></div>
+                    <div><span className="getting-started-info-group">Contact Email: </span><span>{formDetails?.contactEmail}</span></div>
+                    <div><span className="getting-started-info-group">Contact Number: </span><span>{formDetails?.contactNumber}</span></div>
+                    <div><span className="getting-started-info-group">Country: </span><span>{formDetails?.country}</span></div>
+                    <div><span className="getting-started-info-group">City: </span><span>{formDetails?.city}</span></div>
+                    <div><span className="getting-started-info-group">Address: </span><span>{formDetails?.address}</span></div>
+                    </>
+                
+                }
                </div>
 
            </div>
@@ -89,7 +104,7 @@ export default function ProfileImage(props) {
                    <button onClick={()=> goBack()}>Go Back</button>
                </div>
                <div className="getting-started-profile-image-upload-button">
-                   <button onClick={ ()=> handleSubmit(profile, profileImageError, userUpdatedSuccessful)}>Upload Profile</button>
+                   <button onClick={ ()=> handleSubmit(imageFile, user, profileImageError, userUpdatedSuccessful)}>Upload Profile</button>
                </div>
 
            </div>
@@ -97,5 +112,3 @@ export default function ProfileImage(props) {
     )
 
 }
-
-

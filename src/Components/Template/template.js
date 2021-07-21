@@ -67,6 +67,7 @@ function InsideLoginTemplateChildren(props) {
             <div className="inside-login-template-center">
                 {props.children}
             </div>
+            
         </div>
     )
 
@@ -76,12 +77,16 @@ export function GettingStartedTemplate(props) {
     return (
         <>
         <Header dontShowMainNav={true}/>
+        <LeftSideBar 
+             fixed={true}
+            top={props.leftSideBarTop} 
+            center={props.leftSideBarCenter} 
+            bottom={props.leftSideBarBottom} 
+            />
         <GettingStartedTemplateChildren
-        leftSideBarTop={props.leftSideBarTop}
-        leftSideBarCenter={props.leftSideBarCenter}
-        leftSideBarBottom={props.leftSideBarBottom} 
         children={props.children} />
-        <LandingFooter/>
+        {/* <LandingFooter footerClassName={'gettingStarted-footer'} /> */}
+       
         </>
     )
 }
@@ -89,11 +94,6 @@ export function GettingStartedTemplate(props) {
 function GettingStartedTemplateChildren(props) {
     return (
         <div className="getting-started-template-container">
-            <LeftSideBar 
-            top={props.leftSideBarTop} 
-            center={props.leftSideBarCenter} 
-            bottom={props.leftSideBarBottom} 
-            />
             <div className="getting-started-template-center">
                 {props.children}
             </div>

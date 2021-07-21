@@ -130,7 +130,7 @@ export  function DisplayedProduct(props) {
                user = {user}
                 // stars={stars}
                 starCount={starCount}
-                starClicke={starClicked}
+                starClicked={starClicked}
                 starSeller={starSeller}
                />
             </div>

@@ -15,20 +15,20 @@ const loginServerHTTP = httpBase(LOGIN_SERVER_URI);
 const gatewayServerHTTP = httpBase(GATEWAY_SERVER_URI);
 
 export function getInterests(user) {
-    return loginServerHTTP.get(`/interests`,user);
+    return loginServerHTTP.get(`/interests`, user);
 }
 
 export function getConfirmations(user) {
-    return loginServerHTTP.get(`/interests`,user);
+    return loginServerHTTP.get(`/interests`, user);
 }
 
 export function uploadProduct(data) {
-    return productServerHTTP.get(`/upload-product`,data);
+    return productServerHTTP.get(`/upload-product`, data);
 }
 export function updateUser(userData) {
-    return loginServerHTTP.post(`/update-user`,userData);
+    return loginServerHTTP.post(`/update-user`, userData);
 }
 
 export function uploadService(data) {
-    return productServerHTTP.get(`/upload-service`,data);
+    return productServerHTTP.get(`/upload-service`, data);
 }

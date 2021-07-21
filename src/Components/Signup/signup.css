@@ -37,7 +37,7 @@
     display:flex;
     flex-direction:column;
     min-height: 60vh;
-    border:1px solid red;
+    border:2px solid red;
     width:75%;
     margin-left:auto;
     margin-right: auto;
@@ -217,6 +217,11 @@
 }
 
 @media only screen  and (max-width: 600px) {
+    .signup-container{
+     
+        margin-top:10%;
+        margin-bottom: 10%;
+    }
    
 
 }

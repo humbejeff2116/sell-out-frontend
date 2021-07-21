@@ -32,7 +32,9 @@
     width:75%;
     margin-left:auto;
     margin-right: auto;
-    margin:auto auto auto auto;
+    margin-top:10%;
+    margin-bottom: 10%;
+    /* margin:auto auto auto auto; */
 }
 
 .login-panel{
@@ -45,7 +47,7 @@
     margin-top:2.5%;
     margin-bottom:2%;
     position:relative;
-    /* box-shadow:0 0 5px rgba(117, 116, 116, 0.6); */
+   
 }
 
 .login-panel-heading{
@@ -58,9 +60,7 @@
 .login-panel-body{
     display:flex;
     flex-direction:column;
-    /* justify-content: center;
-    align-items: center; */
-    /* min-height:50vh; */
+    
     border:1px solid green;
 }
 
@@ -112,8 +112,7 @@
     border-radius: 4px;
     outline:none;
    
-    /* height:49px; */
-    /* font-size: 0.95em; */
+    
     
     font-weight: bold;
    
@@ -228,9 +227,9 @@
 @media only screen  and (max-width: 600px) {
     .login-err-cont{
         width:85%;
-        /* position: absolute; */
+       
         top:80%;
-        /* z-index: 1; */
+       
     }
     .login-panel{
         width:80%;

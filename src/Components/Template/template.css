@@ -11,10 +11,8 @@
 .login-template-left{
     border:1px solid black;
     width:20%
-
 }
 .login-template-logo{
-
     border:1px solid red;
     display:flex;
     flex-direction: column;
@@ -22,20 +20,16 @@
     align-items: center;
     min-height:10vh;
     margin-top:5%;
-
 }
 .login-template-center{
     border:1px solid black;
     width:60%;
     display:flex;
     flex-direction: column;
-    justify-content: center;
-
 }
 .login-template-right{
     border:1px solid black;
     width:20%
-
 }
 
 
@@ -45,17 +39,18 @@
     top: 8vh;
     margin-left:28%;
     margin-right:28%;
-   
     min-height: 150vh;
-
 }
 
 .getting-started-template-container{
-    display:flex;
-    flex-direction: row;
-    position: relative; 
+    border: 1px solid blue;
+    position: relative;
     margin-top: 8vh;
-    border: 1px solid red 
+    margin-left:28%;
+    /* margin-right:28%; */
+}
+.gettingStarted-footer{
+    margin-left:28%;
 }
 .getting-started-template-nav{
     border: 1px solid black;
@@ -64,6 +59,7 @@
 
 .getting-started-template-center{
     border: 1px solid red;
-    width:45%;
-
+    width:70%;
+    display:flex;
+    flex-direction: column;
 }

@@ -3,32 +3,95 @@
     flex-direction: column;
     justify-content: center;
     border: 2px solid blue;
-    height:92vh;
+    min-height:92vh;
   
 
 }
 .getting-started-profile-image{
     min-height: 40vh;
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid blue;
+    border: 3px solid rgb(0, 255, 76);
 
 }
+
+.getting-started-image{
+    border:1px solid yellow;
+    margin-top: 5%;
+    height:200px;
+    width:200px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.getting-started-image img{
+    
+    border-radius: 50%; 
+    height:200px;
+    width:200px;
+    object-fit: cover;
+    object-position: center;
+    border:1px solid red;
+    /* border:1px solid red; */
+}
+.getting-started-input{
+    border:1px solid red;
+    /* height:100px; */
+    width:200px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.getting-started-input input{
+    /* border:1px solid red; */
+    height: 30px;
+    padding:4px;
+    
+    
+}
+.getting-started-error{
+    border:1px solid red;
+    height:25px;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.getting-started-error span{
+    color: rgb(224, 44, 44);
+}
+
+
+
+
+
 .getting-started-profile-image-info-contr{
     min-height: 30vh;
-    border: 1px solid red;
-
+    border: 3px solid red;
+    display:flex;
+    flex-direction: column;
+    
+    
 }
 .getting-started-profile-image-info{
     display:flex;
     flex-direction: column;
+    border: 2px solid black;
+    width:98%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
 
+}
+.getting-started-info-group{
+    font-weight:bold;
 }
 .getting-started-profile-image-buttons{
     
-    height: 15vh;
+    min-height: 15vh;
     border:1px solid red;
     display:flex;
     flex-direction: row;

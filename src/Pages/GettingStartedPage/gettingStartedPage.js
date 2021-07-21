@@ -51,3 +51,6 @@ function GettingStartedPageComp({match}) {
 
 const GettingStartedPage = RequireAuthentication(GettingStartedPageComp);
 export default GettingStartedPage;
+
+
+    

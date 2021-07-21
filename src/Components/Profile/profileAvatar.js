@@ -4,7 +4,7 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import './profileAvatar.css';
-import image from '../../Images/about-me.png';
+import image from '../../Images/avatar.jpg';
 
 
 
@@ -22,7 +22,7 @@ function Avatar(props) {
     return (
         <>
             <div className="profile-avatar-image">
-            <img src={image} width="100%" height="100%" alt="profile avatar" />
+            <img src={image} alt="profile avatar" />
             </div>
             <div className="profile-avatar-username">
                 <span>Humbe Jeffrey</span>
