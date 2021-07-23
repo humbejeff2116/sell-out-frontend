@@ -18,16 +18,21 @@ export default function Index() {
     const [insideLoginError, setinsideLoginError] = useState('');
     useEffect(()=> {
         let timer = null;
+        let mounted = true;
         socket.on('showInterestError', function(response) {
             const { message } = response;
-            setinsideLoginError(message);
+            if (mounted) {
+                setinsideLoginError(message);
+            }
+            
         });
-        if (insideLoginError) {
+        if (insideLoginError && mounted) {
             timer = setTimeout(() => {
                 setinsideLoginError('');   
             }, 12000);
         }
         return ()=> {
+            mounted = false;
             if (timer) {
                 clearTimeout(timer)
             }   

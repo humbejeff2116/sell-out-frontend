@@ -67,8 +67,7 @@ export function CommentBox(props) {
                     <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
                     <div className="product-comment-input-bttn">
                     <button type="button" onClick={()=>makeReview(product, user, reviewValue)}> Send</button>
-                    </div>
-                    
+                    </div>  
                 </div>
             </div>    
         </div>  

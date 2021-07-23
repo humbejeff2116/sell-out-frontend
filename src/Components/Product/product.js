@@ -15,26 +15,24 @@ import image from '../../Images/avatar.jpg';
 
 export  function DisplayedProduct(props) {
     let [starCount, setStarCount] = useState(0);
-    const [stars, setStars] = useState(null);
+    const [starsUserRecieved, setStarsUserRecieved] = useState([]);
     const [interested, setInterested] = useState(false);
     const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
-    const { product } = props;
+    const { product, panelClassName } = props;
     const { user } = useAuth();
 
     useEffect(() => {
         if (user) { 
             setStarOnLoad(user, product, setStarCount);
             setInterestOnLoad(user, product, setInterested);
-        };
-
+            setStarsUserRecieved(product.starsUserRecieved);  
+        } 
     }, [product, user]);
-
 
     const setStarOnLoad = (user, product, callback) => {
         const userEmail = user.userEmail;
         const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved: null;
-        
         let starCount = 0;
         if(starsUserRecieved) {
             for (let i = 0; i < starsUserRecieved.length; i++) {
@@ -44,14 +42,18 @@ export  function DisplayedProduct(props) {
                 }
             }
             return callback(starCount);
-
-        }
-        
+        }   
     }
-
-   
+  
     const starSeller = (product, user, star) => {
-        if(!star) {
+        const addeStar = {
+            star: star, 
+            starGiverEmail: user.userEmail, 
+            starGiverId: user.id,
+            starGiverFullName: user.fullName
+        }
+        if (!star) {
+            setStarsUserRecieved(currentState => [...currentState, addeStar]);
             setStarClicked(true);
             setStarCount(++starCount);
             const data = {
@@ -62,8 +64,10 @@ export  function DisplayedProduct(props) {
             socket.emit('starSeller', data );
             return;
         }
+        setStarsUserRecieved(currentState => currentState.filter( star => star.starGiverEmail !== user.userEmail));
         setStarClicked(false);
         setStarCount(--starCount);
+        
         const data = {
             product,
             user,
@@ -119,18 +123,18 @@ export  function DisplayedProduct(props) {
             <CommentBox 
             product={product}
             closeCommentBox={closeCommentBox}
-            commentBoxPanelClassName={props.panelClassName}
+            commentBoxPanelClassName={panelClassName}
              />
         )
     }
     return (
-        <div className={props.panelClassName}>
+        <div className={panelClassName}>
             <div className="index-product-profile-panel">
                 <ProfileAvatar product={product} />
                <Star
-               product={product}
-               user = {user}
-                // stars={stars}
+                product={product}
+                user = {user}
+                starsUserRecieved={starsUserRecieved}
                 starCount={starCount}
                 starClicked={starClicked}
                 starSeller={starSeller}
@@ -159,21 +163,23 @@ export  function DisplayedProduct(props) {
 }
 
 function Comment(props) {
+    const {openCommentBox} =props;
     return (
         <div className="index-product-reaction-comments">
-           <i onClick={props.openCommentBox}> comment </i>
+           <i onClick={ openCommentBox }> comment </i>
         </div>
     )
 }
 
 function Star(props) {
-    const className =  props.starCount ? "index-product-profile-star filled" : "index-product-profile-star";
+    const { starCount, starSeller, product, user, starsUserRecieved } = props;
+    const className =  starCount ? "index-product-profile-star filled" : "index-product-profile-star";
     return (
-        <div className={className} onClick={()=> props.starSeller(props.product, props.user, props.starCount)}>
+        <div className={className} onClick={()=> starSeller(product, user, starCount)}>
             stars 
             { 
-                (props.product.starsUserRecieved && props.product.starsUserRecieved.length) ? 
-                props.product.starsUserRecieved.length : ''
+                (starsUserRecieved && starsUserRecieved.length) ? 
+                starsUserRecieved.length : ''
             }
         </div>
     )
