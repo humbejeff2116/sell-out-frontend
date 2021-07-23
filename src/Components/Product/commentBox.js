@@ -1,7 +1,7 @@
 
 
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar.jpg';
@@ -11,21 +11,18 @@ export function CommentBox(props) {
     const [reviewValue, setReviewValue] = useState('');
     const [reviewError,  setReviewError] = useState(null);
     const { user } = useAuth();
-
+    const {commentBoxPanelClassName, closeCommentBox, product, } = props;
     const textBox = React.createRef();
 
     useEffect(() => {
-        textBox.current.focus();
-        
-        
+        textBox.current.focus();  
     }, [textBox]);
 
     const makeReview = (product, user, reviewMessage) => {
-        const message = reviewMessage.trim();
+        const message = reviewMessage.toString().trim();
         if (!message.length) {
             textBox.current.focus();
-            return setReviewError('error')
-            
+            return setReviewError('error')     
         }
 
         const data = {
@@ -33,21 +30,20 @@ export function CommentBox(props) {
             user: user,
             reviewMessage: reviewMessage
         }
-
         socket.emit('reviewProductOrService', data);
         textBox.current.value = '';
     }
 
-    const handleInputChange = (e) => {
+    const handleInputChange = e => {
         setReviewValue( e.target.value )
     }
 
     return (
-        <div className={props.commentBoxPanelClassName}>
+        <div className={commentBoxPanelClassName}>
             <div className="product-comment-container">
                 <div className="product-comment-close-bttn-contr">
                     <div className="product-comment-close-bttn">
-                        <button onClick={props.closeCommentBox}>Close</button>
+                        <button onClick={closeCommentBox}>Close</button>
                     </div>
                 </div>
                 <div className="product-comment-error">
@@ -61,8 +57,8 @@ export function CommentBox(props) {
                 </div>
                 <div className="product-comments-container">
                     {
-                        ( props.product.comments.length > 0 )  && 
-                        (props.product.comments.map((comment, i) =>
+                        ( product.comments.length > 0 )  && 
+                        (product.comments.map((comment, i) =>
                             <Comment key={i} {...comment} />
                         ))
                     }
@@ -70,36 +66,33 @@ export function CommentBox(props) {
                 <div className="product-comment-input">
                     <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
                     <div className="product-comment-input-bttn">
-                    <button type="button" onClick={()=>makeReview(props.product, user, reviewValue)}> Send</button>
+                    <button type="button" onClick={()=>makeReview(product, user, reviewValue)}> Send</button>
                     </div>
                     
                 </div>
             </div>    
-        </div>
-        
+        </div>  
     )
 }
 
 function Comment(props) {
     const { user } = useAuth();
+    const [likesCommentRecieved, setLikesCommentRecieved] = useState([]);
+    const [unlikesCommentRecieved, setUnlikesCommentRecieved] = useState([]);
     const [showReplies, setShowReplies] = useState(false);
     const [replyMessage, setReplyMessage] = useState('');
-    const [likedComment, setLikedComment] = useState(false);
-    const [unLikedComment, setUnLikedComment] = useState(false);
     const textBox = React.createRef();
-    const { userName, userId, profileImage, comment, _id, replies, likesCommentRecieved, unlikesCommentRecieved } = props;
+    const { userName, userId, profileImage, comment, _id, replies } = props;
     
-
     useEffect(() => {
         if (user) { 
-            setLike(user, likesCommentRecieved, setLikedComment);
-            setUnLike(user, unlikesCommentRecieved, setUnLikedComment) 
+            setLikesCommentRecieved(props.likesCommentRecieved);
+            setUnlikesCommentRecieved(props.unlikesCommentRecieved);
         }
-
-    }, [user, likesCommentRecieved, unlikesCommentRecieved, textBox]);
+    }, [user, props.likesCommentRecieved, props.unlikesCommentRecieved]);
     
     const viewProfile = () => {
-        // TODO... save revieId in a context or local storage and redirect to view profile page
+        // TODO... save reviewId in a context or local storage and redirect to view profile page
     }
     const replyComment = (commentId, user, replyMessage) => {
         const replyReviewData = {
@@ -109,69 +102,71 @@ function Comment(props) {
         }
         socket.emit("replyReviewProductOrService", replyReviewData)
     }
-    const handleInputChange = (e) => {
+    const handleInputChange = e => {
         setReplyMessage( e.target.value )
     }
     const toggleReply = () => {
-        return setShowReplies(state => !state);
+        return setShowReplies(currentState => !currentState);
     }
 
-    const setLike = (user, likesCommentRecieved, callback) => {
-        const userEmail = user.userEmail;
-        const commentLikes = likesCommentRecieved ;
-        
+    const likeComment = (commentId, user) => {
+        const data = {
+            commentId: commentId,
+             user: user,
+        }
+        const like = { likeGiverEmail: user.userEmail, likeGiverId: user.id, likeGiverFullName: user.fullName }
+        const commentLikes = likesCommentRecieved;
         let likedComment = false;
-        if(commentLikes) {
+        if (commentLikes) {
             for (let i = 0; i < commentLikes.length; i++) {
-                if (commentLikes[i].likeGiverEmail === userEmail) {
+                if (commentLikes[i].likeGiverEmail === user.userEmail) {
                     likedComment = true;
                     break;
                 }
             }
            
+            if (likedComment) {
+                setLikesCommentRecieved(currentState => currentState.filter(like => like.likeGiverEmail !== user.userEmail ));
+                setUnlikesCommentRecieved(currentState => currentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
+                socket.emit('likeComment', data );
+                return;
+            }
+            setLikesCommentRecieved([...likesCommentRecieved, like]);
+            setUnlikesCommentRecieved(currrentState => currrentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
+            socket.emit('likeComment', data );
         } 
-         return callback(likedComment); 
-    }
-    const setUnLike = (user, unLikesCommentRecieved, callback) => {
-        const userEmail = user.userEmail;
-        const commentUnLikes = unLikesCommentRecieved;
-        
-        let unLikedComment = false;
-        if(commentUnLikes) {
-            for (let i = 0; i < commentUnLikes.length; i++) {
-                if (commentUnLikes[i].unlikeGiverEmail === userEmail) {
-                    unLikedComment = true;
-                    break;
-                }
-            } 
-        }  
-        return callback(unLikedComment);
     }
 
-    const likeComment = (commentId, user) => {
-        const data = {
-           commentId: commentId,
-            user: user,
-        }
-        socket.emit('likeComment', data );
-        setLikedComment(true);
-        setUnLikedComment(false);
-    }
-
-    const unLikeComment = (commentId, user) => {
+    const disLikeComment = (commentId, user) => {   
         const data = {
             commentId: commentId,
             user: user,
         }
-        
-        socket.emit('unLikeComment', data);
-        setLikedComment(false);
-        setUnLikedComment(true);
+        const dislike = { unlikeGiverEmail: user.userEmail, unlikeGiverId: user.id, unlikeGiverFullName: user.fullName }
+        const commentDislikes = unlikesCommentRecieved;
+        let dislikedComment = false;
+        if (commentDislikes) {
+            for (let i = 0; i < commentDislikes.length; i++) {
+                if (commentDislikes[i].unlikeGiverEmail === user.userEmail) {
+                    dislikedComment = true;
+                    break;
+                }
+            }
+            if (dislikedComment) {
+                setLikesCommentRecieved(currrentState => currrentState.filter(like => like.likeGiverEmail !== user.userEmail ));
+                setUnlikesCommentRecieved(currrentState => currrentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
+                socket.emit('unLikeComment', data );
+                return;
+            }
+            setUnlikesCommentRecieved([...unlikesCommentRecieved, dislike]);
+            setLikesCommentRecieved(currrentState => currrentState.filter(like => like.likeGiverEmail !== user.userEmail ));
+            socket.emit('unLikeComment', data );  
+        }  
     }
 
     return (
         <div className="product-comment-panel">
-        {/* flex row */}
+       
         <div className="product-comment-info">
             <div className="product-comment-profile">
                 <img src={image} alt="profile" />
@@ -181,23 +176,21 @@ function Comment(props) {
                 <span> {comment} </span>
             </div>
         </div>
-        {/* flex row */}
+       
         <div className="product-comment-buttons-cntr">
             <div className="product-comment-bttn">
                 <button onClick={()=> likeComment(_id, user)}><i>like</i></button>
                 <span>
                 {
-                    (likesCommentRecieved && likesCommentRecieved.length > 0) ? 
-                    likesCommentRecieved.length : ''
+                    (likesCommentRecieved && likesCommentRecieved.length > 0) ? likesCommentRecieved.length :  ''
                 }
                 </span>
             </div>
             <div className="product-comment-bttn">
-                <button onClick={()=> unLikeComment(_id, user)}><i>unlike</i></button>
+                <button onClick={()=> disLikeComment(_id, user)}><i>unlike</i></button>
                 <span>
                 {
-                    (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? 
-                    unlikesCommentRecieved.length : ''
+                    (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? unlikesCommentRecieved.length : ''
                 }
                 </span>
             </div>
@@ -208,7 +201,7 @@ function Comment(props) {
         {
             (showReplies) && (
                 <Replies
-                id ={_id}
+                commentId ={_id}
                 handleInputChange={handleInputChange}
                 replyComment={replyComment}
                 repliesCommentRecieved={replies}
@@ -223,28 +216,28 @@ function Comment(props) {
 }
 
 function Replies(props) {
+    const {textBox, repliesCommentRecieved, handleInputChange, replyComment, commentId, user, replyMessage} = props;
     useEffect(() => {
-        props.textBox.current.focus();
-    }, [props.textBox])
+        textBox.current.focus();
+    }, [textBox])
    
     return (
         <div className="product-comment-reply-container">
             {
-                ( props.repliesCommentRecieved && props.repliesCommentRecieved.length > 0 ) && (
+                ( repliesCommentRecieved && repliesCommentRecieved.length > 0 ) && (
                     <div className="product-comment-replies">
                     {
-                        props.repliesCommentRecieved.map((replies, i)=>
+                        repliesCommentRecieved.map((replies, i)=>
                             <Reply key={i} {...replies} />
                         )
                     }     
                     </div>
                 )
-
             } 
             <div className="product-comment-reply-input">
-                <textarea name="reviewMessage" onChange={props.handleInputChange} ref= {props.textBox} />
+                <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
                 <button type="button" 
-                onClick={()=>props.replyComment(props.id, props.user, props.replyMessage)}
+                onClick={()=> replyComment(commentId, user, replyMessage)}
                 > 
                 Reply
                 </button>
@@ -255,19 +248,18 @@ function Replies(props) {
 }
 
 function Reply (props) {
-    const {replyMessage, userName} = props
+    const {replyMessage, userName, viewProfile, userId } = props;
     return (
         <>
         <div className="product-comment-reply-profile">
             <img src={image} alt="profile" />
-            <span onClick={()=>props.viewProfile(props.userId)}>{userName}</span>
+            <span onClick={()=> viewProfile(userId)}>{userName}</span>
         </div>
         <div className="product-comment-reply-message">
             <span>
                 {replyMessage}
             </span>
         </div>
-        
         </>
     )
 }
