@@ -149,6 +149,7 @@
 }
 .index-search-form-error span{
     border:1px solid red;
+    color: rgb(224, 44, 44);
  
   
 
@@ -201,6 +202,7 @@
 .index-error-container{
     border:1px solid red;
     position: fixed;
+    color: rgb(224, 44, 44);
 
 }
 

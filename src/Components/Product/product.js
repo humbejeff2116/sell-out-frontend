@@ -26,8 +26,9 @@ export  function DisplayedProduct(props) {
         if (user) { 
             setStarOnLoad(user, product, setStarCount);
             setInterestOnLoad(user, product, setInterested);
-            setStarsUserRecieved(product.starsUserRecieved);  
+             
         } 
+        setStarsUserRecieved(product.starsUserRecieved);
     }, [product, user]);
 
     const setStarOnLoad = (user, product, callback) => {
@@ -46,14 +47,17 @@ export  function DisplayedProduct(props) {
     }
   
     const starSeller = (product, user, star) => {
-        const addeStar = {
-            star: star, 
-            starGiverEmail: user.userEmail, 
-            starGiverId: user.id,
-            starGiverFullName: user.fullName
-        }
+        
         if (!star) {
-            setStarsUserRecieved(currentState => [...currentState, addeStar]);
+            if(user) {
+                const addeStar = {
+                    star: star, 
+                    starGiverEmail: user.userEmail, 
+                    starGiverId: user.id,
+                    starGiverFullName: user.fullName
+                }
+                setStarsUserRecieved(currentState => [...currentState, addeStar]);
+            }
             setStarClicked(true);
             setStarCount(++starCount);
             const data = {
@@ -64,10 +68,11 @@ export  function DisplayedProduct(props) {
             socket.emit('starSeller', data );
             return;
         }
-        setStarsUserRecieved(currentState => currentState.filter( star => star.starGiverEmail !== user.userEmail));
+        if(user) {
+            setStarsUserRecieved(currentState => currentState.filter( star => star.starGiverEmail !== user.userEmail));
+        }
         setStarClicked(false);
         setStarCount(--starCount);
-        
         const data = {
             product,
             user,

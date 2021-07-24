@@ -96,6 +96,11 @@
 
 }
 .product-comment-error{
+   text-align: center;
+
+}
+.product-comment-error span{
+    color: rgb(224, 44, 44);
 
 }
 

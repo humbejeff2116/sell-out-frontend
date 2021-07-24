@@ -22,7 +22,7 @@ export function CommentBox(props) {
         const message = reviewMessage.toString().trim();
         if (!message.length) {
             textBox.current.focus();
-            return setReviewError('error')     
+            return setReviewError('please type in a comment')     
         }
 
         const data = {
@@ -84,10 +84,8 @@ function Comment(props) {
     const { userName, userId, profileImage, comment, _id, replies } = props;
     
     useEffect(() => {
-        if (user) { 
-            setLikesCommentRecieved(props.likesCommentRecieved);
-            setUnlikesCommentRecieved(props.unlikesCommentRecieved);
-        }
+        setLikesCommentRecieved(props.likesCommentRecieved);
+        setUnlikesCommentRecieved(props.unlikesCommentRecieved);
     }, [user, props.likesCommentRecieved, props.unlikesCommentRecieved]);
     
     const viewProfile = () => {
@@ -102,7 +100,7 @@ function Comment(props) {
         socket.emit("replyReviewProductOrService", replyReviewData)
     }
     const handleInputChange = e => {
-        setReplyMessage( e.target.value )
+        setReplyMessage(e.target.value)
     }
     const toggleReply = () => {
         return setShowReplies(currentState => !currentState);
@@ -113,17 +111,16 @@ function Comment(props) {
             commentId: commentId,
              user: user,
         }
-        const like = { likeGiverEmail: user.userEmail, likeGiverId: user.id, likeGiverFullName: user.fullName }
         const commentLikes = likesCommentRecieved;
-        let likedComment = false;
-        if (commentLikes) {
+        if (user) {
+            const like = { likeGiverEmail: user.userEmail, likeGiverId: user.id, likeGiverFullName: user.fullName }
+            let likedComment = false;
             for (let i = 0; i < commentLikes.length; i++) {
                 if (commentLikes[i].likeGiverEmail === user.userEmail) {
                     likedComment = true;
                     break;
                 }
             }
-           
             if (likedComment) {
                 setLikesCommentRecieved(currentState => currentState.filter(like => like.likeGiverEmail !== user.userEmail ));
                 setUnlikesCommentRecieved(currentState => currentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
@@ -133,7 +130,9 @@ function Comment(props) {
             setLikesCommentRecieved([...likesCommentRecieved, like]);
             setUnlikesCommentRecieved(currrentState => currrentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
             socket.emit('likeComment', data );
-        } 
+            return;
+        }
+        socket.emit('likeComment', data );
     }
 
     const disLikeComment = (commentId, user) => {   
@@ -141,10 +140,10 @@ function Comment(props) {
             commentId: commentId,
             user: user,
         }
-        const dislike = { unlikeGiverEmail: user.userEmail, unlikeGiverId: user.id, unlikeGiverFullName: user.fullName }
         const commentDislikes = unlikesCommentRecieved;
-        let dislikedComment = false;
-        if (commentDislikes) {
+        if (user) {
+            const dislike = { unlikeGiverEmail: user.userEmail, unlikeGiverId: user.id, unlikeGiverFullName: user.fullName }
+            let dislikedComment = false;
             for (let i = 0; i < commentDislikes.length; i++) {
                 if (commentDislikes[i].unlikeGiverEmail === user.userEmail) {
                     dislikedComment = true;
@@ -159,8 +158,10 @@ function Comment(props) {
             }
             setUnlikesCommentRecieved([...unlikesCommentRecieved, dislike]);
             setLikesCommentRecieved(currrentState => currrentState.filter(like => like.likeGiverEmail !== user.userEmail ));
-            socket.emit('unLikeComment', data );  
-        }  
+            socket.emit('unLikeComment', data ); 
+            return;   
+        }
+        socket.emit('unLikeComment', data );   
     }
 
     return (
