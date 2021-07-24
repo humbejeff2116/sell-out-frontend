@@ -80,24 +80,34 @@ function Comment(props) {
     const [unlikesCommentRecieved, setUnlikesCommentRecieved] = useState([]);
     const [showReplies, setShowReplies] = useState(false);
     const [replyMessage, setReplyMessage] = useState('');
-    const textBox = React.createRef();
+    const replyTextBox = React.createRef();
     const { userName, userId, profileImage, comment, _id, replies } = props;
     
     useEffect(() => {
         setLikesCommentRecieved(props.likesCommentRecieved);
         setUnlikesCommentRecieved(props.unlikesCommentRecieved);
+        
     }, [user, props.likesCommentRecieved, props.unlikesCommentRecieved]);
+    
     
     const viewProfile = () => {
         // TODO... save reviewId in a context or local storage and redirect to view profile page
     }
     const replyComment = (commentId, user, replyMessage) => {
+        const message = replyMessage.toString().trim();
+        if (!message.length) {
+            replyTextBox.current.focus();
+            return;
+            // return setReviewError('please type in a comment')     
+        }
         const replyReviewData = {
             commentId,
             user,
-            replyMessage
+            replyMessage: message
         }
-        socket.emit("replyReviewProductOrService", replyReviewData)
+        socket.emit("replyReviewProductOrService", replyReviewData);
+        replyTextBox.current.value = '';
+        replyTextBox.current.focus();
     }
     const handleInputChange = e => {
         setReplyMessage(e.target.value)
@@ -207,7 +217,7 @@ function Comment(props) {
                 repliesCommentRecieved={replies}
                 user={user}
                 replyMessage={replyMessage}
-                textBox={textBox}
+                textBox={replyTextBox}
                 />
             )   
         }
