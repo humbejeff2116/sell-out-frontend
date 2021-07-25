@@ -13,9 +13,11 @@ const initialAuthContext = {
     user: null,
     token: null,
     tokenExpiration: null,
+    viewUserProfileData: null,
     setUserData: ()=>{},
     setTokenData: () =>{},
     isAuthenticated: ()=>{},
+    setViewUserProfileData: ()=>{},
 }
 const initialGetStartedContext = {
     contactData: null,

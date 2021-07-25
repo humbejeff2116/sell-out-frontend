@@ -8,6 +8,80 @@
     justify-content: center;
 
 }
-.notifications{
+.notifications-dropdown-wrapper{
+    position:absolute;
+    border:2px solid red;
+    min-height:70vh;
+    top:14%;
+    left:12%;
+    width:290px;
+    border-radius: 5px;
+    /* background-color: aqua; */
+
+}
+
+.notifications-dropdown-container{
+    /* border:1px solid red; */
+    margin-top:1%;
+    margin-bottom:1%;
+    height:70vh;
+    overflow-y: scroll; 
+}
+.notifications-icon{
+
+}
+.notification{
+    border:1px solid red;
+    display:flex;
+    flex-direction: row;
+    margin-top:4%;
+    margin-bottom:4%;
+    margin-left:2%;
+    margin-right:2%;
+    min-height: 10vh;
+    border-radius: 4px;
+
+}
+.notification-image{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:2px solid black;
+    width:20%;
+}
+.notification-image img{
+    margin-top: 5%;
+    border-radius: 50%; 
+    height:35px;
+    width:35px;
+    object-fit: cover;
+    object-position: center;
+    /* border:1px solid red; */
+
+}
+.notification-details{
+    border:2px solid black;
+    width:60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+
+
+
+}
+.notification-details span{
+   
+   
+
+}
+.notification-time{
+    border:2px solid black;
+    width:20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
 }

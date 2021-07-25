@@ -13,7 +13,7 @@ import { ImWarning } from 'react-icons/im';
 import { Loader } from '../Loader/loader';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput,FileInput, AnimSelect, Select } from '../Formik/formik';
+import { TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../Formik/formik';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 import './uploadProduct.css';
@@ -231,7 +231,7 @@ function ProductForm () {
                     productName: Yup.string().required('product name is Required'),
                     productCountry: Yup.string().required('Field is required'),
                     productState: Yup.string().required('State is required'),
-                    productUsage: Yup.string().required('usage duration is required'),
+                    productUsage: Yup.string().required('usage is required'),
                     productCurrency: Yup.string().required('currency is required'),
                     productPrice: Yup.string().required('price is required'),
                     productContactNumber: Yup.string().required('contact number is required'),
@@ -248,22 +248,24 @@ function ProductForm () {
                         name="productCategory" 
                         value={formValues.productCategory} 
                         errorClass="upload-form-error"
+                        labelClassName="upload-form-select-label"
+                        selectClassName="upload-form-select"
                         >
-                            <option value="">--Select--</option>
+                            <option value="">Select</option>
                             <option value="Electronics">Electronics</option>
                             <option value="Furniture">Furniture</option>
                             <option  value="Books">Books</option>
                             <option  value="Clothes">Clothes</option>
                         </Select>
                     </div>
-                    <div className="upload-form-group-child input">
-                        <TextInput
+                    <div className="upload-form-group-child-input">
+                        <TextAreaInput
                         label="Product Name"
-                        labelClassName="upload-label"
+                        labelClassName="upload-form-textarea-label"
                         name="productName"
                         type="text"
                         placeholder="e.g Nokia 3310"
-                        errorClass="login-modal-form-error"
+                        errorClass="upload-form-textarea-error"
                         />
                     </div>
                    
@@ -271,16 +273,28 @@ function ProductForm () {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <Select label="product Country" name="productCountry" errorClass="login-modal-form-error">
-                            <option value="">--Select--</option>
+                        <Select 
+                        label="product Country" 
+                        name="productCountry" 
+                        errorClass="upload-form-error"
+                        labelClassName="upload-form-select-label"
+                        selectClassName="upload-form-select"
+                        >
+                            <option value="">Select</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="Ghana">Ghana</option>
                             <option value="Congo">Congo</option>
                         </Select>   
                     </div>
                     <div className="upload-form-group-child">
-                        <Select label="product State" name="productState" errorClass="upload-form-error">
-                            <option value="">--Select--</option>
+                        <Select 
+                        label="product State" 
+                        name="productState" 
+                        errorClass="upload-form-error"
+                        labelClassName="upload-form-select-label"
+                        selectClassName="upload-form-select"
+                        >
+                            <option value="">Select</option>
                             <option value="Abia">Abia</option>
                             <option value="Abia">Furniture</option>
                             <option value="Abia">Book</option>
@@ -288,8 +302,14 @@ function ProductForm () {
                         </Select> 
                     </div>
                     <div className="upload-form-group-child">
-                        <Select label="product Usage" name="productUsage" errorClass="upload-form-error">
-                            <option value="">--Select--</option>
+                        <Select 
+                        label="product Usage" 
+                        name="productUsage" 
+                        errorClass="upload-form-error"
+                        labelClassName="upload-form-select-label"
+                        selectClassName="upload-form-select"
+                        >
+                            <option value="">Select</option>
                             <option value="Never used">Never used</option>
                             <option value="Fairly used">Fairly used</option>
                             <option value="2 years +">2 years +</option>
@@ -298,7 +318,7 @@ function ProductForm () {
                 </div>
 
                 <div className="upload-form-group">
-                    <div className="upload-form-group-child input">
+                    <div className="upload-form-group-child-input">
                     <FileInput
                         label="Product Image"
                         labelClassName="upload-label"
@@ -307,7 +327,7 @@ function ProductForm () {
                         multiple ="multiple"
                         onChange ={handleInputChange}
                         placeholder="images*"
-                        errorClass="login-modal-form-error"
+                        errorClass="upload-form-textarea-error"
                         />
                     </div>
                     <div className="upload-form-group-child">
@@ -323,6 +343,8 @@ function ProductForm () {
                                 label="Product type"
                                 name="productType"
                                 errorClass="upload-form-error"
+                                labelClassName="upload-form-select-label"
+                                selectClassName="upload-form-select"
                             >
                             {
                                 type.map((val,i) =>
@@ -339,34 +361,40 @@ function ProductForm () {
 
                 <div className="upload-form-group">
                     <div className="upload-form-group-child">
-                        <Select label="product Currency" name="productCurrency" errorClass="upload-form-error">
-                            <option value="">--Select--</option>
+                        <Select 
+                        label="product Currency" 
+                        name="productCurrency" 
+                        errorClass="upload-form-error"
+                        labelClassName="upload-form-select-label"
+                        selectClassName="upload-form-select"
+                        >
+                            <option value="">Select</option>
                             <option value="Naira">Naira</option>
                             <option value="pounds"> British Pounds</option>
                             <option value="dollar">U.S Dollar</option>
                         </Select>
                     </div>
-                    <div className="upload-form-group-child input">
-                        <TextInput
+                    <div className="upload-form-group-child-input">
+                        <TextAreaInput
                             label="Price"
                             labelClassName="upload-label"
                             name="productPrice"
                             type="text"
                             placeholder="e.g 2000"
-                            errorClass="login-modal-form-error"
+                            errorClass="upload-form-textarea-error"
                         />
                     </div> 
                 </div>
 
                 <div className="upload-form-group">
-                    <div className="upload-form-group-child input">
-                        <TextInput
+                    <div className="upload-form-group-child-input">
+                        <TextAreaInput
                             label="Contact number"
                             labelClassName="upload-label"
                             name="productContactNumber"
                             type="text"
                             placeholder="e.g +2348010000000"
-                            errorClass="login-modal-form-error"
+                            errorClass="upload-form-textarea-error"
                         />
                     </div>
                     <div className="upload-form-group-child ">

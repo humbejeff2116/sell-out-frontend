@@ -23,12 +23,16 @@ export function getConfirmations(user) {
 }
 
 export function uploadProduct(data) {
-    return productServerHTTP.get(`/upload-product`, data);
+    return productServerHTTP.post(`/upload-product`, data);
 }
 export function updateUser(userData) {
     return loginServerHTTP.post(`/update-user`, userData);
 }
 
 export function uploadService(data) {
-    return productServerHTTP.get(`/upload-service`, data);
+    return productServerHTTP.post(`/upload-service`, data);
+}
+export function getUser(data) {
+    const {id, userEmail} = data;
+    return productServerHTTP.get(`/user/:${id}/:${userEmail}`,);
 }

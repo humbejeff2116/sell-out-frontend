@@ -106,7 +106,7 @@ export const Checkbox = ({ children, errorClass, labelClassName, ...props }) => 
 
 
 
-export const Select = ({ label, errorClass, labelClassName, ...props }) => {
+export const Select = ({ label, errorClass, labelClassName, selectClassName, ...props }) => {
 
   const [field, meta] = useField(props);
 
@@ -117,7 +117,7 @@ export const Select = ({ label, errorClass, labelClassName, ...props }) => {
             <label htmlFor={props.id || props.name}>{label}</label> 
         </div>
 
-        <div> 
+        <div  className={selectClassName}> 
             <select {...field} {...props} />
         </div>
 
@@ -134,7 +134,7 @@ export const Select = ({ label, errorClass, labelClassName, ...props }) => {
   );
 };
 
-export const  AnimSelect = ({ label, errorClass, labelClassName, ...props }) => {
+export const  AnimSelect = ({ label, errorClass, labelClassName, selectClassName, ...props }) => {
     const [showSelect, setShowSelect] = useState(false);
     const [field, meta] = useField(props);
     useEffect(()=> {
@@ -159,11 +159,11 @@ export const  AnimSelect = ({ label, errorClass, labelClassName, ...props }) => 
     }
     return (
         <>
-        <div>
+        <div className={labelClassName ? labelClassName : ''}>
             <label htmlFor={props.id || props.name}>{label}</label> 
         </div>
 
-        <div> 
+        <div className={selectClassName}> 
             <select {...field} {...props} />  
         </div>
         <div className={errorClass}>

@@ -8,6 +8,7 @@ import {AuthContext } from './context';
 export function AuthContextProvider(props) {
     const [user, setUser] = useState(null);
     const [token, setToken] =  useState(null);
+    const [viewUserProfileData, setViewUserProfileData] = useState({});
     const [tokenExpiration, setTokenExpiration] = useState(null);
    
 
@@ -64,14 +65,16 @@ export function AuthContextProvider(props) {
         }
         return false;  
     }
-
+   
     const values = {
         user: user,
         token: token,
         tokenExpiration: tokenExpiration,
+        viewUserProfileData: viewUserProfileData,
         setUserData: setUserData,
         setTokenData: setTokenData,
         isAuthenticated: isAuthenticated,
+        setViewUserProfileData: setViewUserProfileData,
     }
 
     return(

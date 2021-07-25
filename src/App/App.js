@@ -24,6 +24,7 @@ const InterestPage = React.lazy(()=> import('../Pages/InterestPage/interestPage'
 const ConfirmationsPage = React.lazy(()=> import('../Pages/ConfirmationsPage/confirmationsPage'));
 const NotificationsPage = React.lazy(()=> import('../Pages/NotificationsPage/notificationsPage'));
 const GettingStartedPage = React.lazy(()=> import('../Pages/GettingStartedPage/gettingStartedPage'));
+const ViewProfilePage = React.lazy(()=> import('../Pages/ViewProfilePage/viewProfilePage'));
 
 
 
@@ -89,6 +90,11 @@ export default function App() {
             <Route path="/getting-started">
                 <Suspense fallback={<InsideLoginSuspenseLoader/>}>
                     <GettingStartedPage/>
+                </Suspense>
+            </Route>
+            <Route path="/view-profile">
+                <Suspense fallback={<InsideLoginSuspenseLoader/>}>
+                    <ViewProfilePage/>
                 </Suspense>
             </Route>
 

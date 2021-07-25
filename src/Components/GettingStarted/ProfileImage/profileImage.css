@@ -86,6 +86,12 @@
     margin-bottom: auto;
 
 }
+.getting-started-profile-image-info div{
+    margin-top:1%;
+    /* border:1px solid red; */
+    
+
+}
 .getting-started-info-group{
     font-weight:bold;
 }

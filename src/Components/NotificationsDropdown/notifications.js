@@ -7,6 +7,7 @@ import React, {useState, useEffect} from 'react';
 import './notifications.css';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
+import image from '../../Images/avatar.jpg'
 
 export default function Notifications(props) {
     const [initialNotificationLength, setInitialNotificationsLength] = useState();
@@ -56,6 +57,7 @@ export default function Notifications(props) {
         </div>
         {
             showNotifications && (
+                <div className="notifications-dropdown-wrapper">
                 <div className="notifications-dropdown-container">
                     {
                         notifications.length ? notifications.map((notification, i) =>
@@ -68,7 +70,8 @@ export default function Notifications(props) {
                        
                     }
                 
-                </div>    
+                </div> 
+                </div>   
             )
         }
         </>
@@ -77,7 +80,7 @@ export default function Notifications(props) {
 
 function Notification(props) {
     return (
-        <div className="notifications" onClick={props.openNotifications}>
+        <div className="notifications-icon" onClick={props.openNotifications}>
             <i>icon</i>
             <span>
                 {
@@ -96,13 +99,18 @@ function NotificationsBox(props) {
 
     }
     return (
-        <div className="notifications-dropdown-container">
-            <div>
-                <img src={userProfileImage} alt="profile" />
-                <span onClick={()=>viewProfile(userId)}>{userName}</span>
+        <div className="notification">
+            <div className="notification-image">
+                <img src={image || userProfileImage} alt="profile" /> 
             </div>
-            <div>
-                <p> {action} </p>
+
+            <div className="notification-details">
+                <span onClick={()=>viewProfile(userId)}><b>{userName}</b></span>
+                <span> {action} </span>
+            </div>
+
+            <div className="notification-time">  
+                <span>2w</span>
             </div>
         </div>
     )
