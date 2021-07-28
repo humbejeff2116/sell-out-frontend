@@ -9,16 +9,19 @@
 import React from 'react';
 import { IndexPageTemplate } from '../IndexPage/indexPage';
 import Interests from '../../Components/Interests/interest';
+import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 
 
 
 
 
-export default function InterestPage() {
+ function InterestPageComp() {
     return (
         <IndexPageTemplate>
             <Interests />
         </IndexPageTemplate>
-
     )
 }
+
+const InterestPage = RequireAuthentication(InterestPageComp);
+export default InterestPage;

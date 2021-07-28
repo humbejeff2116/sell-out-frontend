@@ -1,0 +1,147 @@
+.interest-container{
+    border: 2px solid red;
+    
+}
+.interest-header{
+    min-height: 20vh;
+    border: 1px solid red;
+
+
+}
+.interest-panel-wrapper{
+   
+
+}
+.interest-panel{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid green;
+    width:96%;
+    margin: 4% auto 10% auto;
+}
+.interest-profile{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid green;
+    min-height: 10vh;
+}
+.interest-profile-image{
+    border: 1px solid red;
+    width:10%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.interest-profile-image div{
+    border: 1px solid red;
+   
+}
+.interest-profile-image img{ 
+    border-radius: 50%; 
+    height:40px;
+    width:40px;
+    object-fit: cover;
+    object-position: center;
+    border:1px solid red;
+}
+.interest-profile-info{
+    border: 1px solid red;
+    width:60%;
+    display:flex;
+    /* justify-content: flex-end; */
+    align-items: center;
+}
+
+.interest-profile-info div{
+    border: 1px solid yellow; 
+    
+}
+.interest-profile-remove{
+    border: 1px solid red;
+    width:30%;
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.interest-profile-remove-icon{
+    border: 1px solid red;
+    height:30px;
+    width:30px;
+    margin-top:2%;
+    margin-right: 2%;
+    border-radius: 30%; 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.interest-profile-remove-title{
+    border: 1px solid red;
+    position: absolute;
+    top:15.6%;
+    right:-40px;
+    display: none;
+    padding:0.5%;
+    transition: 0.5s all  ease;
+}
+.interest-profile-remove-icon:hover .interest-profile-remove-title{
+   display:block;  
+}
+.interest-profile-remove-icon:hover{
+    cursor: pointer;   
+ }
+
+.interest-images-panel{
+    border: 1px solid green;
+    min-height: 20vh;
+    width:97%;
+   
+    margin: 1% auto 1% auto;
+    
+
+}
+.interest-images-header{
+    border: 1px solid red;
+    min-height: 5vh;
+    display:flex;
+    align-items: center;
+
+
+}
+.interest-images{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.interest-image-group{
+    border:1px solid black;
+    width:30%;
+}
+.interest-image-group img {
+    width: 100%;
+    height: auto;   
+}
+.interest-buttons{
+    border: 1px solid green;
+    display: flex;
+    flex-direction: row;
+    min-height: 10vh;
+
+}
+.interest-button-group{
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.interest-button{
+    min-width: 50%;
+    /* border: 1px solid red; */
+} 
+.interest-button button{
+    width: 100%;
+    height:45px;
+}

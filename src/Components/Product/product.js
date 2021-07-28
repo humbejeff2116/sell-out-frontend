@@ -148,6 +148,8 @@ export  function DisplayedProduct(props) {
 
             <div className="index-product-image-panel">
                 <div className="index-product-image">product images</div>
+
+                
                 <div className="index-product-image-details">product details</div>
             </div>
 

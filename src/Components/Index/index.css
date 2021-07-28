@@ -4,11 +4,14 @@
 
 
 .index-container{
-    border:1px solid red;
+    border:2px solid red;
     min-height: 92vh;
     display:flex;
     flex-direction: column; 
     justify-content: space-between; 
+    width:97%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .index-post-container{
@@ -190,9 +193,8 @@
 
 .index-product-panel{
     border:2px solid red;
-    width:48%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+    width:96%;
+    margin: 4% auto 10% auto;
     min-height:65vh;
 
 }

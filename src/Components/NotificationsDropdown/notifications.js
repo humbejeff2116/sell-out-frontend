@@ -7,7 +7,7 @@ import React, {useState, useEffect} from 'react';
 import './notifications.css';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
-import image from '../../Images/avatar.jpg'
+import image from '../../Images/avatar.jpg';
 
 export default function Notifications(props) {
     const [initialNotificationLength, setInitialNotificationsLength] = useState();
