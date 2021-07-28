@@ -9,6 +9,7 @@ import useAuth from '../../Context/context';
 import {CommentBox} from './commentBox';
 import './product.css';
 import image from '../../Images/avatar.jpg';
+import image2 from '../../Images/product3.webp';
 
 
 
@@ -122,6 +123,17 @@ export  function DisplayedProduct(props) {
         }
         return callback(interested);   
     }
+    let imageComponent = null;
+
+    if(product.productImages.length ===1) {
+        imageComponent = <SingleImageComponent image={product.productImages}/>
+    }
+    if(product.productImages.length === 2) {
+        imageComponent = <DoubleImageComponent images={product.productImages}/>
+    }
+    if(product.productImages.length === 3) {
+        imageComponent = <TrippleImageComponent images={product.productImages}/>
+    }
 
     if(showComment) {
         return (
@@ -146,9 +158,20 @@ export  function DisplayedProduct(props) {
                />
             </div>
 
-            <div className="index-product-image-panel">
-                <div className="index-product-image">product images</div>
-
+            <div className="index-product-image-wrapper">
+                {/* TODO... uncomment ImageComponent when product images are available */}
+               {/* { imageComponent } */}
+                <div className="index-product-tripple-images-panel">
+                <div className="index-product-tripple-image">
+                <img src={image.src || image2} alt="product"/>
+                </div>
+                <div className="index-product-tripple-image">
+                <img src={image.src || image2} alt="product"/>
+                </div>
+                <div className="index-product-tripple-image">
+                <img src={image.src || image2} alt="product"/>
+                </div>
+                </div>
                 
                 <div className="index-product-image-details">product details</div>
             </div>
@@ -202,7 +225,52 @@ function ProfileAvatar(props) {
     return (
         <div className="index-product-profile">
             <img src={image} alt="seller" width="100%" height="auto" />
-            <span onClick={viewSeller(product)}>{product.userName}</span>
+            <span onClick={viewSeller(product)}><b>{product.userName}</b></span>
+        </div>
+    )
+}
+
+
+function SingleImageComponent(props) {
+    const { image } = props;
+    return (
+        <div className="index-product-single-image-panel">
+            {
+                image.map((img,i) =>
+                    <div key={i} className="index-product-single-image">
+                    <img src={img.src || image2} alt="product"/>
+                    </div>
+                )
+            } 
+        </div>
+    )
+}
+
+function DoubleImageComponent(props) {
+    const { images } = props;
+    return (
+        <div className="index-product-double-images-panel">
+            {
+                images.map((img,i) =>
+                    <div key={i} className="index-product-double-image">
+                    <img src={img.src || image2} alt="product"/>
+                    </div>
+                )
+            }   
+        </div>
+    )
+}
+function TrippleImageComponent(props) {
+    const { images } = props;
+    return (
+        <div className="index-product-tripple-images-panel">
+            {
+                images.map((img,i) =>
+                    <div key={i} className="index-product-tripple-image">
+                    <img src={img.src || image2} alt="product"/>
+                    </div>
+                )
+            }  
         </div>
     )
 }
