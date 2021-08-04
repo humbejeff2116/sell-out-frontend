@@ -180,7 +180,7 @@ function Comment(props) {
         <div className="product-comment-info">
             <div className="product-comment-profile">
                 <img src={image} alt="profile" />
-                 <span onClick={()=>viewProfile(userId)}>{userName}</span>
+                 <span onClick={()=>viewProfile(userId)}><b>{userName}</b></span>
             </div>
             <div className="product-comment-message">
                 <span> {comment} </span>
@@ -190,22 +190,34 @@ function Comment(props) {
         <div className="product-comment-buttons-cntr">
             <div className="product-comment-bttn">
                 <button onClick={()=> likeComment(_id, user)}><i>like</i></button>
-                <span>
-                {
-                    (likesCommentRecieved && likesCommentRecieved.length > 0) ? likesCommentRecieved.length :  ''
-                }
-                </span>
+                <div className="product-comment-like-bttn">
+                    <span>
+                    {
+                        (likesCommentRecieved && likesCommentRecieved.length > 0) ? likesCommentRecieved.length :  ''
+                    }
+                    </span>
+                </div>
+               
             </div>
             <div className="product-comment-bttn">
                 <button onClick={()=> disLikeComment(_id, user)}><i>unlike</i></button>
-                <span>
-                {
-                    (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? unlikesCommentRecieved.length : ''
-                }
-                </span>
+                <div className="product-comment-like-bttn">
+                    <span>
+                    {
+                        (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? unlikesCommentRecieved.length : ''
+                    }
+                    </span>
+                </div>
             </div>
             <div className="product-comment-bttn">
                 <button onClick={()=> toggleReply()}><i>reply</i></button>
+                <div className="product-comment-like-bttn">
+                    <span>
+                    {
+                        (replies && replies.length > 0) ? replies.length : ''
+                    }
+                    </span>
+                </div>
             </div>
         </div>
         {
@@ -263,7 +275,7 @@ function Reply (props) {
         <>
         <div className="product-comment-reply-profile">
             <img src={image} alt="profile" />
-            <span onClick={()=> viewProfile(userId)}>{userName}</span>
+            <span onClick={()=> viewProfile(userId)}><b>{userName}</b></span>
         </div>
         <div className="product-comment-reply-message">
             <span>

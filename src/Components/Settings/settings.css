@@ -1,68 +1,226 @@
 
 
 
-.welcome-container{
-    min-height: 92vh;
+.settings-container{
     border:1px solid red;
-    width: 100%;
-}
-.welcome-header{
-    min-height: 30vh;
-    width:100%;
-    border:1px solid green;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-
-}
-.welcome-header h2{
-    border:1px solid green;
-   text-align: center;
-}
-.welcome-body{
-    min-height: 60vh;
-    width:95%;
-    display:flex;
-    flex-direction:column;
-    margin-left:auto;
-    margin-right: auto;
-    border:1px solid black;
-}
-.welcome-body-message{
-    min-height: 45vh;
-    width:100%;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    border:1px solid red;
+    width:80%;
+    min-height:92vh;
+    margin-left:2%;
     
 }
-.welcome-body-bottom{
-    min-height: 15vh;
-    width:100%;
-    display:flex;
-    flex-direction:row;
-    justify-content: space-between;
-    border:1px solid rgb(105, 43, 43);
+.profile-settings-wrapper{
+    border:1px solid blue;
 
 }
-.welcome-body-link{
+.profile-settings-header{
+    min-height:20vh;
+    border:1px solid yellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+}
+
+.profile-settings-panel{
+    border:2px solid green;
+    display: flex;
+    flex-direction:row;
+}
+.profile-settings-form-panel{
     border:1px solid red;
+    width:60%
+
+}
+.profile-settings-form-panel form{
+    border:1px solid blue;
+    
+}
+.profile-settings-form-panel form input{
+    /* padding:12px 12px 12px 5px; */
+    width:90%;
+    height:35px;
+    border-radius: 4px;
+    outline:none;
+    font-weight: bold;
+    border:2px solid #222;
+    transition: border-color 0.3s ease;
+}
+.settings-form-group{
+    width:99%;
+    border:2px solid yellow;
+    margin-top:4%;
+}
+.settings-form-group label{
+    font-size: 0.9em;
+    font-weight: bold;
+}
+.settings-form-group span{ 
+    margin-right: 1%;
+    color:red;
+    border:2px solid yellow;
+}
+.settings-form-error{
+    padding-top: 0.2%;
+    
+    border:2px solid red;
+    min-height: 25px;
+}
+.settings-form-error span{
+    color:red;  
+}
+
+.profile-settings-button-wrapper{
+    border:1px solid red;
+
+}
+.profile-settings-button-consent{
+    margin-top:2%;
+    margin-bottom:2%;
+    border:1px solid red;
+}
+.profile-settings-button-consent span{
+    font-size: 0.9em;
+   
+}
+.profile-settings-button{
+    /* border:1px solid red; */
+    width:92%;
+    margin-bottom:2%;
+    /* display:flex;
+    justify-content: flex-end; */
+}
+.profile-settings-button button{
+    height:40px;
+    min-width:30%;
+    border-radius: 4px;
+    border:1px solid green; 
+}
+
+
+.profile-settings-image-panel{
+    border:1px solid red;
+    width:40%;
+    margin-left:auto;
+
+}
+
+.profile-settings-image{
+    border: 1px solid red;
+    /* width:20%; */
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top:4%;
+}
+
+.profile-settings-image.button button{
+  height:40px;
+  min-width:50%;
+}
+
+.profile-settings-image img{ 
+    border-radius: 50%; 
+    height:150px;
+    width:150px;
+    object-fit: cover;
+    object-position: center;
+    border:1px solid red;
+}
+
+
+
+
+
+.account-settings-wrapper{
 
 }
-.welcome-body-bttn{
+.account-settings-header{
+    min-height:10vh;
+    border:1px solid yellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+}
+.account-settings-panel{
+    /* margin-top:2%; */
+    border:1px solid green;
+}
+.account-settings-group{
+    border:1px solid red;
+    /* width:70%;
+    margin:0 auto; */
+    margin-bottom: 3%;
+    min-height:20vh;
+}
+.account-settings-group-header{
+
+}
+.account-settings-form-panel{
+
+}
+.account-settings-form-panel form{
+    border:2px solid purple;
+    display:flex;
+    justify-content: space-around; 
+    flex-wrap: wrap; 
+    /* margin-top:2%; */
+    margin-bottom: 2%; 
+}
+.account-settings-form-panel form input{ 
+    width:95%;
+    height:35px;
+    border-radius: 4px;
+    outline:none;
+    font-weight: bold;
+    border:2px solid #222;
+    transition: border-color 0.3s ease;
+}
+.account-settings-form-group{
     border:1px solid red;
     width:30%;
+}
+.account-settings-form-group.password-button{
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end; 
     align-items: center;
+
 }
-.welcome-body-bttn button{
-    height:45px;
+.account-settings-button{
+    border:1px solid blue;
+    min-width:100%;
+
+}
+.account-settings-button button{
+    min-width:100%;
+    height:40px;
+}
+.account-remove-settings-panel{
+    display:flex;
+    flex-direction: row;
+    border:2px solid red;
+    justify-content: space-around; 
+}
+
+.account-settings-remove-group{
+    border:1px solid blue;
+    width:40%;
+    margin-top:2%;
+    margin-bottom: 2%;
+}
+.account-remove-settings-button{
+    border:1px solid green;
+    width:50%;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top:2%;
+    margin-bottom: 2%;
+
+}
+.account-remove-settings-button button{ 
     width:100%;
+    height:40px; 
 }
+

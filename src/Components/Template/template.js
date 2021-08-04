@@ -73,6 +73,32 @@ function InsideLoginTemplateChildren(props) {
 
 }
 
+export function SettingsTemplate(props) {
+    return (
+        <>
+        <Header/>
+        <LeftSideBar 
+        fixed={true}
+        top={props.leftSideBarTop} 
+        center={props.leftSideBarCenter} 
+        bottom={props.leftSideBarBottom} 
+        />
+        <SettingsTemplateChildren children={props.children} />
+        </>
+    )
+}
+function SettingsTemplateChildren(props) {
+    return (
+        <div className="settings-template-container">
+            <div className="settings-template-center">
+                {props.children}
+            </div>
+            
+        </div>
+    )
+
+}
+
 export function GettingStartedTemplate(props) {
     return (
         <>

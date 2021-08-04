@@ -184,26 +184,32 @@
 }
 
 .product-comment-panel{
-    border: 1px solid black;
+    border: 1px solid red;
     margin:4% 0 4% 0;
+    padding:2% 0 0 0;
     width:80%;
     margin-left:auto;
     margin-right: auto;
+    border-radius: 6px;
+   
 
 }
 .product-comment-info{
-    border: 1px solid red;
-
+    /* border-top: 1px solid red; */
+    border-bottom: 1px solid red;
+    /* border-radius: 8px; */
 }
 .product-comment-profile{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display:flex;
     /* justify-content: center; */
     align-items: center;
+    margin-left:2%;
+    margin-top:2%;
 
 }
 .product-comment-profile img{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 50%; 
     height:25px;
     width:25px;
@@ -211,8 +217,11 @@
     object-position: center;
     
 }
+.product-comment-profile span{
+   margin-left:1%; 
+}
 .product-comment-message{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width:89%;
     margin-left: auto;
 
@@ -220,8 +229,8 @@
 .product-comment-buttons-cntr{
     justify-content: flex-end;
     display: flex ;
-    border: 1px solid green;
-    padding-bottom: 2%;
+    /* border: 1px solid green; */
+    padding: 2% 0;
 
 }
 .product-comment-bttn{
@@ -229,7 +238,16 @@
     justify-content: center;
     /* border: 1px solid red; */
     /* width:30%; */
-    margin-left: 2%;
+    margin:0 1%;
+
+}
+.product-comment-like-bttn{
+    display: flex ;
+    /* justify-content: center; */
+    /* border: 1px solid red; */
+    width: 30px;
+    margin-left:5%;
+   
 
 }
 .product-comment-bttn button{
@@ -238,7 +256,7 @@
 }
 .product-comment-reply-container{
     border: 1px solid green;
-    margin:4% 0 4% 0;
+    margin:4% 2% 4% 0;
     width:90%;
     margin-left: auto;
 
@@ -254,18 +272,31 @@
    
 }
 .product-comment-replies{
+    border: 3px solid red;
+    margin: 4% 0;
+
+
     border: 1px solid red;
+    margin:4% 0 4% 0;
+    padding:4% 0 4% 0;
+    /* width:80%; */
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 6px;
 
 }
 .product-comment-reply-profile{
-    border: 1px solid black;
+
+    /* border: 1px solid black; */
     display:flex;
     /* justify-content: center; */
     align-items: center;
+    margin-left:2%;
+    /* margin-top:2%; */
 
 }
 .product-comment-reply-profile img{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 50%; 
     height:20px;
     width:20px;
@@ -273,8 +304,12 @@
     object-position: center;
 
 }
+
+.product-comment-reply-profile span{
+    margin-left:1%;
+}
 .product-comment-reply-message{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width:89%;
     margin-left: auto;
 

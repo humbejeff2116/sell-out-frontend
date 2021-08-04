@@ -8,7 +8,7 @@
 
 
 import React, {useEffect} from 'react';
-import { InsideLoginTemplate } from '../../Components/Template/template';
+import { SettingsTemplate } from '../../Components/Template/template';
 import Settings from '../../Components/Settings/settings';
 import ProfileAvatar from '../../Components/Profile/profileAvatar';
 import SettingsFooter from '../../Components/SettingsFooter/settingsFooter';
@@ -21,13 +21,13 @@ function SettingsPageComp() {
         window.scrollTo(0,0);
     },[]);
     return (
-        <InsideLoginTemplate 
+        <SettingsTemplate 
         leftSideBarTop={<ProfileAvatar/>} 
         leftSideBarCenter={<SettingsSideNav/>} 
         leftSideBarBottom={<SettingsFooter/>} 
         >
             <Settings/>
-        </InsideLoginTemplate>
+        </SettingsTemplate>
     )
 
 }
@@ -39,13 +39,13 @@ export default SettingsPage;
 
 export function SettingsPageTemplate(props) {
     return (
-        <InsideLoginTemplate 
+        <SettingsTemplate 
         leftSideBarTop={<ProfileAvatar/>} 
         leftSideBarCenter={<SettingsSideNav/>} 
         leftSideBarBottom={<SettingsFooter/>} 
         >
            {props.children}
-        </InsideLoginTemplate>
+        </SettingsTemplate>
 
     )
 }

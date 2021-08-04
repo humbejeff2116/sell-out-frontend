@@ -70,7 +70,7 @@
     min-height:40vh;
     display:flex;
     flex-direction: column;
-     border:1px solid blue;
+    border:1px solid blue;
 }
 
 .login-form-group{
@@ -111,14 +111,9 @@
     padding:12px 12px 12px 5px;
     border-radius: 4px;
     outline:none;
-   
-    
-    
     font-weight: bold;
-   
     border:2px solid #222;
     transition: border-color 0.3s ease;
-
 }
 
 .login-button{
