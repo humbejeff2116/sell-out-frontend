@@ -6,8 +6,8 @@
 import React, {useEffect, useState} from 'react';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
-import image from '../../Images/avatar.jpg'
-import image2 from '../../Images/product.webp'
+import image from '../../Images/avatar.jpg';
+import image2 from '../../Images/product.webp';
 import './confirmation.css';
 
 
