@@ -218,7 +218,7 @@ function InterestedIn(props) {
                     {
                         props.productOrServiceImages.map((image, i) =>
                             <div key={i} className="interest-image-group">
-                            <img src={image.src || image2} alt="productr"/>
+                            <img src={image.src || image2} alt="product"/>
                             </div>
                         )
                     }

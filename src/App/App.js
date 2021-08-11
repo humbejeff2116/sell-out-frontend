@@ -25,6 +25,7 @@ const ConfirmationsPage = React.lazy(()=> import('../Pages/ConfirmationsPage/con
 const NotificationsPage = React.lazy(()=> import('../Pages/NotificationsPage/notificationsPage'));
 const GettingStartedPage = React.lazy(()=> import('../Pages/GettingStartedPage/gettingStartedPage'));
 const ViewProfilePage = React.lazy(()=> import('../Pages/ViewProfilePage/viewProfilePage'));
+const CartPage = React.lazy(()=> import('../Pages/CartPage/cartPage'));
 
 
 
@@ -95,6 +96,11 @@ export default function App() {
             <Route path="/view-profile">
                 <Suspense fallback={<InsideLoginSuspenseLoader/>}>
                     <ViewProfilePage/>
+                </Suspense>
+            </Route>
+            <Route path="/cart">
+                <Suspense fallback={<InsideLoginSuspenseLoader/>}>
+                    <CartPage/>
                 </Suspense>
             </Route>
 
