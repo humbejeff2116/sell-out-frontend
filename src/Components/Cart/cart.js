@@ -59,6 +59,16 @@ export default function Cart() {
                     )
                 )
             }
+            <div className="cart-products-total-container">
+                <div className="cart-products-total-panel">
+                <div className="cart-products-total-amount">
+                   <span>Total price: 32323</span>
+               </div>
+               <div className="cart-products-total-checkout">
+                  <button>Checkout</button>
+               </div>
+                </div>
+            </div>
             </div>
             <div className="cart-product-checkout">
                 <CartCheckoutComp/>
@@ -116,7 +126,7 @@ function CartProduct(props) {
             <div className="cart-product-buttons" >
                 <div className="cart-product-button-left">
                     <div className="cart-product-add-button"><button>Add</button></div>
-                    <div className="cart-product-input"><input type="text" /></div>
+                    <input className="cart-product-input" type="text" />
                     <div className="cart-product-reduce-button"><button>Reduce</button></div>
                 </div>
                 <div className="cart-product-button-right">
