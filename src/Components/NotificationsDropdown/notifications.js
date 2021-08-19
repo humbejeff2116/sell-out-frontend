@@ -18,29 +18,32 @@ export default function Notifications(props) {
 
     useEffect(()=> {
         let mounted = true;
-            if(user && mounted) {
+        
+        if (user && mounted && socket.connected) {
+           return getNotifications(user);
+        }
+        socket.on('getNotificationsSuccess', function(response) {
+            const { data } = response;
+            let setNotificationsLength;
+            if (mounted) {
+                setNotifications(data);
+                setNotificationsLength = initialNotificationLength ?? setInitialNotificationsLength(data.length); 
+                return setNotificationsLength;   
+            }  
+        });
+        socket.on('productDataChange', function() {
+            if (mounted) {
                 getNotifications(user);
-            }
-            socket.on('getNotificationsSuccess', function (response) {
-                const { data } = response;
-                let setNotificationsLength;
-                if (mounted) {
-                    setNotifications(data);
-                    setNotificationsLength = initialNotificationLength ?? setInitialNotificationsLength(data.length); 
-                    return setNotificationsLength;   
-                }  
-            });
-            socket.on('productDataChange', function() {
-                if (mounted) {
-                    getNotifications(user);
-                }   
-            });
-            return () => {
-                mounted = false;
-            }    
+            }   
+        });
+        
+        return () => {
+            mounted = false;
+        }    
     }, [user, initialNotificationLength]);
   
     const getNotifications = (user) => {
+        console.log("getting notifications")
         socket.emit('getNotifications', user);
     }
     const toggleNotifications = () => {

@@ -11,7 +11,7 @@ export function CommentBox(props) {
     const [reviewValue, setReviewValue] = useState('');
     const [reviewError,  setReviewError] = useState(null);
     const { user } = useAuth();
-    const {commentBoxPanelClassName, closeCommentBox, product, } = props;
+    const {commentBoxPanelClassName, closeCommentBox, product,productCommentPanelName } = props;
     const textBox = React.createRef();
 
     useEffect(() => {
@@ -59,7 +59,11 @@ export function CommentBox(props) {
                     {
                         ( product.comments.length > 0 )  && 
                         (product.comments.map((comment, i) =>
-                            <Comment key={i} {...comment} />
+                            <Comment
+                            productCommentPanelName={productCommentPanelName} 
+                            key={i} 
+                            {...comment} 
+                            />
                         ))
                     }
                 </div>
@@ -175,7 +179,7 @@ function Comment(props) {
     }
 
     return (
-        <div className="product-comment-panel">
+        <div className={ props.productCommentPanelName ? props.productCommentPanelName : "product-comment-panel" }>
        
         <div className="product-comment-info">
             <div className="product-comment-profile">
@@ -190,34 +194,36 @@ function Comment(props) {
         <div className="product-comment-buttons-cntr">
             <div className="product-comment-bttn">
                 <button onClick={()=> likeComment(_id, user)}><i>like</i></button>
-                <div className="product-comment-like-bttn">
-                    <span>
-                    {
-                        (likesCommentRecieved && likesCommentRecieved.length > 0) ? likesCommentRecieved.length :  ''
-                    }
-                    </span>
-                </div>
-               
+            </div>
+            <div className="product-comment-like-bttn">
+                <span>
+                {
+                    (likesCommentRecieved && likesCommentRecieved.length > 0) ? 
+                    likesCommentRecieved.length :  ''
+                }
+                </span>
             </div>
             <div className="product-comment-bttn">
                 <button onClick={()=> disLikeComment(_id, user)}><i>unlike</i></button>
-                <div className="product-comment-like-bttn">
-                    <span>
-                    {
-                        (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? unlikesCommentRecieved.length : ''
-                    }
-                    </span>
-                </div>
+            </div>
+            <div className="product-comment-like-bttn">
+                <span>
+                {
+                    (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? 
+                    unlikesCommentRecieved.length : ''
+                }
+                </span>
             </div>
             <div className="product-comment-bttn">
                 <button onClick={()=> toggleReply()}><i>reply</i></button>
-                <div className="product-comment-like-bttn">
-                    <span>
-                    {
-                        (replies && replies.length > 0) ? replies.length : ''
-                    }
-                    </span>
-                </div>
+            </div>
+            <div className="product-comment-like-bttn">
+                <span>
+                {
+                    (replies && replies.length > 0) ? 
+                    replies.length : ''
+                }
+                </span>
             </div>
         </div>
         {

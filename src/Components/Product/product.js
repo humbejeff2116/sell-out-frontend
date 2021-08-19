@@ -20,7 +20,7 @@ export  function DisplayedProduct(props) {
     const [interested, setInterested] = useState(false);
     const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
-    const { product, panelClassName } = props;
+    const { product, panelClassName, productCommentPanelName } = props;
     const { user } = useAuth();
 
     useEffect(() => {
@@ -141,6 +141,7 @@ export  function DisplayedProduct(props) {
             product={product}
             closeCommentBox={closeCommentBox}
             commentBoxPanelClassName={panelClassName}
+            productCommentPanelName={productCommentPanelName}
              />
         )
     }

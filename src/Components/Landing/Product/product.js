@@ -51,6 +51,7 @@ export default function LandingProducts(props) {
                 key={i} 
                 product={product} 
                 panelClassName="landing-product-panel"
+                productCommentPanelName="landing-product-comment-panel"
                 />
             )
         }

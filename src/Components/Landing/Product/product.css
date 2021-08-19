@@ -14,14 +14,26 @@
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
+    
    
+}
+.landing-product-comment-panel{
+    border: 1px solid red;
+    margin:4% 0 4% 0;
+    padding:2% 0 0 0;
+    width:95%;
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 6px;
+   
+
 }
 
 .landing-product-panel{
     border:2px solid black;
     display:flex;
     flex-direction: column;
-    width:22%;
+    width:27%;
     min-height: 20vh;
     margin-top:2%; 
     margin-bottom:2%; 
