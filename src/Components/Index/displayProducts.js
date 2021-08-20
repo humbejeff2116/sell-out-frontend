@@ -1,10 +1,12 @@
 
 
-
+import axios from 'axios'
 
 import React, {useEffect, useState} from 'react';
 import socket from '../Socket/socket';
 import { DisplayedProduct } from '../Product/product';
+import { getProducts } from '../../Utils/http.services';
+
 
 
  export function DisplayProducts(props) {
@@ -12,10 +14,19 @@ import { DisplayedProduct } from '../Product/product';
    
     useEffect(()=> {
         let mounted = true;
-        if(mounted) {
-            getProductsData();
+
+        function getAllProducts() {
+            getProducts()
+            .then(res => res.data)
+            .then(json => setProducts(json.data))
+            .catch(err => console.error(err.stack));
         }
+        if (mounted) {
+            getAllProducts();
+        }
+
         socket.on('gottenProducts', function(response) {
+            console.log("gotten products")
             const products = response.data;
             if(mounted){
                 setProducts(products);
@@ -24,17 +35,16 @@ import { DisplayedProduct } from '../Product/product';
        
         socket.on('productDataChange', function() {
             if(mounted){
-                getProductsData(); 
-            }
-             
+                
+            }      
         });
+        
         return ()=> {
-            mounted = false
+            mounted = false;
+            socket.close();
         }
     }, []);
-    const getProductsData = ( ) => { 
-        socket.emit('getProducts');
-    }
+   
 
     return (
         <div className="index-products-container">
@@ -53,6 +63,7 @@ import { DisplayedProduct } from '../Product/product';
 
 
 export function DisplayServices(props) {
+    // const {socket} = useSocket();
     const [services, setServices] = useState([]);
    
     useEffect(()=> {
