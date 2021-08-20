@@ -44,7 +44,7 @@ export  function IndexPageTemplate(props) {
         leftSideBarTop={<ProfileAvatar/>} 
         leftSideBarCenter={<IndexSideNav/>} 
         leftSideBarBottom={<IndexFooter/>}
-        rightSideBarTop={<Notifications/>}
+        rightSideBarTop={props.rightSideBarTop || <Notifications/>}
         rightSideBarBottom={<Connections/>} 
         >
            {props.children}

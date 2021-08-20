@@ -21,7 +21,7 @@ import './suspenseLoader.css';
 // home/index, settings, upload-product suspense
 export function InsideLoginSuspenseLoader() {
     return (
-       <IndexPageTemplate>
+       <IndexPageTemplate  rightSideBarTop={<div></div>}>
            <div  className="suspense-container">
            <Loader
             loaderContainer={"index-suspense-loader-container"}

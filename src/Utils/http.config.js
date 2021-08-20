@@ -8,7 +8,7 @@
 
 import axios from 'axios';
 
-export default function http(URI) {
+export default function httpBase(URI) {
     return axios.create({
         baseURL:`${URI}/api/v1`,
         headers:{

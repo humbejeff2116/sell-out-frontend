@@ -9,7 +9,7 @@ import httpBase from './http.config';
 
 const PRODUCT_SERVER_URI = `http://localhost:4003`;
 const GATEWAY_SERVER_URI = `http://localhost:4000`;
-const LOGIN_SERVER_URI = `http://localhost:4000`;
+const LOGIN_SERVER_URI = `http://localhost:4001`;
 const productServerHTTP = httpBase(PRODUCT_SERVER_URI);
 const loginServerHTTP = httpBase(LOGIN_SERVER_URI);
 const gatewayServerHTTP = httpBase(GATEWAY_SERVER_URI);
@@ -22,6 +22,10 @@ export function getConfirmations(user) {
     return loginServerHTTP.get(`/interests`, user);
 }
 
+
+export function getProducts() {
+    return gatewayServerHTTP.get(`/products`);
+}
 export function uploadProduct(data) {
     return productServerHTTP.post(`/upload-product`, data);
 }
