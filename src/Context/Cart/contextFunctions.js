@@ -159,7 +159,7 @@ function calculateCartTotalPrice(state=[]) {
     
     
 
-function calculateSellerTotalSum(state=[]) {
+function createSellerPaymentData(state=[], buyer) {
 
     function calculateIndividualSellerPriceSum(product) {
         let total = 0;
@@ -169,7 +169,13 @@ function calculateSellerTotalSum(state=[]) {
         }
         return ({
             sellerName: product.sellerName,
-            total: total
+            sellerId: product.sellerId,
+            sellerEmail: product.sellerEmail,
+            buyerName: buyer.fullName,
+            buyerId: buyer.id,
+            buyerEmail: buyer.userEmail,
+            productsSellerSold: product.productsUserBoughtFromSeller,
+            totalAmount: total
         });
     } 
     const individualTotal = state.map(product => {
@@ -184,14 +190,30 @@ function calculateTotalNumberOfProductsInCart(state =[]) {
     totalProducts += allCartProducts.length;
     return totalProducts;
 }
+async function createOrderData(productsUserBought, sellerPaymentData, orderId, orderTime) {
+    for(let i = 0; i < productsUserBought.length; i++) {
+        productsUserBought[i].orderTime = orderTime;
+        productsUserBought[i].orderId =orderId;
+    }
+
+    for(let i = 0; i < sellerPaymentData.length; i++) {
+        sellerPaymentData[i].orderTime = orderTime;
+        sellerPaymentData[i].orderId = orderId
+    }
+    return ({
+        order: productsUserBought,
+        payments: sellerPaymentData
+    })
+}
     
-export{
-    calculateSellerTotalSum, 
+export {
+    createSellerPaymentData, 
     calculateCartTotalPrice, 
     clearCart, 
     reduceCartProductQuantity, 
     addCartProductQuantity,
     addProductToCart,
     removeProductFromCart,
-    calculateTotalNumberOfProductsInCart  
+    calculateTotalNumberOfProductsInCart,
+    createOrderData,  
 }

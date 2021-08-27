@@ -15,11 +15,14 @@ import { getProducts } from '../../Utils/http.services';
     useEffect(()=> {
         let mounted = true;
 
-        function getAllProducts() {
-            getProducts()
-            .then(res => res.data)
-            .then(json => setProducts(json.data))
-            .catch(err => console.error(err.stack));
+        async function getAllProducts() {
+            try {
+                const productsResponse = await getProducts();
+                const products = productsResponse.data;
+                setProducts(products)
+            }catch(err) {
+                console.error(err.stack)
+            }  
         }
         if (mounted) {
             getAllProducts();
@@ -34,14 +37,15 @@ import { getProducts } from '../../Utils/http.services';
         });
        
         socket.on('productDataChange', function() {
-            if(mounted){
+            if (mounted) {
+                getAllProducts();
                 
             }      
         });
-        
+
         return ()=> {
             mounted = false;
-            socket.close();
+            socket.off("getProducts");
         }
     }, []);
    

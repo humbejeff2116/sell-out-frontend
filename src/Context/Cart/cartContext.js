@@ -17,6 +17,7 @@ const initialCartContext = {
     reduceCartProductQuantity: ()=>{},
     calculateCartTotalPrice: ()=>{},
     calculateSellerTotalSum: ()=>{},
+    createOrderData: ()=>{},
     clearCart: ()=>{},  
 }
 

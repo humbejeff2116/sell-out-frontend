@@ -6,46 +6,61 @@
 import React, {useState, useEffect} from 'react';
 import './notifications.css';
 import socket from '../Socket/socket';
+import {  getUserNotifications, getCons } from '../../Utils/http.services';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar.jpg';
 
 export default function Notifications(props) {
-    const [initialNotificationLength, setInitialNotificationsLength] = useState();
+    const [initialNotificationLength, setInitialNotificationsLength] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [ showNotifications, setShowNotifications ] = useState(false);
-    const {user} = useAuth();
-
 
     useEffect(()=> {
-        let mounted = true;
-        
-        if (user && mounted && socket.connected) {
-           return getNotifications(user);
+        const getNotifications = (user, mounted) => {
+            getUserNotifications(user)
+            .then(notificationsData => {
+                const {data} = notificationsData;
+                if (mounted) {
+                    setNotifications(data);
+                }   
+            })
+            .catch(err => console.error(err))
         }
-        socket.on('getNotificationsSuccess', function(response) {
-            const { data } = response;
-            let setNotificationsLength;
-            if (mounted) {
-                setNotifications(data);
-                setNotificationsLength = initialNotificationLength ?? setInitialNotificationsLength(data.length); 
-                return setNotificationsLength;   
-            }  
-        });
+
+        let mounted = true;
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        if (user && mounted ) {
+          
+            getNotifications(user, mounted);
+        }
+
         socket.on('productDataChange', function() {
             if (mounted) {
-                getNotifications(user);
+                getNotifications(user, mounted);
             }   
         });
         
         return () => {
             mounted = false;
         }    
-    }, [user, initialNotificationLength]);
+    }, []);
+
+    useEffect(()=> {
+        let mounted = true;
+        
+        function setIntialLength(mounted, notifications, initialNotificationLength, setInitialNotificationsLength) {
+            if (mounted) {
+                if (initialNotificationLength) {
+                    return
+                }
+                setInitialNotificationsLength(notifications.length);       
+            } 
+        }
+        setIntialLength(mounted, notifications, initialNotificationLength, setInitialNotificationsLength)
+        
+    }, [initialNotificationLength, notifications]);
   
-    const getNotifications = (user) => {
-        console.log("getting notifications")
-        socket.emit('getNotifications', user);
-    }
+    
     const toggleNotifications = () => {
         setShowNotifications(prevState => !prevState)
     }

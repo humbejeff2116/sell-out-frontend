@@ -11,14 +11,15 @@ import {useEffect, useState } from 'react';
 import { CartContext } from './cartContext';
 
 import {
-    calculateSellerTotalSum, 
+    createSellerPaymentData, 
     calculateCartTotalPrice, 
     clearCart, 
     reduceCartProductQuantity, 
     addCartProductQuantity,
     addProductToCart,
     removeProductFromCart ,
-    calculateTotalNumberOfProductsInCart 
+    calculateTotalNumberOfProductsInCart,
+    createOrderData 
 }  from './contextFunctions';
 
 let state = [
@@ -36,7 +37,7 @@ export default function CartContextProvider(props) {
     const [cartState, setCartState] = useState(null);
     const [cartTotalNumberOfProducts, setCartTotalNumberOfProducts] = useState(null);
     const [totalSum, setTotatSum] = useState(null);
-    const [sellerTotalSumData, setSellerTotalSumData] = useState(null);
+    const [sellerPaymentData, setSellerPaymentData] = useState(null);
     
     useEffect(()=> {
       const cartProducts =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : null;
@@ -48,24 +49,26 @@ export default function CartContextProvider(props) {
     // function used to update context useState hooks after cart state changes
     const updateContextState = (state) => {
         const totalSum = state.length ? calculateCartTotalPrice(state) : 0;
-        const sellerTotalSumData = state.length ? calculateSellerTotalSum(state) : {};
+        // TODO... pass user into creatSellerPaymentData function or only call function inside a component
+        const sellerPaymentData = state.length ? createSellerPaymentData(state) : {};
         const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : 0;
         setCartState(state);
         setTotatSum(totalSum);
-        setSellerTotalSumData(sellerTotalSumData);
+        setSellerPaymentData(sellerPaymentData);
         setCartTotalNumberOfProducts(cartTotalNumberOfProducts);
     }
     const values = {
         cartState: cartState,
         toatalSum: totalSum,
         cartTotalNumberOfProducts: cartTotalNumberOfProducts,
-        sellerTotalSumData: sellerTotalSumData,
+        sellerTotalSumData: sellerPaymentData,
         updateContextState: updateContextState,
         addProductToCart: addProductToCart,
         removeProductFromCart: removeProductFromCart,
         addCartProductQuantity: addCartProductQuantity,
         reduceCartProductQuantity: reduceCartProductQuantity,
-        clearCart: clearCart,  
+        clearCart: clearCart,
+        createOrderData: createOrderData,  
     }
 
     return (

@@ -16,6 +16,7 @@ import * as Yup from 'yup';
 import { TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../Formik/formik';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
+import { createProduct } from '../../Utils/http.services';
 import './uploadProduct.css';
 
 
@@ -111,7 +112,6 @@ function ProductForm () {
                 setUploadingProduct(false);
             }
         });
-
         socket.on('createProductNetworkError', function(response) {
             if (mounted) {
                 setUploadingError(true);
@@ -142,8 +142,8 @@ function ProductForm () {
         setFormValues(prevValues => ({
             ...prevValues,
             [e.target.name] : 
-            (e.target.type === "file" && e.currentTarget.files.length) ? e.currentTarget.files :
-            (e.target.type === "file" && e.currentTarget.files.length < 1 ) ? e.currentTarget.files[0] :
+            (e.target.type === "file" && e.target.files.length) ? e.target.files :
+            (e.target.type === "file" && e.target.files.length < 1 ) ? e.target.files[0] :
             e.target.value
         }))
         if (e.target.name === "productCategory") {
@@ -171,23 +171,26 @@ function ProductForm () {
              setUploadingError(false);
             setUploadingProduct(true);
             setResponse('');
-            values.productCategory = formValues.productCategory; 
+            values.productCategory = formValues.productCategory;
             const formData = new FormData();
-            const formValuesArr = Object.keys(values).map( keys => ({name: keys, value: values[keys]}));
-            for (let i = 0; i < formValuesArr.length; i++) {
-                formData.append(formValuesArr[i].name , formValuesArr[i].value);
+            const files = formValues.productImages;
+            for (let i =0; i< files.length; i++) {
+                formData.append(`file${i}`, files[i])
             }
-            const productData = {
-                product: values,
-                user: user
-            }
-            // TODO... send data to backend using fetch API
-            socket.emit('createProduct',productData);
+            Object.keys(user).map( keys => formData.append(keys , user[keys]));
+            Object.keys(values).map( keys => formData.append(keys , values[keys]));
+            
+            createProduct(formData)
+            .then(response => console.log(response))
+            .catch(err => console.error(err.stack));
+
+            // socket.emit('createProduct',productData);
         } catch(e) {
             setUploadingError(true);
             setResponse("An error occured please wait and try again");
             
         } finally {
+           
 
         }    
     }

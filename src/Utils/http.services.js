@@ -13,6 +13,7 @@ const LOGIN_SERVER_URI = `http://localhost:4001`;
 const productServerHTTP = httpBase(PRODUCT_SERVER_URI);
 const loginServerHTTP = httpBase(LOGIN_SERVER_URI);
 const gatewayServerHTTP = httpBase(GATEWAY_SERVER_URI);
+const gatewayServerMultipartHTTP = httpBase(GATEWAY_SERVER_URI, "multipart/form-data");
 
 export function getInterests(user) {
     return loginServerHTTP.get(`/interests`, user);
@@ -21,13 +22,19 @@ export function getInterests(user) {
 export function getConfirmations(user) {
     return loginServerHTTP.get(`/interests`, user);
 }
+export async function getUserNotifications(user) {
+    const res = await gatewayServerHTTP.get(`/notifications/${user.id}/${user.userEmail}`);
+    return res.data;
+}
+
+
 
 
 export function getProducts() {
     return gatewayServerHTTP.get(`/products`);
 }
-export function uploadProduct(data) {
-    return productServerHTTP.post(`/upload-product`, data);
+export function createProduct(data) {
+    return gatewayServerHTTP.post(`/product`, data, { headers: {"Content-Type": "multipart/form-data",}} );
 }
 export function updateUser(userData) {
     return loginServerHTTP.post(`/update-user`, userData);
