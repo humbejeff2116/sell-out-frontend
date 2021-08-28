@@ -57,14 +57,9 @@ export default function Signup() {
         try{
             setCreatingAccount(true);
             setCreatingAccountError(false);
-            socket.emit("signUp",values);
+            socket.emit("signUp", values);    
+        } catch(err) {
             
-        } catch(e) {
-
-            
-
-        } finally{
-            setCreatingAccount(false);
 
         }     
     }
