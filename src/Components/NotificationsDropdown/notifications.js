@@ -34,7 +34,7 @@ export default function Notifications(props) {
             getNotifications(user, mounted);
         }
 
-        socket.on('productDataChange', function() {
+        socket.on('userDataChange', function() {
             if (mounted) {
                 getNotifications(user, mounted);
             }   
@@ -74,9 +74,23 @@ export default function Notifications(props) {
 function NotificationsDropDown(props) {
     useEffect(()=> {
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-        socket.emit('seenNotifications', user);
-
-    }, [])
+        checkIfNotificationsIsSeen(props.notifications)
+        .then(notSeen => {
+            if(notSeen) {
+               return  socket.emit('seenNotifications', user);
+            }
+        })
+    }, []);
+    const checkIfNotificationsIsSeen = async (notifications) => {
+         let notSeen = false;
+        for (let i = 0; i < notifications.length; i++) {
+            if(notifications[i].seen === false) {
+               notSeen = true;
+               break;
+            }
+        }
+        return notSeen
+    }
     return (
         <div className="notifications-dropdown-wrapper">
         <div className="notifications-dropdown-container">

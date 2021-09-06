@@ -1,6 +1,15 @@
 
 
-
+let state = [
+    {
+        sellerName:"jeffrey", 
+        productsUserBoughtFromSeller: [
+            {productId: 1, productPrice:300, productQty: 5}, 
+            {productId: 2, productPrice:300, productQty: 2}, 
+            {productId: 3, productPrice:300, productQty: 2}
+        ]
+    }
+];
 
 async function addProductToCart(state =[], action) {
     let productId = action.productId;
@@ -39,13 +48,18 @@ async function addProductToCart(state =[], action) {
     }
     // add new cart product if seller does not eist
     return [...state, { 
-    sellerName: action.sellerName,
-    productId: action.productId,
-    productName: action.productName,
-    productImages: action.productImages,
-    productPrice: action.productPrice,
-    productQty: action.productQty,
-    productSize: action.productSize,
+        sellerName: action.sellerName,
+        sellerId: action.sellerId,
+        sellerEmail: action.sellerEmail,
+        productsDelivered: false,
+        productsUserBoughtFromSeller:[{
+            productId: action.productId,
+            productName: action.productName,
+            productImages: action.productImages,
+            productPrice: action.productPrice,
+            productQty: action.productQty,
+            productSize: action.productSize,  
+        }],
     }];
 }
 
