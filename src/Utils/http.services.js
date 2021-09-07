@@ -30,7 +30,11 @@ export async function getUserNotifications(user) {
 
 
 
-export function getProducts() {
+export async function getProducts(queryData) {
+    if (queryData) {
+        const {gender, category, usage} = queryData;
+        return gatewayServerHTTP.get(`/products?gender=${gender}&category=${category}&usage=${usage}`);
+    }
     return gatewayServerHTTP.get(`/products`);
 }
 export function createProduct(data) {

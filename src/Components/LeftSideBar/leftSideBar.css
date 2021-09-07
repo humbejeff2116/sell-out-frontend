@@ -13,10 +13,10 @@
     top:8vh;
     /* background-color: #1d2c3f; */
     min-height:92vh;
-    width:28%;
+    width:15%;
     overflow-x: none;
     transition: width 0.3s ease;
-    border:1px solid green;
+    border:6px solid green;
 }
 .fixed{
      position:fixed;
@@ -25,7 +25,7 @@
 
 .left-side-bar-content{
     border:1px solid red;
-    width:60%;
+    width:75%;
     margin-left: auto;
     /* margin-right: auto; */
     height:92vh;

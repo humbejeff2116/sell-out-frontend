@@ -10,16 +10,16 @@ export function PostProduct(props) {
         <div className="index-post-container">
             <div className="index-post-writeup-container">
                 <div className="index-post-writeup">
-                    <h4>
-                        Got a Product to sell or a service to offer?
-                        someone might just be needing it.
-                    </h4>
+                    <p>
+                        Got a product to sell ?
+                        No better place to start than here.
+                    </p>
                     
 
                 </div>
             </div>
             <div className="index-post-upload">
-            <Link to="/upload-product"><button>Upload Details</button></Link>
+            <Link to="/upload-product"><button>Upload product details</button></Link>
             </div>
         </div>
     )

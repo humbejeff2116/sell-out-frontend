@@ -125,13 +125,13 @@ export  function DisplayedProduct(props) {
     }
     let imageComponent = null;
 
-    if(product.productImages.length ===1) {
+    if (product.productImages.length === 1) {
         imageComponent = <SingleImageComponent image={product.productImages}/>
     }
-    if(product.productImages.length === 2) {
+    if (product.productImages.length === 2) {
         imageComponent = <DoubleImageComponent images={product.productImages}/>
     }
-    if(product.productImages.length === 3) {
+    if (product.productImages.length === 3) {
         imageComponent = <TrippleImageComponent images={product.productImages}/>
     }
 
@@ -161,8 +161,8 @@ export  function DisplayedProduct(props) {
 
             <div className="index-product-image-wrapper">
                 {/* TODO... uncomment ImageComponent when product images are available */}
-               {/* { imageComponent } */}
-                <div className="index-product-tripple-images-panel">
+               { imageComponent }
+                {/* <div className="index-product-tripple-images-panel">
                 <div className="index-product-tripple-image">
                 <img src={image.src || image2} alt="product"/>
                 </div>
@@ -172,7 +172,7 @@ export  function DisplayedProduct(props) {
                 <div className="index-product-tripple-image">
                 <img src={image.src || image2} alt="product"/>
                 </div>
-                </div>
+                </div> */}
                 
                 <div className="index-product-image-details">product details</div>
             </div>
