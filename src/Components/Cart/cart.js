@@ -14,19 +14,19 @@ const cartData = [
         userProfileImage:'',
         userName: 'jeffrey humbe',
         productOrServiceName:'your product',
-        productOrServiceImages:[{src:""},{src:""},{src:""}]
+        productOrServiceImages:[{src:""}]
     },
     {
         userProfileImage:'',
         userName: 'jude afah',
         productOrServiceName:'your product',
-        productOrServiceImages:[{src:""},{src:""},{src:""}]
+        productOrServiceImages:[{src:""}]
     },
     {
         userProfileImage:'',
         userName: 'mercy josh ',
         productOrServiceName:'your product',
-        productOrServiceImages:[{src:""},{src:""},{src:""}]
+        productOrServiceImages:[{src:""}]
     },
 ];
 
@@ -48,10 +48,11 @@ export default function Cart() {
     return (
         <div className="cart-container">
             <div className="cart-header">
-            header
+           <h2>Cart</h2>
             </div>
             <div className="cart-products-wrapper">
             <div className="cart-products-container">
+            <div className="cart-products-panel">
             {
                 cartData.length && (
                     cartData.map((interest, i) =>
@@ -59,6 +60,7 @@ export default function Cart() {
                     )
                 )
             }
+            </div>
             <div className="cart-products-total-container">
                 <div className="cart-products-total-panel">
                 <div className="cart-products-total-amount">
@@ -81,6 +83,7 @@ export default function Cart() {
 
 function CartProduct(props) {
     return (
+        
             <div className="cart-product-panel">
                 {/* product profile image */}
             <div className="cart-product-profile" >
@@ -134,6 +137,7 @@ function CartProduct(props) {
                 </div>
             </div>
             </div>
+            
     )
 }
 
