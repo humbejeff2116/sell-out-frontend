@@ -1,12 +1,4 @@
 
-
-
-
-
-
-
-
-
 import {useEffect, useState } from 'react';
 import { CartContext } from './cartContext';
 
@@ -33,24 +25,29 @@ let state = [
     }
 ];
 
-export default function CartContextProvider(props) {
-    const [cartState, setCartState] = useState(null);
+export  function CartContextProvider(props) {
+    const [cartState, setCartState] = useState([]);
     const [cartTotalNumberOfProducts, setCartTotalNumberOfProducts] = useState(null);
     const [totalSum, setTotatSum] = useState(null);
     const [sellerPaymentData, setSellerPaymentData] = useState(null);
     
     useEffect(()=> {
-      const cartProducts =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : null;
+      const cartProducts =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
       setCartState(cartProducts);
         return ()=>{
-            localStorage.setItem("cart", JSON.stringify(cartState));
         } 
+    }, []);
+
+    useEffect(()=> {
+          return ()=>{
+            //   localStorage.setItem("cart", JSON.stringify(cartState));
+          } 
     }, [cartState]);
     // function used to update context useState hooks after cart state changes
-    const updateContextState = (state) => {
+    const updateCartContextState = (state, user) => {
         const totalSum = state.length ? calculateCartTotalPrice(state) : 0;
         // TODO... pass user into creatSellerPaymentData function or only call function inside a component
-        const sellerPaymentData = state.length ? createSellerPaymentData(state) : {};
+        const sellerPaymentData = state.length ? createSellerPaymentData(state, user) : {};
         const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : 0;
         setCartState(state);
         setTotatSum(totalSum);
@@ -62,7 +59,7 @@ export default function CartContextProvider(props) {
         toatalSum: totalSum,
         cartTotalNumberOfProducts: cartTotalNumberOfProducts,
         sellerTotalSumData: sellerPaymentData,
-        updateContextState: updateContextState,
+        updateCartContextState: updateCartContextState,
         addProductToCart: addProductToCart,
         removeProductFromCart: removeProductFromCart,
         addCartProductQuantity: addCartProductQuantity,
@@ -78,7 +75,8 @@ export default function CartContextProvider(props) {
     )
 }
 
-// addProductToCart()
+//e.g hoW t use addProduct context function
+// addProductToCart(args)
 // .then(products => {
-//     return cartStateUpdater(products)
+//     return updateCartContextState(products)
 // })

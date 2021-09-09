@@ -8,6 +8,11 @@ import useAuth from '../../Context/context';
 import image from '../../Images/avatar.jpg';
 import image2 from '../../Images/product3.webp';
 import './cart.css';
+import useCartContext from '../../Context/Cart/cartContext';
+import { reduceCartProductActionPayload,
+        addCartProductQuantityActionPayload,
+        removeFromCartActionPayload,
+} from '../../Context/Cart/cartPayloads';
 
 const cartData = [
     {
@@ -82,6 +87,13 @@ export default function Cart() {
 
 
 function CartProduct(props) {
+    const {
+        cartState,
+        addCartProductQuantity, 
+        reduceCartProductQuantity, 
+        removeProductFromCart,
+        updateCartContextState,
+    } = useCartContext();
     return (
         
             <div className="cart-product-panel">
@@ -136,8 +148,7 @@ function CartProduct(props) {
                     <div className="cart-product-remove-button"><button>Remove</button></div>
                 </div>
             </div>
-            </div>
-            
+            </div>     
     )
 }
 

@@ -6,11 +6,11 @@ import { createContext, useContext } from 'react';
 
 
 const initialCartContext = {
-    cartState: null,
+    cartState: [],
     toatalSum: null,
     cartTotalProducts: null,
     sellerTotalSumData: null,
-    updateContextState: ()=>{},
+    updateCartContextState: ()=>{},
     addProductToCart: ()=>{},
     removeProductFromCart: ()=>{},
     addCartProductQuantity: ()=>{},
@@ -23,6 +23,6 @@ const initialCartContext = {
 
 export const CartContext = createContext(initialCartContext);
 
-export  function useCartContext() {
+export default  function useCartContext() {
     return useContext(CartContext);
 }

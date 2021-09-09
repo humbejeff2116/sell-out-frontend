@@ -14,43 +14,45 @@ let state = [
 async function addProductToCart(state =[], action) {
     let productId = action.productId;
     let productQty = action.productQty;
-    let sellerName = action.sellerName;
+    let sellerName = action.userName;
     let sellerExist = false;
     let sellerProductAlreadyExist = false;
     let sellerProducts;
-
-    for (let i = 0; i < state.length; i++) {
-        if ( state[i].sellerName === sellerName) {
-            sellerExist = true;
-            sellerProducts = state[i].productsUserBoughtFromSeller;
-            break;
-        }  
-    }
-    if (sellerExist && sellerProducts.length) {
-        for (let i = 0; i < sellerProducts.length; i++) {
-            if (sellerProducts[i].productId === productId) {
-                sellerProductAlreadyExist = true;
-                sellerProducts[i].productQty += productQty;
+    if (state.length) {
+        for (let i = 0; i < state.length; i++) {
+            if ( state[i].sellerName === sellerName) {
+                sellerExist = true;
+                sellerProducts = state[i].productsUserBoughtFromSeller;
+                break;
+            }  
+        }
+        if (sellerExist && sellerProducts.length) {
+            for (let i = 0; i < sellerProducts.length; i++) {
+                if (sellerProducts[i].productId === productId) {
+                    sellerProductAlreadyExist = true;
+                    sellerProducts[i].productQty += productQty;
+                    return state;
+                }
+            }
+            if (!sellerProductAlreadyExist) {
+                alert("seller does not exist")
+                sellerProducts[sellerProducts.length] = { 
+                    productId: action.productId,
+                    productName: action.productName,
+                    productImages: action.productImages,
+                    productPrice: action.productPrice,
+                    productQty: action.productQty,
+                    productSize: action.productSize,
+                };
                 return state;
             }
         }
-        if (!sellerProductAlreadyExist) {
-            sellerProducts[sellerProducts.length] = { 
-                productId: action.productId,
-                productName: action.productName,
-                productImages: action.productImages,
-                productPrice: action.productPrice,
-                productQty: action.productQty,
-                productSize: action.productSize,
-            };
-            return state;
-        }
     }
-    // add new cart product if seller does not eist
+    // add new cart product if seller does not exist
     return [...state, { 
-        sellerName: action.sellerName,
-        sellerId: action.sellerId,
-        sellerEmail: action.sellerEmail,
+        sellerName: action.userName,
+        sellerId: action.userId,
+        sellerEmail: action.userEmail,
         productsDelivered: false,
         productsUserBoughtFromSeller:[{
             productId: action.productId,
@@ -163,12 +165,12 @@ async function clearCart(state=[], action) {
     
 function calculateCartTotalPrice(state=[]) {
     let allCartProducts = state.flatMap(product => product.productsUserBoughtFromSeller);
-    let totalCartSum = 0;
+    let totalCartSum = 0.00;
 
     for (let i = 0; i < allCartProducts.length; i++) {
         totalCartSum += allCartProducts[i].productPrice * allCartProducts[i].productQty;
     }
-    return totalCartSum;
+    return totalCartSum.toFixed(2);
 }
     
     
@@ -177,7 +179,6 @@ function createSellerPaymentData(state=[], buyer) {
 
     function calculateIndividualSellerPriceSum(product) {
         let total = 0;
-
         for (let i = 0; i < product.productsUserBoughtFromSeller.length; i++) {
             total += product.productsUserBoughtFromSeller[i].productPrice * product.productsUserBoughtFromSeller[i].productQty
         }

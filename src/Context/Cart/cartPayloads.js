@@ -1,23 +1,25 @@
 
-function addToCartActionPayload(
-    productId,
-    sellerId,
-    sellerName,
-    sellerEmail, 
-    productName,
-    productImages,
-    productPrice,
-    productQty,productSize
-) {
-    return ({
-        sellerId,
-        sellerName,
-        sellerEmail,
+function addToCartActionPayload(product, productQty, productSize) {
+    const {
         productId,
+        userId,
+        userName,
+        userEmail, 
         productName,
         productImages,
         productPrice,
+        // productQty,
+        // productSize 
+    } = product;
+    return ({
+        userId,
+        userName,
+        userEmail,
+        productId,
+        productName,
+        productImages,
         productQty,
+        productPrice,
         productSize
     });
 }

@@ -14,10 +14,10 @@ import image2 from '../../Images/product3.webp';
 
 
 
+
 export  function DisplayedProduct(props) {
     let [starCount, setStarCount] = useState(0);
     const [starsUserRecieved, setStarsUserRecieved] = useState([]);
-    const [interested, setInterested] = useState(false);
     const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const { product, panelClassName, productCommentPanelName } = props;
@@ -25,9 +25,7 @@ export  function DisplayedProduct(props) {
 
     useEffect(() => {
         if (user) { 
-            setStarOnLoad(user, product, setStarCount);
-            setInterestOnLoad(user, product, setInterested);
-             
+            setStarOnLoad(user, product, setStarCount);         
         } 
         setStarsUserRecieved(product.starsUserRecieved);
     }, [product, user]);
@@ -88,41 +86,7 @@ export  function DisplayedProduct(props) {
     const closeCommentBox = () => {
         setShowComment(false);
     }
-    const showInterest = (product, user, isInterested ) => {
-        if(!isInterested) {
-            setInterested(true);
-            const data = {
-                product,
-                user,
-                interested: true
-            }
-            socket.emit('showInterest', data );
-            return;
-        }
-         setInterested(false);
-        const data = {
-            product,
-            user,
-            interested: false
-        }
-        socket.emit('showInterest', data );
-    }
-    const setInterestOnLoad = (user, product, callback) => {
-        const userEmail = user.userEmail;
-        const interestProductRecieved = (product.interests && product.interests.length) ? product.interests: null;
-        
-        let interested = false;
-        if(interestProductRecieved) {
-            for (let i = 0; i < interestProductRecieved.length; i++) {
-                if (interestProductRecieved[i].userEmail === userEmail) {
-                    interested = true;
-                    break;
-                }
-            }
-            return callback(interested);
-        }
-        return callback(interested);   
-    }
+
     let imageComponent = null;
 
     if (product.productImages.length === 1) {
@@ -160,32 +124,14 @@ export  function DisplayedProduct(props) {
             </div>
 
             <div className="index-product-image-wrapper">
-                {/* TODO... uncomment ImageComponent when product images are available */}
-               { imageComponent }
-                {/* <div className="index-product-tripple-images-panel">
-                <div className="index-product-tripple-image">
-                <img src={image.src || image2} alt="product"/>
-                </div>
-                <div className="index-product-tripple-image">
-                <img src={image.src || image2} alt="product"/>
-                </div>
-                <div className="index-product-tripple-image">
-                <img src={image.src || image2} alt="product"/>
-                </div>
-                </div> */}
-                
+                { imageComponent }
                 <div className="index-product-image-details">product details</div>
             </div>
 
             <div className="index-product-reaction-panel">
                 <div className="index-product-reaction-star">heart</div>
                 <div className="index-product-reaction-star">
-                    <i onClick={()=> showInterest( product, user, interested)}>
-                        Intrested 
-                        {
-                            (product.interests && product.interests.length) ? product.interests.length: ''
-                        }
-                    </i>
+                    <i>i</i><span> empty</span>
                     </div>
                 <Comment openCommentBox={openCommentBox}  />
             </div>
