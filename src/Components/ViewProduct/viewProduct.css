@@ -94,12 +94,12 @@
 }
 .view-product-details-name span{
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 .view-product-details-code{
     border: 1px solid red;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 .view-product-details-price{
     border: 1px solid red;
@@ -118,7 +118,7 @@
 }
 .view-product-details-usage span{
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .view-product-details-bottom{
@@ -134,7 +134,7 @@
 }
 .view-product-details-bottom-quantity-header span{
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 .view-product-details-bottom-quantity-buttons{
     border:1px solid blue;

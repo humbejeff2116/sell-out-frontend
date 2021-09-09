@@ -53,7 +53,8 @@ export default function Cart() {
     return (
         <div className="cart-container">
             <div className="cart-header">
-           <h2>Cart</h2>
+           {/* <h2>Cart</h2> */}
+           <p>Cart</p>
             </div>
             <div className="cart-products-wrapper">
             <div className="cart-products-container">
@@ -107,7 +108,7 @@ function CartProduct(props) {
                     <div> <span>{props.userName || 'unknown'}</span></div>
                 </div>
             </div>
-            {/* product images */}
+            {/* product image */}
             <div className="cart-product-images-panel">
                 <div className="cart-product-images">
                 {
@@ -122,32 +123,49 @@ function CartProduct(props) {
 
             <div className="cart-product-info" >
                <div className="cart-product-info-span-group">
-                   <span>Product name:</span>
+                <p>This is the product name</p>
                </div>
                <div className="cart-product-info-span-group">
-                   <span>Product price:</span>
+               <p>Price: <span>£320.00</span></p>
                </div>
                <div className="cart-product-info-span-group">
-                   <span>Product quantity:</span>
+               <p>Quantity: <span>5</span></p>
                </div>
                <div className="cart-product-info-span-group">
-                   <span>Product total amount:</span>
+               <p>Amount: <span>£320.00</span></p>
                </div>
-            </div>
-            </div>
-            
-            {/* product add/reduce/remove buttons */}
+
+               {/* product add/reduce/remove buttons */}
 
             <div className="cart-product-buttons" >
-                <div className="cart-product-button-left">
-                    <div className="cart-product-add-button"><button>Add</button></div>
-                    <input className="cart-product-input" type="text" />
-                    <div className="cart-product-reduce-button"><button>Reduce</button></div>
+                <div className="cart-product-buttons-header">
+                    <span>Quantity</span>
                 </div>
-                <div className="cart-product-button-right">
-                    <div className="cart-product-remove-button"><button>Remove</button></div>
+                <div className="cart-product-button-top">
+                    <div className="cart-product-add-button">
+                    <div className="cart-product-add-button-icon">
+                       <i>-</i>
+                    </div>
+                    </div>
+                    <input className="cart-product-input" type="text" />
+                    <div className="cart-product-reduce-button">
+                    <div className="cart-product-add-button-icon">
+                       <i>+</i>
+                    </div>
+                    </div>
+                </div>
+                <div className="cart-product-button-bottom">
+                    <div className="cart-product-remove-button">
+                        <span>Remove</span>
+                    </div>
                 </div>
             </div>
+
+            </div>
+            
+            </div>
+            
+            
             </div>     
     )
 }
@@ -158,16 +176,16 @@ function CartCheckoutComp(props) {
             <div className="cart-checkout-info">
 
                 <div className="cart-checkout-span-group">
-                <span>TOTAL PRICE: 3000</span>
+                <span className="cart-checkout-span-left">Total Price: <span className="cart-checkout-span-right">£3000.00</span></span>
                 </div>
 
                 <div  className="cart-checkout-span-group">
-                <span>TOTAL ITEMS: 5</span>
+                <span className="cart-checkout-span-left">Total Items: <span className="cart-checkout-span-right">5</span></span>
                 </div>
 
                 <div className="cart-checkout-button-wrapper">
                     <div className="cart-checkout-button">
-                        <button>Checkout</button>
+                        <span>Checkout</span>
                     </div>
                 </div>
 
