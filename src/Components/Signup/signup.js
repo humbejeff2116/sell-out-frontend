@@ -105,7 +105,6 @@ export default function Signup() {
                     labelClassName="signup-form-group"
                     name="email"
                     type="email"
-                    placeholder="example@gmail.com"
                     errorClass="signup-form-error"
                 />
                    <TextInput
@@ -113,7 +112,6 @@ export default function Signup() {
                     labelClassName="signup-form-group"
                     name="fullname"
                     type="text"
-                    placeholder="e.g John Doe"
                     errorClass="signup-form-error"
                 />
                 <PasswordInput
@@ -127,8 +125,8 @@ export default function Signup() {
                     <button type="submit" >
                     {
                         creatingAccount ? 'Creating Account...' : 
-                        creatingAccountError ? <><ImWarning/> <span>Create Account</span></> : 
-                        'Create Account'
+                        creatingAccountError ? <><ImWarning/> <span>Create account</span></> : 
+                        <span>Create account</span>
                     }
                     </button>
                 </div>

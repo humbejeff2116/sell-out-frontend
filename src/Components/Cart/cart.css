@@ -9,7 +9,8 @@
     justify-content: center; 
 }
 .cart-header p{ 
-    font-size: 600rem;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 .cart-products-wrapper{
@@ -145,6 +146,11 @@
 .cart-product-info-span-group span{
     font-size: 1.1rem;
     font-weight: 400;   
+}
+.cart-product-info-span-group .original-price{
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 .cart-product-buttons{
     border: 1px solid purple;
