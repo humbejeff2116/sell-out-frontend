@@ -15,8 +15,21 @@ export default function LandingInfoCard() {
     return (
         <div className="landing-info-card-contr" >
             {/* info text */}
-            <div className="landing-info-card-text" >
-                info text
+            <div className="landing-info-card-text-container" >
+                <div className="landing-info-card-text-heading">
+                <h3>This is the heading</h3>
+                </div>
+                <div className="landing-info-card-text-paragraph">
+                <span>
+                Integer pulvinar leo id viverra feugiat. 
+                Pellentesque libero ut justo, semper at tempus vel, 
+                ultrices in ligula. Lorem ipsum dolor sit amet sed 
+                do eiusmod tempor incididunt ut lab
+                    
+                    </span>
+                </div>
+                
+               
             </div>
             {/* login sign up */}
             <div className="landing-info-card-button">
