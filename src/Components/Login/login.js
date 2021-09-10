@@ -124,7 +124,6 @@ export default function Login() {
                     labelClassName="login-form-group"
                     name="email"
                     type="email"
-                    placeholder="example@gmail.com"
                     errorClass="login-form-error"
                 />
                 <PasswordInput
@@ -135,12 +134,16 @@ export default function Login() {
                     errorClass="login-form-error"
                 />
                 <div className="login-forgot-pass">
-                    <p>forgot your password?</p>
+                    <span>forgot your password?</span>
                 </div>
 
                 <div className="login-button">
-                    <button type="submit" className="btn btn-success">
-                    {loginIn ? 'Loging in...' : loginError ? <><ImWarning/> Log in</> : 'Log in'}
+                    <button type="submit" >
+                    {
+                        loginIn ? <span>Loging in...</span> : 
+                        loginError ? <><ImWarning/> <span>Log in</span></> :
+                        <span>Log in</span>
+                    }
                     </button>
                 </div>
                 </Form>
@@ -150,7 +153,7 @@ export default function Login() {
                 <div className="login-signup-panel">
                     <div className="signup-link">
                         <div className="signup-link-text">
-                            <p>dont have an account yet ? </p>
+                            <p>Dont have an account yet ? </p>
                         </div>
                         <div className="signup-link-button">
                             <Link to="/signup"><button> sign up </button></Link>

@@ -124,7 +124,7 @@ export default function Signup() {
                  <div className="signup-button">
                     <button type="submit" >
                     {
-                        creatingAccount ? 'Creating Account...' : 
+                        creatingAccount ? <span>Creating Account...</span> : 
                         creatingAccountError ? <><ImWarning/> <span>Create account</span></> : 
                         <span>Create account</span>
                     }

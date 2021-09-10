@@ -25,7 +25,7 @@ export const TextInput = ({ label, errorClass, labelClassName, ...props }) => {
             <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
-                    <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                    <span><i> {<ImWarning/>} </i>{meta.error}</span>
                 ) : null
             }
             </div>
@@ -49,7 +49,7 @@ export const TextAreaInput = ({ label, errorClass, labelClassName, ...props }) =
               <div className={errorClass}>
               {
                   (meta.touched && meta.error ) ? (
-                      <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                      <span><i> {<ImWarning/>} </i>{meta.error}</span>
                   ) : null
               }
               </div>
@@ -73,7 +73,7 @@ export const PasswordInput = ({ label, errorClass, labelClassName, ...props }) =
                   <div className={errorClass}>
                     {
                         (meta.touched && meta.error ) ? (
-                            <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                            <span><i> {<ImWarning/>} </i>{meta.error}</span>
                         ) : null
 
                     }
@@ -124,7 +124,7 @@ export const Select = ({ label, errorClass, labelClassName, selectClassName, ...
         <div className={errorClass}>
         {
             (meta.touched && meta.error ) ? (
-                <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                <span><i> {<ImWarning/>} </i>{meta.error}</span>
             ) : null
         }
         </div>
@@ -169,7 +169,7 @@ export const  AnimSelect = ({ label, errorClass, labelClassName, selectClassName
         <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
-                    <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                    <span><i> {<ImWarning/>} </i>{meta.error}</span>
                 ) : null
 
             }
@@ -192,7 +192,7 @@ export const FileInput = ({ label, errorClass, labelClassName, ...props }) => {
               <div className={errorClass}>
               {
                   (meta.touched && meta.error ) ? (
-                      <span><i> {<ImWarning/>} </i>{meta.error}*</span>
+                      <span><i> {<ImWarning/>} </i>{meta.error}</span>
                   ) : null
               }
               </div>
