@@ -2,12 +2,11 @@
 
 
 
-
 import React, {useState, useEffect} from 'react';
 import { Link, Redirect, useLocation, useHistory  } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput } from '../../Formik/formik';
+import { TextInput, TextAreaInput } from '../../Formik/formik';
 // import socket from '../../Socket/socket';
 import { useGetStartedContext } from '../../../Context/context';
 import image from '../../../Images/avatar.jpg'
@@ -54,15 +53,17 @@ export default function Contact(props) {
         <div className="getting-started-contact-panel">
             {/* flex row */}
             <div className="getting-started-contact-avatar">
-                <div className="getting-started-contact-img">
-                    <div><img src={image} alt="avatar" /></div>
+                <div className="getting-started-contact-heading">
+                    <p>
+                        Kindly enter your contact details below 
+                    </p>
                 </div>
-                
+                <div className="getting-started-contact-img">
+                    <img src={image} alt="avatar" />
+                </div>  
             </div>
 
-            <div className="getting-started-contact-heading">
-                <p>Kindly enter your contact details below</p>
-            </div>
+            
             
             <div className="getting-started-contact-body">                            
                 <Formik
@@ -70,34 +71,65 @@ export default function Contact(props) {
                         contactEmail: (user && !contactData) ? user.userEmail :
                          contactData ?  contactData?.contactEmail : '',
                         contactNumber: contactData ? contactData?.contactNumber : '',
+                        contactAddress: contactData ? contactData?.contactAddress : ''
                     }}
 
                     validationSchema = { Yup.object({
+                        
                         contactEmail: Yup.string().email('Email address is not valid').required('Contact email is Required'),
                         contactNumber: Yup.string().required('Contact number is required'),
+                        contactAddress: Yup.string().required('Your contact address is Required'),
                     })}
 
                     onSubmit = { handleSubmit }
                 >
                 <Form id="contactForm">
-                <TextInput
-                    label="Contact Email"
+                    <div className="getting-started-contact-form-inputs">
+                        <div className="brand-name">
+                            <span>
+                                Your brand name which will be tagged on all your products is used to help your customers 
+                                identify items which are being sold by you. If not set, it automatically defaults 
+                                to your names.
+                            </span>
+                        </div>
+                    <TextInput
+                    label="BRAND NAME"
+                    labelClassName="contact-form-group brand-name-label"
+                    name="brandName"
+                    type="text"
+                    errorClass="contact-form-error"
+                    />
+                    <TextInput
+                    label="CONTACT EMAIL"
                     labelClassName="contact-form-group"
                     name="contactEmail"
                     type="email"
-                   
-                    placeholder="contactme@yahoo.com"
                     errorClass="contact-form-error"
-                />
+                    />
                
-                <TextInput
-                    label="Contact Number"
-                    labelClassName="contact-form-group"
-                    name="contactNumber"
-                    type="text"
-                    placeholder="+234-813-43-4444"
-                    errorClass="contact-form-error"
-                />
+                    <TextInput
+                        label="CONTACT NUMBER"
+                        labelClassName="contact-form-group"
+                        name="contactNumber"
+                        type="text"
+                        errorClass="contact-form-error"
+                    />
+                    <TextAreaInput
+                        label="CONTACT ADDRESS"
+                        labelClassName="contact-form-group"
+                        name="contactAddress"
+                        // type="text"
+                        errorClass="contact-form-error"
+                    />
+                     <span className="brand-name">
+                        Each information provided here is owned by you and as such, 
+                        can be changed, modified or removed at any time in your settings. 
+                        Kindly go through our privacy policy if you haven't to know how
+                        we use your information or how you can manage your data. 
+                    </span>
+
+                    </div>
+                
 
                 <div className="getting-started-contact-buttons">
                 <div className="getting-started-contact-back-button">
