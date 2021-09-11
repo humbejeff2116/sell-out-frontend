@@ -16,7 +16,7 @@
     width:15%;
     overflow-x: none;
     transition: width 0.3s ease;
-    border:6px solid green;
+    border:1px solid green;
 }
 .fixed{
      position:fixed;

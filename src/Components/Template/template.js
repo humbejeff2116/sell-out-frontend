@@ -111,7 +111,7 @@ export function GettingStartedTemplate(props) {
             />
         <GettingStartedTemplateChildren
         children={props.children} />
-        {/* <LandingFooter footerClassName={'gettingStarted-footer'} /> */}
+        <LandingFooter footerClassName={'gettingStarted-footer'} />
        
         </>
     )
@@ -120,9 +120,7 @@ export function GettingStartedTemplate(props) {
 function GettingStartedTemplateChildren(props) {
     return (
         <div className="getting-started-template-container">
-            <div className="getting-started-template-center">
-                {props.children}
-            </div>
+            {props.children}
         </div>
     )
 
