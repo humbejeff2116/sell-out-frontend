@@ -123,14 +123,19 @@ export  function DisplayedProduct(props) {
 
             <div className="index-product-image-wrapper">
                 { imageComponent }
-                <div className="index-product-image-details">product details</div>
+                <div className="index-product-image-details">
+                    <div className="index-product-details-name">
+                        <span>blue denim close up andre 200 </span>
+                    </div>
+                    <div className="index-product-details-price">
+                        <p>£300.00 (22% OFF) <span>£320.00</span></p>
+                    </div>
+                </div>
             </div>
 
             <div className="index-product-reaction-panel">
-                <div className="index-product-reaction-star">heart</div>
-                <div className="index-product-reaction-star">
-                    <i>i</i><span> empty</span>
-                    </div>
+                <div className="index-product-reaction-star">heart </div>
+               
                 <Comment openCommentBox={openCommentBox}  />
             </div>
         </div>
