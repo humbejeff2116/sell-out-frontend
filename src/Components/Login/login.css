@@ -69,12 +69,9 @@
     /* border:2px solid yellow; */
 }
 .login-form-group label{
+    display:flex;
     font-size: 0.781em;
     font-weight: bold;
-}
-.login-form-group span{
-    margin-right: 1%;
-    color:red;  
 }
 .login-form-error{
     display: flex;

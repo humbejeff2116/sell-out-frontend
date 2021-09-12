@@ -176,8 +176,7 @@ function FilterDisplayedProducts(props) {
             setShowClothingLinks(true)
         }else {
             setShowClothingLinks(false)
-        }
-        
+        } 
     }, [queryValues.category])
    
     const queryProducts = async (queryValues) => {
@@ -198,7 +197,7 @@ function FilterDisplayedProducts(props) {
     return (
         <>
         <div className="index-products-filter-heading">
-            <p>Filter products</p>
+            <p>Products</p>
         </div>
         <div className="index-products-filter-buttons">
             <div className="index-products-filter-select">

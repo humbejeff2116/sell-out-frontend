@@ -74,10 +74,7 @@
     width:99%;
     /* border:2px solid yellow; */
 }
-.signup-form-group span{
-    margin-right: 1%;
-    color:red;
-}
+
 .signup-form-error{
     display: flex;
     /* justify-content: space-between; */

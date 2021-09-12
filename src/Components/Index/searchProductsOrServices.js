@@ -18,12 +18,20 @@ export function SearchProducts(props) {
         <div className="index-search-container">
             <div className="index-search-header-panel">
                 <div className="index-search-header">
+                    {/* <p>
+                        Filter search to alter default behaviour
+                    </p> */}
                     <p>
-                         Filter search to alter default behaviour
+                        Search for products
                     </p>
                 </div>
             </div>
             <div className="index-search-select">
+
+                {/* <div className="index-search-select-filter">
+                    
+                    <span>Filter search</span>
+                </div> */}
 
                 <div className="index-search-select-btn">
                    
@@ -71,17 +79,22 @@ export function SearchProducts(props) {
             </div>
             <div className="index-search-form">
                <form>
-                        <input type="search" placeholder="search for products or services"   name="searchproduct" />
-                            <button type="submit" >
-                            {/* {this.state.Searching ? 'Searching...' : 'Search'} */}
-                            search
-                            </button>
-                        {/* error reporting div */}
-                   
+               <input type="search" placeholder="search for products"   name="searchproduct" />
+
+                <button type="submit" >
+                {/* {this.state.Searching ? 'Searching...' : 'Search'} */}
+                Search
+                </button>   
                </form>
                <div className="index-search-form-error">
-                        <span className="index-search-error">this is search error</span>
-                    </div>
+                            <div className="index-search-form-error-text">
+                            <span className="index-search-error">No products match your search</span>
+                            </div>
+                            <div className="index-search-form-error-close">
+                                <div className="index-search-form-error-close-icon"><i>x</i></div>
+                            </div>      
+                        </div>
+              
             </div>
         </div>
     )
