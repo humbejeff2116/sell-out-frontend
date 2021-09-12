@@ -88,7 +88,7 @@
 }
 .contact-form-group{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding-top: 2.5%;
     margin-top:2%;
     margin-bottom:1%;
@@ -115,6 +115,10 @@
 }
 .contact-form-group label{
     font-size: 0.781em;
+    font-weight: bold;
+}
+.contact-form-group label span{
+    font-size: 0.9em;
     font-weight: bold;
 }
 .getting-started-contact-body form input, textarea{

@@ -11,7 +11,7 @@ import { ImWarning } from 'react-icons/im';
 
 
 
-export const TextInput = ({ label, errorClass, labelClassName, ...props }) => {
+export const TextInput = ({ label, labelText, labelTextClass, errorClass, labelClassName, ...props }) => {
 
   const [field, meta] = useField(props);
 
@@ -19,7 +19,10 @@ export const TextInput = ({ label, errorClass, labelClassName, ...props }) => {
 
     <>
         <div className={labelClassName}>
-            <label htmlFor={props.id || props.name}>{label}</label>
+            <label htmlFor={props.id || props.name}>
+                {label}
+                <span className={ labelTextClass || ""}>{labelText || ""}</span>
+            </label>
         </div>
             <input className="text-input" {...field} {...props} />
             <div className={errorClass}>
@@ -35,7 +38,7 @@ export const TextInput = ({ label, errorClass, labelClassName, ...props }) => {
 
 };
 
-export const TextAreaInput = ({ label, errorClass, labelClassName, ...props }) => {
+export const TextAreaInput = ({ label, labelText, labelTextClass, errorClass, labelClassName, ...props }) => {
 
     const [field, meta] = useField(props);
   
@@ -43,7 +46,11 @@ export const TextAreaInput = ({ label, errorClass, labelClassName, ...props }) =
   
       <>
           <div className={labelClassName}>
-              <label htmlFor={props.id || props.name}>{label}</label>
+            <label htmlFor={props.id || props.name}>
+                {label}
+                <span className={ labelTextClass || ""}>{labelText || ""}</span>
+            </label>
+              
           </div>
               <textarea className="text-area-input" {...field} {...props} />
               <div className={errorClass}>

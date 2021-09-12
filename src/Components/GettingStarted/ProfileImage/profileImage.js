@@ -9,6 +9,7 @@ import { useGetStartedContext } from '../../../Context/context';
 import { ImWarning } from 'react-icons/im';
 import useAuth from '../../../Context/context';
 import './profileImage.css';
+import '../Contact/contact.css';
 
 
 
@@ -61,54 +62,67 @@ export default function ProfileImage(props) {
     const formDetails = getDetails();
 
     return (
-        <div className="getting-started-profile-image-container">
-            {/* profile avatar */}
-           <div className="getting-started-profile-image">
-               <div className="getting-started-image">
-                   <img 
+        <div className="getting-started-contact-container">
+        <div className="getting-started-contact-panel">
+            {/* avatar */}   
+            <div className="getting-started-contact-avatar">
+                <div className="getting-started-contact-heading">
+                    <p>
+                        Kindly upload a profile image 
+                    </p>
+                </div>
+                <div className="getting-started-profile-image">
+                    <img 
                     src={
-                       displayImage ? displayImage : 
-                       profileImage ? profileImage : ""
+                        displayImage ? displayImage : 
+                        profileImage ? profileImage : ""
                     } 
                     alt="profile avatar"
-                   />
-               </div>
-               <div className="getting-started-input">
-               <input type="file"  name="profileImage" onChange={ handleImageChange }  />
-               </div>
-               <div className="getting-started-error">
-                <span>{ profileError ? imageError : ''}</span>
-               </div>
-
-           </div>
-           {/* profile details */}
-           <div className="getting-started-profile-image-info-contr">
-               <div className="getting-started-profile-image-info">
+                    />
+                    <div className="getting-started-input">
+                        {/* <div className="getting-started-input-icon">
+                            <span>icon<span>Edit</span></span>
+                        </div> */}
+                        <input type="file"  name="profileImage" onChange={ handleImageChange }  />
+                    </div>
+                    <div className="getting-started-error">
+                        <span>{ profileError ? imageError : ''}</span>
+                    </div>
+                </div>  
+            </div>
+            {/* body */}
+            <div className="getting-started-contact-body">
+                <div className="getting-started-profile-image-info">
                 {
                     <>
-                    <div><span className="getting-started-info-group">Full Name: </span><span>{user?.fullName}</span></div>
-                    <div><span className="getting-started-info-group">Contact Email: </span><span>{formDetails?.contactEmail}</span></div>
-                    <div><span className="getting-started-info-group">Contact Number: </span><span>{formDetails?.contactNumber}</span></div>
-                    <div><span className="getting-started-info-group">Country: </span><span>{formDetails?.country}</span></div>
-                    <div><span className="getting-started-info-group">City: </span><span>{formDetails?.city}</span></div>
-                    <div><span className="getting-started-info-group">Address: </span><span>{formDetails?.address}</span></div>
+                    <div><span className="getting-started-info-group">FULL NAME: </span><span>{user?.fullName} john adakole</span></div>
+                    <div><span className="getting-started-info-group">CONTACT EMAIL: </span><span>{formDetails?.contactEmail} john@gmail.com</span></div>
+                    <div><span className="getting-started-info-group">CONTACT NUMBER: </span><span>{formDetails?.contactNumber} 0805557758557</span></div>
+                    <div><span className="getting-started-info-group">COUNTRY: </span><span>{formDetails?.country} Nigeria</span></div>
+                    <div><span className="getting-started-info-group">CITY: </span><span>{formDetails?.city} Makurdi</span></div>
+                    <div><span className="getting-started-info-group">CONTACT ADDRESS: </span><span>{formDetails?.address} Behind child evangelical ministries off goerge akume way makurdi benue state</span></div>
                     </>
-                
                 }
-               </div>
-
-           </div>
-          
-           <div className="getting-started-profile-image-buttons">
-               <div className="getting-started-profile-image-back-button">
-                   <button onClick={()=> goBack()}>Go Back</button>
-               </div>
-               <div className="getting-started-profile-image-upload-button">
-                   <button onClick={ ()=> handleSubmit(imageFile, user, profileImageError, userUpdatedSuccessful)}>Upload Profile</button>
-               </div>
-
-           </div>
+                <span className="brand-name">
+                    All data entered in this proccess by you can be modified, or deleted at anytime, 
+                    and by submitting these information you are giving us consent to share this data
+                    wherever your profile appears. Kindly go through our privacy policy if you haven't 
+                    to know how we use your information or how you can manage your data. 
+                </span>
+                </div>
+                {/* buttons */}
+                <div className="getting-started-contact-buttons">
+                    <div className="getting-started-contact-back-button">
+                        <button onClick={()=>goBack()} >
+                            Back
+                        </button>
+                    </div>
+                    <div className="getting-started-contact-next-button">
+                    <button onClick={ ()=> handleSubmit(imageFile, user, profileImageError, userUpdatedSuccessful)}>Submit details</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
         </div>
     )
-
 }

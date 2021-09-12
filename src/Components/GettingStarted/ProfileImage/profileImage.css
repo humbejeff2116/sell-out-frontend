@@ -1,36 +1,19 @@
-.getting-started-profile-image-container{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 2px solid blue;
-    min-height:92vh;
-  
 
-}
 .getting-started-profile-image{
-    min-height: 40vh;
+    min-height: 20vh;
+    width:26%;
+    padding:0.5% 0;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 3px solid rgb(0, 255, 76);
-
+    /* border: 1px solid purple; */
 }
 
-.getting-started-image{
-    border:1px solid yellow;
-    margin-top: 5%;
-    height:200px;
-    width:200px;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-.getting-started-image img{
-    
+.getting-started-profile-image img{
     border-radius: 50%; 
-    height:200px;
-    width:200px;
+    height:140px;
+    width:140px;
     object-fit: cover;
     object-position: center;
     border:1px solid red;
@@ -38,21 +21,21 @@
 }
 .getting-started-input{
     border:1px solid red;
-    /* height:100px; */
-    width:200px;
+    /* width:100px; */
     display:flex;
     justify-content: center;
     align-items: center;
+    position:relative;
+}
+.getting-started-input-icon{
+    border:1px solid red;
+     background-color: red;
 }
 .getting-started-input input{
-    /* border:1px solid red; */
-    height: 30px;
-    padding:4px;
-    
-    
+    width:65px;
 }
 .getting-started-error{
-    border:1px solid red;
+    /* border:1px solid red; */
     height:25px;
     width:100%;
     display:flex;
@@ -63,40 +46,27 @@
     color: rgb(224, 44, 44);
 }
 
-
-
-
-
-.getting-started-profile-image-info-contr{
-    min-height: 30vh;
-    border: 3px solid red;
-    display:flex;
-    flex-direction: column;
-    
-    
-}
 .getting-started-profile-image-info{
     display:flex;
     flex-direction: column;
-    border: 2px solid black;
-    width:98%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-
+    /* border: 1px solid black; */
+    padding:1%;
+}
+.getting-started-profile-image-info .brand-name{
+    font-size: 0.9em;
+    font-weight: 400;
+    /* border: 1px solid black;  */
 }
 .getting-started-profile-image-info div{
-    margin-top:1%;
+    min-height:5vh;
+    margin-bottom:1%;
     /* border:1px solid red; */
-    
-
 }
 .getting-started-info-group{
-    font-weight:bold;
+    font-size: 0.9em;
+    font-weight: bold;
 }
 .getting-started-profile-image-buttons{
-    
     min-height: 15vh;
     border:1px solid red;
     display:flex;
@@ -104,13 +74,11 @@
     justify-content: space-between;
     align-items: center;
     margin-top:auto;
-    /* margin-bottom: auto; */
 }
 .getting-started-profile-image-back-button{
     border:1px solid red;
     width:30%;
     margin-left: 1%; 
-
 }
 .getting-started-profile-image-back-button button{
     width:100%;
@@ -120,7 +88,6 @@
     border:1px solid red;
     width:30%;
     margin-right: 1%;
-
 }
 .getting-started-profile-image-upload-button button{
     width:100%;

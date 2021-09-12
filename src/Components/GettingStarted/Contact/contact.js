@@ -88,13 +88,14 @@ export default function Contact(props) {
                         <div className="brand-name">
                             <span>
                                 Your brand name which will be tagged on all your products is used to help your customers 
-                                identify items which are being sold by you. If not set, it automatically defaults 
+                                identify items which are sold by you. If not set, it automatically defaults 
                                 to your names.
                             </span>
                         </div>
                     <TextInput
                     label="BRAND NAME"
                     labelClassName="contact-form-group brand-name-label"
+                    labelText=" (optional)"
                     name="brandName"
                     type="text"
                     errorClass="contact-form-error"
@@ -122,8 +123,8 @@ export default function Contact(props) {
                         errorClass="contact-form-error"
                     />
                      <span className="brand-name">
-                        Each information provided here is owned by you and as such, 
-                        can be changed, modified or removed at any time in your settings. 
+                        Each information provided here and here off is owned by you and as such, 
+                        can be changed, modified or removed at any time under your settings. 
                         Kindly go through our privacy policy if you haven't to know how
                         we use your information or how you can manage your data. 
                     </span>

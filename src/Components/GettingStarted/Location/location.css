@@ -14,11 +14,11 @@
     justify-content: space-between;
 }
 .location-form-country{
-    width:46%;
+    width:45%;
     /* border:1px solid red; */
 }
 .location-form-state{
-    width:46%;
+    width:45%;
     /* border:1px solid red; */
 }
 
@@ -32,18 +32,32 @@
     transition: border-color 0.3s ease;
     cursor:pointer;
 }
+.getting-started-contact-body.location form  textarea{
+    width:97%; 
+}
 
 
 .location-form-group{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding-top: 2.5%;
     margin-top:2%;
     margin-bottom:1%;
     width:99%;
     /* border:2px solid purple; */
 }
+.location-form-group.brand-name-label{
+    padding-top: 0%;
+    margin-top:1%;
+    margin-bottom:1%;
+    /* border:2px solid green; */
+}
 .location-form-group label{
     font-size: 0.781em;
+    font-weight: bold;
+    /* border:1px solid green; */
+}
+.location-form-group label span{
+    font-size: 0.9em;
     font-weight: bold;
 }
