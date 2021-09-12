@@ -36,8 +36,8 @@ export default function GettingStarted({match}) {
                     <div className="welcome-body">
                         <div className="welcome-body-message-container">
                             <div className="welcome-body-message">
-                            {/* <p className="welcome-body-message-bold">The best place to buy or sell new or used products</p> */}
-                            <p>Hi, <span >{`${user?.fullName || "unknown"} `}</span></p>
+                           
+                            <p>Hi, <span >{`${user?.fullName || ""} `}</span></p>
                             <p> 
                                 Thank you for showing interest in using sellout.
                                 This platform enables you to buy or sell all sorts of produts wether new or used. To be able to use this platform

@@ -54,20 +54,18 @@ export default function Location(props) {
         <div className="getting-started-contact-container">
         <div className="getting-started-contact-panel">
            
-            <div className="getting-started-contact-avatar">
+        <div className="getting-started-contact-avatar">
+                <div className="getting-started-contact-heading">
+                    <p>
+                        Kindly enter your location details below 
+                    </p>
+                </div>
                 <div className="getting-started-contact-img">
                     <img src={image} alt="avatar" />
-                </div>
-                 {/* <div className="getting-started-contact-hr">
-                    
-                 </div> */}
+                </div>  
             </div>
 
-            <div className="getting-started-location-heading">
-                <p>Kindly enter your address details below</p>
-            </div>
-            
-            <div className="getting-started-location-body">                            
+            <div className="getting-started-contact-body">                            
                 <Formik
                     initialValues = {{
                         country: locationData ? locationData?.country : '',
@@ -84,15 +82,16 @@ export default function Location(props) {
                     onSubmit = { handleSubmit }
                 >
                 <Form>
+                <div className="getting-started-contact-form-inputs">
                     <div className="location-form-address">
                         <div className="location-form-country">
                         <Select
-                        label="Country"
+                        label="COUNTRY"
                         labelClassName="location-form-group"
                         name="country"
                         errorClass="contact-form-error"
                         >
-                            <option value="">--Select--</option>
+                            <option value="">Select</option>
                             <option value="Nigeria">Nigeria</option>
                             <option value="Ghana">Ghana</option>
                             <option value="Congo">Congo</option>
@@ -101,12 +100,12 @@ export default function Location(props) {
                         </div>
                         <div className="location-form-state">
                             <Select
-                            label="City"
+                            label="CITY"
                             labelClassName="location-form-group"
                             name="city"
                             errorClass="contact-form-error"
                             >
-                                <option value="">--Select--</option>
+                                <option value="">Select</option>
                                 <option value="Abuja">Abuja</option>
                                 <option value="Abia">Abia</option>
                                 <option value="Adamawa">Adamawa</option>
@@ -117,12 +116,13 @@ export default function Location(props) {
                     </div>
                    
                     <TextAreaInput
-                    label="Address"
+                    label="RESIDENTIAL ADDRESS"
                     labelClassName="location-form-group"
                     name="address"
                     type="text"
                     errorClass="contact-form-error"
                 /> 
+                </div>
                 
                 <div className="getting-started-contact-buttons">
                 <div className="getting-started-contact-back-button">
@@ -138,6 +138,7 @@ export default function Location(props) {
                 </div>
 
                 </div>
+               
                 </Form>
                 </Formik>
             </div>
