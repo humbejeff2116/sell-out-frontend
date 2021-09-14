@@ -2,9 +2,10 @@
 
 
 import React, { useState, useEffect } from 'react';
-import socket from '../Socket/socket';
-import useAuth from '../../Context/context';
-import image from '../../Images/avatar.jpg';
+import socket from '../../Socket/socket';
+import useAuth from '../../../Context/context';
+import image from '../../../Images/avatar.jpg';
+import './commentBox.css';
 
 
 export function CommentBox(props) {
@@ -41,11 +42,7 @@ export function CommentBox(props) {
     return (
         <div className={commentBoxPanelClassName}>
             <div className="product-comment-container">
-                <div className="product-comment-close-bttn-contr">
-                    <div className="product-comment-close-bttn">
-                        <button onClick={closeCommentBox}>Close</button>
-                    </div>
-                </div>
+               
                 <div className="product-comment-error">
                     <div>
                         {
@@ -66,14 +63,17 @@ export function CommentBox(props) {
                             />
                         ))
                     }
-                </div>
-                <div className="product-comment-input">
-                    <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
-                    <div className="product-comment-input-bttn">
-                    <button type="button" onClick={()=>makeReview(product, user, reviewValue)}> Send</button>
-                    </div>  
-                </div>
-            </div>    
+                </div>  
+            </div> 
+
+            <div className="product-comment-input">
+                <textarea placeholder="Write review..." name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
+                <div className="product-comment-input-bttn">
+                <button type="button" onClick={()=>makeReview(product, user, reviewValue)}> Send</button>
+                </div>  
+            </div>
+
+
         </div>  
     )
 }
