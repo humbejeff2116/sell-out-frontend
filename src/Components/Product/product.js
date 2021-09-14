@@ -137,7 +137,7 @@ export  function DisplayedProduct(props) {
                 <CommentBox
                 product={product}
                 closeCommentBox={closeCommentBox}
-                productCommentPanelName="modal-product-panel"
+                // productCommentPanelName="modal-product-panel"
                 commentBoxPanelClassName="modal-comment-box-panel"
                 />
             }

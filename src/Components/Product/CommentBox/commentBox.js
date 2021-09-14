@@ -193,38 +193,41 @@ function Comment(props) {
        
         <div className="product-comment-buttons-cntr">
             <div className="product-comment-bttn">
-                <button onClick={()=> likeComment(_id, user)}><i>like</i></button>
+                <button onClick={()=> likeComment(_id, user)}><i>Like</i></button>
+                <div className="product-comment-bttn-count">
+                    <span>
+                    {
+                        (likesCommentRecieved && likesCommentRecieved.length > 0) ? 
+                        likesCommentRecieved.length :  ''
+                    }
+                    </span>
+                </div>
             </div>
-            <div className="product-comment-like-bttn">
-                <span>
-                {
-                    (likesCommentRecieved && likesCommentRecieved.length > 0) ? 
-                    likesCommentRecieved.length :  ''
-                }
-                </span>
-            </div>
+           
             <div className="product-comment-bttn">
-                <button onClick={()=> disLikeComment(_id, user)}><i>unlike</i></button>
+                <button onClick={()=> disLikeComment(_id, user)}><i>Dislike</i></button>
+                <div className="product-comment-bttn-count">
+                    <span>
+                    {
+                        (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? 
+                        unlikesCommentRecieved.length : ''
+                    }
+                    </span>
+                </div>
             </div>
-            <div className="product-comment-like-bttn">
-                <span>
-                {
-                    (unlikesCommentRecieved && unlikesCommentRecieved.length > 0) ? 
-                    unlikesCommentRecieved.length : ''
-                }
-                </span>
-            </div>
+            
             <div className="product-comment-bttn">
-                <button onClick={()=> toggleReply()}><i>reply</i></button>
+                <button onClick={()=> toggleReply()}><i>Replies</i></button>
+                <div className="product-comment-bttn-count">
+                    <span>
+                    {
+                        (replies && replies.length > 0) ? 
+                        replies.length : ''
+                    }
+                    </span>
+                </div>
             </div>
-            <div className="product-comment-like-bttn">
-                <span>
-                {
-                    (replies && replies.length > 0) ? 
-                    replies.length : ''
-                }
-                </span>
-            </div>
+           
         </div>
         {
             (showReplies) && (
@@ -244,10 +247,17 @@ function Comment(props) {
 }
 
 function Replies(props) {
-    const {textBox, repliesCommentRecieved, handleInputChange, replyComment, commentId, user, replyMessage} = props;
+    const { textBox, repliesCommentRecieved, handleInputChange, replyComment, commentId, user, replyMessage } = props;
     useEffect(() => {
         textBox.current.focus();
-    }, [textBox])
+    }, [textBox]);
+    const likeReply = ( ) => {
+
+    }
+
+    const dislikeReply = ( ) => {
+
+    }
    
     return (
         <div className="product-comment-reply-container">
@@ -256,7 +266,14 @@ function Replies(props) {
                     <div className="product-comment-replies">
                     {
                         repliesCommentRecieved.map((replies, i)=>
-                            <Reply key={i} {...replies} />
+                            <Reply 
+                            key={i} 
+                            {...replies}
+                            user={user}
+                            likeReply={likeReply}
+                            dislikeReply={dislikeReply} 
+
+                            />
                         )
                     }     
                     </div>
@@ -276,18 +293,49 @@ function Replies(props) {
 }
 
 function Reply (props) {
-    const {replyMessage, userName, viewProfile, userId } = props;
+    const {replyMessage, userName, viewProfile, user , userId, likesReplyRecieved, _id, dislikesReplyRecieved } = props;
     return (
         <>
+        {/* reply profile */}
         <div className="product-comment-reply-profile">
             <img src={image} alt="profile" />
             <span onClick={()=> viewProfile(userId)}><b>{userName}</b></span>
         </div>
+        {/* reply message */}
         <div className="product-comment-reply-message">
             <span>
                 {replyMessage}
             </span>
         </div>
+        {/* reply buttons */}
+
+        <div className="product-comment-reply-buttons-cntr">
+            <div className="product-comment-bttn">
+                <button onClick={()=> props.likeReply(_id, user)}><i>Like</i></button>
+                <div className="product-comment-bttn-count">
+                    <span>
+                    {
+                        ( likesReplyRecieved &&  likesReplyRecieved.length > 0) ? 
+                        likesReplyRecieved.length :  ''
+                    }
+                    </span>
+                </div>
+            </div>
+           
+            <div className="product-comment-bttn">
+                <button onClick={()=> props.disLikeReply(props._id, user)}><i>Dislike</i></button>
+                <div className="product-comment-bttn-count">
+                    <span>
+                    {
+                        (dislikesReplyRecieved && dislikesReplyRecieved.length > 0) ? 
+                        dislikesReplyRecieved.length : ''
+                    }
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
         </>
     )
 }

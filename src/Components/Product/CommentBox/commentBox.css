@@ -52,16 +52,18 @@
 }
 
 .product-comment-panel{
-    border: 1px solid red;
+    border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     margin:4% 0 4% 0;
     padding:2% 0 0 0;
-    width:80%;
+    width:95%;
     margin-left:auto;
     margin-right: auto;
     border-radius: 6px;
 }
 .product-comment-info{
-    border-bottom: 1px solid red;
+    border-bottom: 1px solid var(--prim-border-color);
+    padding-bottom:2%;
     /* border-radius: 8px; */
 }
 .product-comment-profile{
@@ -91,31 +93,32 @@
 .product-comment-buttons-cntr{
     display: flex ;
     justify-content: flex-end;
-    border: 4px solid green;
+    /* border: 1px solid green; */
     padding: 2% 0;
 }
 .product-comment-bttn{
     display: flex ;
-    justify-content: center;
-    border: 1px solid red;
-    /* width:30%; */
+    justify-content: space-between;
+    /* border: 1px solid red; */
+    width:26%;
     margin:0 1%;
 }
-.product-comment-like-bttn{
+.product-comment-bttn-count{
     display: flex ;
     /* justify-content: center; */
-    border: 1px solid red;
-    min-width: 8%;
+    /* border: 1px solid red; */
+    min-width: 45%;
     /* margin-left:5%; */
 }
 .product-comment-bttn button{
-    /* width:100%; */
+    width:50%;
    
 }
 .product-comment-reply-container{
-    border: 1px solid green;
+    /* border: 1px solid green; */
     margin:4% 2% 4% 0;
-    width:90%;
+    width:85%;
+    /* padding: 0 2%; */
     margin-left: auto;
 
 }
@@ -128,11 +131,10 @@
     height: 30px;
 }
 .product-comment-replies{
-    border: 3px solid red;
     margin: 4% 0;
-    border: 1px solid red;
+    border: 1px solid var(--prim-border-color);
     margin:4% 0 4% 0;
-    padding:4% 0 4% 0;
+    padding:4% 0 0 0;
     /* width:80%; */
     margin-left:auto;
     margin-right: auto;
@@ -163,4 +165,12 @@
     /* border: 1px solid black; */
     width:89%;
     margin-left: auto;
+    padding-bottom:2%;
+}
+
+.product-comment-reply-buttons-cntr{
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--prim-border-color);
+    padding: 2% 0;
 }

@@ -61,7 +61,7 @@ export default function LandingComponent(props) {
             </div>
             <div className="landing-center">
                 <LandingProduct />
-                <LandingServices  />
+                {/* <LandingServices  /> */}
             </div>
 
             <div>
