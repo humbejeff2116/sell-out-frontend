@@ -58,8 +58,11 @@
     flex-direction: column;
     justify-content: center;
     border:1px solid #222;
+    /* border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color); */
     min-height:65vh;
     padding:1%;
+    border-radius: 6px;
 }
 .index-search-header-panel{
     /* border:1px solid red; */

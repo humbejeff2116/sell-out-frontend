@@ -64,7 +64,7 @@ export default function LandingComponent(props) {
                 <LandingServices  />
             </div>
 
-            <div className="landing-footer" >
+            <div>
                 <LandingFooter/>
             </div>
 

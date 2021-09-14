@@ -67,7 +67,7 @@ function SellOut(props) {
         <div className="landing-footer-main-content">
             <span className="landing-footer-content-header">Sell out</span>
             <span>About</span>
-            <span>Investors</span>
+            <span>Investors </span>
             <span>Jobs</span>
            
         </div>

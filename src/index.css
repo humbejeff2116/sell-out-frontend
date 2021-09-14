@@ -14,17 +14,20 @@ code {
 
 :root{
   --color: #222;
-  --prim-border-color: #79a2d4;
-  --sec-border-color: #55759c;
+  --prim-color: #005ab4;
+  --sec-color: #55759c;
 
   --bg-color: #ffffff;
   --prim-bg-color: #ffffff;
-  --sec-bg-color: #55759c;
+  --sec-bg-color: #222;
 
   --border-color: #222;
   --prim-border-color: #b4b4b4;
-  --sec-border-color: #55759c;
+  --sec-border-color: #005ab4;
 
   --box-shadow-color: rgba(117, 116, 116, 0.6);
+
+  --button-bg-color: #005ab4;
+  --button-outline-color: #489cf0;
 
 }
