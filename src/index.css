@@ -13,13 +13,18 @@ code {
 }
 
 :root{
-  --sidenav-bg-color: #233143;
-  --prim-color: #79a2d4;
-  --sec-color: #55759c;
+  --color: #222;
   --prim-border-color: #79a2d4;
   --sec-border-color: #55759c;
-  /* color: #8fb1da;
-  color: #e7e7e7;
-  color: #79a2d4;
-  color: #8fb1da;  */
+
+  --bg-color: #ffffff;
+  --prim-bg-color: #ffffff;
+  --sec-bg-color: #55759c;
+
+  --border-color: #222;
+  --prim-border-color: #b4b4b4;
+  --sec-border-color: #55759c;
+
+  --box-shadow-color: rgba(117, 116, 116, 0.6);
+
 }

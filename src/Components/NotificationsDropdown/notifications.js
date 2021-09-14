@@ -121,7 +121,7 @@ function NotificationIcon(props) {
     }
     return (
         <div className="notifications-icon" onClick={props.openNotifications}>
-            <i>icon</i>
+            <i>Notifications icon</i>
             <span>
                 {
                     props.notifications && (
@@ -141,19 +141,26 @@ function NotificationsBox(props) {
 
     }
     return (
-        <div className="notification">
+        <div className="notification-container">
+
+        <div className="notification-header">
             <div className="notification-image">
                 <img src={image || userProfileImage} alt="profile" /> 
             </div>
 
-            <div className="notification-details">
+            <div className="notification-name">
                 <span onClick={()=>viewProfile(userId)}><b>{userName}</b></span>
-                <span> {action} </span>
             </div>
 
             <div className="notification-time">  
                 <span>2w</span>
             </div>
+        </div>
+
+        <div className="notification-details">
+            <span> {action} </span>
+        </div>
+            
         </div>
     )
 }

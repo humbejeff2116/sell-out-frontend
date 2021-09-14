@@ -3,21 +3,20 @@
 
 .notifications-container{
     border:1px solid red;
-    width:50%;
     display: flex;
     justify-content: center;
-
 }
 .notifications-dropdown-wrapper{
     position:absolute;
-    border:2px solid red;
+    border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     min-height:70vh;
     top:14%;
     right:18%;
     width:290px;
     border-radius: 5px;
-    /* background-color: aqua; */
-
+    padding:1%;
+    background-color: var(--bg-color);
 }
 
 .notifications-dropdown-container{
@@ -30,25 +29,28 @@
 .notifications-icon{
 
 }
-.notification{
-    border:1px solid red;
-    display:flex;
-    flex-direction: row;
+.notification-container{
+    border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     margin-top:4%;
     margin-bottom:4%;
     margin-left:2%;
     margin-right:2%;
-    min-height: 10vh;
-    border-radius: 4px;
-
+    border-radius: 5px;
+}
+.notification-header{
+    border-bottom:1px solid var(--prim-border-color);
+    display:flex;
+    flex-direction: row;
 }
 .notification-image{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border:2px solid black;
+    /* border:2px solid black; */
     width:20%;
+    padding:1%;
 }
 .notification-image img{
     margin-top: 5%;
@@ -58,30 +60,26 @@
     object-fit: cover;
     object-position: center;
     /* border:1px solid red; */
-
 }
-.notification-details{
-    border:2px solid black;
+.notification-name{
+    /* border:2px solid black; */
     width:60%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
-
-
-
 }
-.notification-details span{
-   
-   
-
+.notification-details{
+    /* border:1px solid black; */
+    padding:2%;
+    display: flex;
+    justify-content: center;
 }
+
 .notification-time{
-    border:2px solid black;
+    /* border:2px solid black; */
     width:20%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
