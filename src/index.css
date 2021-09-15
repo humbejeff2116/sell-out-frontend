@@ -13,13 +13,14 @@ code {
 }
 
 :root{
-  --color: #222;
-  --prim-color: #005ab4;
+  /* div variables */
+  --color: rgb(8, 8, 73);
+  --prim-color: #222;
   --sec-color: #55759c;
 
   --bg-color: #ffffff;
-  --prim-bg-color: #ffffff;
-  --sec-bg-color: #222;
+  --prim-bg-color: #005ab4;
+  --sec-bg-color: rgb(19, 182, 19);
 
   --border-color: #222;
   --prim-border-color: #b4b4b4;
@@ -27,7 +28,18 @@ code {
 
   --box-shadow-color: rgba(117, 116, 116, 0.6);
 
-  --button-bg-color: #005ab4;
+  /* button variables */
+  --button-color: rgb(8, 8, 73);
+  --prim-button-color: #ffffff;
+
   --button-outline-color: #489cf0;
+
+  --button-bg-color: rgb(19, 182, 19);
+  --prim-button-bg-color: #005ab4;
+
+  --button-border-color:rgb(8, 8, 73);
+  --prim-button-border-color: #005ab4;;
+
+  
 
 }
