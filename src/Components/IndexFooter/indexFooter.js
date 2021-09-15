@@ -11,7 +11,7 @@ import {RiBookOpenLine } from "react-icons/ri";
 import './indexFooter.css';
 
 const indexFooterLinks = [
-    { name: "Support/Help", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
+    { name: "Support", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
     { name: "Settings", href: "/about", icon: <BiUser className="index-side-nav-icon"/> },
     { name: "Logout", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> }
 ]
@@ -35,7 +35,7 @@ function NavLinks(props) {
             <NavLink
             exact 
             to={props.href} 
-            activeClassName="index-footer-active"
+            activeClassName="index-footer-link-active"
             className="index-footer-link" 
             title={props.name} >
                 <i>{props.icon}</i>{props.name} 

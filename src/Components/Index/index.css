@@ -1,11 +1,11 @@
 
 .index-container{
-    border:1px solid red;
+    /* border:1px solid red; */
     min-height: 92vh;
     display:flex;
     flex-direction: column; 
     justify-content: space-between; 
-    width:95%;
+    /* width:95%; */
     margin-left: auto;
     margin-right: auto;
     padding:1%;
@@ -273,8 +273,8 @@
 .index-products-container{
     display:flex;
     flex-direction: row;
-    justify-content: space-around;
-    border:1px solid #222;
+    justify-content: space-between;
+    /* border:1px solid #222; */
     flex-wrap: wrap;
     min-height:30vh;
 }

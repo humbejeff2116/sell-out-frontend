@@ -17,11 +17,13 @@
     overflow-x: none;
     transition: width 0.3s ease;
     /* border:1px solid green; */
+   
 }
 .fixed{
      position:fixed;
 
 }
+
 
 .left-side-bar-content{
     /* border:1px solid red; */
@@ -39,15 +41,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 .left-side-bar-center{
-    /* border:1px solid green; */
+    /* border-top:1px solid var(--prim-border-color); */
+    border-bottom:1px solid var(--prim-border-color);
     height: 51vh;
-    overflow-y: auto;
-    
+    overflow-y: auto;  
 }
 .left-side-bar-bottom{
     /* border:1px solid blue; */
-    min-height: 20vh; 
+    min-height: 20vh;
 }
