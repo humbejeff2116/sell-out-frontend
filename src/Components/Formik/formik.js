@@ -14,6 +14,7 @@ import { ImWarning } from 'react-icons/im';
 export const TextInput = ({ label, labelText, labelTextClass, errorClass, labelClassName, ...props }) => {
 
   const [field, meta] = useField(props);
+  let className;
 
   return (
 
@@ -24,7 +25,7 @@ export const TextInput = ({ label, labelText, labelTextClass, errorClass, labelC
                 <span className={ labelTextClass || ""}>{labelText || ""}</span>
             </label>
         </div>
-            <input className="text-input" {...field} {...props} />
+            <input className={(meta.touched && !meta.error) ?"text-input not-empty" : "text-input"} {...field} {...props} />
             <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
@@ -52,7 +53,7 @@ export const TextAreaInput = ({ label, labelText, labelTextClass, errorClass, la
             </label>
               
           </div>
-              <textarea className="text-area-input" {...field} {...props} />
+              <textarea className={(meta.touched && !meta.error) ?"text-area-input not-empty" : "text-area-input"} {...field} {...props} />
               <div className={errorClass}>
               {
                   (meta.touched && meta.error ) ? (

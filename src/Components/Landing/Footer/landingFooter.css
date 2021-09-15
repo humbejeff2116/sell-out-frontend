@@ -3,7 +3,7 @@
 
 
 footer{
-    border:2px solid var(--sec-bg-color);
+    border:2px solid var(--color);
     margin-top: 1%;
     /* margin-bottom: 2%; */
     padding:2% 1%;
@@ -38,6 +38,7 @@ footer{
     flex-direction:column;
     align-self: center;
     font-weight: 600;
+    color: var(--color);
 }
 .landing-footer-content-header{
     margin-bottom: 4%;
@@ -108,10 +109,11 @@ footer{
 }
 .landing-footer-copyright a{
     text-decoration: none;
-    color: var(--prim-color);
+    color: var(--sec-color);
 }
 
 @media only screen and (max-width:500px) {
+   
     .landing-footer-top{
         /* border:1px solid red; */
          width:100%;  

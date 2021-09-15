@@ -28,7 +28,8 @@
     border-radius: 4px;
     outline:none;  
     width:100%;
-    border:1px solid #222;
+    color: var(--text-color);
+    border:1px solid var(--text-color);
     transition: border-color 0.3s ease;
     cursor:pointer;
 }
@@ -55,9 +56,12 @@
 .location-form-group label{
     font-size: 0.781em;
     font-weight: bold;
+    color: var(--text-color);
     /* border:1px solid green; */
 }
+
 .location-form-group label span{
     font-size: 0.9em;
     font-weight: bold;
+    color: var(--sec-color);
 }

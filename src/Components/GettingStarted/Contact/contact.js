@@ -42,6 +42,7 @@ export default function Contact(props) {
         setRedirect('/getting-started');   
     }
 
+
     if(redirect) {
         return (
             <Redirect to={redirect} />
@@ -106,6 +107,7 @@ export default function Contact(props) {
                     name="contactEmail"
                     type="email"
                     errorClass="contact-form-error"
+                   
                     />
                
                     <TextInput

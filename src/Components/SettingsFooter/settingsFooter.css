@@ -3,7 +3,7 @@
 
 
 .settings-footer{
-    border:1px solid green;
+    /* border:1px solid green; */
     height: 19vh;
     display:flex;
     flex-direction: column;

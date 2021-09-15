@@ -19,8 +19,8 @@
     margin-top:2.5%;
     margin-bottom:2%;
     position:relative;
-    border: 1px solid red;
-
+    border:1px solid var(--prim-border-color);
+    border-radius: 6px;
 }
 .getting-started-contact-avatar{
     min-height: 20vh;
@@ -60,6 +60,7 @@
     font-size: large;
     font-size:1.5rem;
    font-weight:600;
+   color: var(--text-color);
    /* border:3px solid green; */   
 }
 .getting-started-contact-body{
@@ -78,6 +79,7 @@
 .getting-started-contact-form-inputs .brand-name{
     font-size: 0.9em;
     font-weight: 400;
+    color: var(--text-color);
 }
 .getting-started-contact-body form {
     position:relative;
@@ -116,23 +118,46 @@
 .contact-form-group label{
     font-size: 0.781em;
     font-weight: bold;
+    color: var(--text-color);
 }
 .contact-form-group label span{
     font-size: 0.9em;
     font-weight: bold;
+    color: var(--sec-color);
 }
 .getting-started-contact-body form input, textarea{
     width:96%; 
     padding:12px 12px 12px 5px;
-    border:1px solid #222;
+    border:1px solid var(--prim-border-color);
+    /* box-shadow:0 0 2px var(--box-shadow-color); */
+    caret-color:var(--prim-color);
     border-radius: 4px;
     outline:none;  
     transition: border-color 0.3s ease;
+    color: var(--text-color);
 }
+.getting-started-contact-body form input:focus{
+    border:1px solid var(--text-color);
+   
+}
+.getting-started-contact-body form textarea:focus{
+    border:1px solid var(--text-color);
+   
+}
+
+.getting-started-contact-body form input.not-empty{
+    border-color:var(--text-color);
+}
+.getting-started-contact-body form textarea.not-empty{
+    border-color:var(--text-color);
+}
+
 
 .getting-started-contact-buttons{
     min-height: 15vh;
-    border:1px solid red;
+    border-radius: 6px;
+    border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     display:flex;
     flex-direction: row;
     justify-content: space-between;
@@ -145,7 +170,9 @@
 .getting-started-contact-back-button button{   
     width:100%;
     height: 50px;
-    border:1px solid #222;
+    border:1px solid var(--sec-color);
+    background-color:#f0f0f0;
+    color: var(--sec-color);
     border-radius: 4px;
     font-size: 0.9rem;
     font-weight: bold;
@@ -159,7 +186,9 @@
 .getting-started-contact-next-button button{
     width:100%;
     height: 50px;
-    border:1px solid #222;
+    color: var(--bg-color);
+    border:1px solid var(--prim-color);
+    background-color:var(--prim-color);
     border-radius: 4px;
     font-size: 0.9rem;
     font-weight: bold;

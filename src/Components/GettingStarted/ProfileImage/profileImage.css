@@ -51,11 +51,13 @@
     flex-direction: column;
     /* border: 1px solid black; */
     padding:1%;
+    color: var(--text-color);
 }
 .getting-started-profile-image-info .brand-name{
     font-size: 0.9em;
     font-weight: 400;
     /* border: 1px solid black;  */
+   
 }
 .getting-started-profile-image-info div{
     min-height:5vh;

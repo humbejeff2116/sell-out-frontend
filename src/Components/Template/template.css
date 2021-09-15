@@ -51,16 +51,14 @@
 .settings-template-container{
     border: 3px solid blue;
     position: relative;
-    top:var(--top);
     margin-left:15%;
     /* margin-right:28%; */
     min-height: 150vh;
 }
 
 .getting-started-template-container{
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     position: relative;
-    top:var(--top);
     margin-left:15%;
     /* margin-right:28%; */
 }
@@ -74,6 +72,9 @@
 
 
 @media only screen and (max-width:500px) {
+    .gettingStarted-footer{
+        margin-left:0;
+    }
    
 
      
