@@ -19,15 +19,26 @@
     justify-content: center;
 
 }
-.settings-footer-active{
-
+.settings-footer-item:hover .settings-footer-link {
+    color: var(--sec-color);
+    text-decoration: underline;
 }
+
+.settings-footer-item > .settings-footer-active{
+    color: var(--sec-color);
+    text-decoration: underline;
+     border-left:1px solid var(--sec-border-color);
+}
+
 .settings-footer-link{
     display:flex;
     flex-direction: row;
     align-items: center;
     text-decoration: none;
     transition:all 0.3s ease;
+    color: var(--color);
+    /* font-size:0.9em; */
+    padding:5% 0;
 
 }
 .settings-footer-link i{
@@ -37,3 +48,11 @@
     padding :0.2rem;
     
 }
+
+
+
+
+
+
+
+

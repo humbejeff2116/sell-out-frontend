@@ -60,7 +60,7 @@
 }
 
 .main-nav-item:hover .main-nav-link {
-    color: var(--main-color);
+    color: var(--color);
     /* background-color:var(--color); */
     border-radius: 30%;
     border:1px solid var(--prim-border-color);
@@ -68,7 +68,7 @@
 }
 
 .main-nav-item > .main-nav-link-active{
-    color: var(--main-color);
+    color: var(--color);
     border-radius: 30%;
     border:1px solid var(--prim-border-color);
     box-shadow:0 0 4px var(--box-shadow-color);

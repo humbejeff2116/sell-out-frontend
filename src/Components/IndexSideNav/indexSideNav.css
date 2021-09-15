@@ -26,6 +26,7 @@
     color: #ffffff;
     border-radius: 4px;
     background-color:var(--color);
+     /* border-left:1px solid var(--color); */
 }
 
 .index-side-nav-link{

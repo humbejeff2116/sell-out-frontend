@@ -20,7 +20,7 @@
 }
 .index-product-profile span{
     margin-left:4%;
-    color: var(--color);
+    color: var(--text-color);
 }
 .index-product-profile img{
     border-radius: 50%; 
@@ -105,7 +105,7 @@
 .index-product-details-name span{
     font-size: 0.9rem;
     font-weight: 400; 
-    color: var(--color);  
+    color: var(--text-color);  
 }
 
 .index-product-details-price{
