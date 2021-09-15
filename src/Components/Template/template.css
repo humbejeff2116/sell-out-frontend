@@ -34,7 +34,7 @@
 
 
 .inside-login-template-container{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     position: relative;
     top: 8vh;
     margin-left:15%;

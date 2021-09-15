@@ -105,7 +105,7 @@
 .index-product-details-name span{
     font-size: 0.9rem;
     font-weight: 400; 
-    color: var(--prim-color);  
+    color: var(--color);  
 }
 
 .index-product-details-price{

@@ -11,7 +11,7 @@ import {BiHome, BiUser, BiFolder} from "react-icons/bi";
 import {RiBookOpenLine, RiContactsBookLine} from "react-icons/ri";
 
 const landingMainLinks = [
-    { name: "Account", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
+    { name: "Account", href: "/home", icon: <BiHome className="index-side-nav-icon" /> },
     { name: "Connections", href: "/about", icon: <BiUser className="index-side-nav-icon"/> },
     { name: "Community", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
     { name: "Activity", href: "/support", icon: <BiFolder className="index-side-nav-icon"/> },
@@ -33,7 +33,6 @@ export default function IndexSideNav(props) {
         </nav>
     )
 }
-
 
 function NavLinks({ match, ...props}) {
     return (

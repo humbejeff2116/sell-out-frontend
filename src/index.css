@@ -15,7 +15,7 @@ code {
 :root{
   /* div variables */
   --color: rgb(8, 8, 73);
-  --prim-color: #222;
+  --prim-color: rgb(19, 182, 19);
   --sec-color: #005ab4;
 
   --bg-color: #ffffff;

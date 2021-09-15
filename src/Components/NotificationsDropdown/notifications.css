@@ -8,23 +8,24 @@
 }
 .notifications-dropdown-wrapper{
     position:absolute;
-    border:1px solid var(--prim-border-color);
+     border: 3px solid var(--prim-border-color);
     box-shadow:0 0 2px var(--box-shadow-color);
     min-height:70vh;
     top:14%;
     right:18%;
     width:290px;
-    border-radius: 5px;
+    border-radius: 8px;
     padding:1%;
     background-color: var(--bg-color);
 }
 
 .notifications-dropdown-container{
-    /* border:1px solid red; */
+    /* border-top:1px solid red; */
     margin-top:1%;
     margin-bottom:1%;
     height:70vh;
     overflow-y: scroll; 
+    background-color: var(--bg-color);
 }
 .notifications-icon{
 
