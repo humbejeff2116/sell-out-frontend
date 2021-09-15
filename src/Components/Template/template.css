@@ -8,6 +8,11 @@
     justify-content: space-between;
     min-height: 100vh;
 }
+.inside-login-template-panel{
+    display:flex;
+    flex-direction: row;
+
+}
 .login-template-left{
     border:1px solid black;
     width:20%
@@ -36,16 +41,17 @@
 .inside-login-template-container{
     border: 1px solid blue;
     position: relative;
-    top: 8vh;
+    /* top:var(--top); */
     margin-left:15%;
     margin-right:15%;
     min-height: 150vh;
+    width:70%;
 }
 
 .settings-template-container{
     border: 3px solid blue;
     position: relative;
-    top: 8vh;
+    top:var(--top);
     margin-left:15%;
     /* margin-right:28%; */
     min-height: 150vh;
@@ -54,7 +60,7 @@
 .getting-started-template-container{
     border: 2px solid blue;
     position: relative;
-    margin-top: 8vh;
+    top:var(--top);
     margin-left:15%;
     /* margin-right:28%; */
 }
@@ -64,4 +70,26 @@
 .getting-started-template-nav{
     border: 1px solid black;
     width:28%;
+}
+
+
+@media only screen and (max-width:500px) {
+   
+
+     
+}
+
+@media only screen and (max-width:414px) {
+    
+
+}
+
+@media only screen and (max-width:360px) {
+
+
+}
+
+@media only screen and (max-width:305px) {
+    
+
 }

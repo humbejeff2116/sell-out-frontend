@@ -9,19 +9,14 @@
    /* justify-content: center; */
     margin:0;
     padding:0;
-    /* position:fixed; */
-    top:8vh;
-    /* background-color: #1d2c3f; */
     min-height:92vh;
     width:15%;
     overflow-x: none;
     transition: width 0.3s ease;
-    /* border:1px solid green; */
-   
+    /* border:1px solid green; */  
 }
 .fixed{
-     position:fixed;
-
+    position:fixed;
 }
 
 
@@ -51,4 +46,28 @@
 .left-side-bar-bottom{
     /* border:1px solid blue; */
     min-height: 20vh;
+}
+
+@media only screen and (max-width:500px) {
+    .left-side-bar-container{
+        width:0%;
+        overflow-x: auto; 
+    }
+
+     
+}
+
+@media only screen and (max-width:414px) {
+    
+
+}
+
+@media only screen and (max-width:360px) {
+
+
+}
+
+@media only screen and (max-width:305px) {
+    
+
 }

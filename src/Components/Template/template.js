@@ -49,6 +49,7 @@ export function InsideLoginTemplate(props) {
     return (
         <>
         <Header/>
+        <div className="inside-login-template-panel">
         <LeftSideBar 
         fixed={true}
         top={props.leftSideBarTop} 
@@ -57,6 +58,9 @@ export function InsideLoginTemplate(props) {
         />
         <InsideLoginTemplateChildren children={props.children} />
         <RightSideBar topComponent={props.rightSideBarTop} bottomComponent={props.rightSideBarBottom} />
+
+        </div>
+       
         </>
     )
 }

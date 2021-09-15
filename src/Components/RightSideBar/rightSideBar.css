@@ -3,7 +3,6 @@
 
 .right-side-bar-container{
 
-
     z-index:1;
     display:flex;
     flex-direction: column;
@@ -12,17 +11,15 @@
     padding:0;
     position:fixed;
     right:0;
-    top:8vh;
-    /* background-color: #1d2c3f; */
     height:92vh;
     width:15%;
     overflow-x: none;
     transition: width 0.3s ease;
-    border:px solid green;
+    /* border:1px solid green; */
 }
 
 .right-side-bar-content{
-    border:1px solid red;
+    /* border:1px solid red; */
     width:75%;
     /* margin-left: auto; */
     margin-right: auto;
@@ -32,7 +29,7 @@
 }
 
 .right-side-bar-top{
-    border:1px solid black;
+    /* border:1px solid black; */
     min-height: 20vh;
     display: flex;
     flex-direction: column;
@@ -41,6 +38,31 @@
 }
 
 .right-side-bar-bottom{
-    border:1px solid blue;
+    /* border:1px solid blue; */
     min-height: 71vh;   
+}
+
+@media only screen and (max-width:500px) {
+    .right-side-bar-container{
+        width:0%;
+        overflow-x: auto;
+    }
+    
+   
+    
+}
+
+@media only screen and (max-width:414px) {
+    
+
+}
+
+@media only screen and (max-width:360px) {
+
+
+}
+
+@media only screen and (max-width:305px) {
+    
+
 }

@@ -17,6 +17,7 @@ code {
   --color: rgb(8, 8, 73);
   --prim-color: rgb(19, 182, 19);
   --sec-color: #005ab4;
+  --main-color:rgb(96, 96, 219);
 
   --bg-color: #ffffff;
   --prim-bg-color: #005ab4;
@@ -39,6 +40,9 @@ code {
 
   --button-border-color:rgb(8, 8, 73);
   --prim-button-border-color: #005ab4;
+
+
+  --top:9vh;
 
   
 
