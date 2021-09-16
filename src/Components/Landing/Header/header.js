@@ -16,6 +16,19 @@ const landingMainLinks = [
     { name: "Support", href: "/support", icon: <BiFolder className="nav-icon"/> },
     { name: "Contact", href: "/contact", icon: <RiContactsBookLine className="nav-icon"/> }
 ]
+function setUnicode(unicode) {
+    let dummy;
+    let decoded;
+    if(!unicode){
+        return decoded ="";
+    }
+    dummy = document.createElement('textarea');
+    dummy.innerHTML = unicode;
+    decoded = dummy.value;
+    return decoded;
+}
+const open = setUnicode('&#9776;')
+const close = setUnicode('&times;')
 
 
 export default function Header(props) {
@@ -23,7 +36,7 @@ export default function Header(props) {
         <header className="landing-header">
             {/* logo */}
             <div className="landing-header-logo">
-                <div  className="landing-header-logo-img">logo</div>
+                <div  className="landing-header-logo-img">LOGO</div>
             </div>
             {/* main navigation */}
             <div className="landing-header-navigation">
@@ -39,9 +52,23 @@ export default function Header(props) {
             <div className="landing-header-login">
                 <div className="landing-login-item" >
                     <button onClick={()=> props.showLoginModal(true)}>Login</button>
+                    <MobileNavIcon/>
                 </div>
             </div>
         </header>
+    )
+}
+
+export function MobileNavIcon(props) {
+    return (
+        <div className="landing-header-mobile-nav-container">
+           {/* <div className="header-mobile-nav-search-icon">
+               {open}
+           </div> */}
+           <div className="landing-header-mobile-nav-icon">
+           {open}
+           </div>
+        </div>
     )
 }
 
@@ -51,10 +78,11 @@ function NavLinks(props) {
             <NavLink
             exact 
             to={props.href} 
-            activeClassName="landing-link-active"
+            activeClassName="landing-nav-link-active"
             className="landing-nav-link" 
             title={props.name} >
-                <i>{props.icon}</i>{props.name} 
+                {/* <i>{props.icon}</i> */}
+                {props.name} 
             </NavLink> 
         </div>
     ) 

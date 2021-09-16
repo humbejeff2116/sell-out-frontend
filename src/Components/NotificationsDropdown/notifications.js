@@ -93,6 +93,7 @@ function NotificationsDropDown(props) {
     }
     return (
         <div className="notifications-dropdown-wrapper">
+           
         <div className="notifications-dropdown-container">
             {
                 props.notifications.length ? props.notifications.map((notification, i) =>

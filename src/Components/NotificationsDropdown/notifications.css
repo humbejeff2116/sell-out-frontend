@@ -8,8 +8,8 @@
 }
 .notifications-dropdown-wrapper{
     position:absolute;
-     border: 3px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 5px var(--box-shadow-color);
     min-height:70vh;
     top:14%;
     right:18%;
@@ -27,6 +27,7 @@
     overflow-y: scroll; 
     background-color: var(--bg-color);
 }
+
 .notifications-icon{
 
 }

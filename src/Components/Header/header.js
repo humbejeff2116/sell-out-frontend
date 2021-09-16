@@ -61,7 +61,7 @@ function SearchBar(props) {
         </div>
     )
 }
-function MobileNavIcon(props) {
+ function MobileNavIcon(props) {
     return (
         <div className="header-mobile-nav-container">
            {/* <div className="header-mobile-nav-search-icon">

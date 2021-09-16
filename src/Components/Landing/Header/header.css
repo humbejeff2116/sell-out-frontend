@@ -9,18 +9,23 @@
     justify-content: space-between;
     margin-top:4%;
     min-height: 8vh;
-    border: 1px solid blue;
+    border:1px solid var(--prim-border-color);
+    /* box-shadow:0 0 4px var(--box-shadow-color); */
     width:90%;
     margin-left:auto;
     margin-right:auto;
+    background-color: var(--bg-color);
 }
 .landing-header-logo{
     width:20%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: var(--color);
+    font-size:1.1em;
+    font-weight:bold;
 
 }
 .landing-header-logo-img{
@@ -28,26 +33,27 @@
 }
 .landing-header-navigation{
     width:100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display:flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
 
 }
 .landing-header-navigation nav{
     width:100%;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     display:flex;
     flex-direction: row;
     justify-content: center;
+    /* justify-content: space-between; */
 
 }
 .landing-nav-item{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     display:flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     width:15%;
 }
 .nav-icon{
@@ -64,14 +70,31 @@
     align-items: center;
     text-decoration: none;
     transition:all 0.3s ease;
+    /* border-bottom: 1px solid var(); */
+    border-bottom: 3px solid var(--bg-color);
+    padding:0 5%;
+    color: var(--color);
+}
+.landing-nav-link:hover{   
+   
+    /* border-bottom: 1px solid var(); */
+    /* background-color:#f0f0f0; */
+    border-bottom: 3px solid var(--color);
+    color: var(--color);
 }
 
-.landing-nav-link i{
+/* .landing-nav-link i{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     padding :0.2rem;
-    /* border: 1px solid black; */
+    border: 1px solid black;
+} */
+
+.landing-nav-link-active{
+    color: var(--color);
+    border-bottom: 3px solid var(--color);
+
 }
 
 
@@ -81,7 +104,7 @@
     display: flex;
     justify-content: center;
     width:20%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 
 }
 .landing-login-item{
@@ -90,12 +113,98 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width:100%;
 }
+.landing-header-mobile-nav-container{
+    width:40%;
+    /* padding:1%; */
+    border:1px solid red;
+    display:none;
+    justify-content: space-around;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 4px;
+    border:1px solid var(--color);
+    cursor:pointer;
+    color: var(--color);
+
+}
+
 
 .landing-login-item button{
     height:40px;
     width:55%;
-    /* border:0;   */
+    cursor:pointer;
+    background-color: #ffffff; 
+    color: var(--color);
+    border:1px solid var(--color);
+    border-radius:6px; 
+    font-weight: bold; 
+    transition:all 0.2s ease;      
+}
+.landing-login-item button:focus{
+    outline: 1px solid var(--main-color);        
+}
+.landing-login-item button:hover{
+    background-color: var(--color); 
+    color: #ffffff;
+    border:1px solid var(--color);        
+}
+
+
+
+@media only screen and (max-width:500px) {
+    .landing-header{
+        margin-top:0%;
+        margin-left:0;
+        margin-right:0;
+        min-height: 8vh;
+        /* border: 1px solid blue; */
+         border:1px solid var(--prim-boder-color);
+        box-shadow:0 0 8px var(--box-shadow-color);
+        width:100%;
+        position: fixed;
+        top: 0;
+    }
+.landing-header-navigation{
+    display:none;
+
+}
+.landing-header-logo{
+    min-width:20%;
+   
+
+}
+    
+    .landing-login-item button{
+      display:none;
+    }
+    .landing-header-mobile-nav-container{ 
+        display:flex;
+    }
+ 
+}
+
+@media only screen and (max-width:414px) {
+    
+
+}
+
+@media only screen and (max-width:360px) {
+
+
+}
+@media only screen and (max-width:290px) {
+    .nav-icon{
+        font-size:1em;
+    }
+    .main-nav-link{  
+       
+        padding: 5%;
+        border-radius: 30%;
+        border:1px solid var(--color);
+    }
+
+
 }

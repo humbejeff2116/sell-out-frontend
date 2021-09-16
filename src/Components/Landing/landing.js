@@ -40,6 +40,7 @@ export default function LandingComponent(props) {
 
     return (
         <section className="landing-container">
+           
             <div className="landing-top" >
                 <Header showLoginModal={setShowLoginModal}/>
                 {
