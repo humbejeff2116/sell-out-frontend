@@ -14,7 +14,6 @@ import { ImWarning } from 'react-icons/im';
 export const TextInput = ({ label, labelText, labelTextClass, errorClass, labelClassName, ...props }) => {
 
   const [field, meta] = useField(props);
-  let className;
 
   return (
 
@@ -25,7 +24,13 @@ export const TextInput = ({ label, labelText, labelTextClass, errorClass, labelC
                 <span className={ labelTextClass || ""}>{labelText || ""}</span>
             </label>
         </div>
-            <input className={(meta.touched && !meta.error) ?"text-input not-empty" : "text-input"} {...field} {...props} />
+            <input 
+            className={
+                (meta.touched && !meta.error) ?"text-input not-empty" : "text-input"
+            } 
+            {...field} 
+            {...props} 
+            />
             <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
@@ -53,7 +58,13 @@ export const TextAreaInput = ({ label, labelText, labelTextClass, errorClass, la
             </label>
               
           </div>
-              <textarea className={(meta.touched && !meta.error) ?"text-area-input not-empty" : "text-area-input"} {...field} {...props} />
+              <textarea 
+                className= {
+                  (meta.touched && !meta.error) ? "text-area-input not-empty" : "text-area-input"
+                } 
+                {...field} 
+                {...props} 
+              />
               <div className={errorClass}>
               {
                   (meta.touched && meta.error ) ? (
@@ -77,7 +88,13 @@ export const PasswordInput = ({ label, errorClass, labelClassName, ...props }) =
           <div className={labelClassName}>
             <label htmlFor={props.id || props.name}>{label}</label>
           </div>
-              <input className="password-input" {...field} {...props} />
+              <input 
+              className= {
+                (meta.touched && !meta.error) ? "password-input not-empty" : "password-input"
+              } 
+              {...field} 
+              {...props} 
+              />
                   <div className={errorClass}>
                     {
                         (meta.touched && meta.error ) ? (

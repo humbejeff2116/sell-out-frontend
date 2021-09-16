@@ -51,7 +51,7 @@ export default function GettingStarted({match}) {
                             
                         <div className="welcome-body-bottom">
                             <div className="welcome-body-index-link">
-                                <p>I only wish to buy products for now?</p>
+                                <p>You only wish to buy products for now ?</p>
                                <div className="welcome-body-index-link-bttn">
                                    <button><Link to="/home">Click me</Link></button>
                                 </div>

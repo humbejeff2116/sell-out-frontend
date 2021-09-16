@@ -38,7 +38,7 @@
     text-decoration: none;
     transition:all 0.3s ease;
     color: var(--color);
-    /* font-size:0.9em; */
+    font-size:0.9em;
     padding:5% 0;
 
 }

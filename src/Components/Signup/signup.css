@@ -19,7 +19,9 @@
     display:flex;
     flex-direction:column;
     min-height: 60vh;
-    border:1px solid red;
+    border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
+    border-radius: 6px;
     width:65%;
     margin-left:auto;
     margin-right: auto;
@@ -40,9 +42,10 @@
 }
 
 .signup-panel-heading{
+    color: var(--text-color);
     background-color:#ffffff;
     text-align: center;
-    border:1px solid black;
+    /* border:1px solid black; */
     margin-bottom:2%;
 }
 .signup-panel-error{
@@ -89,19 +92,31 @@
 }
 .signup-form-group label{
     font-size: 0.781em;
-    font-weight: bold; 
+    font-weight: bold;
+    color: var(--text-color); 
 }
 
 .signup-panel form input{
     padding:12px 12px 12px 5px;
-    border-radius: 4px;
-    outline:none;  
-    border:1px solid #222;
+    border-radius: 4px; 
+    /* border:1px solid #222; */
+    color: var(--text-color);
+    border:1px solid var(--prim-border-color);
     transition: border-color 0.3s ease;
 }
+.signup-panel form input:focus{
+    border:1px solid var(--text-color);
+    outline: 1px solid var(--outline-color); 
+   
+}
+
+.signup-panel form input.not-empty{
+    border-color:var(--text-color);
+}
+
 
 .signup-button{
-    border:1px solid #222;
+    /* border:1px solid #222; */
     margin-top: 5%;
     margin-bottom: 2%;
 }
@@ -111,7 +126,9 @@
 .signup-panel button{
     width:100%;
     height: 50px;
-    border:none;
+    border:1px solid var(--sec-color);
+    background-color: var(--color);
+    color: #ffffff;
     border-radius: 4px;
     font-size: 0.9rem;
     font-weight: bold;
@@ -120,6 +137,11 @@
 }
 
 .signup-panel button:hover{
+    /* outline: 1px solid var(--outline-color); */
+   
+}
+.signup-panel button:focus{
+    outline: 1px solid var(--outline-color);
    
 }
 
@@ -145,6 +167,7 @@
 .login-link-text p{
     text-align: center;
     font-size: 0.9rem; 
+    color: var(--text-color);
 }
 .login-link-button{
     /* border:1px solid green; */
@@ -154,7 +177,7 @@
     width:50%;
 }
 .login-link-button a{
-    border:1px solid #222;
+    /* border:1px solid #222; */
     width:70%;
     margin:0 auto 0 auto;
     cursor:pointer;
@@ -166,6 +189,20 @@
     cursor:pointer;
     font-size: 0.9rem;
     font-weight: bold;
+    border:1px solid var(--text-color);
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+.login-link-button button:hover{
+    
+    border:1px solid var(--text-color);
+    background-color: var(--text-color);
+    color: #ffffff;
+}
+.login-link-button button:focus{
+    outline: 1px solid var(--outline-color);  
 }
 
 

@@ -21,6 +21,7 @@
     position:relative;
     border:1px solid var(--prim-border-color);
     border-radius: 6px;
+    padding: 0.1%;;
 }
 .getting-started-contact-avatar{
     min-height: 20vh;
@@ -31,10 +32,10 @@
 .getting-started-contact-img{
     min-height: 20vh;
     display:flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     width:26%;
-    padding:0.5% 0;
+    padding:2% 2% 2% 0;
     /* border: 1px solid red; */
 }
 
@@ -49,7 +50,7 @@
 }
 
 .getting-started-contact-heading{
-    width:72%;
+    width:70%;
     /* border:3px solid green; */
     margin-left: auto;
     display:flex;
@@ -74,7 +75,7 @@
     /* border:1px solid green; */
     width:70%;
     /* margin:2% auto; */
-    padding:2%;
+    padding:1%;
 }
 .getting-started-contact-form-inputs .brand-name{
     font-size: 0.9em;
@@ -156,8 +157,8 @@
 .getting-started-contact-buttons{
     min-height: 15vh;
     border-radius: 6px;
-    border:1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    /* border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color); */
     display:flex;
     flex-direction: row;
     justify-content: space-between;

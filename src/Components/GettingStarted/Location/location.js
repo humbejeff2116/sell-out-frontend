@@ -54,7 +54,7 @@ export default function Location(props) {
         <div className="getting-started-contact-container">
         <div className="getting-started-contact-panel">
            
-        <div className="getting-started-contact-avatar">
+            <div className="getting-started-contact-avatar">
                 <div className="getting-started-contact-heading">
                     <p>
                         Kindly enter your location details below 

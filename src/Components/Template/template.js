@@ -31,7 +31,7 @@ export function LoginAndSignupTemplate(props) {
         <div className="login-template-container">
 
             <div className="login-template-left">
-                <section className="login-template-logo">logo</section>
+                <section className="login-template-logo">LOGO</section>
             </div>
 
             <div className="login-template-center">
@@ -39,7 +39,7 @@ export function LoginAndSignupTemplate(props) {
             </div>
 
             <div className="login-template-right">
-               <section> empty section </section>
+               <section> </section>
             </div>
         </div>
     )
