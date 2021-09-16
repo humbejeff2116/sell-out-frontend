@@ -16,7 +16,9 @@
     display:flex;
     flex-direction:column;
     min-height: 60vh;
-    border:1px solid red;
+    border-radius: 6px;
+    border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     width:65%;
     margin-left:auto;
     margin-right: auto;
@@ -38,15 +40,18 @@
 }
 
 .login-panel-heading{
-    background-color:#ffffff;
+    /* background-color:#ffffff; */
     text-align: center;
-    border:1px solid #222;
+    /* border:1px solid #222; */
     margin-bottom:2%;
+    color:var(--text-color);
 }
 
 .login-panel-body{
     display:flex;
     flex-direction:column;
+    color:var(--text-color); 
+   
     /* border:1px solid green; */
 }
 
@@ -72,6 +77,7 @@
     display:flex;
     font-size: 0.781em;
     font-weight: bold;
+    /* color:var(--text-color); */
 }
 .login-form-error{
     display: flex;
@@ -89,8 +95,19 @@
     padding:12px 12px 12px 5px;
     border-radius: 4px;
     outline:none;
-    border:1px solid #222;
+    color: var(--text-color);
+    border:1px solid var(--prim-border-color);
     transition: border-color 0.3s ease;
+    caret-color: var(--prim-color);
+}
+.login-panel form input:focus{
+    border:1px solid var(--text-color);
+    outline: 1px solid var(--outline-color); 
+   
+}
+
+.login-panel form input.not-empty{
+    border-color:var(--text-color);
 }
 .login-forgot-pass{
     margin-bottom:2%;
@@ -98,7 +115,7 @@
 }
 
 .login-forgot-pass span{
-    font-size: 0.9rem;  
+    font-size: 0.9rem; 
 }
 
 .login-forgot-pass span:hover{
@@ -107,22 +124,31 @@
 }
 
 .login-button{
-    border:1px solid #222;
+    /* border:1px solid #222; */
     margin-bottom: 2%;
 }
 
 .login-panel button{
     width:100%;
     height: 50px;
-    border:none;
     font-size: 0.9rem;
     font-weight: bold;
     transition:all 0.3s ease-in-out;
     cursor:pointer;
+    border-radius: 4px;
+    border:1px solid var(--sec-color);
+    background-color: var(--color);
+    color: #ffffff;
 }
 
 .login-panel button:hover{
+    border:1px solid var(--opaque-color);
+   background-color: var(--opaque-color);
    
+}
+
+.login-panel button:focus{
+    outline: 1px solid var(--outline-color); 
 }
 /* sign up panel */
 .login-signup-panel{
@@ -146,6 +172,7 @@
 }
 .signup-link-text p{
     text-align: center; 
+    color: var(--text-color);
 }
 .signup-link-button{
     /* border:1px solid green; */
@@ -155,7 +182,7 @@
     width:50%;
 }
 .signup-link-button a{
-    border:1px solid #222;
+    /* border:1px solid #222; */
     width:70%;
     margin:0 auto 0 auto;
     cursor:pointer;
@@ -169,6 +196,20 @@
     font-weight: bold;
     border:none;
     border-radius: 4px;
+    border:1px solid var(--text-color);
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+.signup-link-button button:hover{
+    
+    border:1px solid var(--text-color);
+    background-color: var(--text-color);
+    color: #ffffff;
+}
+.signup-link-button button:focus{
+    outline: 1px solid var(--outline-color);  
 }
 
 @media only screen  and (max-width: 910px) {

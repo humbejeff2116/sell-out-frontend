@@ -19,6 +19,11 @@ code {
   --sec-color: #005ab4;
   --main-color:rgb(96, 96, 219);
 
+  --opaque-color:#0074e7;
+  --opaque-prim-color:rgb(23, 211, 23);
+
+  --text-color:rgb(8, 8, 73);
+
   --outline-color:rgb(96, 96, 219);
 
   --bg-color: #ffffff;
@@ -45,7 +50,7 @@ code {
 
 
   --top:9vh;
-  --text-color:rgb(8, 8, 73);
+  
 
   
 
