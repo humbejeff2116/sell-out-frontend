@@ -161,7 +161,7 @@
         margin-right:0;
         min-height: 8vh;
         /* border: 1px solid blue; */
-         border:1px solid var(--prim-boder-color);
+        border:1px solid var(--prim-boder-color);
         box-shadow:0 0 8px var(--box-shadow-color);
         width:100%;
         position: fixed;

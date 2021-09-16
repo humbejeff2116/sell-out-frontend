@@ -3,6 +3,7 @@
 
 
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import { DisplayedProduct } from '../../Product/product';
 import socket from '../../Socket/socket';
 import './product.css';
@@ -56,8 +57,10 @@ export default function LandingProducts(props) {
             )
         }
         </div>
-        <div className="landing-product-heading">
-            <div><button>View more products </button></div>
+        <div className="landing-view-products-btn-cntr">
+            <div className="landing-view-products-btn-wrapper">
+            <button><Link to="/products">View more products</Link></button>
+            </div>
         </div>
         </>
     )
