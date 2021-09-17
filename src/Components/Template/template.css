@@ -52,7 +52,7 @@
 }
 
 .settings-template-container{
-    border: 3px solid blue;
+    /* border: 1px solid blue; */
     position: relative;
     margin-left:15%;
     /* margin-right:28%; */

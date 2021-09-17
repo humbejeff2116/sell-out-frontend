@@ -2,67 +2,75 @@
 
 
 .settings-container{
-    border:1px solid red;
+    /* border:1px solid red; */
     width:80%;
     min-height:92vh;
-    margin-left:2%;
-    
+    padding:1%;
+    margin-left: auto;
+    margin-right: auto;  
 }
 .profile-settings-wrapper{
-    border:1px solid blue;
+    /* border:3px solid blue; */
 
 }
-.profile-settings-header{
-    min-height:20vh;
-    border:1px solid yellow;
+.settings-header{
+    /* border-bottom:1px solid var(--prim-border-color); */
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-
+    justify-content: center;
+    color: var(--text-color);
 }
 
 .profile-settings-panel{
-    border:2px solid green;
+    border:1px solid var(--prim-border-color);
+    border-radius: 6px;
     display: flex;
     flex-direction:row;
+    padding:0% 0 2% 2%;
 }
 .profile-settings-form-panel{
-    border:1px solid red;
+    /* border:1px solid red; */
     width:60%
-
 }
 .profile-settings-form-panel form{
-    border:1px solid blue;
+    /* border:1px solid blue; */
     
 }
 .profile-settings-form-panel form input{
-    /* padding:12px 12px 12px 5px; */
-    width:90%;
+    width:97%;
     height:35px;
     border-radius: 4px;
     outline:none;
-    font-weight: bold;
-    border:2px solid #222;
+    border:1px solid var(--prim-border-color);
     transition: border-color 0.3s ease;
+    color: var(--text-color);
+    caret-color: var(--prim-color);
+    padding-left:1%;
 }
+.profile-settings-form-panel form input:focus{
+    border:1px solid var(--text-color);  
+}
+.profile-settings-form-panel form input.not-empty{
+    border-color:var(--text-color);
+}
+
 .settings-form-group{
     width:99%;
-    border:2px solid yellow;
+    /* border:2px solid yellow; */
     margin-top:4%;
+    margin-bottom: 1%;
 }
 .settings-form-group label{
     font-size: 0.9em;
     font-weight: bold;
+    color: var(--text-color);
 }
-.settings-form-group span{ 
-    margin-right: 1%;
-    color:red;
-    border:2px solid yellow;
-}
+
 .settings-form-error{
+    display:flex;
+    justify-content: flex-end;
     padding-top: 0.2%;
-    
-    border:2px solid red;
+    /* border:2px solid red; */
     min-height: 25px;
 }
 .settings-form-error span{
@@ -70,42 +78,55 @@
 }
 
 .profile-settings-button-wrapper{
-    border:1px solid red;
-
+    /* border:1px solid red; */
 }
 .profile-settings-button-consent{
     margin-top:2%;
-    margin-bottom:2%;
-    border:1px solid red;
+    margin-bottom:1%;
+    /* border:1px solid red; */
 }
 .profile-settings-button-consent span{
     font-size: 0.9em;
-   
+    color: var(--text-color); 
+}
+.profile-settings-button-consent span a{
+    color: var(--color);
+    text-decoration: none;  
+}
+.profile-settings-button-consent span a:hover{
+    text-decoration: underline;  
 }
 .profile-settings-button{
     /* border:1px solid red; */
     width:92%;
-    margin-bottom:2%;
-    /* display:flex;
-    justify-content: flex-end; */
 }
 .profile-settings-button button{
     height:40px;
     min-width:30%;
     border-radius: 4px;
-    border:1px solid green; 
+    border:1px solid var(--prim-color);
+    color: #ffffff;
+    background-color: var(--prim-color);
+    font-weight: bold;
+    cursor:pointer; 
+}
+.profile-settings-button button:hover{
+    border:1px solid var(--opaque-prim-color);
+    color: #ffffff;
+    background-color: var(--opaque-prim-color);
+    font-weight: bold;
+    cursor:pointer; 
 }
 
 
 .profile-settings-image-panel{
-    border:1px solid red;
+    /* border:1px solid red; */
     width:40%;
     margin-left:auto;
-
 }
 
 .profile-settings-image{
-    border: 1px solid red;
+    /* border: 1px solid red; */
     /* width:20%; */
     display:flex;
     flex-direction: column;
@@ -115,8 +136,26 @@
 }
 
 .profile-settings-image.button button{
-  height:40px;
-  min-width:50%;
+    height:40px;
+    min-width:50%;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    border-radius: 30px;
+    border:1px solid var(--color);
+    background-color: var(--bg-color);
+    color: var(--color);
+}
+
+.profile-settings-image.button button:hover{
+    border:1px solid var(--color);
+   background-color: var(--color);
+   color: #ffffff; 
+}
+
+.profile-settings-image.button button:focus{
+    outline: 1px solid var(--outline-color); 
 }
 
 .profile-settings-image img{ 
@@ -129,15 +168,12 @@
 }
 
 
-
-
-
+/* account settings styles */
 .account-settings-wrapper{
 
 }
 .account-settings-header{
     min-height:10vh;
-    border:1px solid yellow;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -145,40 +181,51 @@
 }
 .account-settings-panel{
     /* margin-top:2%; */
-    border:1px solid green;
+    /* border:1px solid green; */
 }
 .account-settings-group{
-    border:1px solid red;
-    /* width:70%;
-    margin:0 auto; */
+    border:1px solid var(--prim-border-color);
+    border-radius: 6px;
+    padding:1%;
     margin-bottom: 3%;
     min-height:20vh;
 }
 .account-settings-group-header{
-
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
 }
 .account-settings-form-panel{
 
 }
 .account-settings-form-panel form{
-    border:2px solid purple;
+    /* border:1px solid var(--prim-border-color); */
     display:flex;
     justify-content: space-around; 
     flex-wrap: wrap; 
-    /* margin-top:2%; */
-    margin-bottom: 2%; 
+    padding:0.5% 0;
 }
 .account-settings-form-panel form input{ 
-    width:95%;
+    width:97%;
     height:35px;
-    border-radius: 4px;
     outline:none;
     font-weight: bold;
-    border:2px solid #222;
+    border-radius: 4px;
+    border:1px solid var(--prim-border-color);
     transition: border-color 0.3s ease;
+    color: var(--text-color);
+    caret-color: var(--prim-color);
+    padding-left:1%;
+    transition: all 0.3s ease;
+}
+.account-settings-form-panel form input:focus{
+    border:1px solid var(--text-color);  
+}
+.account-settings-form-panel form input.not-empty{
+    border-color:var(--text-color);
 }
 .account-settings-form-group{
-    border:1px solid red;
+    /* border:1px solid red; */
     width:30%;
 }
 .account-settings-form-group.password-button{
@@ -188,30 +235,47 @@
     align-items: center;
 
 }
-.account-settings-button{
-    border:1px solid blue;
+.account-settings-password-button{
+    /* border:1px solid blue; */
     min-width:100%;
 
 }
-.account-settings-button button{
+.account-settings-password-button button{
     min-width:100%;
     height:40px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    border-radius: 4px;
+    border:1px solid var(--color);
+    background-color: var(--bg-color);
+    color: var(--color);
+}
+.account-settings-password-button button:hover{
+    border:1px solid var(--color);
+   background-color: var(--color);
+   color: #ffffff; 
+}
+
+.account-settings-password-button button:focus{
+    outline: 1px solid var(--outline-color); 
 }
 .account-remove-settings-panel{
     display:flex;
     flex-direction: row;
-    border:2px solid red;
+    /* border:1px solid var(--prim-border-color); */
     justify-content: space-around; 
 }
 
 .account-settings-remove-group{
-    border:1px solid blue;
+    /* border:1px solid blue; */
     width:40%;
     margin-top:2%;
     margin-bottom: 2%;
 }
 .account-remove-settings-button{
-    border:1px solid green;
+    /* border:1px solid green; */
     width:50%;
     margin-left:auto;
     margin-right: auto;
@@ -219,8 +283,47 @@
     margin-bottom: 2%;
 
 }
-.account-remove-settings-button button{ 
+
+.account-remove-settings-button.disable button{ 
     width:100%;
-    height:40px; 
+    height:40px;
+    cursor:pointer;
+    border-radius: 4px;
+    border:1px solid rgb(255, 44, 44);
+    background-color: rgb(255, 44, 44);
+    color: #ffffff; 
+    font-weight:bold;
+    transition:all 0.3s ease;
 }
+.account-remove-settings-button.disable button:hover{
+    border:1px solid rgb(252, 87, 87);
+   background-color: rgb(252, 87, 87);
+   color: #ffffff; 
+}
+
+.account-remove-settings-button.disable button:focus{
+    outline: 1px solid rgb(255, 44, 44);
+}
+
+.account-remove-settings-button.delete button{ 
+    width:100%;
+    height:40px;
+    cursor:pointer;
+    border-radius: 4px;
+    border:1px solid rgb(255, 44, 44);
+    background-color: var(--bg-color);
+    color: rgb(255, 44, 44);
+    font-weight:bold;
+    transition:all 0.3s ease; 
+}
+
+.account-remove-settings-button.delete button:hover{
+    background-color: rgb(255, 44, 44);
+    color: #ffffff; 
+}
+ 
+ .account-remove-settings-button.delete button:focus{
+     outline: 1px solid rgb(255, 44, 44);
+ }
+
 

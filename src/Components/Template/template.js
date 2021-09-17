@@ -88,6 +88,7 @@ export function SettingsTemplate(props) {
         bottom={props.leftSideBarBottom} 
         />
         <SettingsTemplateChildren children={props.children} />
+        <LandingFooter footerClassName={'gettingStarted-footer'} />
         </>
     )
 }

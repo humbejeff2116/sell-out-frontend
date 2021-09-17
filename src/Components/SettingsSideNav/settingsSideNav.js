@@ -8,8 +8,8 @@ import {RiBookOpenLine, RiContactsBookLine} from "react-icons/ri";
 import './settingsSideNav.css';
 
 const landingMainLinks = [
-    { name: "Account", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
-    { name: "Connections", href: "/about", icon: <BiUser className="index-side-nav-icon"/> },
+    { name: "Settings", href: "/settings", icon: <BiHome className="index-side-nav-icon" /> },
+    { name: "Connections", href: "/account", icon: <BiUser className="index-side-nav-icon"/> },
     { name: "Community", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
     { name: "Activity", href: "/support", icon: <BiFolder className="index-side-nav-icon"/> },
     { name: "Blog", href: "/support", icon: <BiFolder className="index-side-nav-icon"/> },

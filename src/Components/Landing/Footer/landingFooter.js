@@ -18,7 +18,7 @@ const landingSocialLinks = [
 
 export default function LandingFooter(props){
     return (
-        <footer className ={props.footerClassName ? props.footerClassName : ''}>
+        <footer className ={props.footerClassName ? props.footerClassName : 'landing-footer-container'}>
             <div className="landing-footer-top">
                 <section className="landing-footer-main-section">
                     <SellOut/>

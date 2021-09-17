@@ -72,7 +72,8 @@ export default function Contact(props) {
                         contactEmail: (user && !contactData) ? user.userEmail :
                          contactData ?  contactData?.contactEmail : '',
                         contactNumber: contactData ? contactData?.contactNumber : '',
-                        contactAddress: contactData ? contactData?.contactAddress : ''
+                        contactAddress: contactData ? contactData?.contactAddress : '',
+                        brandName: contactData ? contactData?.brandName : '',
                     }}
 
                     validationSchema = { Yup.object({

@@ -13,7 +13,6 @@ import image2 from '../../Images/product2.webp';
 import './settings.css';
 
 
-
 export default function Settings(props) {
     // const [user, setUser] = useState({});
     const [updatingProfile, setUpdatingProfile] = useState(false);
@@ -33,7 +32,7 @@ export default function Settings(props) {
     return (
         <div className="settings-container">
             <div className="profile-settings-wrapper" >
-                <div className="profile-settings-header" >
+                <div className="settings-header" >
                    <h3>Profile settings</h3>
                 </div>
                 <div className="profile-settings-panel" > 
@@ -121,7 +120,7 @@ export default function Settings(props) {
            
 
             <div className="account-settings-wrapper"> 
-                <div className="account-settings-header">
+                <div className="settings-header" id="account">
                   <h3>Account settings</h3>
                 </div>
 
@@ -164,7 +163,7 @@ export default function Settings(props) {
                                 />    
                             </div>
                             <div className="account-settings-form-group password-button">
-                                <div className="account-settings-button">
+                                <div className="account-settings-password-button">
                                     <button type="submit" >
                                     {
                                         changingPassword ? 'Changing password...' : 
@@ -192,14 +191,14 @@ export default function Settings(props) {
                         <div className="account-remove-settings-panel">
 
                             <div className="account-settings-remove-group">
-                                <div className="account-remove-settings-button">
-                                    <button type="submit" > Disable</button>
+                                <div className="account-remove-settings-button disable">
+                                    <button type="submit" >Disable Account</button>
                                 </div> 
                             </div>
 
                             <div className="account-settings-remove-group">
-                                <div className="account-remove-settings-button">
-                                    <button type="submit" > Delete</button>
+                                <div className="account-remove-settings-button delete">
+                                    <button type="submit" >Delete Account</button>
                                 </div>  
                             </div>
                       

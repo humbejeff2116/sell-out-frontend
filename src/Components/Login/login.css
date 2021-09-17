@@ -139,6 +139,7 @@
     border:1px solid var(--sec-color);
     background-color: var(--color);
     color: #ffffff;
+    
 }
 
 .login-panel button:hover{

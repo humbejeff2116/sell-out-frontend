@@ -3,11 +3,14 @@
 
 
 footer{
-    /* border:1px solid var(--prim-border-color); */
+    
     /* box-shadow:0 0 2px var(--box-shadow-color); */
     margin-top: 1%;
     /* margin-bottom: 2%; */
     padding:2% 1%;
+}
+.landing-footer-container{
+    border-top:1px solid var(--prim-border-color);
 }
 .landing-footer-top{
     display: flex;

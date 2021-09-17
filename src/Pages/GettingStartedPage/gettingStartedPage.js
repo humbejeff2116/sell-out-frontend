@@ -43,7 +43,7 @@ function GettingStartedPageComp({match}) {
             <Route exact path="/getting-started"  component={GettingStarted}/>
             <Route  path="/getting-started/contact" component={Contact} />
             <Route  path="/getting-started/location" component={Location} />
-            <Route exact path="/getting-started/profile-image" component={ProfileImage} /> 
+            <Route  path="/getting-started/profile-image" component={ProfileImage} /> 
             </Switch>
         </GettingStartedTemplate>   
     )

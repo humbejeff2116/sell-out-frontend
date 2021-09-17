@@ -83,16 +83,27 @@
     font-weight: bold;
     cursor:pointer;
     border-radius: 4px;
-    border:1px solid var(--text-color);
+    /* border:1px solid var(--text-color);
     border-radius: 4px;
     background-color: #f0f0f0;
-    color: var(--text-color);
+    color: var(--text-color); */
     transition: all 0.3s ease;
+
+    border:1px solid var(--color);
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: var(--color);
+
+
+     /* border:1px solid var(--text-color);
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    color: var(--text-color); */
 }
 .landing-info-card-login button:hover{
     
-    border:1px solid var(--text-color);
-    background-color: var(--text-color);
+    border:1px solid var(--color);
+    background-color: var(--color);
     color: #ffffff;
 }
 .landing-info-card-login button:focus{
@@ -121,13 +132,18 @@
     transition:all 0.3s ease;
     cursor:pointer;
     border-radius: 4px;
-    border:1px solid var(--sec-color);
+    /* border:1px solid var(--sec-color);
     background-color: var(--color);
+    color: #ffffff; */
+
+
+    border:1px solid var(--prim-color);
+    background-color: var(--prim-color);
     color: #ffffff;
 }
 .landing-info-card-signup button:hover{
-    border:1px solid var(--opaque-color);
-   background-color: var(--opaque-color);
+    border:1px solid var(--opaque-prim-color);
+   background-color: var(--opaque-prim-color);
    
 }
 
