@@ -44,6 +44,7 @@
     border-bottom:1px solid var(--prim-border-color);
     display:flex;
     flex-direction: row;
+    color: var(--text-color);
 }
 .notification-image{
     display: flex;
@@ -75,6 +76,7 @@
     padding:2%;
     display: flex;
     justify-content: center;
+    color: var(--text-color);
 }
 
 .notification-time{
@@ -84,4 +86,5 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: var(--color);
 }

@@ -16,7 +16,7 @@ const landingMainLinks = [
     { name: "Community", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
     { name: "Activity", href: "/support", icon: <BiFolder className="index-side-nav-icon"/> },
     { name: "Blog", href: "/support", icon: <BiFolder className="index-side-nav-icon"/> },
-    { name: "Service", href: "/support", icon: <RiContactsBookLine className="index-side-nav-icon"/>},
+    { name: "Cart", href: "/cart", icon: <RiContactsBookLine className="index-side-nav-icon"/>},
 ]
 
 

@@ -41,7 +41,9 @@ export function SettingsPageTemplate(props) {
     return (
         <SettingsTemplate 
         leftSideBarTop={<ProfileAvatar/>} 
-        leftSideBarCenter={<SettingsSideNav/>} 
+        leftSideBarCenter={
+          props.sideNav ? props.sideNav :  <SettingsSideNav/>
+        } 
         leftSideBarBottom={<SettingsFooter/>} 
         >
            {props.children}

@@ -52,31 +52,32 @@ export default function Cart() {
   
     return (
         <div className="cart-container">
-            <div className="cart-header">
-           {/* <h2>Cart</h2> */}
-           <p>Cart</p>
-            </div>
+            
             <div className="cart-products-wrapper">
             <div className="cart-products-container">
-            <div className="cart-products-panel">
-            {
-                cartData.length && (
-                    cartData.map((interest, i) =>
-                        <CartProduct key={i} {...interest} />
-                    )
-                )
-            }
-            </div>
-            <div className="cart-products-total-container">
-                <div className="cart-products-total-panel">
-                <div className="cart-products-total-amount">
-                   <span>Total price: 32323</span>
-               </div>
-               <div className="cart-products-total-checkout">
-                  <button>Checkout</button>
-               </div>
+                <div className="cart-header">
+                {/* <h2>Cart</h2> */}
+                <p>Cart</p>
                 </div>
-            </div>
+                <div className="cart-products-panel">
+                {
+                    cartData.length && (
+                        cartData.map((interest, i) =>
+                            <CartProduct key={i} {...interest} />
+                        )
+                    )
+                }
+                </div>
+                <div className="cart-products-total-container">
+                    <div className="cart-products-total-panel">
+                    <div className="cart-products-total-amount">
+                    <span className="cart-products-total-amount-span-bold">Total amount: </span> <span> £32323.00</span>
+                </div>
+                <div className="cart-products-total-checkout">
+                    <button>Checkout</button>
+                </div>
+                    </div>
+                </div>
             </div>
             <div className="cart-product-checkout">
                 <CartCheckoutComp/>
@@ -132,7 +133,7 @@ function CartProduct(props) {
                <p>Quantity: <span>5</span></p>
                </div>
                <div className="cart-product-info-span-group">
-               <p>Amount: <span>£320.00</span></p>
+               <p>Sub total: <span>£320.00</span></p>
                </div>
 
                {/* product add/reduce/remove buttons */}
@@ -144,19 +145,21 @@ function CartProduct(props) {
                 <div className="cart-product-button-top">
                     <div className="cart-product-add-button">
                     <div className="cart-product-add-button-icon">
-                       <i>-</i>
+                       {/* <i>-</i> */}
+                       <button>-</button>
                     </div>
                     </div>
                     <input className="cart-product-input" type="text" />
                     <div className="cart-product-reduce-button">
                     <div className="cart-product-add-button-icon">
-                       <i>+</i>
+                    <button>+</button>
                     </div>
                     </div>
                 </div>
                 <div className="cart-product-button-bottom">
                     <div className="cart-product-remove-button">
-                        <span>Remove</span>
+                        {/* <span>Remove</span> */}
+                        <button>Remove</button>
                     </div>
                 </div>
             </div>
@@ -185,7 +188,7 @@ function CartCheckoutComp(props) {
 
                 <div className="cart-checkout-button-wrapper">
                     <div className="cart-checkout-button">
-                        <span>Checkout</span>
+                        <button>Checkout</button>
                     </div>
                 </div>
 

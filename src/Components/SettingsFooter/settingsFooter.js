@@ -9,7 +9,7 @@ import './settingsFooter.css'
 
 
 const settingsFooterLinks = [
-    { name: "Support/Help", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
+    { name: "Support", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
     { name: "Settings", href: "/about", icon: <BiUser className="index-side-nav-icon"/> },
     { name: "Logout", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> }
 ]
