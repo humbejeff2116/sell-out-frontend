@@ -186,7 +186,7 @@
 .cart-product-buttons{
     /* border: 1px solid purple; */
     height: 100%;
-    margin-top:auto;
+    /* margin-top:auto; */
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -266,8 +266,9 @@
     font-weight: bolder;
 }
 .cart-product-add-button-icon button:hover{
+    color: #ffffff;
     border:1px solid var(--prim-color);
-    box-shadow:0 0 2px var(--prim-color);
+    background-color: var(--prim-color);
     /* transform: scale(1.05); */
 }
 .cart-product-add-button-icon button:focus{

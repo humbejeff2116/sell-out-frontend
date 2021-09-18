@@ -128,6 +128,10 @@ export default function ViewProduct() {
         return () => {}
     }, [])
     return (
+        <>
+        <div className="view-product-back-bttn-cntr">
+            <div className="view-product-back-bttn"><button>Go back</button></div>
+        </div>
         <div className="view-product-container">
 
             <div className="view-product-top">
@@ -140,6 +144,7 @@ export default function ViewProduct() {
             </div>
 
         </div>
+        </>
     )
 }
 
@@ -150,6 +155,7 @@ function ProductImage(props) {
         <div className="view-product-profile" >
             <div  className="view-product-profile-image">
                 <img src={image} alt="avatar" />
+                <span> User name</span>
                 
             </div>
             <div className="view-product-seller-stars">
@@ -211,14 +217,14 @@ function ProductDetails(props) {
                    <div className="view-product-details-bottom-quantity-buttons">
                    <div className="view-product-add-button">
                        <div className="view-product-add-button-icon">
-                       <i>-</i>
+                       <button>-</button>
                        </div>
                       
                     </div>
                     <input className="view-product-input" type="text" />
                     <div className="view-product-reduce-button">
                         <div  className="view-product-add-button-icon">
-                       <i>+</i>
+                        <button>+</button>
                        </div>
                     </div>
                    </div>
@@ -226,7 +232,7 @@ function ProductDetails(props) {
 
                 <div className="view-product-details-bottom-bottom">
                     <div className="view-product-details-bottom-add-to-cart">
-                    <span onClick={()=> addToCart(cartState, product, user)}>Add to cart</span>
+                    <button onClick={()=> addToCart(cartState, product, user)}>Add to cart</button>
                     </div>
                     <div className="view-product-details-bottom-heart"><span>heart</span></div>
                 </div> 
