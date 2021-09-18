@@ -126,8 +126,8 @@ function CartProduct(props) {
                <div className="cart-product-info-span-group">
                 <p>This is the product name</p>
                </div>
-               <div className="cart-product-info-span-group">
-               <p>Price: <span>£300.00 (22% OFF)</span> <span className="original-price">£320.00</span></p>
+               <div className="cart-product-info-span-group ">
+               <p>Price: <span className="price">£300.00 (22% OFF)</span> <span className="original-price">£320.00</span></p>
                </div>
                <div className="cart-product-info-span-group">
                <p>Quantity: <span>5</span></p>
