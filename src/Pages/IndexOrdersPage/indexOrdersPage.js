@@ -8,9 +8,7 @@
 
 
 import React, {useEffect} from 'react';
-import {Redirect} from 'react-router-dom';
-import {  IndexPageTemplate } from '../IndexPage/indexPage';
-import {Route, Switch } from 'react-router-dom';
+import { IndexPageTemplate} from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import Router from '../../Components/Router/router';
 import {
@@ -20,8 +18,6 @@ import {
     DeliveredProducts
 } from '../../Components/UserDashboard/Orders/index';
 import  NotFoundPage from '../NotFoundPage/notFoundPage';
-
-
 
 const orderRoutes = [
     {path: "/home/orders", exact: true, Component: PlacedOrders},
@@ -37,7 +33,7 @@ function IndexOrdersPageComp({match}) {
         window.scrollTo(0,0);
     },[]);
     return (
-        < IndexPageTemplate>
+        <IndexPageTemplate>
             <Router routes={orderRoutes}/>
         </IndexPageTemplate>   
     )

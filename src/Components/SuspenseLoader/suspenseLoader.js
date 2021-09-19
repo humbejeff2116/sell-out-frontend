@@ -8,9 +8,12 @@
 
 import React from 'react';
 import Template from '../Template/template';
-import {LoginAndSignupTemplate} from '../Template/template';
-import { IndexPageTemplate } from '../../Pages/IndexPage/indexPage';
-import {SettingsPageTemplate} from '../../Pages/SettingsPage/settingsPage';
+import {
+    LoginAndSignupTemplate, 
+    IndexPageTemplate,
+    SettingsPageTemplate,
+ } from '../Template/template';
+
 import {LandingSuspenseTemplate} from '../../Components/Landing/landing';
 import { Loader } from '../Loader/loader';
 import './suspenseLoader.css';

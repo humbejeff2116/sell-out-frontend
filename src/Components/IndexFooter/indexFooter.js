@@ -6,21 +6,17 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {BiHome, BiUser} from "react-icons/bi";
-import {RiBookOpenLine } from "react-icons/ri";
+import Links  from '../../Data/links';
 import './indexFooter.css';
 
-const indexFooterLinks = [
-    { name: "Support", href: "/", icon: <BiHome className="index-side-nav-icon" /> },
-    { name: "Settings", href: "/about", icon: <BiUser className="index-side-nav-icon"/> },
-    { name: "Logout", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> }
-]
-
 export default function IndexFooter(props) {
+    const indexSideNavFooterLinks = Links.getIndexSideNavFooterLinks();
     return (
         <div className="index-footer">
             {
-                indexFooterLinks.map((link, i) =>
+                (props.links) ? props.links.map((link, i) =>
+                    <NavLinks key={i} {...link} />
+                ) : indexSideNavFooterLinks.map((link, i) =>
                     <NavLinks key={i} {...link} />
                 )
             }

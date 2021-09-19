@@ -3,7 +3,7 @@
 
 import React from 'react';
 import IndexSideNav from '../../Components/IndexSideNav/indexSideNav';
-import { SettingsPageTemplate } from '../SettingsPage/settingsPage';
+import { SettingsPageTemplate } from '../../Components/Template/template';
 import ViewProduct from '../../Components/ViewProduct/viewProduct';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import { isAuthenticated } from '../../Services/services';
@@ -12,7 +12,7 @@ import { isAuthenticated } from '../../Services/services';
  function ViewProductPageComp() {
     return (
         <SettingsPageTemplate
-        sideNav ={<IndexSideNav/>}
+        leftSideBarCenter ={<IndexSideNav/>}
         >
             <ViewProduct/> 
         </SettingsPageTemplate>

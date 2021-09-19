@@ -2,15 +2,45 @@
 
 
 
-
-
 import React from 'react';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import LeftSideBar from '../LeftSideBar/leftSideBar';
 import RightSideBar from '../RightSideBar/rightSideBar';
 import LandingFooter from '../Landing/Footer/landingFooter';
+import ProfileAvatar from '..//Profile/profileAvatar';
+import IndexSideNav from '../IndexSideNav/indexSideNav';
+import IndexFooter from '../IndexFooter/indexFooter';
+import Notifications from '../NotificationsDropdown/notifications';
+import Connections from '../Connections/connections';
+import Links from '../../Data/links';
 import './template.css';
+
+const settingsSideNavLinks = Links.getSettingsSideNavLinks();
+const settingsSideNavFooterLinks = Links.getSettingsSideNavFooterLinks();
+const gettingStartedSideNavLinks = Links.getGettingStartedSideNavLinks();
+
+
+export  function IndexPageTemplate(props) {
+    return (
+        <>
+        <Header/>
+        <div className="inside-login-template-panel">
+        <LeftSideBar 
+        fixed={true}
+        top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
+        center={ props.leftSideBarCenter ? props.leftSideBarCenter : <IndexSideNav/>} 
+        bottom={props.leftSideBarBottom ? props.leftSideBarBottom : <IndexFooter />} 
+        />
+        <IndexPageTemplateChildren children={props.children} />
+        <RightSideBar 
+        topComponent={props.rightSideBarTop ? props.rightSideBarTop : <Notifications/>} 
+        bottomComponent={props.rightSideBarBottom ? props.rightSideBarBottom  : <Connections/>} 
+        />
+        </div>
+        </>
+    )
+}
 
 
 export default function Template(props) {
@@ -45,53 +75,33 @@ export function LoginAndSignupTemplate(props) {
     )
 }
 
-export function InsideLoginTemplate(props) {
-    return (
-        <>
-        <Header/>
-        <div className="inside-login-template-panel">
-        <LeftSideBar 
-        fixed={true}
-        top={props.leftSideBarTop} 
-        center={props.leftSideBarCenter} 
-        bottom={props.leftSideBarBottom} 
-        />
-        <InsideLoginTemplateChildren children={props.children} />
-        <RightSideBar topComponent={props.rightSideBarTop} bottomComponent={props.rightSideBarBottom} />
 
-        </div>
-       
-        </>
-    )
-}
-
-function InsideLoginTemplateChildren(props) {
+function IndexPageTemplateChildren(props) {
     return (
         <div className="inside-login-template-container">
             <div className="inside-login-template-center">
                 {props.children}
             </div>
-            
         </div>
     )
-
 }
 
-export function SettingsTemplate(props) {
+export function SettingsPageTemplate(props) {
     return (
         <>
         <Header/>
         <LeftSideBar 
         fixed={true}
-        top={props.leftSideBarTop} 
-        center={props.leftSideBarCenter} 
-        bottom={props.leftSideBarBottom} 
+        top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
+        center={ props.leftSideBarCenter ? props.leftSideBarCenter : <IndexSideNav links={settingsSideNavLinks}/>} 
+        bottom={props.leftSideBarBottom ? props.leftSideBarBottom : <IndexFooter links ={settingsSideNavFooterLinks}/>} 
         />
         <SettingsTemplateChildren children={props.children} />
         <LandingFooter footerClassName={'gettingStarted-footer'} />
         </>
     )
 }
+
 function SettingsTemplateChildren(props) {
     return (
         <div className="settings-template-container">
@@ -101,7 +111,6 @@ function SettingsTemplateChildren(props) {
             
         </div>
     )
-
 }
 
 export function GettingStartedTemplate(props) {
@@ -110,14 +119,12 @@ export function GettingStartedTemplate(props) {
         <Header dontShowMainNav={true}/>
         <LeftSideBar 
              fixed={true}
-            top={props.leftSideBarTop} 
-            center={props.leftSideBarCenter} 
-            bottom={props.leftSideBarBottom} 
+            top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
+            center={props.leftSideBarCenter  ? props.leftSideBarCenter : <IndexSideNav links ={gettingStartedSideNavLinks}/>} 
+            bottom={props.leftSideBarBottom ? props.leftSideBarCenter : <IndexFooter/>} 
             />
-        <GettingStartedTemplateChildren
-        children={props.children} />
+        <GettingStartedTemplateChildren children={props.children} />
         <LandingFooter footerClassName={'gettingStarted-footer'} />
-       
         </>
     )
 }
@@ -128,5 +135,4 @@ function GettingStartedTemplateChildren(props) {
             {props.children}
         </div>
     )
-
 }

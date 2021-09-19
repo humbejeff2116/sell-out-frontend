@@ -6,7 +6,7 @@
 
 
 import React, {useEffect} from 'react';
-import {  IndexPageTemplate } from '../IndexPage/indexPage';
+import { IndexPageTemplate} from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import Router from '../../Components/Router/router';
 import {

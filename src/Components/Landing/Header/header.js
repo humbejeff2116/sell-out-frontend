@@ -5,30 +5,10 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {BiHome, BiUser, BiFolder} from "react-icons/bi";
-import {RiBookOpenLine, RiContactsBookLine} from "react-icons/ri";
+import Links, { open } from '../../../Data/links';
 import './header.css';
+const landingMainLinks = Links.getLandingMainLinks()
 
-const landingMainLinks = [
-    { name: "Home", href: "/", icon: <BiHome className="nav-icon" /> },
-    { name: "About", href: "/about", icon: <BiUser className="nav-icon"/> },
-    { name: "Community", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
-    { name: "Support", href: "/support", icon: <BiFolder className="nav-icon"/> },
-    { name: "Contact", href: "/contact", icon: <RiContactsBookLine className="nav-icon"/> }
-]
-function setUnicode(unicode) {
-    let dummy;
-    let decoded;
-    if(!unicode){
-        return decoded ="";
-    }
-    dummy = document.createElement('textarea');
-    dummy.innerHTML = unicode;
-    decoded = dummy.value;
-    return decoded;
-}
-const open = setUnicode('&#9776;')
-const close = setUnicode('&times;')
 
 
 export default function Header(props) {
@@ -81,7 +61,6 @@ function NavLinks(props) {
             activeClassName="landing-nav-link-active"
             className="landing-nav-link" 
             title={props.name} >
-                {/* <i>{props.icon}</i> */}
                 {props.name} 
             </NavLink> 
         </div>

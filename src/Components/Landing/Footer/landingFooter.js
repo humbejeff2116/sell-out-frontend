@@ -3,20 +3,13 @@
 
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Links from '../../../Data/links';
 import './landingFooter.css';
-import { FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare } from 'react-icons/fa';
 
 
-
-
-const landingSocialLinks = [
-    { name:"Li",title:"Linkedin", href:"linkedin.com/jeffrey123", icon:< FaLinkedinIn className="landing-footer-social-nav-icon"/> },
-    { name:"Gi",title:"Github", href:"linkedin.com/jeffrey123", icon:< FaGithubSquare className="landing-footer-social-nav-icon"/> },
-    { name:"Fa",title:"Facebook", href:"linkedin.com/jeffrey123", icon:< FaFacebookSquare className="landing-footer-social-nav-icon"/> },
-    { name:"Tw",title:"Twitter", href:"linkedin.com/jeffrey123", icon:< FaTwitter className="landing-footer-social-nav-icon"/> }
-]
 
 export default function LandingFooter(props){
+    const landingSocialLinks = Links.getFooterSocialLinks();
     return (
         <footer className ={props.footerClassName ? props.footerClassName : 'landing-footer-container'}>
             <div className="landing-footer-top">

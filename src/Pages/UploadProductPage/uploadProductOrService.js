@@ -1,18 +1,10 @@
 
 
 
-
-
-
-
-
 import React, {useEffect} from 'react';
 import UploadProductOrService from '../../Components/UploadProductOrService/uploadProduct';
-import {IndexPageTemplate} from '../IndexPage/indexPage';
+import { IndexPageTemplate} from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
-
-
-
 
 
 function UploadProductOrServicePageComp() {

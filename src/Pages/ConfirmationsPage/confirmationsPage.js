@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { IndexPageTemplate} from '../IndexPage/indexPage';
+import { IndexPageTemplate} from '../../Components/Template/template';
 import Confirmations from '../../Components/Confirmations/confirmation';
 
 

@@ -7,7 +7,7 @@
 
 
 import React from 'react';
-import { IndexPageTemplate } from '../IndexPage/indexPage';
+import { IndexPageTemplate} from '../../Components/Template/template';
 import Interests from '../../Components/Interests/interest';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 
