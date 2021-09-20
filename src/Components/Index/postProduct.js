@@ -19,7 +19,7 @@ export function PostProduct(props) {
                 </div>
             </div>
             <div className="index-post-upload">
-            <Link to="/upload-product"><button>Sell Product</button></Link>
+            <Link to="/home/upload-product"><button>Sell Product</button></Link>
             </div>
         </div>
     )

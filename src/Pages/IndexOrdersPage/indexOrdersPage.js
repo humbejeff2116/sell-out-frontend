@@ -21,7 +21,7 @@ import  NotFoundPage from '../NotFoundPage/notFoundPage';
 
 const orderRoutes = [
     {path: "/home/orders", exact: true, Component: PlacedOrders},
-    {path: "/home/orders/placed-orders",exact: true,  Component: PlacedOrders},
+    {path: "/home/orders/placed-orders",  Component: PlacedOrders},
     {path: "/home/orders/recieved-orders", Component: RecievedOrders},
     {path: "/home/orders/confirm-delivery", Component: ConfirmDelivery},
     {path: "/home/orders/delivered-products", Component: DeliveredProducts},

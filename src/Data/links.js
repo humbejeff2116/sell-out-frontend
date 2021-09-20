@@ -26,6 +26,16 @@ const LinksData = {
         { name: "Contact", href: "/contact", icon: <RiContactsBookLine className="nav-icon"/> }
     ],
     indexSideNavLinks : [
+        // {
+        //     accordion: true,
+        //     name:"Orders", 
+        //     links: [
+        //         {href:"/home/orders/recieved-orders", name:"Recieved orders", icon:""},
+        //         {href:"/home/orders/placed-orders", name:"Placed orders", icon:""},
+        //         {href:"/home/orders/confirm-delivery", name:"Confirm delivery", icon:""},
+        //         {href:"/home/orders/delivered-products", name:"Delivered products", icon:""},
+        //     ]
+        // },
         { name: "Home", href: "/home", icon: <BiHome className="index-side-nav-icon" /> },
         { name: "Connections", href: "/about", icon: <BiUser className="index-side-nav-icon"/> },
         { name: "Community", href: "/community", icon: <RiBookOpenLine className="index-side-nav-icon"/> },

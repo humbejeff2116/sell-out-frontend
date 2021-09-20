@@ -16,8 +16,8 @@ code {
   /* div variables */
   --color: #005ab4;
   --prim-color: rgb(19, 182, 19);
-  --sec-color: #005ab4;
-  --main-color:rgb(96, 96, 219);
+  --sec-color: rgb(255, 84, 84);
+  --no-color:#ffffff;
 
   --opaque-color:#0074e7;
   --opaque-prim-color:rgb(23, 211, 23);
@@ -50,8 +50,7 @@ code {
 
 
   --top:9vh;
-  
-
+  --sidebar-width: 15%;
   
 
 }

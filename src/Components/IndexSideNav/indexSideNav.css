@@ -10,7 +10,7 @@
 }
 .index-side-nav-item{
     /* border:1px solid red; */
-    height: 8vh;
+    min-height: 8vh;
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -47,4 +47,22 @@
 .index-side-nav-icon{
     width: 1.2em;
     height:1.2em;
+}
+.index-side-nav-accordion-cntr{
+    /* width: 100%; */
+    border:1px solid red;
+
+}
+
+.index-side-nav-accordion-cntr button{
+    width: 100%;
+    border: 0;
+    transition:all 0.3s ease;
+    color: var(--color);
+    padding:5% 0;
+}
+.index-side-nav-accordion-cntr button:hover{
+    color: #ffffff;
+    background-color:var(--color);
+    border-radius: 4px;
 }
