@@ -28,14 +28,14 @@ export default function PlacedOrdersContainer(props) {
             <div className="placed-orders-search-container">
                 <div className="placed-orders-search">
                 <form>
-                    <label htmlFor="order-search"> search order by seller name or brand</label>
+                    <label htmlFor="order-search"> Search by seller name or brand</label>
                     <input type="text" />
                 </form>
 
                 </div>
                 <div className="placed-orders-search">
                     <form>
-                    <label htmlFor="order-search"> Search order by date</label>
+                    <label htmlFor="order-search"> Search by date</label>
                     <input type="text" />
                 </form>
 
@@ -83,8 +83,12 @@ function PlacedOrder(props) {
     let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending"
     return (
         <div className="placed-order">
-         <div className="placed-order-details-container">
+        <div className="placed-order-details-container">
+        <div className="placed-order-details-image-container">
+            {/* image component goes here */}
 
+        </div>
+        <div className="placed-order-details-group-container">
             <div className="placed-order-details-group">
             <p>Order date: <span>wed 04 sep 2021</span></p>
             </div>
@@ -108,17 +112,21 @@ function PlacedOrder(props) {
             </div>
         </div>
 
-        <div className="placed-order-buttons-container">
+            
+        </div>
 
-            <div className="placed-order-button-wrapper">
-                <div className="placed-order-confirm-delivery-button">
-                    <button>Confirm delivery</button>
-                </div>
-            </div>
+        <div className="placed-order-buttons-container">
 
             <div className="placed-order-button-wrapper">
                 <div className="placed-order-view-order-product-button">
                     <button>View order products</button>
+                </div>
+            </div>
+
+            <div className="placed-order-button-wrapper">
+               
+                <div className="placed-order-confirm-delivery-button">
+                    <button>Confirm delivery</button>
                 </div>
             </div>
 

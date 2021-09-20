@@ -14,7 +14,7 @@ import Router from '../../Components/Router/router';
 import {
     PlacedOrders, 
     RecievedOrders, 
-    ConfirmDelivery, 
+    // ConfirmDelivery, 
     DeliveredProducts
 } from '../../Components/UserDashboard/Orders/index';
 import  NotFoundPage from '../NotFoundPage/notFoundPage';
@@ -22,8 +22,8 @@ import  NotFoundPage from '../NotFoundPage/notFoundPage';
 const orderRoutes = [
     {path: "/home/orders", exact: true, Component: PlacedOrders},
     {path: "/home/orders/placed-orders",  Component: PlacedOrders},
-    {path: "/home/orders/recieved-orders", Component: RecievedOrders},
-    {path: "/home/orders/confirm-delivery", Component: ConfirmDelivery},
+    {path: "/home/orders/sold-products", Component: RecievedOrders},
+    // {path: "/home/orders/confirm-delivery", Component: ConfirmDelivery},
     {path: "/home/orders/delivered-products", Component: DeliveredProducts},
     {path: "/home/orders/*", Component: NotFoundPage,},
 ]

@@ -136,7 +136,7 @@
     transition:all 0.3s ease-in-out;
     cursor:pointer;
     border-radius: 4px;
-    border:1px solid var(--sec-color);
+    border:1px solid var(--color);
     background-color: var(--color);
     color: #ffffff;
     
@@ -210,7 +210,7 @@
     color: #ffffff;
 }
 .signup-link-button button:focus{
-    outline: 1px solid var(--outline-color);  
+    outline: 1px solid var(--opaque-color);  
 }
 
 @media only screen  and (max-width: 910px) {

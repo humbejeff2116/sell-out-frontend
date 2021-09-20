@@ -80,7 +80,7 @@
     border: 1px solid var(--prim-border-color);
     box-shadow:0 0 2px var(--box-shadow-color);
     border-radius: 6px;
-    padding: 1%;
+    padding: 0% 2% 2% 2%;
      margin: 2% 0;
 
 }
@@ -96,12 +96,18 @@
     border: 1px solid var(--prim-border-color);
     box-shadow:0 0 2px var(--box-shadow-color);
     border-radius: 6px;
-    width:47%; 
+    width:46.7%; 
     /* margin: 4% auto 5% auto; */
     min-height: 18vh;
     padding: 1%;
 }
 .placed-order-details-container{
+
+}
+.placed-order-details-image-container{
+
+}
+.placed-order-details-group-container{
 
 }
 .placed-order-details-group{
@@ -160,7 +166,7 @@
     border-radius: 30px;
     border:1px solid var(--pim-color);
     background-color: var(--prim-color);
-    color: #ffffff;
+    color: var(--no-color);
 
 }
 .placed-order-confirm-delivery-button button:hover{
@@ -187,16 +193,16 @@
     cursor:pointer;
     border-radius: 30px;
     border:1px solid var(--color);
-    background-color: #ffffff;
+    background-color: var(--no-color);
     color: var(--color);
 
 }
 .placed-order-view-order-product-button button:hover{
     background-color: var(--color);
-    color: #ffffff;
-
+    color: var(--no-color);
 }
 .placed-order-view-order-product-button button:focus{
+    border:1px solid var(--opaque-color);
 
 }
 

@@ -1,0 +1,36 @@
+
+.sold-product-button-wrapper{
+    /* border: 3px solid green; */
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    /* align-items: flex-end; */
+    padding: 1%
+}
+.sold-product-view-product-button{
+    /* border: 1px solid red; */
+    min-width:40%;
+
+}
+.sold-product-view-product-button button{
+    width:100%;
+    height: 45px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    border-radius: 30px;
+    border:1px solid var(--color);
+    background-color: var(--color);
+    color: var(--no-color);
+
+}
+.sold-product-view-product-button button:hover{
+    border:1px solid var(--opaque-color);
+    background-color: var(--opaque-color);
+
+}
+.sold-product-view-product-button button:focus{
+    background-color: var(--opaque--color);
+
+}
