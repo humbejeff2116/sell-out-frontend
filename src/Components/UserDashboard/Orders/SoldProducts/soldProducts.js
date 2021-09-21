@@ -3,8 +3,11 @@
 
 
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import useAuth from '../../../../Context/context';
+import image from '../../../../Images/avatar.jpg';
 import './soldProducts.css';
+import '../PlacedOrders/placedOrders.css';
 
 
 const soldProducts = [
@@ -13,7 +16,7 @@ const soldProducts = [
     }
 ]
 
-export default function RecievedOrders(props) {
+export default function SoldProducts(props) {
     useEffect(() => {
       
         return () => {
@@ -38,36 +41,59 @@ export default function RecievedOrders(props) {
                         <input type="text" />
                     </form>
                 </div>
+                <div className="placed-orders-search">
+                    <form>
+                        <label htmlFor="order-search"> Filter by delivery status</label>
+                        <select>
+                        <option>Default</option>
+                            <option>Pending</option>
+                            <option>Delivered</option>
+                        </select>
+                    </form>
+                </div>
             </div>
             {
-               soldProducts.map((order, i) =>
-                    <SoldProducts key={i} {...order} />
+                //  {/* TODO... replace buyerName with buyer name from order */}
+                soldProducts.map((order, i) =>
+                    <SoldProductsComp 
+                    key={i} 
+                    {...order} 
+                    orderProfile={ 
+                        <OrderProfile 
+                        {...order}
+                        buyerName={"Jeffrey"}
+                        />
+                    }
+                    />
                 )
             }
         </div>
     )
 }
 
-function SoldProducts(props) {
+export function SoldProductsComp(props) {
     let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending";
     return (
         <div className="placed-order-wrapper">
             <div className="placed-order-intro">
                 <div>
-                    <div className="placed-order-details-group">
+                   {
+                       props.orderProfile
+                   }
+                     <div className="placed-order-details-group">
                         <p>Order date: <span>wed 04 sep 2021</span></p>
                     </div>
                     <div className="placed-order-details-group">
                         <p>Order Id: <span>pss12845zf4</span></p>
                     </div>
                     <div className="placed-order-details-group">
-                        <p>Buyer name: <span>John Doe</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Buyer contact: <span>+444-464-4747-566</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
                         <p>Delivery status: <span className={deleveryStatusSpanClass}>Pending</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                    <p>Total order amount: <span className="diff">£68.00</span></p>
+                </div>
+                    <div className="placed-order-details-group">
+                        <p>Order products:</p>
                     </div>
                 </div>
             </div> 
@@ -84,7 +110,6 @@ function SoldProducts(props) {
 
 
 function SoldProduct(props) {
-    let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending";
     return (
         <div className="placed-order">
          <div className="placed-order-details-container">
@@ -98,9 +123,6 @@ function SoldProduct(props) {
                 </div>
                 <div className="placed-order-details-group">
                     <p>Product id: <span>px223ffr4</span></p>
-                </div>
-                <div className="placed-order-details-group">
-                    <p>Delivery status: <span className={deleveryStatusSpanClass}>Pending</span></p>
                 </div>
                 <div className="placed-order-details-group">
                     <p>Order quantity: <span>2</span></p>
@@ -121,5 +143,85 @@ function SoldProduct(props) {
         </div>
 
         </div>
+    )
+}
+
+
+export function OrderProfile(props) {
+     const {user} = useAuth();
+     if(user?.fullName === props.buyerName){
+        return (
+             <SellerOrderProfile {...props} />
+        )
+     }
+    return (
+        // TODO... component recieves shipping address as props from user object
+        <BuyerOrderProfile  {...props} />
+    )
+}
+
+export function SellerOrderProfile(props) {
+    const {sellerName, sellerProfileImage, sellerContact} = props
+    return (
+        <>
+        <div className="placed-order-details-group">
+            {
+                props.usedInDeliveryPage ? <p>Recieved delivery from:</p> : 
+                props.usedInPaymentsPage ? <p>Made payment to:</p> :
+                <p>Bought products from: </p>
+            }
+            
+        </div>
+        <div className="sold-products-profile-container">
+            <div className="sold-products-profile-image">
+                <img src={image} alt="seller" />
+            </div>
+            <div className="sold-products-profile-details-container">
+                <div className="sold-products-profile-details">
+                    <div className="placed-order-details-group">
+                        <p>Name: <span>John Doe</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Contact: <span>+444-464-4747-566</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </>
+
+    )
+}
+
+export function BuyerOrderProfile(props) {
+    const {buyerrName, buyerProfileImage, buyerContact, shippingAddress} = props
+    return (
+        <>
+        <div className="placed-order-details-group">
+        {
+                props.usedInDeliveryPage ? <p>Delivered products to:</p> : 
+                props.usedInPaymentsPage ? <p>Recieved payment from:</p> :
+                <p>Made sales to: </p>
+            }
+        </div>
+        <div className="sold-products-profile-container">
+            <div className="sold-products-profile-image">
+                <img src={image} alt="seller" />
+            </div>
+            <div className="sold-products-profile-details-container">
+                <div className="sold-products-profile-details">
+                    <div className="placed-order-details-group">
+                        <p>Name: <span>John Doe</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Contact: <span>+444-464-4747-566</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Shipping address: <span>state of art way, Johnson avenue </span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </>
+
     )
 }

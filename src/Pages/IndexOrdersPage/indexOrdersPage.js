@@ -13,7 +13,7 @@ import RequireAuthentication from '../../Components/Authentication/requireAuthen
 import Router from '../../Components/Router/router';
 import {
     PlacedOrders, 
-    RecievedOrders, 
+    SoldProducts, 
     // ConfirmDelivery, 
     DeliveredProducts
 } from '../../Components/UserDashboard/Orders/index';
@@ -22,7 +22,7 @@ import  NotFoundPage from '../NotFoundPage/notFoundPage';
 const orderRoutes = [
     {path: "/home/orders", exact: true, Component: PlacedOrders},
     {path: "/home/orders/placed-orders",  Component: PlacedOrders},
-    {path: "/home/orders/sold-products", Component: RecievedOrders},
+    {path: "/home/orders/sold-products", Component: SoldProducts},
     // {path: "/home/orders/confirm-delivery", Component: ConfirmDelivery},
     {path: "/home/orders/delivered-products", Component: DeliveredProducts},
     {path: "/home/orders/*", Component: NotFoundPage,},

@@ -11,8 +11,8 @@ import RequireAuthentication from '../../Components/Authentication/requireAuthen
 import Router from '../../Components/Router/router';
 import {
     PlacedOrders, 
-    RecievedOrders, 
-    ConfirmDelivery, 
+    SoldProducts, 
+    // ConfirmDelivery, 
     DeliveredProducts
 } from '../../Components/UserDashboard/Orders/index';
 import {
@@ -38,13 +38,13 @@ const dashboardRoutes = [
     // orders
     {path: "/home/dashboard", exact: true, Component: PlacedOrders},
     {path: "/home/dashboard/orders/placed-orders",exact: true,  Component: PlacedOrders},
-    {path: "/home/dashboard/orders/recieved-orders", Component: RecievedOrders},
-    {path: "/home/dashboard/orders/confirm-delivery", Component: ConfirmDelivery},
+    {path: "/home/dashboard/orders/sold-products", Component: SoldProducts},
+    // {path: "/home/dashboard/orders/confirm-delivery", Component: ConfirmDelivery},
     {path: "/home/dashboard/orders/delivered-products", Component: DeliveredProducts},
     // payments
     {path: "/home/dashboard/payments/payments-made",  Component:  PaymentsMade},
     {path: "/home/dashboard/payments/payments-recieved",  Component:  PaymentsRecieved},
-    {path: "/home/dashboard/payments/pending-payments", Component: RecievedOrders},
+    // {path: "/home/dashboard/payments/pending-payments", Component: SoldProducts},
     // activity
     {path: "/home/dashboard/activity/products-sold", Component:  ProductsSold},
     {path: "/home/dashboard/activity/products-bought", Component:  ProductsBought},

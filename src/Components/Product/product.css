@@ -111,13 +111,13 @@
 .index-product-details-price{
     /* border: 1px solid red; */
     font-weight: 700;
-    color: var(--sec-color);
+    color: var(--color);
 }
 .index-product-details-price span{
     text-decoration: line-through;
     font-size: 0.9rem;
     font-weight: 400;
-    color: red;
+    color: var(--sec-color);
 }
 .index-product-reaction-panel{
     border: 1px solid var(--prim-border-color);

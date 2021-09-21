@@ -6,10 +6,7 @@
     min-height: 92vh;
     /* border: 1px solid blue; */
     padding:1%;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center; */
-
+    background-color: var(--no-color);
 }
 .placed-orders-header{
     /* border: 1px solid red; */
@@ -25,25 +22,19 @@
     display: flex;
     justify-content: space-between;
     margin: 2% 0;
-    
-
 }
 .placed-orders-search{
     /* border: 3px solid green; */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 45%;
+    min-width: 30%;
     min-height: 15vh;
-    /* padding:1%; */
 }
 .placed-orders-search form{
     /* border: 3px solid yellow; */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    /* width: 50%; */
-
 }
 .placed-orders-search-group {
     display: flex;
@@ -58,11 +49,9 @@
     /* font-size: 0.781em; */
     font-weight: bold;
     color: var(--text-color);
-    /* padding-top: 2.5%; */
-    /* margin-top:2%; */
     margin-bottom:1%;
 }
-.placed-orders-search form input{
+.placed-orders-search form input, select{
     padding:12px 12px 12px 5px;
     border:1px solid var(--prim-border-color);
     caret-color:var(--prim-color);
@@ -72,17 +61,16 @@
     color: var(--text-color);  
 }
 .placed-orders-search form input:focus{
-    border:1px solid var(--text-color);
-   
+    border:1px solid var(--text-color); 
 }
+
 
 .placed-order-wrapper{
     border: 1px solid var(--prim-border-color);
     box-shadow:0 0 2px var(--box-shadow-color);
     border-radius: 6px;
-    padding: 0% 2% 2% 2%;
-     margin: 2% 0;
-
+    padding: 2% 2% 2% 2%;
+    margin: 2% 0;
 }
 .placed-order-intro{
 
@@ -113,6 +101,19 @@
 .placed-order-details-group{
 
 }
+.placed-order-profile-image{
+    display:flex;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+
+.placed-order-profile-image img{
+    border-radius: 50%; 
+    height:40px;
+    width:40px;
+    object-fit: cover;
+    object-position: center;
+}
 .placed-order-details-group p{
     font-size: 1.05rem;
     font-weight: bold;
@@ -125,7 +126,6 @@
 }
 .placed-order-details-group .pending{
     color: var(--sec-color); 
-
 }
 .placed-order-details-group .delivered{
     color: var(--prim-color); 
@@ -139,22 +139,14 @@
 .placed-order-buttons-container{
     /* border: 1px solid purple; */
     display: flex;
-    padding:1%;
-
-
-}
-.placed-order-button-wrapper{
-    /* border: 3px solid green; */
-    width: 50%;
-    display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 1%
+    padding:1%;
 }
+
 .placed-order-confirm-delivery-button{
     /* border: 1px solid red; */
-    min-width:80%;
-
+    min-width:40%;
 }
 .placed-order-confirm-delivery-button button{
     width:100%;
@@ -167,22 +159,18 @@
     border:1px solid var(--pim-color);
     background-color: var(--prim-color);
     color: var(--no-color);
-
 }
 .placed-order-confirm-delivery-button button:hover{
     /* border:1px solid var(--opaque-prim-color); */
     background-color: var(--opaque-prim-color);
-
 }
 .placed-order-confirm-delivery-button button:focus{
-    background-color: var(--opaque-prim-color);
-
+    outline:1px solid var(--opaque-prim-color);
 }
 
 .placed-order-view-order-product-button{
     /* border: 1px solid red; */
-    min-width:80%;
-
+    min-width:40%;
 }
 .placed-order-view-order-product-button button{
     width:100%;
@@ -195,14 +183,12 @@
     border:1px solid var(--color);
     background-color: var(--no-color);
     color: var(--color);
-
 }
 .placed-order-view-order-product-button button:hover{
     background-color: var(--color);
     color: var(--no-color);
 }
 .placed-order-view-order-product-button button:focus{
-    border:1px solid var(--opaque-color);
-
+    outline:1px solid var(--opaque-color);
 }
 

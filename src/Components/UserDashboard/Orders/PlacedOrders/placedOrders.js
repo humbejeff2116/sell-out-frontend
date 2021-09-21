@@ -3,7 +3,8 @@
 
 
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import image from '../../../../Images/avatar.jpg';
 import './placedOrders.css';
 
 
@@ -90,16 +91,28 @@ function PlacedOrder(props) {
         </div>
         <div className="placed-order-details-group-container">
             <div className="placed-order-details-group">
+                <p>Bought products from: </p>
+            </div>
+            <div className="sold-products-profile-container">
+                <div className="sold-products-profile-image">
+                    <img src={image} alt="seller" />
+                </div>
+                <div className="sold-products-profile-details-container">
+                    <div className="sold-products-profile-details">
+                        <div className="placed-order-details-group">
+                            <p>Name: <span>John Doe</span></p>
+                        </div>
+                        <div className="placed-order-details-group">
+                            <p>Contact: <span>+444-464-4747-566</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="placed-order-details-group">
             <p>Order date: <span>wed 04 sep 2021</span></p>
             </div>
             <div className="placed-order-details-group">
             <p>Order Id: <span>pss12845zf4</span></p>
-            </div>
-            <div className="placed-order-details-group">
-            <p>Seller name: <span>John Doe</span></p>
-            </div>
-            <div className="placed-order-details-group">
-            <p>Seller contact: <span>+444-464-4747-566</span></p>
             </div>
             <div className="placed-order-details-group">
             <p>Delivery status: <span className={deleveryStatusSpanClass}>Pending</span></p>
@@ -116,20 +129,12 @@ function PlacedOrder(props) {
         </div>
 
         <div className="placed-order-buttons-container">
-
-            <div className="placed-order-button-wrapper">
-                <div className="placed-order-view-order-product-button">
-                    <button>View order products</button>
-                </div>
+            <div className="placed-order-view-order-product-button">
+                <button>View order products</button>
             </div>
-
-            <div className="placed-order-button-wrapper">
-               
-                <div className="placed-order-confirm-delivery-button">
-                    <button>Confirm delivery</button>
-                </div>
+            <div className="placed-order-confirm-delivery-button">
+                <button>Confirm delivery</button>
             </div>
-
         </div>
 
         </div>
