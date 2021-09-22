@@ -164,7 +164,7 @@ export function SellerOrderProfile(props) {
     const {sellerName, sellerProfileImage, sellerContact} = props
     return (
         <>
-        <div className="placed-order-details-group">
+        <div className="placed-order-details-group header">
             {
                 props.usedInDeliveryPage ? <p>Recieved delivery from:</p> : 
                 props.usedInPaymentsPage ? <p>Made payment to:</p> :
@@ -196,7 +196,7 @@ export function BuyerOrderProfile(props) {
     const {buyerrName, buyerProfileImage, buyerContact, shippingAddress} = props
     return (
         <>
-        <div className="placed-order-details-group">
+        <div className="placed-order-details-group header">
         {
                 props.usedInDeliveryPage ? <p>Delivered products to:</p> : 
                 props.usedInPaymentsPage ? <p>Recieved payment from:</p> :

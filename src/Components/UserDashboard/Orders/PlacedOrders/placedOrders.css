@@ -72,6 +72,7 @@
     padding: 2% 2% 2% 2%;
     margin: 2% 0;
 }
+
 .placed-order-intro{
 
 }
@@ -80,6 +81,7 @@
     display:flex; 
     justify-content: space-between;
 }
+
 .placed-order{
     border: 1px solid var(--prim-border-color);
     box-shadow:0 0 2px var(--box-shadow-color);
@@ -124,6 +126,10 @@
     font-weight: 400; 
     /* color: var(--color);   */
 }
+.placed-order-details-group.header p{
+    font-size: 1.2rem;
+    font-weight: bold; 
+}
 .placed-order-details-group .pending{
     color: var(--sec-color); 
 }
@@ -141,7 +147,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding:1%;
+    padding:1% 0;
 }
 
 .placed-order-confirm-delivery-button{
