@@ -42,14 +42,14 @@ const dashboardRoutes = [
     // {path: "/home/dashboard/orders/confirm-delivery", Component: ConfirmDelivery},
     {path: "/home/dashboard/orders/delivered-products", Component: DeliveredProducts},
     // payments
-    {path: "/home/dashboard/payments/payments-made",  Component:  PaymentsMade},
-    {path: "/home/dashboard/payments/payments-recieved",  Component:  PaymentsRecieved},
+    {path: "/home/dashboard/payments/made-payments",  Component:  PaymentsMade},
+    {path: "/home/dashboard/payments/recieved-payments",  Component:  PaymentsRecieved},
     // {path: "/home/dashboard/payments/pending-payments", Component: SoldProducts},
     // activity
-    {path: "/home/dashboard/activity/products-sold", Component:  ProductsSold},
-    {path: "/home/dashboard/activity/products-bought", Component:  ProductsBought},
-    {path: "/home/dashboard/activity/payments-made", Component: ActivityPaymentsMade},
-    {path: "/home/dashboard/activity/payments-recieved", Component: ActivityPaymentsRecieved},
+    {path: "/home/dashboard/activity/sold-products", Component:  ProductsSold},
+    {path: "/home/dashboard/activity/bought-products", Component:  ProductsBought},
+    {path: "/home/dashboard/activity/made-payments", Component: ActivityPaymentsMade},
+    {path: "/home/dashboard/activity/recieved-payments", Component: ActivityPaymentsRecieved},
     // store
     {path: "/home/dashboard/store/products", Component:  Products},
     {path: "/home/dashboard/store/edit-product", Component: EditProduct},

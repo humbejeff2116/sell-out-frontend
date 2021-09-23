@@ -5,8 +5,8 @@
 
 
 
-import PaymentsMade from './PaymentsMade/paymentsMade';
-import PaymentsRecieved from './PaymentsRecieved/paymentsRecieved';
+import PaymentsMade from './MadePayments/paymentsMade';
+import PaymentsRecieved from './RecievedPayments/paymentsRecieved';
 
 
 

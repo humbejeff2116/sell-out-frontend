@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { BuyerOrderProfile } from '../../Orders/SoldProducts/soldProducts';
-import {PaymentComp} from '../PaymentsMade/paymentsMade';
+import {PaymentComp} from '../MadePayments/paymentsMade';
 import './paymentsRecieved.css';
 
 
