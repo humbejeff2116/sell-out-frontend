@@ -175,6 +175,9 @@ export function SellerOrderProfile(props) {
         <div className="sold-products-profile-container">
             <div className="sold-products-profile-image">
                 <img src={image} alt="seller" />
+                <div  className="sold-products-profile-button component">
+                    <button>view seller profile</button>
+                </div>
             </div>
             <div className="sold-products-profile-details-container">
                 <div className="sold-products-profile-details">
@@ -206,6 +209,9 @@ export function BuyerOrderProfile(props) {
         <div className="sold-products-profile-container">
             <div className="sold-products-profile-image">
                 <img src={image} alt="seller" />
+                <div  className="sold-products-profile-button component">
+                    <button>view buyer profile</button>
+                </div>
             </div>
             <div className="sold-products-profile-details-container">
                 <div className="sold-products-profile-details">

@@ -17,11 +17,12 @@
     font-weight: bold; 
 }
 .placed-orders-search-container{
-    /* border: 1px solid var(--prim-border-color); */
+    border: 1px solid var(--prim-border-color);
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
     margin: 2% 0;
+    padding:1%;
 }
 .placed-orders-search{
     /* border: 3px solid green; */
@@ -57,7 +58,7 @@
     caret-color:var(--prim-color);
     border-radius: 4px;
     outline:none;  
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     color: var(--text-color);  
 }
 .placed-orders-search form input:focus{
@@ -67,7 +68,7 @@
 
 .placed-order-wrapper{
     border: 1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    /* box-shadow:0 0 2px var(--box-shadow-color); */
     border-radius: 6px;
     padding: 2% 2% 2% 2%;
     margin: 2% 0;
@@ -106,7 +107,7 @@
 .placed-order-profile-image{
     display:flex;
     align-items: center;
-    /* border: 1px solid red; */
+    border: 1px solid red;
 }
 
 .placed-order-profile-image img{
@@ -117,17 +118,15 @@
     object-position: center;
 }
 .placed-order-details-group p{
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: bold;
     color: var(--text-color);   
 }
 .placed-order-details-group span{
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 400; 
-    /* color: var(--color);   */
 }
 .placed-order-details-group.header p{
-    font-size: 1.2rem;
     font-weight: bold; 
 }
 .placed-order-details-group .pending{
@@ -138,7 +137,7 @@
 
 }
 .placed-order-details-group .diff{
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 400; 
     color: var(--color);  
 }
@@ -156,13 +155,13 @@
 }
 .placed-order-confirm-delivery-button button{
     width:100%;
-    height: 45px;
+    height: 40px;
     font-size: 0.9rem;
     font-weight: bold;
     transition:all 0.3s ease;
     cursor:pointer;
-    border-radius: 30px;
-    border:1px solid var(--pim-color);
+    border-radius: 4px;
+    border:1px solid var(--prim-color);
     background-color: var(--prim-color);
     color: var(--no-color);
 }
@@ -180,18 +179,18 @@
 }
 .placed-order-view-order-product-button button{
     width:100%;
-    height: 45px;
+    height: 40px;
     font-size: 0.9rem;
     font-weight: bold;
     transition:all 0.3s ease-in-out;
     cursor:pointer;
-    border-radius: 30px;
-    border:1px solid var(--color);
+    border-radius: 4px;
+    border:1px solid var(--text-color);
     background-color: var(--no-color);
-    color: var(--color);
+    color: var(--text-color);
 }
 .placed-order-view-order-product-button button:hover{
-    background-color: var(--color);
+    background-color: var(--text-color);
     color: var(--no-color);
 }
 .placed-order-view-order-product-button button:focus{

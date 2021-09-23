@@ -96,6 +96,9 @@ function PlacedOrder(props) {
             <div className="sold-products-profile-container">
                 <div className="sold-products-profile-image">
                     <img src={image} alt="seller" />
+                    <div  className="sold-products-profile-button">
+                        <button>view buyer profile</button>
+                    </div>
                 </div>
                 <div className="sold-products-profile-details-container">
                     <div className="sold-products-profile-details">
