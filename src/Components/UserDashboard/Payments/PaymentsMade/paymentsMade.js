@@ -6,7 +6,7 @@
 
 
 import React from 'react';
-import {SellerOrderProfile, BuyerOrderProfile} from '../../Orders/SoldProducts/soldProducts';
+import { SellerOrderProfile } from '../../Orders/SoldProducts/soldProducts';
 import './paymentsMade.css';
 
 const paymentsMade = [
@@ -19,7 +19,7 @@ export default function PaymentsMade(props) {
     return (
         <div className="placed-orders-container">
         <div  className="placed-orders-header">
-            <h3>Payments made</h3>
+            <h3> Made Payments</h3>
         </div>
         <div className="placed-orders-search-container">
             <div className="placed-orders-search">
@@ -38,7 +38,9 @@ export default function PaymentsMade(props) {
         {
            
             paymentsMade.map((payment, i) =>
-               <PaymentsMadeComp
+               <PaymentComp
+               key={i}
+               {...payment}
                paymentProfile={
                    <SellerOrderProfile usedInPaymentsPage={true}/>
 
@@ -50,7 +52,7 @@ export default function PaymentsMade(props) {
     )
 }
 
-function PaymentsMadeComp(props) {
+export function PaymentComp(props) {
     let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending";
     return (
         <div className="placed-order-wrapper">
@@ -78,7 +80,7 @@ function PaymentsMadeComp(props) {
             <div className="placed-order-buttons-container">
                 <div className="payments-made-button-wrapper">
                     <div className="payments-made-view-product-button">
-                        <button>View  product</button>
+                        <button>View  order</button>
                     </div>
                 </div>
             </div>

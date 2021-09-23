@@ -16,16 +16,16 @@
     font-weight: bold;
     transition:all 0.3s ease;
     cursor:pointer;
-    border-radius: 30px;
-    border:1px solid var(--color);
+    border-radius: 4px;
+    border:1px solid var(--prim-color);
     background-color: var(--no-color);
-    color: var(--color);
+    color: var(--prim-color);
 }
 .payments-made-view-product-button button:hover{
-    border:1px solid var(--color);
-    background-color: var(--color);
+    border:1px solid var(--prim-color);
+    background-color: var(--prim-color);
     color: var(--no-color);
 }
 .payments-made-view-product-button button:focus{
-    outline:1px solid var(--opaque-color);
+    outline:1px solid var(--opaque-prim-color);
 }

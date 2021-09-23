@@ -194,6 +194,6 @@
     color: var(--no-color);
 }
 .placed-order-view-order-product-button button:focus{
-    outline:1px solid var(--opaque-color);
+    outline:1px solid var(--opaque-text-color);
 }
 

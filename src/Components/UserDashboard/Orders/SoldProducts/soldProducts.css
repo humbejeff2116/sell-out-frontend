@@ -46,7 +46,7 @@
     border:1px solid var(--prim-border-color);
 }
 .sold-products-profile-button button:focus{
-    outline:1px solid var(--opaque-color);
+    outline:1px solid var(--opaque-prim-color);
 }
 
 .sold-products-profile-details-container{
@@ -89,5 +89,5 @@
     color: var(--no-color);
 }
 .sold-product-view-product-button button:focus{
-    outline:1px solid var(--opaque-color);
+    outline:1px solid var(--opaque-prim-color);
 }

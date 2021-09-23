@@ -25,7 +25,7 @@ export default function DeliveredProducts(props) {
     return (
         <div className="placed-orders-container">
             <div  className="placed-orders-header">
-                <h3>Delivered products</h3>
+                <h3>Delivered Products</h3>
             </div>
             <div className="placed-orders-search-container">
                 <div className="placed-orders-search">

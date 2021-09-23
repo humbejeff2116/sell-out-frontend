@@ -26,7 +26,7 @@ export default function SoldProducts(props) {
     return (
         <div className="placed-orders-container">
             <div  className="placed-orders-header">
-                <h3>Sold products</h3>
+                <h3>Sold Products</h3>
             </div>
             <div className="placed-orders-search-container">
                 <div className="placed-orders-search">
