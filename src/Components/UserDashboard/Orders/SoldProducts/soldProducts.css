@@ -38,7 +38,8 @@
     cursor:pointer;
     border-radius: 30px;
     border:1px solid var(--no-color);
-    background-color: var(--no-color);
+    /* background-color: var(--no-color); */
+    background-color: #f0f0f0;
     color: var(--color);
 
 }
@@ -81,6 +82,7 @@
     border-radius: 4px;
     border:1px solid var(--prim-color);
     background-color: var(--no-color);
+    background-color: #f0f0f0;
     color: var(--prim-color);
 }
 .sold-product-view-product-button button:hover{
