@@ -27,6 +27,7 @@ import {
 
 } from '../../Components/UserDashboard/Activity/index';
 import {
+    UploadProductOrService,
     Products,
     StoreSettings,
     EditProduct,
@@ -52,6 +53,7 @@ const dashboardRoutes = [
     {path: "/home/dashboard/activity/recieved-payments", Component: ActivityPaymentsRecieved},
     // store
     {path: "/home/dashboard/store/products", Component:  Products},
+    {path: "/home/dashboard/store/upload-product", Component:  UploadProductOrService},
     {path: "/home/dashboard/store/edit-product", Component: EditProduct},
     {path: "/home/dashboard/store/settings", Component: StoreSettings}, 
 

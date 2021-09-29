@@ -21,6 +21,7 @@ import {
     ProfileAvatar,
 
 } from './Fragments/productFragments';
+import {  AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 
 
 
@@ -173,7 +174,9 @@ export  function DisplayedProduct(props) {
             </div>
 
             <div className="index-product-reaction-panel">
-                <div className="index-product-reaction-star">heart </div>
+                <div className="index-product-reaction-star">
+                    <AiOutlineHeart className="nav-icon"/>
+                    </div>
                
                 <OpenComment openCommentBox={openCommentBox}  />
             </div>

@@ -9,6 +9,10 @@ import socket from '../Socket/socket';
 import {  getUserNotifications } from '../../Utils/http.services';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar.jpg';
+import {MdNotificationsNone} from 'react-icons/md';
+import {RiNotification4Line, RiNotification3Line} from 'react-icons/ri'
+import {GrNotification} from 'react-icons/gr';
+import { BiBell } from "react-icons/bi";
 
 export default function Notifications(props) {
     // const [initialNotificationLength, setInitialNotificationsLength] = useState(null);
@@ -109,9 +113,9 @@ function NotificationsDropDown(props) {
     )
 }
 
-
+// notification icon
 function NotificationIcon(props) {
-    const setNotifications = (notifications) => {
+    const notSeenNotificationsCount = (notifications) => {
         let j = 0;
         for (let i = 0; i < notifications.length; i++) {
             if(notifications[i].seen === false) {
@@ -121,16 +125,14 @@ function NotificationIcon(props) {
         return j;   
     }
     return (
-        <div className="notifications-icon" onClick={props.openNotifications}>
-            <i>Notifications icon</i>
-            <span>
-                {
-                    props.notifications && (
-                        setNotifications(props.notifications) > 0  ?
-                        setNotifications(props.notifications) : ''
-                    ) 
-                }
-            </span>
+        <div className="notifications-icon-wrapper" onClick={props.openNotifications}>
+            <RiNotification3Line className="notification-icon" />
+            {
+                props.notifications && (
+                    notSeenNotificationsCount(props.notifications) > 0  ?
+                    ( <div></div> ) : ''
+                ) 
+            }
         </div>
     )
 }

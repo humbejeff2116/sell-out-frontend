@@ -1,5 +1,10 @@
 import React from 'react';
 import image from '../../../Images/avatar.jpg';
+import {  AiOutlineStar, AiFillStar,} from 'react-icons/ai';
+import {  BsStar, BsStarFill} from 'react-icons/bs';
+import {  BiMessageAltEdit, BiMessageSquareEdit} from 'react-icons/bi';
+
+
 
 
 
@@ -7,17 +12,25 @@ function OpenComment(props) {
     const {openCommentBox} =props;
     return (
         <div className="index-product-reaction-comments">
-           <i onClick={ openCommentBox }> Reviews </i>
+           < BiMessageSquareEdit onClick={ openCommentBox } className="nav-icon"/>Reviews
         </div>
     )
 }
-
+// star
 function Star(props) {
     const { starCount, starSeller, product, user, starsUserRecieved } = props;
     const className =  starCount ? "index-product-profile-star filled" : "index-product-profile-star";
+    let starIcon;
+    if(starCount) {
+        starIcon = <AiFillStar className="nav-icon" />
+    }else {
+        starIcon = < AiOutlineStar className="nav-icon" /> 
+    }
+
+   
     return (
         <div className={className} onClick={()=> starSeller(product, user, starCount)}>
-            stars 
+          {starIcon}
             { 
                 (starsUserRecieved && starsUserRecieved.length) ? 
                 starsUserRecieved.length : ''

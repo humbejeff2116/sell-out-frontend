@@ -9,7 +9,6 @@ import {
 const IndexPage = React.lazy(()=> import('../Pages/IndexPage/indexPage'));
 const Settingspage = React.lazy(()=> import('../Pages/SettingsPage/settingsPage'));
 const NotFoundPage = React.lazy(()=> import('../Pages/NotFoundPage/notFoundPage'));
-const UploadProductOrServicePage = React.lazy(()=>import('../Pages/UploadProductPage/uploadProductOrService'));
 const InterestPage = React.lazy(()=> import('../Pages/InterestPage/interestPage'));
 const ConfirmationsPage = React.lazy(()=> import('../Pages/ConfirmationsPage/confirmationsPage'));
 const NotificationsPage = React.lazy(()=> import('../Pages/NotificationsPage/notificationsPage'));
@@ -26,7 +25,6 @@ const homeRoutes = [
     {path: "/home/settings",  suspense: true,SuspenseComponent: SettingsSuspenseLoader, Component: Settingspage, },
     {path: "/home/interests",  suspense: true,SuspenseComponent: SettingsSuspenseLoader, Component: InterestPage, },
     {path: "/home/confirmations",  suspense: true,SuspenseComponent: SettingsSuspenseLoader, Component: ConfirmationsPage, },
-    {path: "/home/upload-product",  suspense: true, SuspenseComponent: InsideLoginSuspenseLoader, Component: UploadProductOrServicePage, },
     {path: "/home/notifications",  suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: NotificationsPage, },
     {path: "/home/getting-started", suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: GettingStartedPage, },
     {path: "/home/view-profile",suspense: true, SuspenseComponent: InsideLoginSuspenseLoader, Component: ViewProfilePage,},

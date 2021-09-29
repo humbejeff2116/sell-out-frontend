@@ -10,13 +10,13 @@
 import React, {useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
 import { ImWarning } from 'react-icons/im';
-import { Loader } from '../Loader/loader';
+import { Loader } from '../../../Loader/loader';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../Formik/formik';
-import socket from '../Socket/socket';
-import useAuth from '../../Context/context';
-import { createProduct } from '../../Utils/http.services';
+import { TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../../../Formik/formik';
+import socket from '../../../Socket/socket';
+import useAuth from '../../../../Context/context';
+import { createProduct } from '../../../../Utils/http.services';
 import './uploadProduct.css';
 
 

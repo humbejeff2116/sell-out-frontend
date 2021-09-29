@@ -5,38 +5,18 @@
 import React from 'react';
 import './header.css';
 import { NavLink } from 'react-router-dom';
+import Links, { open, close } from '../../Data/links';
+import { BiSearch} from "react-icons/bi";
+import './header.css';
 
-import {BiHome, BiUser, BiFolder} from "react-icons/bi";
-import {RiBookOpenLine} from "react-icons/ri";
 
-
-const mainLinks = [
-    { name: "Home", href: "/home", icon: <BiHome className="nav-icon" /> },
-    { name: "About", href: "/about", icon: <BiUser className="nav-icon"/> },
-    { name: "Community", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
-    { name: "Support", href: "/support", icon: <BiFolder className="nav-icon"/> },
-]
-
-function setUnicode(unicode) {
-    let dummy;
-    let decoded;
-    if(!unicode){
-        return decoded ="";
-    }
-    dummy = document.createElement('textarea');
-    dummy.innerHTML = unicode;
-    decoded = dummy.value;
-    return decoded;
-}
-
-const open = setUnicode('&#9776;')
-const close = setUnicode('&times;')
 
 
 
 
 
 export default function Header(props) {
+    const mainLinks = Links.getMainLinks();
     return (
         <header className="header-container" >
             <section className="header-logo">
