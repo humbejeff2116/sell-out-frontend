@@ -21,11 +21,13 @@
 .index-product-profile span{
     margin-left:4%;
     color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600; 
 }
 .index-product-profile img{
     border-radius: 50%; 
-    height:40px;
-    width:40px;
+    height:30px;
+    width:30px;
     object-fit: cover;
     object-position: center;
 }

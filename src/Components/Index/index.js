@@ -34,7 +34,7 @@ const maleClothingLinks = [
 const mockProducts = [
     {
         userId: 2234343,
-        userName: "hummbe jeffrey",
+        userName: "Humbe jeffrey",
         userEmail: "humbejeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
@@ -54,7 +54,7 @@ const mockProducts = [
     },
     {
         userId: 2234343,
-        userName: "hummbe jeffrey",
+        userName: "Bottega",
         userEmail: "humbejeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
@@ -74,7 +74,7 @@ const mockProducts = [
     },
     {
         userId: 2234343,
-        userName: "hummbe jeffrey",
+        userName: "Splash Collections",
         userEmail: "humbejeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,

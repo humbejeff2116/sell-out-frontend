@@ -49,7 +49,7 @@ function ProfileAvatar(props) {
     return (
         <div className="index-product-profile">
             <img src={image} alt="seller" width="100%" height="auto" />
-            <span onClick={viewSeller(product)}><b>{product.userName}</b></span>
+            <span onClick={viewSeller(product)}>{product.userName}</span>
         </div>
     )
 }
