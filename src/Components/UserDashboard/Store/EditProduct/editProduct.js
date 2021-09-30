@@ -10,6 +10,8 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {Link} from 'react-router-dom'
 import {TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../../../Formik/formik';
+import {  BiEdit} from "react-icons/bi";
+import { RiAddFill, RiCloseLine, RiSave2Line} from "react-icons/ri";
 import './editProduct.css';
 
 const mockProduct = [
@@ -292,9 +294,15 @@ function EditItem(props) {
         setShowEditBar(state => !state);
     }
     if (showEditBar) {
-            Button = <button onClick={openEditBar}> Close</button>
+            Button = <button onClick={openEditBar}> 
+                        <RiCloseLine className="store-icon-edit"/>
+                        Close
+                    </button>
     } else {
-        Button = <button onClick={openEditBar}> Edit</button>
+        Button = <button onClick={openEditBar}>
+                    <BiEdit title="Edit" className="store-icon-edit"/> 
+                    Edit
+                </button>
     }
     return (
         <div className="store-product-edit-details-group-container">
@@ -308,7 +316,11 @@ function EditItem(props) {
             {
                 
                 <div className="store-product-edit-details-group-edit-button">
-                    { (!props.value && !showEditBar) ?  <button onClick={openEditBar}>Add</button> :  Button }
+                    { (!props.value && !showEditBar) ? (
+                        <button onClick={openEditBar}>
+                        <RiAddFill className="store-icon-edit"/>
+                        Add</button>
+                    )  :  Button }
                    
                 </div>
             }
@@ -345,7 +357,10 @@ function EditBar(props) {
 
          <div className="store-product-edit-details-group-right">
              <div className="store-product-edit-details-group-edit-button save">
-                 <button onClick={submitForm}>Save</button>
+                 <button onClick={submitForm}>
+                    <RiSave2Line className="store-icon-edit"/>
+                    Save
+                </button>
              </div>
          </div>
          </div>

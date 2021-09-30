@@ -117,6 +117,18 @@
     box-shadow:0 0 2px var(--box-shadow-color);
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+.store-product-edit-icon:hover{
+    background-color: #f0f0f0;
+    /* border: 1px solid var(--text-color);
+    box-shadow:0;
+    color: var(--no-color); */
+      
+}
+.store-icon{
+    font-size:1.2em;
+    cursor: pointer;
 }
 
 .store-product-panel{

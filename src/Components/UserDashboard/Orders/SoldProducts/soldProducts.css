@@ -1,26 +1,60 @@
 
 
 .sold-products-profile-container{
-    border-top: 1px solid var(--prim-border-color);
-    border-bottom: 1px solid var(--prim-border-color);
     min-width: 50%;
     padding: 1%; 
 }
-.sold-products-profile-image{
+.sold-products-profile-image-wrapper{
     display:flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1%;
-    /* border: 1px solid red; */
+    flex-direction: column;
+    padding: 2%;
+    border: 1px solid var(--prim-border-color);
+    border-radius: 6px;
 }
 
-.sold-products-profile-image img{
+.sold-products-profile-details-wrapper{
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* border:1px solid purple; */
+    padding: 0.5%;
+
+}
+
+.sold-products-profile-details-wrapper img{
     border-radius: 50%; 
-    height:50px;
-    width:50px;
+    height:40px;
+    width:40px;
     object-fit: cover;
     object-position: center;
 }
+.sold-products-profile-details{
+    display:flex;
+    align-items: center;
+    flex-wrap: wrap;
+    /* border:1px solid red; */
+    width: 75%;
+    margin-left: 2%;
+
+}
+.sold-products-profile-details div{
+    margin-right: 2%;
+    padding: 1% 2%;
+    border-radius: 30px;
+    border:1px solid var(--no-color);
+    background-color: #f0f0f0;
+    color: var(--color);
+}
+.sold-products-profile-image-kebab-icon{
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    justify-content: center;
+    /* border:1px solid green; */
+    color: var(--text-color);
+    min-width: 10%;
+}
+
 .sold-products-profile-button{
     /* border: 1px solid red; */
     min-width:35%;
@@ -38,10 +72,8 @@
     cursor:pointer;
     border-radius: 30px;
     border:1px solid var(--no-color);
-    /* background-color: var(--no-color); */
     background-color: #f0f0f0;
     color: var(--color);
-
 }
 .sold-products-profile-button button:hover{
     border:1px solid var(--prim-border-color);
@@ -53,12 +85,7 @@
 .sold-products-profile-details-container{
     /* border:1px solid green; */
     min-width: 80%;
-    align-items: center;
-   
-}
-.sold-products-profile-details{
-    /* border:1px solid red; */
-
+    align-items: center;  
 }
 
 .sold-product-button-wrapper{
@@ -80,16 +107,19 @@
     transition:all 0.3s ease;
     cursor:pointer;
     border-radius: 4px;
-    border:1px solid var(--prim-color);
+    border:1px solid var(--color);
     background-color: var(--no-color);
-    background-color: #f0f0f0;
-    color: var(--prim-color);
+    /* background-color: #f0f0f0; */
+    color: var(--color);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
 }
 .sold-product-view-product-button button:hover{
-    border:1px solid var(--prim-color);
-    background-color: var(--prim-color);
+    border:1px solid var(--color);
+    background-color: var(--color);
     color: var(--no-color);
 }
 .sold-product-view-product-button button:focus{
-    outline:1px solid var(--opaque-prim-color);
+    outline:1px solid var(--opaque-color);
 }

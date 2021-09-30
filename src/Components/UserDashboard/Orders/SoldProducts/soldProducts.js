@@ -6,6 +6,8 @@
 import React, {useEffect} from 'react';
 import useAuth from '../../../../Context/context';
 import image from '../../../../Images/avatar.jpg';
+import {FaRegEye} from 'react-icons/fa';
+import { GoKebabHorizontal} from 'react-icons/go';
 import './soldProducts.css';
 import '../PlacedOrders/placedOrders.css';
 
@@ -136,7 +138,10 @@ function SoldProduct(props) {
         <div className="placed-order-buttons-container">
             <div className="sold-product-button-wrapper">
                 <div className="sold-product-view-product-button">
-                    <button>View  product</button>
+                    <button>
+                        {/* <FaRegEye className="nav-icon dashboard"/> */}
+                        View  product
+                    </button>
                 </div>
             </div>
 
@@ -173,23 +178,30 @@ export function SellerOrderProfile(props) {
             
         </div>
         <div className="sold-products-profile-container">
-            <div className="sold-products-profile-image">
-                <img src={image} alt="seller" />
-                <div  className="sold-products-profile-button component">
-                    <button>view seller profile</button>
-                </div>
-            </div>
-            <div className="sold-products-profile-details-container">
-                <div className="sold-products-profile-details">
-                    <div className="placed-order-details-group">
-                        <p>Name: <span>John Doe</span></p>
+                <div className="sold-products-profile-image-wrapper">
+                    
+                    <div className="sold-products-profile-details-wrapper">
+
+                    <img src={image} alt="seller" />
+
+                    <div className="sold-products-profile-details">
+                        <div>
+                            <span>John Doe joels omega</span>
+                        </div>
+                       
                     </div>
-                    <div className="placed-order-details-group">
-                        <p>Contact: <span>+444-464-4747-566</span></p>
+
+                    <div className="sold-products-profile-image-kebab-icon">
+                        <GoKebabHorizontal className="nav-icon"/>
                     </div>
+                    </div>
+                    
+                    {/* <div  className="sold-products-profile-button">
+                        <button>view seller profile</button>
+                    </div> */}
                 </div>
+               
             </div>
-        </div>
         </>
 
     )
@@ -207,26 +219,30 @@ export function BuyerOrderProfile(props) {
             }
         </div>
         <div className="sold-products-profile-container">
-            <div className="sold-products-profile-image">
-                <img src={image} alt="seller" />
-                <div  className="sold-products-profile-button component">
-                    <button>view buyer profile</button>
+                <div className="sold-products-profile-image-wrapper">
+                    
+                    <div className="sold-products-profile-details-wrapper">
+
+                    <img src={image} alt="seller" />
+
+                    <div className="sold-products-profile-details">
+                        <div>
+                            <span>John Doe joels omega</span>
+                        </div>
+                       
+                    </div>
+
+                    <div className="sold-products-profile-image-kebab-icon">
+                        <GoKebabHorizontal className="nav-icon"/>
+                    </div>
+                    </div>
+                    
+                    {/* <div  className="sold-products-profile-button">
+                        <button>view seller profile</button>
+                    </div> */}
                 </div>
+               
             </div>
-            <div className="sold-products-profile-details-container">
-                <div className="sold-products-profile-details">
-                    <div className="placed-order-details-group">
-                        <p>Name: <span>John Doe</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Contact: <span>+444-464-4747-566</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Shipping address: <span>state of art way, Johnson avenue </span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
         </>
 
     )

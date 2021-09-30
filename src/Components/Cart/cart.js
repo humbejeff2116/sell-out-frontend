@@ -57,7 +57,7 @@ export default function Cart() {
             <div className="cart-products-container">
                 <div className="cart-header">
                 {/* <h2>Cart</h2> */}
-                <p>Cart</p>
+                <h3>Cart</h3>
                 </div>
                 <div className="cart-products-panel">
                 {

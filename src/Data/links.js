@@ -1,8 +1,8 @@
 
 import {BiHome, BiUser, BiFolder, BiCart,BiCartAlt, BiLogOut,BiHelpCircle, BiTrash,BiDislike,BiLike,
-     BiEdit, BiStore, BiStar,
+     BiEdit, BiStore, BiStar,BiMenu,BiMinus,BiPlus,
     BiBell, BiCog, BiCoinStack, BiMap, BiSearch} from "react-icons/bi";
-import {RiBookOpenLine, RiContactsBookLine, RiShoppingCartLine,
+import {RiBookOpenLine, RiContactsBookLine, RiShoppingCartLine,RiCloseFill,RiMenuFill,
     RiUserSettingsFill,RiSettings4Fill,RiLogoutBoxFill, RiShoppingCart2Line, RiLogoutBoxLine, RiLogoutCircleLine} from "react-icons/ri";
 import { FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare, FaRegStar, FaRegThumbsUp, 
     FaRegThumbsDown, FaRegMoneyBillAlt, FaRegHeart,FaHeart } from 'react-icons/fa';

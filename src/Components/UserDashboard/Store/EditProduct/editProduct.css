@@ -103,6 +103,10 @@
     width: 50%;
     /* height:100%; */
 }
+.store-icon-edit{
+    font-size:1.4em;
+    cursor: pointer;
+}
 .store-product-edit-details-group-edit-button button{
    
     width: 100%;
@@ -114,6 +118,9 @@
     font-weight: bold;
     transition:all 0.3s ease;
     cursor:pointer;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 
 }
 .store-product-edit-details-group-edit-button button:hover{

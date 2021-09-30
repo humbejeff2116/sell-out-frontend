@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { DisplayedProduct } from '../../../Product/product';
+import {  BiTrash,BiEdit} from "react-icons/bi";
 import './products.css';
 
 const mockProducts = [
@@ -131,13 +132,13 @@ function StoreProduct(props) {
             <div className="store-product-edit-icon-panel">
                 <div className="store-product-edit-group">
                     <div className="store-product-edit-icon">
-                        <i>Edi</i>
+                        <BiEdit title="Edit" className="store-icon"/>
                     </div>
                 </div>
 
                 <div className="store-product-edit-group">
                     <div className="store-product-edit-icon">
-                        <i>Del</i>
+                    <BiTrash title="Delete" className="store-icon"/>
                     </div>
                 </div>
             </div>

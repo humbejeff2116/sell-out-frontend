@@ -58,4 +58,6 @@ code {
 .nav-icon{
   font-size:1.4em;
   cursor: pointer;
+  /* border: 1px solid red; */
+ 
 }

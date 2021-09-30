@@ -1,17 +1,18 @@
 
 
 .cart-container{
-    /* border: 5px solid green;  */
+    /* border: 1px solid green;  */
+    padding:1%;
 }
 .cart-header{
     /* width:80%; */
-    /* border: 2px solid yellow; */
+    /* border: 1px solid yellow; */
     display: flex;
     justify-content: center; 
 }
-.cart-header p{ 
+.cart-header h3{ 
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: bold;
     color: var(--text-color);
 }
 
@@ -84,7 +85,7 @@
     box-shadow:0 0 2px var(--box-shadow-color);
     border-radius: 6px;
     width:70%;
-    margin: 4% auto 5% auto;
+    margin: 2% auto 5% auto;
 }
 
 .cart-product-profile{

@@ -5,7 +5,13 @@
 
 import React, {useEffect} from 'react';
 import image from '../../../../Images/avatar.jpg';
+import {FaRegEye} from 'react-icons/fa';
+import {GiConfirmed} from 'react-icons/gi';
+import { GoKebabHorizontal} from 'react-icons/go';
 import './placedOrders.css';
+
+
+ 
 
 
 const placedOrders = [
@@ -94,37 +100,38 @@ function PlacedOrder(props) {
                 <p>Bought products from: </p>
             </div>
             <div className="sold-products-profile-container">
-                <div className="sold-products-profile-image">
+                <div className="sold-products-profile-image-wrapper">
+                    
+                    <div className="sold-products-profile-details-wrapper">
+
                     <img src={image} alt="seller" />
-                    <div  className="sold-products-profile-button">
-                        <button>view buyer profile</button>
-                    </div>
-                </div>
-                <div className="sold-products-profile-details-container">
+
                     <div className="sold-products-profile-details">
-                        <div className="placed-order-details-group">
-                            <p>Name: <span>John Doe</span></p>
+                        <div>
+                            <span>John Doe joels omega</span>
                         </div>
-                        <div className="placed-order-details-group">
-                            <p>Contact: <span>+444-464-4747-566</span></p>
-                        </div>
+                       
                     </div>
+
+                    <div className="sold-products-profile-image-kebab-icon">
+                        <GoKebabHorizontal className="nav-icon"/>
+                    </div>
+                    </div>
+                    
+                    {/* <div  className="sold-products-profile-button">
+                        <button>view seller profile</button>
+                    </div> */}
                 </div>
+               
             </div>
             <div className="placed-order-details-group">
-            <p>Order date: <span>wed 04 sep 2021</span></p>
+            <p>Delivery Status: <span className={deleveryStatusSpanClass}>Pending</span></p>
             </div>
             <div className="placed-order-details-group">
-            <p>Order Id: <span>pss12845zf4</span></p>
+            <p>Number Of Products: <span>2</span></p>
             </div>
             <div className="placed-order-details-group">
-            <p>Delivery status: <span className={deleveryStatusSpanClass}>Pending</span></p>
-            </div>
-            <div className="placed-order-details-group">
-            <p>Total number of products: <span>2</span></p>
-            </div>
-            <div className="placed-order-details-group">
-            <p>Total order amount: <span className="diff">£30068.00</span></p>
+            <p>Total Order Amount: <span className="diff">£30068.00</span></p>
             </div>
         </div>
 
@@ -133,10 +140,16 @@ function PlacedOrder(props) {
 
         <div className="placed-order-buttons-container">
             <div className="placed-order-view-order-product-button">
-                <button>View order products</button>
+                <button>
+                    {/* < FaRegEye className="nav-icon dashboard"/> */}
+                    View order products
+                </button>
             </div>
             <div className="placed-order-confirm-delivery-button">
-                <button>Confirm delivery</button>
+                <button>
+                    {/* <GiConfirmed className="nav-icon dashboard"/> */}
+                    Confirm delivery
+                </button>
             </div>
         </div>
 
