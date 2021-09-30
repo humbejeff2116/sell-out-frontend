@@ -38,7 +38,7 @@
 }
 .index-post-upload{
     /* border:1px solid blue; */
-    width:30%;
+    width:23%;
     display:flex;
     flex-direction: column;
     justify-content: center;
@@ -49,15 +49,21 @@
 }
 .index-post-upload button{
     width:100%;
-    height: 50px;
+    height: 45px;
     border:0;
     border-radius: 30px;
     font-size: 0.9em;
     font-weight: bold;
-    transition:all 0.3s ease-in-out;
+    transition:all 0.3s ease;
     cursor:pointer;
-    background-color: var(--button-bg-color);
+    background-color: var(--prim-color);
     color:white;
+}
+.index-post-upload button:hover{
+    background-color: var(--opaque-prim-color);
+}
+.index-post-upload button:focus{
+    background-color: var(--opaque-prim-color);
 }
 .index-search-container{
     display:flex;

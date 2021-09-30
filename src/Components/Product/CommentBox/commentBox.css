@@ -11,12 +11,10 @@
 
 .product-comments-container{
     /* border: 1px solid rgba(117, 116, 116, 0.4); */
-    border: 1px solid #d3d3d3;
-    /* box-shadow: 0 0 3px rgb(39, 145, 250, 0.3); */
     height:50vh;
-    overflow-y: scroll;
+    border: 1px solid #d3d3d3;
     border-radius: 4px;
-    
+    overflow-y: scroll;   
 }
 .product-comment-input{
     display:flex;
@@ -26,59 +24,71 @@
 }
 
 .product-comment-input textarea{
-    margin:2% 0 2% 0; 
-    /* box-shadow:0 0 5px rgba(117, 116, 116, 0.1); */
-    border: 1px solid #d3d3d3;
     height:8vh; 
+    outline:0;
+    border: 1px solid var(--prim-border-color);
+    margin:2% 0 2% 0; 
     padding-left:2%;
-    border-radius: 4px; 
+    caret-color: var(--prim-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.product-comment-input textarea:focus{
+    border: 1px solid var(--color);
 }
 .product-comment-input-bttn{
+    display: flex;
+    justify-content: flex-end;
     margin-top: auto;
 }
 .product-comment-input-bttn button{
-   width:100%;
+   width:30%;
    height:6vh;
-   border: none;
-   font-size: 0.9rem;
-   border-radius: 4px;
    font-weight: bold;
-   transition:all 0.3s ease-in-out;
+   border: 1px solid var(--color);
+   border-radius: 4px;
+   color: var(--no-color);
+   background-color: var(--color);
+   transition:all 0.3s ease;
    cursor:pointer;
-   /* background-color: #222; */
-   background-color:#005ab4;
-    outline-color: #489cf0;
-   color:#ffffff;
+}
+.product-comment-input-bttn button:hover{
+    border: 1px solid var(--opaque-color);
+    background-color: var(--opaque-color);
+}
+.product-comment-input-bttn button:focus{
+    outline : 1px solid var(--opaque-color);
 }
 
 .product-comment-panel{
-    border: 1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    width:95%;
     margin:4% 0 4% 0;
     padding:2% 0 0 0;
-    width:95%;
     margin-left:auto;
     margin-right: auto;
+    color: var(--text-color);
+    border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     border-radius: 6px;
 }
 .product-comment-info{
     border-bottom: 1px solid var(--prim-border-color);
     padding-bottom:2%;
-    /* border-radius: 8px; */
 }
 .product-comment-profile{
     /* border: 1px solid black; */
     display:flex;
-    /* justify-content: center; */
     align-items: center;
     margin-left:2%;
     margin-top:2%;
 }
 .product-comment-profile img{
-    /* border: 1px solid black; */
-    border-radius: 50%; 
+   
     height:25px;
     width:25px;
+     /* border: 1px solid black; */
+     border-radius: 50%; 
     object-fit: cover;
     object-position: center; 
 }
@@ -98,62 +108,86 @@
 }
 .product-comment-bttn{
     display: flex ;
-    justify-content: space-between;
     /* border: 1px solid red; */
-    width:26%;
+    width:22%;
     margin:0 1%;
+}
+.product-comment-bttn.fill{
+    color: var(--sec-color);
 }
 .product-comment-bttn-count{
     display: flex ;
-    /* justify-content: center; */
     /* border: 1px solid red; */
     min-width: 45%;
-    /* margin-left:5%; */
+    margin-left:2%;
 }
-.product-comment-bttn button{
-    width:50%;
-   
-}
+
 .product-comment-reply-container{
     /* border: 1px solid green; */
-    margin:4% 2% 4% 0;
     width:85%;
-    /* padding: 0 2%; */
+    margin:4% 2% 4% 0;
     margin-left: auto;
-
 }
 .product-comment-reply-input{
     display:flex;
     flex-direction: column;
-
+}
+.product-comment-reply-input textarea{
+    caret-color: var(--prim-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom:0.9%;
+    padding-left:2%;
+    border: 1px solid var(--prim-border-color);
+    outline:0;
+}
+.product-comment-reply-input textarea:focus{
+    border: 1px solid var(--color);
+}
+.product-comment-reply-input-bttn{
+    display: flex;
+    justify-content: flex-end;
 }
 .product-comment-reply-input button{
-    height: 30px;
+    width:30%;
+    height: 32px;
+    font-weight: bold;
+    color: var(--no-color);
+    background-color: var(--color);
+    cursor:pointer;
+    border: 1px solid var(--color);
+    border-radius: 4px;
+    transition:all 0.3s ease;
+   
+}
+.product-comment-reply-input button:hover{
+    border: 1px solid var(--opaque-color);
+    background-color: var(--opaque-color);
+}
+.product-comment-reply-input button:focus{
+    outline : 1px solid var(--opaque-color);
 }
 .product-comment-replies{
     margin: 4% 0;
-    border: 1px solid var(--prim-border-color);
     margin:4% 0 4% 0;
-    padding:4% 0 0 0;
-    /* width:80%; */
     margin-left:auto;
     margin-right: auto;
+    padding:4% 0 0 0;
+    border: 1px solid var(--prim-border-color);
     border-radius: 6px;
-
 }
 .product-comment-reply-profile{
     /* border: 1px solid black; */
     display:flex;
-    /* justify-content: center; */
     align-items: center;
     margin-left:2%;
-    /* margin-top:2%; */
 }
 .product-comment-reply-profile img{
-    /* border: 1px solid black; */
-    border-radius: 50%; 
-    height:20px;
     width:20px;
+    height:20px;
+     /* border: 1px solid black; */
+     border-radius: 50%; 
     object-fit: cover;
     object-position: center;
 }

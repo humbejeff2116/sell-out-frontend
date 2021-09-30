@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import socket from '../../Socket/socket';
 import useAuth from '../../../Context/context';
+import { BiDislike,BiLike, BiReply, BiMessageAltDots, BiMessageAlt, BiMessage} from "react-icons/bi";
 import image from '../../../Images/avatar.jpg';
 import './commentBox.css';
 
@@ -67,9 +68,9 @@ export function CommentBox(props) {
             </div> 
 
             <div className="product-comment-input">
-                <textarea placeholder="Write review..." name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
+                <textarea placeholder="Write review" name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
                 <div className="product-comment-input-bttn">
-                <button type="button" onClick={()=>makeReview(product, user, reviewValue)}> Send</button>
+                <button  onClick={()=>makeReview(product, user, reviewValue)}> Send</button>
                 </div>  
             </div>
 
@@ -84,14 +85,39 @@ function Comment(props) {
     const [unlikesCommentRecieved, setUnlikesCommentRecieved] = useState([]);
     const [showReplies, setShowReplies] = useState(false);
     const [replyMessage, setReplyMessage] = useState('');
+    const [userLikedComment, setUserLikedComment] = useState(false);
+    const [userDislikedComment, setUserDislikedComment] = useState(false);
     const replyTextBox = React.createRef();
     const { userName, userId, profileImage, comment, _id, replies } = props;
+    const likeIconClassName = userLikedComment ? "product-comment-bttn fill" : "product-comment-bttn"
+    const dislikeIconClassName = userDislikedComment ? "product-comment-bttn fill" : "product-comment-bttn"
     
     useEffect(() => {
         setLikesCommentRecieved(props.likesCommentRecieved);
         setUnlikesCommentRecieved(props.unlikesCommentRecieved);
         
     }, [user, props.likesCommentRecieved, props.unlikesCommentRecieved]);
+
+    useEffect(() => {
+        const checkIfUserLikedOrDislikedComment = (user, likes, disLikes) => {
+            const { userEmail } = user;
+            for(let i = 0; i < likes.length; i++ ) {
+                if(likes[i].likeGiverEmail === userEmail) {
+                    setUserLikedComment(true);
+                    break;
+                }
+            }
+            for(let i = 0; i < disLikes.length; i++ ) {
+                if(disLikes[i].unlikeGiverEmail === userEmail) {
+                    setUserDislikedComment(true);
+                    break;
+                }
+            }
+        }
+        if(user) {
+            checkIfUserLikedOrDislikedComment(user, props.likesCommentRecieved, props.unlikesCommentRecieved );
+        }    
+    }, [user, props.likesCommentRecieved, props.unlikesCommentRecieved ]);
     
     
     const viewProfile = () => {
@@ -136,11 +162,13 @@ function Comment(props) {
                 }
             }
             if (likedComment) {
+                setUserLikedComment(false);
                 setLikesCommentRecieved(currentState => currentState.filter(like => like.likeGiverEmail !== user.userEmail ));
                 setUnlikesCommentRecieved(currentState => currentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
                 socket.emit('likeComment', data );
                 return;
             }
+            setUserLikedComment(true);
             setLikesCommentRecieved([...likesCommentRecieved, like]);
             setUnlikesCommentRecieved(currrentState => currrentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
             socket.emit('likeComment', data );
@@ -165,11 +193,13 @@ function Comment(props) {
                 }
             }
             if (dislikedComment) {
+                setUserDislikedComment(false);
                 setLikesCommentRecieved(currrentState => currrentState.filter(like => like.likeGiverEmail !== user.userEmail ));
                 setUnlikesCommentRecieved(currrentState => currrentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
                 socket.emit('unLikeComment', data );
                 return;
             }
+             setUserDislikedComment(true);
             setUnlikesCommentRecieved([...unlikesCommentRecieved, dislike]);
             setLikesCommentRecieved(currrentState => currrentState.filter(like => like.likeGiverEmail !== user.userEmail ));
             socket.emit('unLikeComment', data ); 
@@ -192,8 +222,8 @@ function Comment(props) {
         </div>
        
         <div className="product-comment-buttons-cntr">
-            <div className="product-comment-bttn">
-                <button onClick={()=> likeComment(_id, user)}><i>Like</i></button>
+            <div className={likeIconClassName}>
+                <BiLike title="Like" className="nav-icon" onClick={()=> likeComment(_id, user)}/>
                 <div className="product-comment-bttn-count">
                     <span>
                     {
@@ -204,8 +234,8 @@ function Comment(props) {
                 </div>
             </div>
            
-            <div className="product-comment-bttn">
-                <button onClick={()=> disLikeComment(_id, user)}><i>Dislike</i></button>
+            <div className={dislikeIconClassName}>
+                <BiDislike title="Dislike" className="nav-icon" onClick={()=> disLikeComment(_id, user)}/>
                 <div className="product-comment-bttn-count">
                     <span>
                     {
@@ -217,7 +247,7 @@ function Comment(props) {
             </div>
             
             <div className="product-comment-bttn">
-                <button onClick={()=> toggleReply()}><i>Replies</i></button>
+                <BiReply title="Reply" className="nav-icon" onClick={()=> toggleReply()}/>
                 <div className="product-comment-bttn-count">
                     <span>
                     {
@@ -280,12 +310,14 @@ function Replies(props) {
                 )
             } 
             <div className="product-comment-reply-input">
-                <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
-                <button type="button" 
-                onClick={()=> replyComment(commentId, user, replyMessage)}
-                > 
-                Reply
-                </button>
+                <textarea name="reviewMessage" onChange={handleInputChange} ref= {textBox} placeholder="Write reply" />
+                <div className="product-comment-reply-input-bttn">
+                    <button onClick={()=> replyComment(commentId, user, replyMessage)}>
+                    Reply
+                    </button> 
+                </div>
+               
+              
             </div>
            
         </div>
@@ -311,7 +343,7 @@ function Reply (props) {
 
         <div className="product-comment-reply-buttons-cntr">
             <div className="product-comment-bttn">
-                <button onClick={()=> props.likeReply(_id, user)}><i>Like</i></button>
+            <BiLike title="Like" className="nav-icon" onClick={()=> props.likeReply(_id, user)}/>
                 <div className="product-comment-bttn-count">
                     <span>
                     {
@@ -323,7 +355,7 @@ function Reply (props) {
             </div>
            
             <div className="product-comment-bttn">
-                <button onClick={()=> props.disLikeReply(props._id, user)}><i>Dislike</i></button>
+            <BiDislike title="Dislike" className="nav-icon"onClick={()=> props.disLikeReply(props._id, user)}/>
                 <div className="product-comment-bttn-count">
                     <span>
                     {

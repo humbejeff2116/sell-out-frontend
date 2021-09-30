@@ -11,8 +11,8 @@ export function PostProduct(props) {
             <div className="index-post-writeup-container">
                 <div className="index-post-writeup">
                     <p>
-                        Got a product to sell ?
-                       You can start here.
+                        Got product('s) you wish to sell ? 
+                       {/* You can start here. */}
                     </p>
                     
 

@@ -68,9 +68,10 @@ export  function DisplayedProduct(props) {
                     starGiverFullName: user.fullName
                 }
                 setStarsUserRecieved(currentState => [...currentState, addeStar]);
+                setStarClicked(true);
+                setStarCount(++starCount);
             }
-            setStarClicked(true);
-            setStarCount(++starCount);
+           
             const data = {
                 product,
                 user,
@@ -81,9 +82,10 @@ export  function DisplayedProduct(props) {
         }
         if(user) {
             setStarsUserRecieved(currentState => currentState.filter( star => star.starGiverEmail !== user.userEmail));
+            setStarClicked(false);
+            setStarCount(--starCount);
         }
-        setStarClicked(false);
-        setStarCount(--starCount);
+       
         const data = {
             product,
             user,

@@ -17,40 +17,40 @@
   .modal-comment-product-container{
     position:fixed;
     /* background-color:#f1f1f1; */
-    background-color:#ffffff;
+    background-color:var(--no-color);
     width:70%;
     height: 85vh;
     z-index:1;
     /* animation-name:animatetop; */
     animation-duration:0.6s;
-    border:3px solid #ffffff;
+    border:3px solid var(--no-color);
     border-radius: 4px;
     padding:1%;
   }
   
-  .modal-comment-product-comment-bttn{
+  .modal-comment-product-comment-bttn-container{
     display:flex;
     justify-content: flex-end;
     /* border:1px solid red; */
-    height: 5vh;
+    min-height: 5vh;
   }
+.modal-comment-product-comment-bttn-wrapper{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border:1px solid var(--no-color);
   
-  .modal-comment-product-comment-bttn button{
-    border:1px solid #222;
-    border:0;
-    background-color:#ffffff;
-    width:5%;
-    /* height: 45px; */
-    border-radius: 4px;
-    transition:all 0.2s ease;
-    font-size: large;
-    /* font-weight:bold; */
-    color:rgb(71, 71, 71);
-  }
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+   
+}
   
-  .modal-comment-product-comment-bttn button:hover{
-    cursor:pointer;
-  }
+.modal-comment-product-comment-bttn-wrapper:hover{
+  border:1px solid var(--prim-border-color);
+}
   .modal-comment-product-comment-panel{
     /* border:2px solid yellow; */
     display:flex;
