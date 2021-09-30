@@ -25,8 +25,11 @@ function Avatar(props) {
             <img src={image} alt="profile avatar" />
             </div>
             <div className="profile-avatar-username">
-                <span>Humbe Jeffrey</span>
+                <span>Humbe J.</span>
             </div>
+            {/* <div className="profile-avatar-username location">
+                <span>Cross River, Nigeria</span>
+            </div> */}
         </>
     )
 }

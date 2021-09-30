@@ -1,35 +1,31 @@
 
-
-
-
-
-
 .profile-avatar-container{
-    border:1px solid yellow;
+    /* border:1px solid var(--prim-border-color);
+    border-radius: 6px; */
     display:flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 85%;
+    padding: 2% 2%;
   
 }
 .profile-avatar-image{
     /* border:1px solid red; */
-    height:100px;
-    width:100px;
+    height:60px;
+    width:60px;
+    /* align-self: center; */
 }
 .profile-avatar-image img{
-    
     border-radius: 50%; 
-    height:100px;
-    width:100px;
+    height:60px;
+    width:60px;
     object-fit: cover;
     object-position: center;
     /* border:1px solid red; */
 }
 .profile-avatar-username{
-    border:1px solid red;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
+    /* border:1px solid red; */
+    color: var(--color);
+    font-weight: bold;
+    font-size: 0.9rem;
 }

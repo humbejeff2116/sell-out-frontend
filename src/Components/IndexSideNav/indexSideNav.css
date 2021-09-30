@@ -1,11 +1,15 @@
 
 
 .index-side-nav{
-    /* border:3px solid green; */
+    border:1px solid var(--prim-border-color);
+    border-radius: 6px;
+    width: 85%;
+    padding:0 3% ;
     min-height: 50vh;
     display:flex;
     flex-direction: column;
    justify-content: center;
+  
 
 }
 .index-side-nav-item{
