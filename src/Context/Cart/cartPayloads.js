@@ -1,5 +1,5 @@
 
-function addToCartActionPayload(product, productQty, productSize) {
+function addToCartActionPayload(product, productQty, productSize="") {
     const {
         productId,
         userId,
