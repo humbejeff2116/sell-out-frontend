@@ -6,7 +6,9 @@ import React from 'react';
 import './header.css';
 import { NavLink } from 'react-router-dom';
 import Links, { open, close } from '../../Data/links';
-import { BiSearch} from "react-icons/bi";
+import { BiSearch } from "react-icons/bi";
+import { NotificationAlert } from '../NotificationsDropdown/notifications';
+import useCartContext from '../../Context/Cart/cartContext';
 import './header.css';
 
 
@@ -54,6 +56,7 @@ function SearchBar(props) {
     )
 }
 function MainNavigation(props) {
+   
     return (
         <nav>
         {
@@ -66,16 +69,60 @@ function MainNavigation(props) {
 }
 
 function NavLinks(props) {
-    return (
-        <div className="main-nav-item" >
+    const {  cartTotalNumberOfProducts } = useCartContext();
+    let Component;
+    if (props.name === "Cart") {
+        Component = (
+            <div className="main-nav-item" >
+            {
+                cartTotalNumberOfProducts > 0  ?
+                ( <NotificationAlert className="header-notifications-icon-alert"/> ) : ''
+            }
             <NavLink
             exact 
             to={props.href} 
             activeClassName="main-nav-link-active"
             className="main-nav-link" 
-            title={props.name} >
+            title={props.name} 
+            >
                 <i>{props.icon}</i> 
             </NavLink> 
-        </div>
+            </div>
+        )
+    } else if (props.name === "Orders") {
+        // TODO... write order notification alert
+        Component = (
+            <div className="main-nav-item" >
+            <NavLink
+            exact 
+            to={props.href} 
+            activeClassName="main-nav-link-active"
+            className="main-nav-link" 
+            title={props.name} 
+            >
+                <i>{props.icon}</i> 
+            </NavLink> 
+            </div>
+        )
+
+    } else {
+        Component = (
+            <div className="main-nav-item" >
+            <NavLink
+            exact 
+            to={props.href} 
+            activeClassName="main-nav-link-active"
+            className="main-nav-link" 
+            title={props.name} 
+            >
+                <i>{props.icon}</i> 
+            </NavLink> 
+            </div>
+        )
+    }
+    return (
+        <>
+        { Component }
+        </>
     ) 
 }
