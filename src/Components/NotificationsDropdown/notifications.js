@@ -130,11 +130,19 @@ function NotificationIcon(props) {
             {
                 props.notifications && (
                     notSeenNotificationsCount(props.notifications) > 0  ?
-                    ( <div></div> ) : ''
+                    ( <NotificationAlert className="notifications-icon-alert"/> ) : ''
                 ) 
             }
         </div>
     )
+}
+export function NotificationAlert(props) {
+    return(
+        <div className={props.className}>
+
+        </div>
+    )
+
 }
 
 function NotificationsBox(props) {
