@@ -300,6 +300,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--sec-color);
+}
+.view-product-heart-icon{
+    font-size:1.8em;
+    cursor: pointer;
 }
 
 /* bottom seller products */
@@ -334,3 +339,5 @@
     min-height:65vh;
     padding:1%;
 }
+
+
