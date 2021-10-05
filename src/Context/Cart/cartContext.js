@@ -7,7 +7,8 @@ import { createContext, useContext } from 'react';
 
 const initialCartContext = {
     cartState: [],
-    toatalSum: null,
+    cartItems: [],
+    totalSum: null,
     cartTotalProducts: null,
     sellerTotalSumData: null,
     updateCartContextState: ()=>{},
