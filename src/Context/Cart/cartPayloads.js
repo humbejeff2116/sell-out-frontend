@@ -4,7 +4,8 @@ function addToCartActionPayload(product, productQty, productSize="") {
         productId,
         userId,
         userName,
-        userEmail, 
+        userEmail,
+        userProfilePicture, 
         productName,
         productImages,
         productPrice,
@@ -15,6 +16,7 @@ function addToCartActionPayload(product, productQty, productSize="") {
         userId,
         userName,
         userEmail,
+        userProfilePicture,
         productId,
         productName,
         productImages,
@@ -24,24 +26,24 @@ function addToCartActionPayload(product, productQty, productSize="") {
     });
 }
 
-function removeFromCartActionPayload(sellerName, productId) {
+function removeFromCartActionPayload(sellerEmail, productId) {
     return ({
-        sellerName,
+        sellerEmail,
         productId
     })
 }
 
-function addCartProductQuantityActionPayload(sellerName, productId, productQty) {
+function addCartProductQuantityActionPayload(sellerEmail, productId, productQty) {
     return ({
-        sellerName,
+        sellerEmail,
         productId,
         productQty,
     })
 }
 
-function reduceCartProductActionPayload(sellerName, productId, productQty) {
+function reduceCartProductActionPayload(sellerEmail, productId, productQty) {
     return ({
-        sellerName,
+        sellerEmail,
         productId,
         productQty
     })
