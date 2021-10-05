@@ -1,26 +1,16 @@
 
 
-let state = [
-    {
-        sellerName:"jeffrey", 
-        productsUserBoughtFromSeller: [
-            {productId: 1, productPrice:300, productQty: 5}, 
-            {productId: 2, productPrice:300, productQty: 2}, 
-            {productId: 3, productPrice:300, productQty: 2}
-        ]
-    }
-];
 
 async function addProductToCart(state =[], action) {
     let productId = action.productId;
     let productQty = action.productQty;
-    let sellerName = action.userName;
+    let sellerEmail = action.userEmail;
     let sellerExist = false;
     let sellerProductAlreadyExist = false;
     let sellerProducts;
     if (state.length) {
         for (let i = 0; i < state.length; i++) {
-            if ( state[i].sellerName === sellerName) {
+            if ( state[i].sellerEmail === sellerEmail) {
                 sellerExist = true;
                 sellerProducts = state[i].productsUserBoughtFromSeller;
                 break;
@@ -35,7 +25,6 @@ async function addProductToCart(state =[], action) {
                 }
             }
             if (!sellerProductAlreadyExist) {
-                alert("seller does not exist")
                 sellerProducts[sellerProducts.length] = { 
                     productId: action.productId,
                     productName: action.productName,
@@ -55,6 +44,9 @@ async function addProductToCart(state =[], action) {
         sellerEmail: action.userEmail,
         productsDelivered: false,
         productsUserBoughtFromSeller:[{
+            sellerName: action.userName,
+            sellerEmail: action.userEmail,
+            sellerProfilePicture: action.userProfilePicture,
             productId: action.productId,
             productName: action.productName,
             productImages: action.productImages,
@@ -67,12 +59,12 @@ async function addProductToCart(state =[], action) {
 
 async function removeProductFromCart(state=[], action) {
     let productId = action.productId;
-    let sellerName = action.sellerName;
+    let sellerEmail = action.sellerEmail;
     let sellerProducts;
     let sellerExist = false;
 
     for (let i = 0; i < state.length; i++) {
-        if (state[i].sellerName === sellerName) {
+        if (state[i].sellerEmail === sellerEmail) {
             sellerExist = true;
             sellerProducts = state[i].productsUserBoughtFromSeller;
             break;
@@ -88,7 +80,7 @@ async function removeProductFromCart(state=[], action) {
     });
     //  loop through the cart state and attach the new filtered seller product
     for (let i = 0; i < state.length; i++) {
-        if (state[i].sellerName === sellerName) {
+        if (state[i].sellerEmail === sellerEmail) {
             state[i].productsUserBoughtFromSeller = newSellerProducts;
             break;
         }   
@@ -98,17 +90,17 @@ async function removeProductFromCart(state=[], action) {
     
 async function addCartProductQuantity(state=[], action) {
     let productId = action.productId;
-    let sellerName = action.sellerName;
-    let productQuantity = action.productQty;
+    let sellerEmail = action.sellerEmail;
+    let updatedProductQuantity = action.productQty;
     let sellerProducts;
     let sellerExist = false;
 
-    if (productQuantity < 1) {
+    if (updatedProductQuantity < 1) {
         return state;
     }
 
     for (let i = 0; i < state.length; i++) {
-        if (state[i].sellerName === sellerName) {
+        if (state[i].sellerEmail === sellerEmail) {
             sellerExist = true;
             sellerProducts = state[i].productsUserBoughtFromSeller;
             break;
@@ -121,7 +113,7 @@ async function addCartProductQuantity(state=[], action) {
     //   loop through seller products and add quantity
     for (let i = 0; i < sellerProducts.length; i++) {
         if (sellerProducts[i].productId === productId) {
-            sellerProducts[i].productQty += productQuantity;
+            sellerProducts[i].productQty += updatedProductQuantity || 1;
             break;
         }
     }
@@ -130,7 +122,7 @@ async function addCartProductQuantity(state=[], action) {
     
 async function reduceCartProductQuantity(state=[], action) {
     let productId = action.productId;
-    let sellerName = action.sellerName;
+    let sellerEmail = action.sellerEmail;
     let productQuantity = action.productQty;
     let sellerProducts;
     let sellerExist = false;
@@ -139,7 +131,7 @@ async function reduceCartProductQuantity(state=[], action) {
         return state;
     }
     for (let i = 0; i < state.length; i++) {
-        if (state[i].sellerName === sellerName) {
+        if (state[i].sellerEmail === sellerEmail) {
             sellerExist = true;
             sellerProducts = state[i].productsUserBoughtFromSeller;
             break;
@@ -149,10 +141,13 @@ async function reduceCartProductQuantity(state=[], action) {
     if (!sellerExist || !sellerProducts.length) {
         return state;
     }
-    //   loop through sseller products and add quantity
+    //   loop through seller products and add quantity
     for (let i = 0; i < sellerProducts.length; i++) {
         if ( (sellerProducts[i].productId === productId) && !(productQuantity > sellerProducts[i].productQty) ) {
-            sellerProducts[i].productQty -= productQuantity;
+            if( sellerProducts[i].productQty <= 1) {
+                break;
+            }
+            sellerProducts[i].productQty -= 1;
             break;
         }
     }
