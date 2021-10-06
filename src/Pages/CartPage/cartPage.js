@@ -8,8 +8,10 @@ import { SettingsPageTemplate } from '../../Components/Template/template';
 import IndexSideNav from '../../Components/IndexSideNav/indexSideNav';
 import IndexFooter from '../../Components/IndexFooter/indexFooter';
 import Cart from '../../Components/Cart/cart';
+import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
+import { isAuthenticated } from '../../Services/services';
 
-export default function CartPage() {
+ function CartPageComp() {
     return (
         <SettingsPageTemplate
         leftSideBarCenter={<IndexSideNav/>}
@@ -19,3 +21,6 @@ export default function CartPage() {
         </SettingsPageTemplate>
     )
 }
+
+const CartPage = RequireAuthentication(CartPageComp, isAuthenticated);
+export default CartPage;
