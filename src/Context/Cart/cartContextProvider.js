@@ -14,19 +14,10 @@ import {
     createOrderData 
 }  from './contextFunctions';
 
-let state = [
-    {
-        sellerName:"jeffrey", 
-        productsUserBoughtFromSeller: [
-            {productId: 1, productPrice:300, productQty: 5}, 
-            {productId: 2, productPrice:300, productQty: 2}, 
-            {productId: 3, productPrice:300, productQty: 2}
-        ]
-    }
-];
 
 export  function CartContextProvider(props) {
     const [cartState, setCartState] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
     const [cartTotalNumberOfProducts, setCartTotalNumberOfProducts] = useState(null);
     const [totalSum, setTotatSum] = useState(null);
     const [sellerPaymentData, setSellerPaymentData] = useState(null);
@@ -46,17 +37,19 @@ export  function CartContextProvider(props) {
     // function used to update context useState hooks after cart state changes
     const updateCartContextState = (state, user) => {
         const totalSum = state.length ? calculateCartTotalPrice(state) : 0;
-        // TODO... pass user into creatSellerPaymentData function or only call function inside a component
         const sellerPaymentData = state.length ? createSellerPaymentData(state, user) : {};
         const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : 0;
+        const cartItems = state.flatMap(item => item.productsUserBoughtFromSeller);
         setCartState(state);
+        setCartItems(cartItems);
         setTotatSum(totalSum);
         setSellerPaymentData(sellerPaymentData);
         setCartTotalNumberOfProducts(cartTotalNumberOfProducts);
     }
     const values = {
         cartState: cartState,
-        toatalSum: totalSum,
+        cartItems: cartItems,
+        totalSum: totalSum,
         cartTotalNumberOfProducts: cartTotalNumberOfProducts,
         sellerTotalSumData: sellerPaymentData,
         updateCartContextState: updateCartContextState,
@@ -74,9 +67,3 @@ export  function CartContextProvider(props) {
         </CartContext.Provider>
     )
 }
-
-//e.g hoW t use addProduct context function
-// addProductToCart(args)
-// .then(products => {
-//     return updateCartContextState(products)
-// })
