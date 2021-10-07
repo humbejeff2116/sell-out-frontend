@@ -16,7 +16,7 @@ async function addProductToCart(state =[], action) {
                 break;
             }  
         }
-        if (sellerExist && sellerProducts.length) {
+        if (sellerExist) {
             for (let i = 0; i < sellerProducts.length; i++) {
                 if (sellerProducts[i].productId === productId) {
                     sellerProductAlreadyExist = true;
@@ -26,6 +26,9 @@ async function addProductToCart(state =[], action) {
             }
             if (!sellerProductAlreadyExist) {
                 sellerProducts[sellerProducts.length] = { 
+                    sellerName: action.userName,
+                    sellerEmail: action.userEmail,
+                    sellerProfilePicture: action.userProfilePicture,
                     productId: action.productId,
                     productName: action.productName,
                     productImages: action.productImages,
@@ -71,7 +74,7 @@ async function removeProductFromCart(state=[], action) {
         }   
     }
     //  return initial state if seller does not exist
-    if (!sellerExist || !sellerProducts.length) {
+    if (!sellerExist || !sellerProducts.length > 0) {
         return state;
     }
     //   filter product with product id
