@@ -1,15 +1,19 @@
 
 
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import IndexSideNav from '../../Components/IndexSideNav/indexSideNav';
 import { SettingsPageTemplate } from '../../Components/Template/template';
 import ViewProduct from '../../Components/ViewProduct/viewProduct';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
-import { isAuthenticated } from '../../Services/services';
+import RequireViewStateAuthentication from '../../Components/Authentication/requireViewStateAuthentication';
+
 
 
  function ViewProductPageComp() {
+     useEffect(()=>{
+         window.scrollTo(0,0);
+     },[])
     return (
         <SettingsPageTemplate
         leftSideBarCenter ={<IndexSideNav/>}
@@ -19,5 +23,5 @@ import { isAuthenticated } from '../../Services/services';
     )
 }
 
-const ViewProductPage = RequireAuthentication(ViewProductPageComp, isAuthenticated);
+const ViewProductPage = RequireViewStateAuthentication(RequireAuthentication, ViewProductPageComp);
 export default ViewProductPage;
