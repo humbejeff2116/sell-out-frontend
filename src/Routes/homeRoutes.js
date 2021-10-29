@@ -18,6 +18,7 @@ const CartPage = React.lazy(()=> import('../Pages/CartPage/cartPage'));
 const ViewProductPage = React.lazy(()=> import('../Pages/ViewProductPage/viewProductPage'));
 const IndexOrdersPage = React.lazy(()=> import('../Pages/IndexOrdersPage/indexOrdersPage'));
 const UserDashboardPage = React.lazy(()=> import('../Pages/UserDashboardPages/userDashboard'));
+const CheckoutPage = React.lazy(()=> import('../Pages/CheckoutPage/checkoutPage'));
 
 
 const homeRoutes = [
@@ -30,7 +31,8 @@ const homeRoutes = [
     {path: "/home/view-profile",suspense: true, SuspenseComponent: InsideLoginSuspenseLoader, Component: ViewProfilePage,},
     {path: "/home/cart", suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: CartPage, },
     {path: "/home/view-product",suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: ViewProductPage, },
-    {path: "/home/orders", suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: IndexOrdersPage, },
+    {path: "/home/checkout", suspense: true, SuspenseComponent: InsideLoginSuspenseLoader, Component: CheckoutPage, },
+    // {path: "/home/orders", suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: IndexOrdersPage, },
     {path: "/home/dashboard", suspense: true,SuspenseComponent: InsideLoginSuspenseLoader, Component: UserDashboardPage, },
     {path: "/home/*", suspense: true, SuspenseComponent: InsideLoginSuspenseLoader, Component: NotFoundPage,},
 ]
