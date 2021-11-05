@@ -386,3 +386,183 @@
 .cart-checkout-button button:focus{
     outline:1px solid var(--opaque-color);
 }
+
+/* empty cart */
+.empty-cart-container{
+    padding:1%;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
+    /* border: 2px solid red;  */
+    width:80%;
+}
+
+.empty-cart-body{
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
+    border-radius: 6px;
+    padding: 0% 2%;
+    width: 50%;
+    margin: auto auto;
+
+}
+.empty-cart-content{
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 2%;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.empty-cart-button{
+    display: flex;
+    justify-content: center;
+}
+.empty-cart-button-wrapper{
+    /* border: 2px solid purple; */
+    min-width: 40%;
+}
+.empty-cart-button-wrapper a{
+    /* border: 1px solid var(--color); */
+    min-width:70%;
+}
+
+.empty-cart-button-wrapper button{
+    border: 1px solid var(--color);
+    /* border: 1px solid var(--prim-border-color); */
+    border-radius: 4px;
+    /* font-size: 0.9rem; */
+    font-weight: bold;
+    color: var(--no-color);
+    background-color: var(--color);
+    min-width: 100%;
+    height: 42px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.empty-cart-button-wrapper button:hover{
+    border: 1px solid var(--opaque-color);
+    background-color: var(--opaque-color); 
+     
+}
+.empty-cart-button-wrapper button:focus{
+    outline:1px solid var(--opaque-color);
+   
+    
+}
+
+/* modal component */
+
+.cart-checkout-modal-container-wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index:1;
+    overflow:auto;
+    /* border:1px solid red; */
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cart-checkout-modal-container{
+    position:fixed;
+    /* background-color:#f1f1f1; */
+    background-color:var(--no-color);
+    width:35%;
+    min-height: 30vh;
+    z-index:1;
+    /* animation-name:animatetop; */
+    animation-duration:0.6s;
+    border:3px solid var(--no-color);
+    border-radius: 4px;
+    padding:1%;
+}
+.cart-checkout-modal-body-container{
+    /* border:3px solid purple; */
+    min-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 1%;
+}
+.cart-checkout-modal-content{
+    /* border:1px solid green; */
+    margin-bottom: 2%;
+    /* font-size: 1.1rem; */
+    /* font-weight: 550; */
+    text-align: center;
+    color: var(--text-color);
+}
+.cart-checkout-modal-buttons-container{
+    /* border:3px solid blue; */
+    display: flex;
+    justify-content: space-between;
+    /* margin-top: auto; */
+    /* align-items: center; */
+}
+.cart-checkout-modal-button{
+    /* border:1px solid red; */
+    width: 30%;
+}
+.cart-checkout-modal-button button{
+    width: 100%;
+    height: 45px;
+    border: 1px solid var(--color);
+    border-radius: 4px;
+    font-weight: bold;
+    color: var(--no-color);
+    background-color: var(--color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.cart-checkout-modal-button button a{
+    color: var(--no-color);
+    text-decoration: none;
+}
+
+/* modal offline payment */
+.cart-checkout-modal-go-back-button{
+
+}
+.cart-checkout-modal-offline-payment-content{
+    margin-bottom: 2%;
+    color: var(--text-color);
+}
+.cart-checkout-modal-place-order-button-container{
+    display: flex;
+    justify-content: space-between;
+}
+.cart-checkout-modal-place-order-button{
+    width: 30%;
+     /* border:1px solid red; */
+
+}
+.cart-checkout-modal-place-order-button button{
+    width: 100%;
+    height: 45px;
+    border: 1px solid var(--color);
+    border-radius: 4px;
+    font-weight: bold;
+    color: var(--no-color);
+    background-color: var(--color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    
+}
+.cart-checkout-modal-place-order-button.back button{
+    border: 1px solid var(--color);
+    color: var(--color);
+    background-color: var(--no-color);
+}
+
