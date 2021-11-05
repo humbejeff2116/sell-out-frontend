@@ -14,6 +14,7 @@ import {TextInput, PasswordInput} from '../Formik/formik';
 import './signup.css';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
+import { signupUser } from '../../Utils/http.services';
 
 
 
@@ -23,41 +24,28 @@ import useAuth from '../../Context/context';
 export default function Signup() {
     const [creatingAccount, setCreatingAccount] = useState(false);
     const [creatingAccountError, setCreatingAccountError] = useState(false);
-    const [signingUpResponse, setSigningUpResponse] = useState({});
+    const [signingUpResponseMessage, setSigningUpResponseMessage] = useState(null);
     const [redirect, setRedirect] =useState('');
     const location = useLocation();
     const history = useHistory();
     const { setUserData, setTokenData } = useAuth();
     
-
-    useEffect(() => {
-        let mounted = true;
-        socket.on('userSignedUp', function(response) {
-            if(mounted) {  
-                setCreatingAccountError(false);
-                setUserData(response.data)
-                setCreatingAccount(false);
-                history.push(location.pathname);
-                setRedirect('/getting-started');
-            }   
-        });
-        socket.on('userAlreadyExist', function (response) {
-            if(mounted) {
-                setCreatingAccountError(true);
-                setSigningUpResponse(response);
-                setCreatingAccount(false);
-            }  
-        });
-        return () => {
-            mounted = false;
-        }         
-    }, [setUserData, location, history, setTokenData]);
-
-    function handleSubmit  (values) {
+    async function handleSubmit  (values) {
         try{
             setCreatingAccount(true);
             setCreatingAccountError(false);
-            socket.emit("signUp", values);    
+            const signupUserResponse = await signupUser(values);
+            if (signupUserResponse.userAlreadyExist) {
+                setCreatingAccountError(true);
+                setSigningUpResponseMessage(signupUserResponse.message);
+                setCreatingAccount(false);
+                return;
+            }
+            setCreatingAccountError(false);
+            setUserData(signupUserResponse.data)
+            setCreatingAccount(false);
+            history.push(location.pathname);
+            setRedirect('/getting-started');
         } catch(err) {
             
 
@@ -77,8 +65,8 @@ export default function Signup() {
                 </div>
                 <div className="signup-panel-error">
                     {
-                        signingUpResponse.message && (
-                            <span>{signingUpResponse.message}</span>
+                        signingUpResponseMessage && (
+                            <span>{signingUpResponseMessage}</span>
                         )
                     }
                 </div>
