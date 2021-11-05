@@ -4,116 +4,300 @@
 
 
 import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar.jpg';
 import image2 from '../../Images/product3.webp';
-import './cart.css';
+import {ModalBox} from '../ModalComments/modalComments';
 import useCartContext from '../../Context/Cart/cartContext';
-import { reduceCartProductActionPayload,
-        addCartProductQuantityActionPayload,
-        removeFromCartActionPayload,
+import {
+    reduceCartProductActionPayload,
+    addCartProductQuantityActionPayload,
+    removeFromCartActionPayload,
 } from '../../Context/Cart/cartPayloads';
-
-const cartData = [
-    {
-        userProfileImage:'',
-        userName: 'jeffrey humbe',
-        productOrServiceName:'your product',
-        productOrServiceImages:[{src:""}]
-    },
-    {
-        userProfileImage:'',
-        userName: 'jude afah',
-        productOrServiceName:'your product',
-        productOrServiceImages:[{src:""}]
-    },
-    {
-        userProfileImage:'',
-        userName: 'mercy josh ',
-        productOrServiceName:'your product',
-        productOrServiceImages:[{src:""}]
-    },
-];
-
+import './cart.css';
 
 export default function Cart() {
-    const [cartProducts, setCartProducts] = useState([]);
     const { user } = useAuth();
-    useEffect(() => {
-        let mounted = true;
-        if (user && mounted) {
-        }
-        
-        return () => {
-            mounted = false;
-        }
-    }, [user])
-
-  
+    const { cartState, cartItems } = useCartContext();
+    let CartProductsComponent;
+    if (cartItems.length > 0) {
+        CartProductsComponent = (
+            <CartProductsWrapper cartData={cartItems}/>
+        );  
+    } else {
+        CartProductsComponent = (
+            <EmptyCart/>
+        );
+    }
     return (
         <div className="cart-container">
-            
-            <div className="cart-products-wrapper">
+            {CartProductsComponent}
+        </div>
+    )
+}
+
+function CartProductsWrapper(props) {
+    const [showCartModal, setShowCartModal] = useState(false);
+    const [offlinePaymentMethod, setOfflinePaymentMethod] = useState(false);
+    const [confirmOfflinePaymentMethod, setConfirmOfflinePaymentMethod] = useState(false);
+    const [placingOrder, setPlacingOrder] = useState(false);
+    const [placeOrderUsingOfflinePayment, setPlaceOrderUsingOfflinePayment] = useState(false);
+    const [placedOrderSuccess, setPlacedOrderSuccess] = useState(false);
+    const [redirect, setRedirect] = useState("");    
+    const {
+       totalSum
+    } = useCartContext();
+    let CheckoutModalChildComp;
+    const closeCartModal = () => {
+        setShowCartModal(false);
+        setOfflinePaymentMethod(false);
+        setConfirmOfflinePaymentMethod(false)
+        setPlacingOrder(false)
+        setPlacedOrderSuccess(false)
+    }
+    const openCartModal =() => {
+        setShowCartModal(true);
+    }
+    const handleOfflinePayment = () => {
+        setOfflinePaymentMethod(true)
+    }
+    const handleOnlinePayment = () => {
+        
+    }
+    const goBack = () => {
+        setOfflinePaymentMethod(false);
+        setConfirmOfflinePaymentMethod(false)
+    }
+    const confirmOfflinePayment= () => {
+        setConfirmOfflinePaymentMethod(true)
+        setOfflinePaymentMethod(false)
+    }
+    const placeOrder = () => {
+        // TODO... emit order to server here and return placedOrderSuccess to true;
+        setPlacingOrder(true)
+
+
+    }
+    if (offlinePaymentMethod) {
+        CheckoutModalChildComp = (
+            <CheckoutOfflinePaymentMethod
+            goBack={goBack}
+            confirmOfflinePayment={confirmOfflinePayment}
+            />
+        )
+    } else if(confirmOfflinePaymentMethod) {
+        CheckoutModalChildComp = (
+            <ConfirmOfflinePaymentOrder
+            goBack={goBack}
+            placeorder={placeOrder}
+            placingOrder={placingOrder}
+            placedOrderSuccess={placedOrderSuccess}
+            />
+        )
+    }else {
+        CheckoutModalChildComp = (
+            <CheckoutModalChild 
+            handleOfflinePayment={handleOfflinePayment}
+            handleOnlinePayment={ handleOnlinePayment}
+            />
+        )
+    }
+    return (
+        <div className="cart-products-wrapper">
+            {
+                (showCartModal) && (
+                    <ModalBox 
+                    handleModal={closeCartModal} 
+                    modalContainerWrapperName={"cart-checkout-modal-container-wrapper"}
+                    modalContainer={"cart-checkout-modal-container"}
+                    >
+                       { CheckoutModalChildComp }
+                    </ModalBox>
+                )
+
+            }
             <div className="cart-products-container">
                 <div className="cart-header">
-                {/* <h2>Cart</h2> */}
                 <h3>Cart</h3>
                 </div>
                 <div className="cart-products-panel">
-                {
-                    cartData.length && (
-                        cartData.map((interest, i) =>
-                            <CartProduct key={i} {...interest} />
-                        )
+                {   
+                    props.cartData.map((cartItem, i) =>
+                        <CartProduct key={i} product={cartItem} />
                     )
                 }
                 </div>
                 <div className="cart-products-total-container">
                     <div className="cart-products-total-panel">
-                    <div className="cart-products-total-amount">
-                    <span className="cart-products-total-amount-span-bold">Total amount: </span> <span> £32323.00</span>
-                </div>
-                <div className="cart-products-total-checkout">
-                    <button>Checkout</button>
-                </div>
+                        <div className="cart-products-total-amount">
+                        <span className="cart-products-total-amount-span-bold">Total amount: </span> <span> {`£${totalSum}`}</span>
+                        </div>
+                        <div className="cart-products-total-checkout">
+                            <button onClick={openCartModal}>Checkout</button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div className="cart-product-checkout">
-                <CartCheckoutComp/>
+                <CartCheckoutComp onClick={openCartModal}/>
             </div>
+        </div>
+    )
+
+}
+
+
+function CheckoutModalChild(props) {
+    return (
+        <div className="cart-checkout-modal-body-container">
+            <div className="cart-checkout-modal-content">
+                <p>
+                    {/* Kindly select how you would like to handle transaction below */}
+                    How would you like to handle your payment transaction?
+                </p>
+            </div>
+            <div className="cart-checkout-modal-buttons-container">
+                <div className="cart-checkout-modal-button">
+                    <button onClick={props.handleOfflinePayment}>Offline</button>
+                </div>
+                <div className="cart-checkout-modal-button">
+                   
+                        <Link to="/home/checkout"> 
+                        <button onClick={props.handleOnlinePayment}>
+                            Online
+                        </button>
+                        </Link>
+                    
+                </div>
             </div>
         </div>
     )
 }
+function CheckoutOfflinePaymentMethod(props) {
+    return(
+        <div className="cart-checkout-modal-body-container">
+           
+           <div className="cart-checkout-modal-offline-payment-content">
+                <p>
+                   By using the offline payment method, all financial transactions 
+                   related to this order, here off, is solely handled between 
+                   you and the seller('s) outside the knowledge of this platform.
+                </p>
+           </div>
+           <div className="cart-checkout-modal-place-order-button-container">
+                <div className="cart-checkout-modal-place-order-button back">
+                   <button  onClick={props.goBack}>Go back</button>
+                </div>
+               <div className="cart-checkout-modal-place-order-button">
+                   <button onClick={props.confirmOfflinePayment}>Place Order</button>
+                </div>
+           </div>
+        </div>
+    )
+}
 
+function ConfirmOfflinePaymentOrder(props) {
+    let ConfirmOfflinePaymentOrderComp;
+    if (props.placingOrder) {
+        ConfirmOfflinePaymentOrderComp = (
+            <PlacingOrder/>
+        )
 
+    }else if(props.placedOrderSuccess) {
+        ConfirmOfflinePaymentOrderComp = (
+            <PlacedOrderSuccess/>
+        )
+
+    }else {
+        ConfirmOfflinePaymentOrderComp = (
+            <>
+            <div className="cart-checkout-modal-offline-payment-content">
+                <p>
+                    Are you sure you want to place order using offline payment method?
+                </p>
+            </div>
+            <div className="cart-checkout-modal-place-order-button-container">
+                <div className="cart-checkout-modal-place-order-button back">
+                   <button  onClick={props.goBack}>Go back</button>
+                </div>
+               <div className="cart-checkout-modal-place-order-button">
+                   <button onClick={props.placeorder}>Place Order</button>
+                </div>
+            </div>
+            </>
+        )
+
+    }
+    return (
+        <div className="cart-checkout-modal-body-container">
+            {ConfirmOfflinePaymentOrderComp}
+        </div>
+    )
+}
+function PlacingOrder(props) {
+    return (
+        <div>placing order...</div>
+    )
+}
+function PlacedOrderSuccess(props) {
+    return (
+        <div>
+            Order placed successfully
+        </div>
+    )
+}
 function CartProduct(props) {
+    const [quantity, setQuantity] = useState(""); 
+    const { user } = useAuth();
     const {
         cartState,
+        cartItems,
         addCartProductQuantity, 
         reduceCartProductQuantity, 
         removeProductFromCart,
         updateCartContextState,
     } = useCartContext();
+    const { product } = props;
+
+    const addProductQuantity = async (cartState, sellerEmail, productId, user) => {
+        // setQuantity(prevState => (parseInt(prevState) + 1).toString());
+        const updatedState = await addCartProductQuantity(cartState, addCartProductQuantityActionPayload(sellerEmail, productId));
+        updateCartContextState(updatedState, user);
+    }
+
+    const reduceProductQuantity = async (cartState, sellerEmail, productId, user) => {
+        // setQuantity(prevState => (prevState - 1).toString());
+        const updatedState = await  reduceCartProductQuantity(cartState,  reduceCartProductActionPayload(sellerEmail, productId));
+        updateCartContextState(updatedState, user);
+    }
+
+    const removeProduct = async (cartState, cartItems, sellerEmail, productId, user) => {
+        const updatedState = await removeProductFromCart(cartState, removeFromCartActionPayload(sellerEmail, productId));
+
+        updateCartContextState(updatedState, user);
+        if(cartItems.length > 0) {
+            window.scrollTo(0,0)
+        }
+    }
+
     return (
-        
             <div className="cart-product-panel">
                 {/* product profile image */}
             <div className="cart-product-profile" >
                 <div  className="cart-product-profile-image">
-                    <img src={props.userProfileImage || image} alt="avatar" />
+                    <img src={ product.sellerProfilePicture || image} alt="avatar" />
                 </div>
 
                 <div className="cart-product-profile-info">
-                    <div> <span>{props.userName || 'unknown'}</span></div>
+                    <div> <span>{ product.sellerName || 'unknown'}</span></div>
                 </div>
             </div>
             {/* product image */}
             <div className="cart-product-images-panel">
                 <div className="cart-product-images">
                 {
-                    props.productOrServiceImages.map((image, i) =>
+                    [product.productImages[0]].map((image, i) =>
                         <div key={i} className="cart-product-image-group">
                         <img src={image.src || image2} alt="product" />
                         </div>
@@ -121,78 +305,113 @@ function CartProduct(props) {
                 }
                 </div>
                 {/* product information */}
-
-            <div className="cart-product-info" >
-               <div className="cart-product-info-span-group">
-                <p>This is the product name</p>
-               </div>
-               <div className="cart-product-info-span-group ">
-               <p>Price: <span className="price">£300.00 (22% OFF)</span> <span className="original-price">£320.00</span></p>
-               </div>
-               <div className="cart-product-info-span-group">
-               <p>Quantity: <span>5</span></p>
-               </div>
-               <div className="cart-product-info-span-group">
-               <p>Sub total: <span>£320.00</span></p>
-               </div>
-
-               {/* product add/reduce/remove buttons */}
-
-            <div className="cart-product-buttons" >
-                <div className="cart-product-buttons-header">
-                    <span>Quantity</span>
+                <div className="cart-product-info" >
+                    <div className="cart-product-info-span-group">
+                        <p>
+                        {
+                            product.productName ||  "This is the product name"
+                        }
+                        </p>
+                    </div>
+                    <div className="cart-product-info-span-group ">
+                        <p>Price: <span className="price">{`£${product.productPrice}`} (22% OFF)</span> <span className="original-price">{`£${product.productPrice}`}</span></p>
+                    </div>
+                    <div className="cart-product-info-span-group">
+                        <p>Quantity: <span>{product.productQty}</span></p>
+                    </div>
+                    <div className="cart-product-info-span-group">
+                        <p>Sub total: <span>{`£${(product.productPrice *  product.productQty).toFixed(2, 10)}`}</span></p>
+                    </div>
+                    {/* product add/reduce/remove buttons */}    
+                    <div className="cart-product-buttons" >
+                        <div className="cart-product-buttons-header">
+                            <span>Quantity</span>
+                        </div>
+                        <div className="cart-product-button-top">
+                            <div className="cart-product-add-button">
+                                <div className="cart-product-add-button-icon">
+                                <button onClick={()=>reduceProductQuantity(cartState, product.sellerEmail, product.productId, user)}>-</button>
+                                </div>
+                            </div>
+                        
+                            <input  
+                            value={product.productQty}
+                           onChange={ f => f }
+                            className="cart-product-input" type="text" 
+                            />
+                            <div className="cart-product-reduce-button">
+                                <div className="cart-product-add-button-icon">
+                                <button onClick={()=>addProductQuantity(cartState, product.sellerEmail, product.productId, user)}>+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="cart-product-button-bottom">
+                            <div className="cart-product-remove-button">
+                                <button onClick={()=>removeProduct(cartState, cartItems, product.sellerEmail, product.productId, user)}>Remove</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="cart-product-button-top">
-                    <div className="cart-product-add-button">
-                    <div className="cart-product-add-button-icon">
-                       {/* <i>-</i> */}
-                       <button>-</button>
-                    </div>
-                    </div>
-                    <input className="cart-product-input" type="text" />
-                    <div className="cart-product-reduce-button">
-                    <div className="cart-product-add-button-icon">
-                    <button>+</button>
-                    </div>
-                    </div>
-                </div>
-                <div className="cart-product-button-bottom">
-                    <div className="cart-product-remove-button">
-                        {/* <span>Remove</span> */}
-                        <button>Remove</button>
-                    </div>
-                </div>
+                
             </div>
-
-            </div>
-            
-            </div>
-            
-            
             </div>     
     )
 }
 
 function CartCheckoutComp(props) {
+    const {
+        totalSum,
+        cartTotalNumberOfProducts
+     } = useCartContext();
     return (
         <div className="cart-checkout-panel">
             <div className="cart-checkout-info">
 
                 <div className="cart-checkout-span-group">
-                <span className="cart-checkout-span-left">Total Price: <span className="cart-checkout-span-right">£3000.00</span></span>
+                <span className="cart-checkout-span-left">Total Price: <span className="cart-checkout-span-right">{`£${totalSum}`}</span></span>
                 </div>
 
                 <div  className="cart-checkout-span-group">
-                <span className="cart-checkout-span-left">Total Items: <span className="cart-checkout-span-right">5</span></span>
+                <span className="cart-checkout-span-left">Item('s) In Cart: <span className="cart-checkout-span-right">{cartTotalNumberOfProducts}</span></span>
                 </div>
 
                 <div className="cart-checkout-button-wrapper">
                     <div className="cart-checkout-button">
-                        <button>Checkout</button>
+                        <button onClick={props.onClick}>
+                            Checkout
+                        </button>
                     </div>
                 </div>
 
             </div>
+        </div>
+    )
+}
+
+
+
+function EmptyCart(props) {
+    return (
+        
+        <div className="empty-cart-container">
+            <div className="cart-header">
+                <h3>Cart</h3>
+            </div>
+
+            <div className="empty-cart-body">
+                <div className="empty-cart-content">
+                    <p> It seems you have no items in your cart at the moment.</p>
+                    {/* <p> Products you wish to buy show up here only after you have added them.</p> */}
+                </div>
+
+                <div className="empty-cart-button">
+                    <div className="empty-cart-button-wrapper">
+                    <Link to="/home"><button> Let's Go Shopping</button></Link>
+                    </div>
+                </div>
+            </div>
+            
+
         </div>
     )
 }
