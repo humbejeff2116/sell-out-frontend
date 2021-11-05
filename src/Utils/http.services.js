@@ -51,3 +51,17 @@ export function getUser(data) {
     const {id, userEmail} = data;
     return productServerHTTP.get(`/user/:${id}/:${userEmail}`,);
 }
+
+export async function signupUser(data) {
+    const singedupResponse =  await gatewayServerHTTP.post(`/signup`, data);
+    const signedupUserData = singedupResponse.data;
+    console.log("signed up user is", signedupUserData)
+    return signedupUserData;
+}
+
+export async function loginUser(data) {
+    const loginResponse =  await gatewayServerHTTP.post(`/login`, data);
+    const loggedInUserData = loginResponse.data;
+    console.log("user login data is", loggedInUserData)
+    return loggedInUserData;
+}
