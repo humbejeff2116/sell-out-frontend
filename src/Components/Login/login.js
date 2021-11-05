@@ -10,77 +10,47 @@
    import {TextInput, PasswordInput} from '../Formik/formik';
    import socket from '../Socket/socket';
    import useAuth from '../../Context/context';
+   import { loginUser } from '../../Utils/http.services';
    import './login.css';
 
 export default function Login() {
     const [loginIn, setLoginIn] = useState(false);
     const [loginError, setLoginError] = useState(false);
-    const [loginResponse, setLoginResponse] = useState({});
+    const [loginResponseMessage, setLoginResponseMessage] = useState(null);
     const [redirect, setRedirect] = useState('');
     const location = useLocation();
     const history = useHistory();
     const {setUserData, setTokenData} = useAuth();
 
-    useEffect(() => {
-        let isMounted = true;
-
-        socket.on('userNotFound', function(response) {
-            if(isMounted) {
-                setLoginResponse(response);
-                setLoginError(true);
-                setLoginIn(false);
-            }
-        })
-
-        socket.on('passwordError', function(response) {
-            if(isMounted) {
-                setLoginResponse(response);
-                setLoginError(true);
-                setLoginIn(false);
-            }   
-        });
-
-        socket.on('passwordMatchNotFound', function(response) {
-            if(isMounted) {
-            setLoginResponse(response);
-            setLoginError(true);
-            setLoginIn(false); 
-            }   
-        });
-
-        socket.on('userFound', function(response) {
-                    const TOKEN = response.token;
-                    
-                    if (isMounted) {
-                        if (response.data.isNewUser) {
-                            setUserData(response.data)
-                            history.push(location.pathname);
-                            setLoginError(false);
-                            setLoginIn(false);
-                            setLoginResponse({});
-                            return setRedirect('/getting-started');
-                        }
-                        setUserData(response.data)
-                        setTokenData(TOKEN);
-                        setLoginError(false);
-                        setLoginIn(false);
-                        setLoginResponse({});
-                        history.push(location.pathname);
-                        setRedirect('/home');
-                    } 
-        });
-
-    
-        return ()=> {
-            isMounted = false
-        }         
-    }, [setUserData, history, location, setTokenData]);
-
-    function handleSubmit  (values) {
+    async function handleSubmit (values) {
         try{
             setLoginIn(true);
             const loginData = values;
-            socket.emit('login', loginData);
+            // socket.emit('login', loginData);
+
+            const loggedInUserResponse = await loginUser(values);
+            if (loggedInUserResponse.error) {
+                setLoginResponseMessage(loggedInUserResponse.message);
+                setLoginError(true);
+                setLoginIn(false);
+                return;
+            }
+            if (loggedInUserResponse.data.isNewUser) {
+                setUserData(loggedInUserResponse.data)
+                history.push(location.pathname);
+                setLoginError(false);
+                setLoginIn(false);
+                setLoginResponseMessage(null);
+                return setRedirect('/getting-started');
+            }
+            const TOKEN = loggedInUserResponse.token;
+            setUserData(loggedInUserResponse.data);
+            setTokenData(TOKEN);
+            setLoginError(false);
+            setLoginIn(false);
+            setLoginResponseMessage("");
+            history.push(location.pathname);
+            setRedirect('/home');
 
         } catch(e) {
             setLoginError(true)
@@ -101,7 +71,7 @@ export default function Login() {
             </div>
             <div className="login-panel-error">
                     {
-                        ( <span>{loginResponse.message || '' }</span> )
+                        ( <span>{loginResponseMessage || '' }</span> )
                     }
             </div>
             <div className="login-panel-body">                            
@@ -153,7 +123,7 @@ export default function Login() {
                 <div className="login-signup-panel">
                     <div className="signup-link">
                         <div className="signup-link-text">
-                            <p>Dont have an account yet ? </p>
+                            <p>Dont have an account yet? </p>
                         </div>
                         <div className="signup-link-button">
                             <Link to="/signup"><button> sign up </button></Link>
