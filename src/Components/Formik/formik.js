@@ -143,7 +143,13 @@ export const Select = ({ label, errorClass, labelClassName, selectClassName, ...
         </div>
 
         <div  className={selectClassName}> 
-            <select {...field} {...props} />
+            <select 
+             className= {
+                (meta.touched && !meta.error && meta.value) ? "select not-empty" : "select"
+              } 
+            {...field} 
+            {...props} 
+            />
         </div>
 
         <div className={errorClass}>
