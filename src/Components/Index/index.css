@@ -122,9 +122,8 @@
 .index-search-select-btn select{
     outline: none;
     width:100%;
-    min-height:40px;
-    /* font-weight: bold; */
-    border:1px solid var(--button-border-color);
+    min-height:35px;
+    border:1px solid var(--prim-border-color);
     color:var(--text-color);
     border-radius: 6px;
     text-align: center;
@@ -261,9 +260,9 @@
 .index-products-filter-select select{
     outline: none;
     width:100%;
-    min-height:40px;
+    min-height:35px;
     /* font-weight: bold; */
-    border:1px solid var(--button-border-color);
+    border:1px solid var(--prim-border-color);
     color:var(--text-color);
     border-radius: 6px;
     text-align: center;
