@@ -16,6 +16,10 @@ import {
     reduceCartProductActionPayload,
     addCartProductQuantityActionPayload,
 } from '../../Context/Cart/cartPayloads';
+import useViewContext from '../../Context/viewContext/context';
+import { Star } from '../Product/Fragments/productFragments';
+import { useLocation, useHistory } from 'react-router-dom';
+import BackButton from '../BackButton/backButton';
 
 // import { getProducts } from '../../Utils/http.services';
 
@@ -32,7 +36,7 @@ const product = {
     productState: "Benue",
     productUsage: "never used",
     productCurrency: "naira",
-    productPrice: 200,
+    productPrice: 210,
     productContactNumber: "334039438493",
     productImages: [{}],
     stars: [],
@@ -48,15 +52,15 @@ const mockProducts = [
         userEmail: "humbejeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
-        productName: "short nikka",
+        productName: "short andres denim combat ",
         productCategory: "furniture",
         productCountry: "Nigeria",
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
-        productPrice: "200",
+        productPrice: "230",
         productContactNumber: "334039438493",
-        productImages: [{}],
+        productImages: [{},{},{}],
         stars: [],
         unstars: [],
         comments: [],
@@ -65,18 +69,18 @@ const mockProducts = [
     {
         userId: 2234343,
         userName: "hummbe jeffrey",
-        userEmail: "humbejeff@gmail.com",
+        userEmail: "humbeeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
-        productName: "short nikka",
+        productName: "blue tantarum maryland jean",
         productCategory: "furniture",
         productCountry: "Nigeria",
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
-        productPrice: "200",
+        productPrice: "110",
         productContactNumber: "334039438493",
-        productImages: [{}],
+        productImages: [{},{},{}],
         stars: [],
         unstars: [],
         comments: [],
@@ -85,7 +89,7 @@ const mockProducts = [
     {
         userId: 2234343,
         userName: "hummbe jeffrey",
-        userEmail: "humbejeff@gmail.com",
+        userEmail: "humbeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
         productName: "short nikka",
@@ -94,9 +98,9 @@ const mockProducts = [
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
-        productPrice: "200",
+        productPrice: "17.2",
         productContactNumber: "334039438493",
-        productImages: [{}],
+        productImages: [{},{},{}],
         stars: [],
         unstars: [],
         comments: [],
@@ -105,7 +109,7 @@ const mockProducts = [
     {
         userId: 2234343,
         userName: "hummbe jeffrey",
-        userEmail: "humbejeff@gmail.com",
+        userEmail: "humbjef@gmail.com",
         userProfilePicture: "",
         productId: 232323,
         productName: "short nikka",
@@ -114,9 +118,9 @@ const mockProducts = [
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
-        productPrice: "200",
+        productPrice: "15.22",
         productContactNumber: "334039438493",
-        productImages: [{}],
+        productImages: [{},{},{}],
         stars: [],
         unstars: [],
         comments: [],
@@ -127,21 +131,56 @@ const mockProducts = [
 
 export default function ViewProduct() {
     const [sellerProducts, setSellerProducts] = useState([]);
+    const [showAddToCartMessage, setShowAddToCartMessage] = useState(false);
+    const { viewState, setViewState } = useViewContext();
+    const location = useLocation();
     useEffect(() => {
        
 
-        return () => {}
-    }, [])
+        return () => {
+            if((location.pathname === "/home/view-product")){
+               return;
+            } 
+            setViewState(null);  
+        }
+    }, [location.pathname, setViewState])
+
+    useEffect(() => {
+        let timer = null;
+        let mounted = true;
+        if (showAddToCartMessage && mounted) {
+            timer = setTimeout(() => {
+                setShowAddToCartMessage(false)
+            }, 4000);
+        }
+        return () => {
+            // setViewState(null);
+            mounted = false;
+            if (timer) {
+                clearTimeout(timer)
+            }   
+        }
+    }, [showAddToCartMessage, setViewState])
+    const handleAddToCartMessage = (bool) => {
+        setShowAddToCartMessage(bool);
+    }
     return (
         <>
+        {
+            (showAddToCartMessage) && (
+                <div className="add-to-cart-mssg">
+                    <span>Product added to cart </span>
+                </div>
+            )
+        } 
         <div className="view-product-back-bttn-cntr">
-            <div className="view-product-back-bttn"><button>Go back</button></div>
+            <BackButton buttonWrapperClassName="view-product-back-bttn"/>
         </div>
         <div className="view-product-container">
 
             <div className="view-product-top">
-                <ProductImage/>
-                <ProductDetails/>
+                <ProductImage product={viewState} />
+                <ProductDetails product={ viewState } showAddToCartMessage={handleAddToCartMessage}/>
             </div>
 
             <div className="view-product-bottom">
@@ -154,13 +193,21 @@ export default function ViewProduct() {
 }
 
 function ProductImage(props) {
+    const [viewedProductImage, setViewedProductImage] = useState("");
+    const { product } = props;
+    useEffect(()=> {
+        setViewedProductImage(product.productImages[0].src);
+    },[product.productImages])
+    const setProductImage = (src) => {
+      return setViewedProductImage(src);
+    }
     return (
         <div className="view-product-image-wrapper">
         {/* seller profile */}
         <div className="view-product-profile" >
             <div  className="view-product-profile-image">
-                <img src={image} alt="avatar" />
-                <span> User name</span>
+                <img src={product.userProfilePicture || image} alt="avatar" />
+                <span> {product.userName}</span>
                 
             </div>
             <div className="view-product-seller-stars">
@@ -170,30 +217,51 @@ function ProductImage(props) {
         {/* product images */}
         <div className="view-product-image-container">
             <div className="view-product-image-thumbnails">
-                thumbnails
+                {
+                    product.productImages.length > 0 ? (
+                        product.productImages.map((image, i)=>
+                            <Thumbnail 
+                            key={i} 
+                            {...image} 
+                            currentlyViewedImage ={viewedProductImage} 
+                            setViewImage ={setProductImage}
+                            />
+                        ) 
+                    ) : ""    
+                }  
             </div>
             <div className="view-product-image">
-                <img src={image2} alt="product"/>
+                <img src={viewedProductImage || image2} alt="product"/>
             </div>
         </div>
+        </div>
+    )
+}
+function Thumbnail(props) {
+    const {src, currentlyViewedImage} = props;
+    const thumbnailClass = ( src === currentlyViewedImage ) ? "view-product-thumbnail focus" : "view-product-thumbnail" 
+    return (
+        <div className={ thumbnailClass } onClick={()=>props.setViewImage(src)}>
+            <img src={src || image2} alt="product"/>
         </div>
     )
 }
 
 function ProductDetails(props) {
     const [quantity, setQuantity] = useState("");
+    const [productSize, setProductSize] = useState(null);
     const{ user } = useAuth();
     const { 
         cartState, 
         addProductToCart, 
         updateCartContextState,
     } = useCartContext();
-    const {productSize} = props;
-
-
+    const { 
+        showAddToCartMessage, 
+        product,
+    } = props;
     useEffect(()=> {
         setQuantity("1");
-
     },[]);
 
     const addProductQuantity = () => {
@@ -217,6 +285,9 @@ function ProductDetails(props) {
         if (isNaN(e.target.value)) { 
             return;
         }
+        if (e.target.value < 1) {
+            return  setQuantity("");
+        }
         // check and return if entered value contains a decimal
         for (let i = 0; i < value.length; i++) {
             if (value[i] === ".") {
@@ -232,7 +303,9 @@ function ProductDetails(props) {
             return;
         }
         const addedProduct = await addProductToCart(cartState, addToCartActionPayload(product, quantity));
-        updateCartContextState(addedProduct, user);   
+        updateCartContextState(addedProduct, user);
+        showAddToCartMessage(true);
+
     }
     return (
         <div className="view-product-details-container">
@@ -241,21 +314,20 @@ function ProductDetails(props) {
             <div className="view-product-details">
                 <div className="view-product-details-name-wrapper">
                     <div className="view-product-details-name">
-                        <p>This Is The Name Of The Product <br />
-                        <span>Product code:</span> <span>fzz1002</span>
+                        <p>{product.productName} <br />
+                        <span>Product code:</span> <span>{product.productId}</span>
                         </p>
-                    </div>
-                    
+                    </div> 
                 </div>
                 
                 <div className="view-product-details-price">
-                    <p>£300.00 (22% OFF) <span>£320.00</span></p>
+                    <p>{`£${product.productPrice}`} (22% OFF) <span>{`£${product.productPrice}`}</span></p>
                 </div>
 
                 <div className="view-product-details-usage">
-                    <p>Usage: <span>Brand new</span></p>
+                    <p>Usage: <span>{product.productUsag}</span></p>
                 </div>
-                <div  className="view-product-details-usage">
+                <div className="view-product-details-usage">
                     <p>Supply Region('s): <span>Benue, Lagos, Abuja</span></p>
                 </div> 
             </div>  
@@ -276,7 +348,8 @@ function ProductDetails(props) {
                     <input 
                      value={quantity} 
                      onChange={handleInputChange}
-                    className="view-product-input" type="text" />
+                    className="view-product-input" type="text" 
+                    />
                     <div className="view-product-reduce-button">
                         <div  className="view-product-add-button-icon">
                         <button onClick={()=> addProductQuantity()}>+</button>
