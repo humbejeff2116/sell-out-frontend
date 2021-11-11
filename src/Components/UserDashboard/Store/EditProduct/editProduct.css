@@ -70,7 +70,6 @@
 .store-product-edit-details-group-left form textarea{
     width: 98%;
     height:40px;
-    /* padding:2% 2% 2% 2%; */
     border:1px solid var(--prim-border-color);
     caret-color:var(--prim-color);
     border-radius: 4px;
@@ -79,16 +78,15 @@
     color: var(--text-color);  
 }
 
-.store-product-edit-details-group-left form select{
+.store-product-edit-details-group-left form select {
     width: 100%;
-    min-height:30px;
+    height:35px;
     text-align: center;
     outline:none; 
     color: var(--text-color); 
-    border:1px solid var(--text-color);
+    border:1px solid var(--prim-border-color);
     border-radius: 4px;
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 .store-product-edit-details-group-right{
     width: 30%;
@@ -111,11 +109,11 @@
    
     width: 100%;
     height:35px;
-    color: var(--text-color);
+    color: var(--color);
     background-color: #f0f0f0; 
-    border:1px solid var(--text-color);
+    border:1px solid var(--prim-border-color);
     border-radius:4px;
-    font-weight: bold;
+    font-weight: 500;
     transition:all 0.3s ease;
     cursor:pointer;
     display: flex;
@@ -125,13 +123,11 @@
 }
 .store-product-edit-details-group-edit-button button:hover{
     color: var(--no-color);
-    background-color: var(--text-color); 
-     
+    background-color: var(--color); 
+    border:1px solid var(--color);    
 }
 .store-product-edit-details-group-edit-button button:focus{
-    outline:1px solid var(--opaque-text-color);
-   
-    
+    outline:none;
 }
 
 .store-product-edit-details-group-edit-button.save button{
@@ -180,7 +176,7 @@
 
 }
 .edit-product-empty-content p{
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
 
 }
