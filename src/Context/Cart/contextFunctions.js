@@ -1,7 +1,7 @@
 
 
 
-async function addProductToCart(state =[], action) {
+async function addProductToCart(state = [], action) {
     let productId = action.productId;
     let productQty = action.productQty;
     let sellerEmail = action.userEmail;
@@ -60,7 +60,7 @@ async function addProductToCart(state =[], action) {
     }];
 }
 
-async function removeProductFromCart(state=[], action) {
+async function removeProductFromCart(state = [], action) {
     let productId = action.productId;
     let sellerEmail = action.sellerEmail;
     let sellerProducts;
@@ -91,7 +91,7 @@ async function removeProductFromCart(state=[], action) {
     return state;
 }
     
-async function addCartProductQuantity(state=[], action) {
+async function addCartProductQuantity(state = [], action) {
     let productId = action.productId;
     let sellerEmail = action.sellerEmail;
     let updatedProductQuantity = action.productQty;
@@ -157,11 +157,11 @@ async function reduceCartProductQuantity(state=[], action) {
     return state;
 }
     
-async function clearCart(state=[], action) {
+async function clearCart(state = [], action) {
     return state = [];
 }
     
-function calculateCartTotalPrice(state=[]) {
+function calculateCartTotalPrice(state = []) {
     let allCartProducts = state.flatMap(product => product.productsUserBoughtFromSeller);
     let totalCartSum = 0.00;
 
@@ -173,7 +173,7 @@ function calculateCartTotalPrice(state=[]) {
     
     
 
-function createSellerPaymentData(state=[], buyer) {
+function createSellerPaymentData(state = [], buyer) {
 
     function calculateIndividualSellerPriceSum(product) {
         let total = 0;
@@ -197,19 +197,19 @@ function createSellerPaymentData(state=[], buyer) {
     return individualTotal;
 }
 
-function calculateTotalNumberOfProductsInCart(state =[]) {
+function calculateTotalNumberOfProductsInCart(state = []) {
     let totalProducts = 0;
     let allCartProducts = state.flatMap(product => product.productsUserBoughtFromSeller);
     totalProducts += allCartProducts.length;
     return totalProducts;
 }
 async function createOrderData(productsUserBought, sellerPaymentData, orderId, orderTime) {
-    for(let i = 0; i < productsUserBought.length; i++) {
+    for (let i = 0; i < productsUserBought.length; i++) {
         productsUserBought[i].orderTime = orderTime;
-        productsUserBought[i].orderId =orderId;
+        productsUserBought[i].orderId = orderId;
     }
 
-    for(let i = 0; i < sellerPaymentData.length; i++) {
+    for (let i = 0; i < sellerPaymentData.length; i++) {
         sellerPaymentData[i].orderTime = orderTime;
         sellerPaymentData[i].orderId = orderId
     }
