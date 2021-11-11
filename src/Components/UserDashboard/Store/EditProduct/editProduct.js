@@ -316,12 +316,13 @@ function EditItem(props) {
             {
                 
                 <div className="store-product-edit-details-group-edit-button">
-                    { (!props.value && !showEditBar) ? (
+                { 
+                    (!props.value && !showEditBar) ? (
                         <button onClick={openEditBar}>
                         <RiAddFill className="store-icon-edit"/>
                         Add</button>
-                    )  :  Button }
-                   
+                    )  :  Button 
+                }
                 </div>
             }
             </div>
