@@ -34,9 +34,9 @@
     /* padding: 1%; */
 }
 .checkout-back-button button{
-    color: var(--text-color);
-    border:1px solid var(--no-color);
-    background-color: var(--no-color);
+    color: var(--color);
+    border:1px solid var(--prim-border-color);
+    background-color: var(--light-grey);
     height:32px;
     width:100%;
     border-radius: 4px; 
@@ -46,15 +46,12 @@
     cursor: pointer; 
     transition: all 0.2s ease;
     font-size:0.8rem;
-    /* font-weight: bolder; */
 }
 .checkout-back-button button:hover{
-    /* color: #ffffff; */
-    border:1px solid var(--prim-border-color);
-    /* background-color: var(--prim-color); */
+    border:1px solid var(--color);
 }
 .checkout-back-button button:focus{
-    outline:1px solid var(--prim-border-color); 
+    outline:none; 
 }
 
 
