@@ -3,6 +3,7 @@ import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import socket from '../Socket/socket';
 import useAuth from "../../Context/context";
 import useCartContext from "../../Context/Cart/cartContext";
+import BackButton from '../BackButton/backButton';
 import "./checkout.css";
 
 export default function Checkout(props) {
@@ -16,18 +17,8 @@ export default function Checkout(props) {
   } = useCartContext();
   const { user } = useAuth();
 
-  const createOrder = async (
-    cartState,
-    sellerTotalSumData,
-    orderId,
-    orderTime
-  ) => {
-    const buyersPreOrder = await createOrderData(
-      cartState,
-      sellerTotalSumData,
-      orderId,
-      orderTime
-    );
+  const createOrder = async (cartState, sellerTotalSumData, orderId, orderTime) => {
+    const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, orderId, orderTime);
     // TODO... emit order details to db after buyer has paid
   };
 
@@ -53,6 +44,7 @@ export default function Checkout(props) {
     ...config,
     text: "Pay with Flutterwave!",
     callback: async (response) => {
+      alert(JSON.stringify(response));
       console.log(response);
       // TODO... call the createOrder function here
       await createOrder(cartState, sellerTotalSumData);
@@ -67,9 +59,7 @@ export default function Checkout(props) {
         <h3>Checkout</h3>
       </div>
       <div className="checkout-back-button-container">
-        <div className="checkout-back-button">
-          <button>Go back</button>
-        </div>
+        <BackButton buttonWrapperClassName="checkout-back-button"/>
       </div>
 
       <div className="checkout-body">
