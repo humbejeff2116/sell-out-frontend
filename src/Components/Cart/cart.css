@@ -365,7 +365,6 @@
     cursor:pointer;
     font-size:1.1rem;
     font-weight: 550;
-
 }
 .cart-checkout-button button{
     width:100%;
@@ -399,7 +398,7 @@
 }
 
 .empty-cart-body{
-    min-height: 40vh;
+    min-height: 45vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -441,7 +440,7 @@
     color: var(--no-color);
     background-color: var(--color);
     min-width: 100%;
-    height: 42px;
+    height: 45px;
     transition: all 0.3s ease;
     cursor: pointer;
 }
