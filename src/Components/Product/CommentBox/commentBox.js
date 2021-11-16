@@ -169,6 +169,7 @@ function Comment(props) {
                 return;
             }
             setUserLikedComment(true);
+            setUserDislikedComment(false);
             setLikesCommentRecieved([...likesCommentRecieved, like]);
             setUnlikesCommentRecieved(currrentState => currrentState.filter(dislike => dislike.unlikeGiverEmail !== user.userEmail ));
             socket.emit('likeComment', data );
@@ -200,6 +201,7 @@ function Comment(props) {
                 return;
             }
              setUserDislikedComment(true);
+             setUserLikedComment(false);
             setUnlikesCommentRecieved([...unlikesCommentRecieved, dislike]);
             setLikesCommentRecieved(currrentState => currrentState.filter(like => like.likeGiverEmail !== user.userEmail ));
             socket.emit('unLikeComment', data ); 
