@@ -3,6 +3,7 @@ import image from '../../../Images/avatar.jpg';
 import {  AiOutlineStar, AiFillStar,} from 'react-icons/ai';
 import {  BsStar, BsStarFill} from 'react-icons/bs';
 import {  BiMessageAltEdit, BiMessageSquareEdit} from 'react-icons/bi';
+import {  AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 
 
 
@@ -39,6 +40,27 @@ function Star(props) {
     )
 }
 
+// Heart
+function Heart({ userLikedProduct, likeProduct, product, user, likesProductRecieved }) {
+    const likeIconClassName = userLikedProduct ? "product-heart-bttn fill" : "product-heart-bttn"
+    let heartIcon;
+    if (userLikedProduct) {
+        heartIcon = <AiFillHeart className="nav-icon" />
+    } else {
+        heartIcon = < AiOutlineHeart className="nav-icon" /> 
+    }
+
+    return (
+        <div className={likeIconClassName} onClick={()=> likeProduct(product, user)}>
+          {heartIcon}
+            { 
+                (likesProductRecieved && likesProductRecieved.length) ? 
+                likesProductRecieved.length : ''
+            }
+        </div>
+    )
+}
+
 function ProfileAvatar(props) {
     const { product } = props;
     const viewSeller = (product) => {
@@ -58,4 +80,5 @@ export {
     OpenComment,
     Star,
     ProfileAvatar,
+    Heart,
 }
