@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { TextInput, TextAreaInput } from '../../Formik/formik';
 // import socket from '../../Socket/socket';
 import { useGetStartedContext } from '../../../Context/context';
-import image from '../../../Images/avatar.jpg'
+import image from '../../../Images/avatar.jpg';
 import useAuth from '../../../Context/context';
 
 import './contact.css';
