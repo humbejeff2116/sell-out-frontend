@@ -1,0 +1,28 @@
+
+
+
+.user-dashboard-container{
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+}
+
+.user-dashboard-graph-container{
+    min-height: 90vh;
+    border: 
+    1px solid black;;
+
+}
+.user-dashboard-navigation-container{
+    border: 1px solid green;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2%;
+
+}
+.user-dashboard-navigation-child{
+    min-height: 20vh;
+    width: 30%;
+    border: 1px solid yellow;
+
+}
