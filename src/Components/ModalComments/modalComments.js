@@ -24,19 +24,28 @@ export default function ModalComment({ handleClose, show,  modalDisplayedProduct
                 <div className="modal-comment-product-comment-panel">
                 { modalDisplayedProduct}
                 { commentBox}
-               
-
-                    {/* <div className="modal-comment-product-comment-product">
-                       { modalDisplayedProduct}
-                    </div>
-                    <div className="modal-comment-product-comments-container">
-                       { commentBox}
-                    </div> */}
 
                 </div>
             </div>
 
         </div> 
 
+    )
+}
+
+
+
+export function ModalBox(props) {
+    return(
+        <div className={props.modalContainerWrapperName}>
+            <div className={props.modalContainer}>
+                <div className="modal-comment-product-comment-bttn-container">
+                    <div className="modal-comment-product-comment-bttn-wrapper">
+                    <RiCloseFill className="nav-icon"  onClick={ props.handleModal }/>
+                    </div>
+                </div>
+                { props.children}
+            </div>
+        </div>
     )
 }
