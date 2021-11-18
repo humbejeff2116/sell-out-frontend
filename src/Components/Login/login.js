@@ -9,6 +9,7 @@
    import * as Yup from 'yup';
    import {TextInput, PasswordInput} from '../Formik/formik';
    import socket from '../Socket/socket';
+   import useCartContext from '../../Context/Cart/cartContext';
    import useAuth from '../../Context/context';
    import { loginUser } from '../../Utils/http.services';
    import './login.css';
@@ -21,10 +22,12 @@ export default function Login() {
     const location = useLocation();
     const history = useHistory();
     const {setUserData, setTokenData} = useAuth();
+    const {  clearCart, cartState, updateCartContextState } = useCartContext();
 
     async function handleSubmit (values) {
         try{
             setLoginIn(true);
+            clearCartState(cartState)
             const loginData = values;
             // socket.emit('login', loginData);
 
@@ -55,6 +58,11 @@ export default function Login() {
         } catch(e) {
             setLoginError(true)
         }     
+    }
+    const clearCartState = async (cartState) => {
+        const cart = await clearCart(cartState);
+            updateCartContextState(cart);
+            return;
     }
  
     if (redirect) {
