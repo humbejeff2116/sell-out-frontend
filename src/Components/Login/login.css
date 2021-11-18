@@ -93,7 +93,7 @@
 }
 .login-panel form input{
     padding:12px 12px 12px 5px;
-    border-radius: 4px;
+    /* border-radius: 4px; */
     outline:none;
     color: var(--text-color);
     border:1px solid var(--prim-border-color);
@@ -102,12 +102,14 @@
 }
 .login-panel form input:focus{
     border:1px solid var(--text-color);
-    outline: 1px solid var(--outline-color); 
+    outline: 1px solid var(--text-color);
+    /* outline: none;  */
    
 }
 
 .login-panel form input.not-empty{
     border-color:var(--text-color);
+    outline: 1px solid var(--text-color);
 }
 .login-forgot-pass{
     margin-bottom:2%;
