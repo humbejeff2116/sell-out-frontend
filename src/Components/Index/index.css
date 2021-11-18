@@ -125,6 +125,7 @@
     min-height:35px;
     border:1px solid var(--prim-border-color);
     color:var(--text-color);
+    background-color: var(--no-color);
     border-radius: 6px;
     text-align: center;
     cursor:pointer;
@@ -264,6 +265,7 @@
     /* font-weight: bold; */
     border:1px solid var(--prim-border-color);
     color:var(--text-color);
+    background-color: var(--no-color);
     border-radius: 6px;
     text-align: center;
     cursor:pointer;
