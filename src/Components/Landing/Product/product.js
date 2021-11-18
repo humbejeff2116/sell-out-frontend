@@ -5,6 +5,7 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { DisplayedProduct } from '../../Product/product';
+import { getProducts } from '../../../Utils/http.services';
 import socket from '../../Socket/socket';
 import './product.css';
 
@@ -17,29 +18,30 @@ export default function LandingProducts(props) {
    
     useEffect(()=> {
         let mounted = true;
-        if(mounted) {
-            getProductsData();
+        async function getAllProducts() {
+            try {
+                const productsResponse = await getProducts();
+                const products = productsResponse.data;
+                setProducts(products)
+            }catch(err) {
+                console.error(err.stack)
+            }  
         }
-        socket.on('gottenProducts', function(response) {
-            const products = response.data;
-            if(mounted){
-                setProducts(products);
-            }
-        });
-       
+        if (mounted) {
+            getAllProducts();
+        }  
         socket.on('productDataChange', function() {
-            if(mounted){
-                getProductsData(); 
-            }
-             
+            if (mounted) {
+                getAllProducts();
+            }         
         });
+
         return ()=> {
-            mounted = false
+            mounted = false;
+            socket.off("getProducts");
         }
     }, []);
-    const getProductsData = ( ) => { 
-        socket.emit('getProducts');
-    }
+   
     return (
         <>
         <div  className="landing-product-heading">
