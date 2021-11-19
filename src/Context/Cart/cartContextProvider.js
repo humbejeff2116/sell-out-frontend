@@ -36,9 +36,9 @@ export  function CartContextProvider(props) {
     }, [cartState]);
     // function used to update context useState hooks after cart state changes
     const updateCartContextState = (state, user) => {
-        const totalSum = state.length ? calculateCartTotalPrice(state) : 0;
+        const totalSum = state.length ? calculateCartTotalPrice(state) : null;
         const sellerPaymentData = state.length ? createSellerPaymentData(state, user) : {};
-        const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : 0;
+        const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : null;
         const cartItems = state.flatMap(item => item.productsUserBoughtFromSeller);
         setCartState(state);
         setCartItems(cartItems);
