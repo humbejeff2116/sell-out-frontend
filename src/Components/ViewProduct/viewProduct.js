@@ -274,7 +274,7 @@ function ProductDetails(props) {
         if (!quantity) { 
             return  setQuantity("1");
         }
-        if (quantity <= 1) {
+        if (quantity <= 1) {   
             return;
         }
         setQuantity(prevState => (prevState - 1).toString());
