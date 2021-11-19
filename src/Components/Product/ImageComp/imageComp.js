@@ -1,19 +1,41 @@
 
 
 
-import React from 'react';
+import React, {useState} from 'react';
+import {  Redirect, useLocation, useHistory } from 'react-router-dom';
+import useViewContext from '../../../Context/viewContext/context';
 import image2 from '../../../Images/product3.webp';
 
 
 
 function SingleImageComponent(props) {
+    const [redirect, setRedirect] = useState('');
+    const location = useLocation();
+    const history = useHistory();
+    const { setViewState } = useViewContext();
     const { image } = props;
+
+    const viewProduct = (product) => {
+        if(location.pathname === '/home/view-product') {
+           setViewState(product);
+           window.scrollTo(0,0);
+           return; 
+        }
+        setViewState(product)
+        history.push(location.pathname);
+        return setRedirect('/home/view-product');
+    }
+    if (redirect) {
+        return (
+            <Redirect to={redirect} />
+        )
+    }
     return (
-        <div className="index-product-single-image-panel">
+        <div className="index-product-single-image-panel" onClick={()=>viewProduct(props.product)}>
             {
-                image.map((img,i) =>
+               [image].map((img,i) =>
                     <div key={i} className="index-product-single-image">
-                    <img src={img.src || image2} alt="product"/>
+                    <img src={img?.src || image2} alt="product"/>
                     </div>
                 )
             } 
