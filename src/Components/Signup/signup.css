@@ -98,7 +98,7 @@
 
 .signup-panel form input{
     padding:12px 12px 12px 5px;
-    border-radius: 4px; 
+    /* border-radius: 4px;  */
     /* border:1px solid #222; */
     color: var(--text-color);
     border:1px solid var(--prim-border-color);
@@ -107,12 +107,13 @@
 }
 .signup-panel form input:focus{
     border:1px solid var(--text-color);
-    outline: 1px solid var(--outline-color); 
+    outline: 1px solid var(--text-color); 
    
 }
 
 .signup-panel form input.not-empty{
     border-color:var(--text-color);
+    outline: 1px solid var(--text-color); 
 }
 
 
