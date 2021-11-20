@@ -65,3 +65,10 @@ export async function loginUser(data) {
     console.log("user login data is", loggedInUserData)
     return loggedInUserData;
 }
+
+export async function deleteProduct(product) {
+    const deleteProductResponse =  await gatewayServerHTTP.post(`/remove-product`, product);
+    const deleteProductData = deleteProductResponse.data;
+    console.log("user login data is", deleteProductData)
+    return deleteProductData;
+}
