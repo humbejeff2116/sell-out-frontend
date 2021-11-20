@@ -32,13 +32,14 @@ import {
     StoreSettings,
     EditProduct,
 } from '../../Components/UserDashboard/Store/index';
+import DashboardIndex from '../../Components/UserDashboard/Index/index';
  import  NotFoundPage from '../NotFoundPage/notFoundPage';
 
 
 const dashboardRoutes = [
     // orders
-    {path: "/home/dashboard", exact: true, Component: PlacedOrders},
-    {path: "/home/dashboard/orders/placed-orders",exact: true,  Component: PlacedOrders},
+    {path: "/home/dashboard", exact: true, Component: DashboardIndex},
+    {path: "/home/dashboard/orders/placed-orders", Component: PlacedOrders},
     {path: "/home/dashboard/orders/sold-products", Component: SoldProducts},
     // {path: "/home/dashboard/orders/confirm-delivery", Component: ConfirmDelivery},
     {path: "/home/dashboard/orders/delivered-products", Component: DeliveredProducts},
