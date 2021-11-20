@@ -51,27 +51,82 @@ const LinksData = {
         { name: "Cart", href: "/home/cart", icon: <BiCartAlt className="nav-icon"/> },
     ],
     indexSideNavLinks : [
-        // {
-        //     accordion: true,
-        //     name:"Orders", 
-        //     links: [
-        //         {href:"/home/orders/recieved-orders", name:"Recieved orders", icon:""},
-        //         {href:"/home/orders/placed-orders", name:"Placed orders", icon:""},
-        //         {href:"/home/orders/confirm-delivery", name:"Confirm delivery", icon:""},
-        //         {href:"/home/orders/delivered-products", name:"Delivered products", icon:""},
-        //     ]
-        // },
+        
         { name: "Home", href: "/home", icon: <BiHome className="index-side-nav-icon" /> },
-        { name: "Dashboard", href: "/Dashboard", icon: <GoDashboard  className="index-side-nav-icon"/> },
-        { name: "Store", href: "/store", icon: <BiStore className="index-side-nav-icon"/> },
-        { name: "Orders", href: "/home/dashboard/activity", icon: <IoMdTimer className="index-side-nav-icon"/> },
-        { name: "Payments", href: "/support", icon: <BiCoinStack className="index-side-nav-icon"/> },
+        { name: "Dashboard", href: "/home/dashboard", icon: <GoDashboard  className="index-side-nav-icon"/> },
+        {
+            accordion: true,
+            name:"Store", 
+            icon: <BiStore className="index-side-nav-icon"/>,
+            links: [
+                {href:"/home/dashboard/store/products", name:"Products", icon:""},
+                {href:"/home/dashboard/store/upload-product", name:"Upload Product", icon:""},
+                {href:"/home/dashboard/store/edit-product", name:"Edit Product", icon:""},
+                {href:"/home/dashboard/store/settings", name:"Store settings", icon:""},
+            ]
+        },
+        // { name: "Orders", href: "/home/dashboard/orders/", icon: <IoMdTimer className="index-side-nav-icon"/> },
+        {
+            accordion: true,
+            name:"Orders", 
+            icon: <IoMdTimer className="index-side-nav-icon"/>,
+            links: [
+                {href:"/home/dashboard/orders/placed-orders", name:"Placed Orders", icon:""},
+                {href:"/home/dashboard/orders/sold-products", name:"Sold Products", icon:""},
+                {href:"/home/dashboard/orders/delivered-products", name:"Delivered products", icon:""},
+            ]
+        },
+        {
+            accordion: true,
+            name:"Payments", 
+            icon: <BiCoinStack className="index-side-nav-icon"/> ,
+            links: [
+                {href:"/home/dashboard/payments/made-payments", name:"Made payments", icon:""},
+                {href:"/home/dashboard/payments/recieved-payments", name:"Recieved Payments", icon:""},
+            ]
+        },
         { name: "Cart", href: "/home/cart", icon: <BiCartAlt className="index-side-nav-icon"/>},
     ],
     indexSideNavFooterLinks : [
         { name: "Support", href: "/support", icon: <BiHelpCircle className="index-side-nav-icon" /> },
         { name: "Settings", href: "/home/settings", icon: <BiCog className="index-side-nav-icon"/> },
         { name: "Logout", href: "/logout", icon: <BiLogOut className="index-side-nav-icon"/> }
+    ],
+    dashboardSideNavLinks : [
+        { name: "Dashboard", href: "/home/dashboard", icon: <BiHome className="index-side-nav-icon" /> },
+        {
+            accordion: true,
+            name: "Store",
+            icon: <BiUser className="index-side-nav-icon"/>, 
+            links: [
+                {href:"/home/dashboard/store/products", name:"Products", icon:""},
+                {href:"/home/dashboard/store/edit-product", name:"Edit product", icon:""},
+                {href:"/home/dashboard/store/upload-product", name:"Upload Product", icon:""},
+                {href:"/home/dashboard/store/settings", name:"Settings", icon:""},
+            ]
+        },
+
+        {
+            accordion: true,
+            name: "Orders",
+            icon: <BiUser className="index-side-nav-icon"/>, 
+            links: [
+                {href:"/home/dashboard/orders/placed-orders", name:"Placed", icon:""},
+                {href:"/home/dashboard/orders/sold-products", name:"Sold Products", icon:""},
+                {href:"/home/dashboard/orders/delivered-products", name:"Delivered Products", icon:""},
+            ]
+        },
+
+        {
+            accordion: true,
+            name: "Payments",
+            icon: <BiUser className="index-side-nav-icon"/>, 
+            links: [
+                {href:"/home/dashboard/payments/made-payments", name:"Made Payments", icon:""},
+                {href:"/home/dashboard/payments/recieved-payments", name:"Recieved Payments", icon:""},      
+            ]
+        },
+
     ],
     settingsSideNavLinks : [
         { name: "Settings", href: "/home/settings", icon: <BiHome className="index-side-nav-icon" /> },
@@ -117,6 +172,9 @@ Links.prototype.getIndexSidenavLinks = function() {
 
 Links.prototype.getIndexSideNavFooterLinks = function() {
     return this.data.indexSideNavFooterLinks;
+}
+Links.prototype.getDashboardSideNavLinks = function() {
+    return this.data.dashboardSideNavLinks;
 }
 Links.prototype.getSettingsSideNavLinks = function() {
     return this.data.settingsSideNavLinks;
