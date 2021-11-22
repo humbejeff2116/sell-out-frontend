@@ -52,8 +52,8 @@
     color: var(--text-color);
     margin-bottom:1%;
 }
-.placed-orders-search form input, select{
-    padding:12px 12px 12px 5px;
+.placed-orders-search form input, .placed-orders-search select{
+    padding:8px 8px 8px 5px;
     border:1px solid var(--prim-border-color);
     caret-color:var(--prim-color);
     border-radius: 4px;
