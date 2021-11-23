@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import fling from '../../../Images/fling8.png';
 import Links, { open } from '../../../Data/links';
 import './header.css';
 const landingMainLinks = Links.getLandingMainLinks()
@@ -16,7 +17,7 @@ export default function Header(props) {
         <header className="landing-header">
             {/* logo */}
             <div className="landing-header-logo">
-                <div  className="landing-header-logo-img">LOGO</div>
+                <div  className="landing-header-logo-img"><img src={fling} alt="fling" /></div>
             </div>
             {/* main navigation */}
             <div className="landing-header-navigation">
