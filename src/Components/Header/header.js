@@ -9,6 +9,7 @@ import Links, { open, close } from '../../Data/links';
 import { BiSearch } from "react-icons/bi";
 import { NotificationAlert } from '../NotificationsDropdown/notifications';
 import useCartContext from '../../Context/Cart/cartContext';
+import fling from '../../Images/fling8.png';
 import './header.css';
 
 
@@ -22,7 +23,7 @@ export default function Header(props) {
     return (
         <header className="header-container" >
             <section className="header-logo">
-                <div className="header-logo-img">LOGO</div>
+                <div className="header-logo-img"><img src={fling} alt="fling" /></div>
             </section>
             <section className="header-main-navigation">
                { (props.dontShowMainNav) ? '' : <MainNavigation mainLinks={mainLinks}/> }
