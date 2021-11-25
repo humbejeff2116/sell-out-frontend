@@ -5,8 +5,9 @@
 
 
 
-import React from 'react';
+import React,{useState} from 'react';
 import { SellerOrderProfile } from '../../Orders/SoldProducts/soldProducts';
+import { GoKebabHorizontal} from 'react-icons/go';
 import './paymentsMade.css';
 
 const paymentsMade = [
@@ -53,27 +54,14 @@ export default function PaymentsMade(props) {
 }
 
 export function PaymentComp(props) {
-    let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending";
     return (
         <div className="placed-order-wrapper">
             <div className="placed-order-intro">
                 <div>
-                   {
-                       props.paymentProfile
-                   }
-                     <div className="placed-order-details-group">
-                        <p>Order date: <span>wed 04 sep 2021</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Order Id: <span>pss12845zf4</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Payment date: <span>wed 04 sep 2021</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Payment amount: <span className="diff">£68.00</span></p>
-                    </div>
-                    
+                {
+                    props.paymentProfile
+                }
+                <ViewPaymentDetails />    
                 </div>
             </div> 
 
@@ -88,4 +76,38 @@ export function PaymentComp(props) {
         </div>
 
     )
+}
+
+function ViewPaymentDetails(props) {
+    const [showDetails, setShowDetails] = useState(false);
+    return (
+        <div>
+            <div className="placed-order-details-group show-more">
+            <div className="placed-order-details-group">
+                <p>Order date: <span>wed 04 sep 2021</span></p>
+            </div>
+            <div className="sold-products-profile-image-kebab-icon">
+                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                {/* View more */}
+            </div>
+            </div>
+
+            {
+                showDetails && (
+                    <>
+                    <div className="placed-order-details-group">
+                        <p>Order Id: <span>pss12845zf4</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Payment date: <span>wed 04 sep 2021</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Payment amount: <span className="diff">£68.00</span></p>
+                    </div>
+                    </>
+                )
+            }           
+        </div>
+    )
+
 }
