@@ -80,6 +80,8 @@
 .placed-order-container{
     /* border: 1px solid green; */
     display:flex; 
+    flex-direction: row;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
@@ -106,6 +108,12 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+
+}
+.placed-order-details-group.show-more{
+    display: flex;
+    /* justify-content: flex-start;
+    align-items: center; */
 
 }
 .placed-order-profile-image{
