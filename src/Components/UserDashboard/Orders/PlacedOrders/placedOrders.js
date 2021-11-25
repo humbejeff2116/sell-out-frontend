@@ -3,7 +3,7 @@
 
 
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import image from '../../../../Images/avatar.jpg';
 import {FaRegEye} from 'react-icons/fa';
 import {GiConfirmed} from 'react-icons/gi';
@@ -87,7 +87,7 @@ function PlacedOrders(props) {
 }
 
 function PlacedOrder(props) {
-    let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending"
+    let deliveryStatusSpanClass = props.delivered ? "delivered" : "pending"
     return (
         <div className="placed-order">
         <div className="placed-order-details-container">
@@ -124,15 +124,7 @@ function PlacedOrder(props) {
                 </div>
                
             </div>
-            <div className="placed-order-details-group">
-            <p>Delivery Status: <span className={deleveryStatusSpanClass}>Pending</span></p>
-            </div>
-            <div className="placed-order-details-group">
-            <p>Number Of Products: <span>2</span></p>
-            </div>
-            <div className="placed-order-details-group">
-            <p>Total Order Amount: <span className="diff">£30068.00</span></p>
-            </div>
+            <ViewProductDetails deliveryStatusSpanClass={deliveryStatusSpanClass} />
         </div>
 
             
@@ -153,6 +145,33 @@ function PlacedOrder(props) {
             </div>
         </div>
 
+        </div>
+    )
+}
+function ViewProductDetails(props) {
+    const [showDetails, setShowDetails] = useState(false);
+    return (
+        <div>
+            <div className="placed-order-details-group show-more">
+            <p>Delivery Status: <span className={props.deliveryStatusSpanClass}>Pending</span></p>
+            <div className="sold-products-profile-image-kebab-icon">
+                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                {/* View more */}
+            </div>
+            </div>
+            {
+                showDetails && (
+                    <>
+                    <div className="placed-order-details-group">
+                    <p>Number Of Products: <span>2</span></p>
+                    </div>
+
+                    <div className="placed-order-details-group">
+                    <p>Total Order Amount: <span className="diff">£30068.00</span></p>
+                    </div>
+                    </>
+                )
+            } 
         </div>
     )
 }
