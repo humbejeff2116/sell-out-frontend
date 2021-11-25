@@ -3,7 +3,7 @@
 
 
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import useAuth from '../../../../Context/context';
 import image from '../../../../Images/avatar.jpg';
 import {FaRegEye} from 'react-icons/fa';
@@ -74,7 +74,7 @@ export default function SoldProducts(props) {
 }
 
 export function SoldProductsComp(props) {
-    let deleveryStatusSpanClass = props.delivered ? "delivered" : "pending";
+    let deliveryStatusSpanClass = props.delivered ? "delivered" : "pending";
     return (
         <div className="placed-order-wrapper">
             <div className="placed-order-intro">
@@ -82,21 +82,7 @@ export function SoldProductsComp(props) {
                    {
                        props.orderProfile
                    }
-                     <div className="placed-order-details-group">
-                        <p>Order date: <span>wed 04 sep 2021</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Order Id: <span>pss12845zf4</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                        <p>Delivery status: <span className={deleveryStatusSpanClass}>Pending</span></p>
-                    </div>
-                    <div className="placed-order-details-group">
-                    <p>Total order amount: <span className="diff">£68.00</span></p>
-                </div>
-                    <div className="placed-order-details-group">
-                        <p>Order products:</p>
-                    </div>
+                    <ViewOrderDetails deliveryStatusSpanClass={deliveryStatusSpanClass} />
                 </div>
             </div> 
             <div  className="placed-order-container">
@@ -120,18 +106,7 @@ function SoldProduct(props) {
 
              </div>
              <div className="placed-order-details-group-container">
-                <div className="placed-order-details-group">
-                    <p>Product name: <span>John Doe</span></p>
-                </div>
-                <div className="placed-order-details-group">
-                    <p>Product id: <span>px223ffr4</span></p>
-                </div>
-                <div className="placed-order-details-group">
-                    <p>Order quantity: <span>2</span></p>
-                </div>
-                <div className="placed-order-details-group">
-                    <p>Total sub amount: <span className="diff">£68.00</span></p>
-                </div>
+                <ViewProductDetails />
              </div>
         </div>
 
@@ -208,7 +183,7 @@ export function SellerOrderProfile(props) {
 }
 
 export function BuyerOrderProfile(props) {
-    const {buyerrName, buyerProfileImage, buyerContact, shippingAddress} = props
+    const {buyerName, buyerProfileImage, buyerContact, shippingAddress} = props
     return (
         <>
         <div className="placed-order-details-group header">
@@ -246,4 +221,80 @@ export function BuyerOrderProfile(props) {
         </>
 
     )
+}
+
+function ViewOrderDetails(props) {
+    const [showDetails, setShowDetails] = useState(false);
+    return (
+        <div>
+            <div className="placed-order-details-group show-more">
+            <div className="placed-order-details-group">
+                        <p>Order date: <span>wed 04 sep 2021</span></p>
+                    </div>
+            <div className="sold-products-profile-image-kebab-icon">
+                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                {/* View more */}
+            </div>
+            </div>
+
+            {
+                showDetails && (
+                    <>
+                   
+                    <div className="placed-order-details-group">
+                        <p>Order Id: <span>pss12845zf4</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Delivery status: <span className={props.deliveryStatusSpanClass}>Pending</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Total order amount: <span className="diff">£68.00</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Order products:</p>
+                    </div>
+                    </>
+                )
+            }
+
+           
+        </div>
+    )
+
+}
+
+function ViewProductDetails(props) {
+    const [showDetails, setShowDetails] = useState(false);
+    return (
+        <div>
+            <div className="placed-order-details-group show-more">
+            <div className="placed-order-details-group">
+                <p>Product name: <span>John Doe</span></p>
+            </div>
+            <div className="sold-products-profile-image-kebab-icon">
+                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                {/* View more */}
+            </div>
+            </div>
+
+            {
+                showDetails && (
+                    <>
+                    <div className="placed-order-details-group">
+                        <p>Product id: <span>px223ffr4</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Order quantity: <span>2</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Total sub amount: <span className="diff">£68.00</span></p>
+                    </div>
+                    </>
+                )
+            }
+
+           
+        </div>
+    )
+
 }
