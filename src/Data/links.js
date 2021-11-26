@@ -47,7 +47,7 @@ const LinksData = {
     mainLinks : [
         { name: "Home", href: "/home", icon: <BiHome className="nav-icon" /> },
         { name: "Store", href: "/home/dashboard/store/products", icon: <BiStore className="nav-icon"/> },
-        { name: "Orders", href: "/community", icon: <IoMdTimer className="nav-icon"/> },
+        { name: "Orders", href: "/home/dashboard/orders/placed-orders", icon: <IoMdTimer className="nav-icon"/> },
         { name: "Cart", href: "/home/cart", icon: <BiCartAlt className="nav-icon"/> },
     ],
     indexSideNavLinks : [
