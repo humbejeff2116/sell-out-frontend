@@ -44,7 +44,7 @@
     text-align: center;
     /* border:1px solid #222; */
     margin-bottom:2%;
-    color:var(--text-color);
+    color:var(--color);
 }
 
 .login-panel-body{
