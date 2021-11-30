@@ -20,14 +20,15 @@
 .login-template-logo{
     /* border:1px solid red; */
     display:flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height:10vh;
-    margin-top:5%;
-    color: var(--text-color);
-    font-size:1.4em;
-    font-weight:bold;
+    /* min-height:10vh; */
+    margin-top:15%;
+    width: 100%;
+}
+.login-template-logo img{
+   width: 22%;
+   /* height: 10%; */
 }
 .login-template-center{
     border:1px solid black;
@@ -69,7 +70,7 @@
     margin-left:15%;
 }
 .getting-started-template-nav{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     width:28%;
 }
 
