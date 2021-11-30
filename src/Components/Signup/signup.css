@@ -42,7 +42,7 @@
 }
 
 .signup-panel-heading{
-    color: var(--text-color);
+    color: var(--color);
     background-color:#ffffff;
     text-align: center;
     /* border:1px solid black; */
