@@ -21,13 +21,12 @@ export default function Login() {
     const [redirect, setRedirect] = useState('');
     const location = useLocation();
     const history = useHistory();
-    const {setUserData, setTokenData} = useAuth();
+    const {user, setUserData, setTokenData} = useAuth();
     const {  clearCart, cartState, updateCartContextState } = useCartContext();
 
     async function handleSubmit (values) {
         try{
             setLoginIn(true);
-            clearCartState(cartState)
             const loginData = values;
             // socket.emit('login', loginData);
 
@@ -39,14 +38,17 @@ export default function Login() {
                 return;
             }
             if (loggedInUserResponse.data.isNewUser) {
+                setCartStateOnLogin(user, loggedInUserResponse.data.userEmail, clearCartState, cartState);
                 setUserData(loggedInUserResponse.data)
                 history.push(location.pathname);
                 setLoginError(false);
                 setLoginIn(false);
                 setLoginResponseMessage(null);
+               
                 return setRedirect('/getting-started');
             }
             const TOKEN = loggedInUserResponse.token;
+            setCartStateOnLogin(user,loggedInUserResponse.data.userEmail, clearCartState, cartState);
             setUserData(loggedInUserResponse.data);
             setTokenData(TOKEN);
             setLoginError(false);
@@ -58,6 +60,15 @@ export default function Login() {
         } catch(e) {
             setLoginError(true)
         }     
+    }
+    const setCartStateOnLogin = (user, userEmail, clearCartState, cartState) => {
+        // check if the user context email is the same as the logged in user email
+        // if the same leave the cart context as is
+        // else clear the cart context
+        if(user && (user?.userEmail === userEmail)) {
+            return;
+        }
+        return clearCartState(cartState);
     }
     const clearCartState = async (cartState) => {
         const cart = await clearCart(cartState);
