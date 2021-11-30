@@ -14,6 +14,7 @@ import IndexFooter from '../IndexFooter/indexFooter';
 import Notifications from '../NotificationsDropdown/notifications';
 import Connections from '../Connections/connections';
 import Links from '../../Data/links';
+import fling from '../../Images/fling8.png';
 import './template.css';
 
 const settingsSideNavLinks = Links.getSettingsSideNavLinks();
@@ -61,7 +62,7 @@ export function LoginAndSignupTemplate(props) {
         <div className="login-template-container">
 
             <div className="login-template-left">
-                <section className="login-template-logo">LOGO</section>
+                <section className="login-template-logo"><img src={fling} alt="fling" /></section>
             </div>
 
             <div className="login-template-center">
