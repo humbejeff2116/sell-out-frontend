@@ -18,6 +18,7 @@ code {
   --prim-color: rgb(19, 182, 19);
   --sec-color: rgb(255, 84, 84);
   --no-color:#ffffff;
+  --error-color: red;
 
   --opaque-color:#0074e7;
   --opaque-prim-color:rgb(23, 211, 23);
