@@ -18,7 +18,7 @@
     min-height: 60vh;
     border-radius: 6px;
     border:1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     width:65%;
     margin-left:auto;
     margin-right: auto;
@@ -83,13 +83,21 @@
     display: flex;
     /* justify-content: space-between; */
     justify-content: flex-end;
-    padding-top: 0.2%;
+    /* padding-top: 0.2%; */
     width:99%;
     /* border:2px solid red; */
     min-height: 25px;
+    color:var(--error-color); 
 }
 .login-form-error span{
-    color:red;  
+    display: flex;
+    
+}
+.login-form-error  i{
+    display: flex;
+    align-items: center;
+    margin-right: 1%;
+    /* border:1px solid red; */
 }
 .login-panel form input{
     padding:12px 12px 12px 5px;
@@ -97,7 +105,7 @@
     outline:none;
     color: var(--text-color);
     border:1px solid var(--prim-border-color);
-    transition: border-color 0.3s ease;
+    transition: all 0.2s ease;
     caret-color: var(--prim-color);
 }
 .login-panel form input:focus{
