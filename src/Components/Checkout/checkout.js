@@ -18,8 +18,12 @@ export default function Checkout(props) {
   const { user } = useAuth();
 
   const createOrder = async (cartState, sellerTotalSumData, orderId, orderTime) => {
-    const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, orderId, orderTime);
-    // TODO... emit order details to db after buyer has paid
+    try{
+      const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, orderId, orderTime);
+      // TODO... emit order details to db after buyer payment has been deducted
+    }  catch(err) {
+
+    } 
   };
 
   const config = {
@@ -42,11 +46,11 @@ export default function Checkout(props) {
 
   const fwConfig = {
     ...config,
-    text: "Pay with Flutterwave!",
+    text: "Pay with Flutterwave",
     callback: async (response) => {
       alert(JSON.stringify(response));
       console.log(response);
-      // TODO... call the createOrder function here
+      // TODO... call the createOrder function here is response status is 200
       await createOrder(cartState, sellerTotalSumData);
       closePaymentModal(); // this will close the modal programmatically
     },
@@ -65,7 +69,7 @@ export default function Checkout(props) {
       <div className="checkout-body">
         <div className="checkout-content">
           {/* <p>Total items in cart: <span>4</span></p> */}
-          <span>Total payment amount: <span>£30.88</span></span>
+          <span>Total payment amount: <span>£{totalSum}</span></span>
         </div>
         <div className="checkout-para">
           <p>Make payment using</p>
