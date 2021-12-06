@@ -7,6 +7,10 @@
 import React, {useState, useEffect} from 'react';
 import { useField } from 'formik';
 import { ImWarning } from 'react-icons/im';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
+import { BsExclamationCircle } from 'react-icons/bs';
+// BsExclamationCircle
+// AiOutlineExclamationCircle
 
 
 
@@ -34,7 +38,9 @@ export const TextInput = ({ label, labelText, dontCheckError, labelTextClass, er
             <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
-                    <span><i> {<ImWarning/>} </i>{meta.error}</span>
+                    <>
+                    <i> {<BsExclamationCircle/>} </i> <span>{meta.error}</span>
+                    </> 
                 ) : null
             }
             </div>
@@ -68,7 +74,9 @@ export const TextAreaInput = ({ label, labelText, labelTextClass, errorClass, la
               <div className={errorClass}>
               {
                   (meta.touched && meta.error ) ? (
-                      <span><i> {<ImWarning/>} </i>{meta.error}</span>
+                    <>
+                    <i> {<BsExclamationCircle/>} </i> <span>{meta.error}</span>
+                    </>
                   ) : null
               }
               </div>
@@ -98,7 +106,9 @@ export const PasswordInput = ({ label, errorClass, labelClassName, ...props }) =
                   <div className={errorClass}>
                     {
                         (meta.touched && meta.error ) ? (
-                            <span><i> {<ImWarning/>} </i>{meta.error}</span>
+                           <>
+                           <i> {<BsExclamationCircle/>} </i> <span>{meta.error}</span>
+                           </> 
                         ) : null
 
                     }
@@ -155,7 +165,9 @@ export const Select = ({ label, errorClass, labelClassName, selectClassName, ...
         <div className={errorClass}>
         {
             (meta.touched && meta.error ) ? (
-                <span><i> {<ImWarning/>} </i>{meta.error}</span>
+                <>
+                <i> {<BsExclamationCircle/>} </i> <span>{meta.error}</span>
+                </> 
             ) : null
         }
         </div>
@@ -200,7 +212,9 @@ export const  AnimSelect = ({ label, errorClass, labelClassName, selectClassName
         <div className={errorClass}>
             {
                 (meta.touched && meta.error ) ? (
-                    <span><i> {<ImWarning/>} </i>{meta.error}</span>
+                    <>
+                    <i> {<BsExclamationCircle/>} </i> <span>{meta.error}</span>
+                    </> 
                 ) : null
 
             }
@@ -208,27 +222,34 @@ export const  AnimSelect = ({ label, errorClass, labelClassName, selectClassName
         </>
     )
 }
-
-export const FileInput = ({ label, errorClass, labelClassName, ...props }) => {
+//  file input inspired by https://codepen.io/softopia/pen/LMmJLz
+export const FileInput = ({ label, errorClass, labelClassName, labelSpanClassName, ...props }) => {
 
     const [field, meta] = useField(props);
   
     return (
-  
       <>
-          <div className={labelClassName}>
-              <label htmlFor={props.id || props.name}>{label}</label>
-          </div>
-              <input className="product-images" {...field} {...props} />
-              <div className={errorClass}>
-              {
-                  (meta.touched && meta.error ) ? (
-                      <span><i> {<ImWarning/>} </i>{meta.error}</span>
-                  ) : null
-              }
-              </div>
+        <label className={labelClassName}>
+           {
+               props.numberofimages > 0 && (
+                <span className="length">{props.numberofimages}</span>
+               )
+           }
+            <i>{props.icon}</i>
+            <span className={labelSpanClassName}>
+            {label}
+            </span>
+            <input className={ props.inputClassName || "product-images" } type="file" {...field} {...props} />
+        </label>
+        <div className={errorClass}>
+        {
+            (meta.touched && meta.error ) ? (
+                <span><i> {<ImWarning/>} </i>{meta.error}</span>
+            ) : null
+        }
+        </div>
       </>
   
     );
   
-  };
+}
