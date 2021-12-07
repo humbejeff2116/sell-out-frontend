@@ -19,6 +19,7 @@ import {
     OpenComment,
     Star,
     ProfileAvatar,
+    Heart,
 
 } from './Fragments/productFragments';
 import {  AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
@@ -32,6 +33,8 @@ export  function DisplayedProduct(props) {
     const [starsUserRecieved, setStarsUserRecieved] = useState([]);
     const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
+    const [likesProductRecieved, setLikesProductRecieved] = useState([]);
+    const [userLikedProduct, setUserLikedProduct] = useState(false);
     const { product, panelClassName, productCommentPanelName } = props;
     const { user } = useAuth();
 
@@ -41,6 +44,25 @@ export  function DisplayedProduct(props) {
         } 
         setStarsUserRecieved(product.starsUserRecieved);
     }, [product, user]);
+
+    // useEffect(() => {
+    //     setLikesProductRecieved(product.likesProductRecieved);
+    // }, [ product.likesProductRecieved ]);
+
+    // useEffect(() => {
+    //     const checkIfUserLikedProduct = (user, likes) => {
+    //         const { userEmail } = user;
+    //         for (let i = 0; i < likes.length; i++ ) {
+    //             if (likes[i].likeGiverEmail === userEmail) {
+    //                 setUserLikedProduct(true);
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     if(user) {
+    //         checkIfUserLikedProduct(user, product.likesProductRecieved);
+    //     }    
+    // }, [user, product.likesProductRecieved]);
 
     const setStarOnLoad = (user, product, callback) => {
         const userEmail = user.userEmail;
@@ -60,7 +82,7 @@ export  function DisplayedProduct(props) {
     const starSeller = (product, user, star) => {
         
         if (!star) {
-            if(user) {
+            if (user) {
                 const addeStar = {
                     star: star, 
                     starGiverEmail: user.userEmail, 
@@ -93,25 +115,43 @@ export  function DisplayedProduct(props) {
         }
         socket.emit('starSeller', data );
     }
-    
+
+    const likeProduct = (product, user) => {
+        const data = {
+            product: product,
+            user: user,
+        }
+        if (user) {
+            const like = { likeGiverEmail: user.userEmail, likeGiverId: user.id, likeGiverFullName: user.fullName }
+            let likedProduct = false;
+            for (let i = 0; i < likesProductRecieved.length; i++) {
+                if (likesProductRecieved[i].likeGiverEmail === user.userEmail) {
+                    likedProduct = true;
+                    break;
+                }
+            }
+            if (likedProduct) {
+                setUserLikedProduct(false);
+                setLikesProductRecieved(currentState => currentState.filter(like => like.likeGiverEmail !== user.userEmail ));
+                socket.emit('likeProduct', data );
+                return;
+            }
+            setUserLikedProduct(true);
+            setLikesProductRecieved([...likesProductRecieved, like]);
+            socket.emit('likeProduct', data );
+            return;
+        }
+        socket.emit('likeProduct', data );
+    }
+
     const openCommentBox = () => {
         setShowComment(true);
     }
     const closeCommentBox = () => {
         setShowComment(false);
-    }
-    
-    let imageComponent = null;
+    }  
+    let imageComponent =  <SingleImageComponent product={product} image={product.productImages[0]}/>;
 
-    if (product.productImages.length === 1) {
-        imageComponent = <SingleImageComponent image={product.productImages}/>
-    }
-    if (product.productImages.length === 2) {
-        imageComponent = <DoubleImageComponent images={product.productImages}/>
-    }
-    if (product.productImages.length === 3) {
-        imageComponent = <TrippleImageComponent images={product.productImages}/>
-    }
     // if(showMobileComment) {
     //     // return (
     //     //     <CommentBox 
@@ -129,19 +169,19 @@ export  function DisplayedProduct(props) {
             <ModalComment  
             handleClose={closeCommentBox}
 
-            modalDisplayedProduct={
+            modalDisplayedProduct= {
                 <ModalProduct
                 product={product}
                 ProductPanelClassName="modal-comment-product-panel"
 
                 />
             }
-            commentBox={
+            commentBox= {
                 <CommentBox
                 product={product}
                 closeCommentBox={closeCommentBox}
                 // productCommentPanelName="modal-product-panel"
-                commentBoxPanelClassName="modal-comment-box-panel"
+                commentBoxPanelClassName= "modal-comment-box-panel"
                 />
             }
             >
@@ -177,9 +217,14 @@ export  function DisplayedProduct(props) {
 
             <div className="index-product-reaction-panel">
                 <div className="index-product-reaction-star">
-                    <AiOutlineHeart className="nav-icon"/>
-                    </div>
-               
+                   <Heart
+                   userLikedProduct={userLikedProduct}
+                   likeProduct={likeProduct}
+                   product={product}
+                   user={user}
+                   likesProductRecieved={likesProductRecieved}
+                   />
+                </div>
                 <OpenComment openCommentBox={openCommentBox}  />
             </div>
         </div>
