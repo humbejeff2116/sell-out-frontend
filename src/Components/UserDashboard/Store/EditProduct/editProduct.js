@@ -12,32 +12,10 @@ import {Link} from 'react-router-dom'
 import {TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../../../Formik/formik';
 import {  BiEdit} from "react-icons/bi";
 import { RiAddFill, RiCloseLine, RiSave2Line} from "react-icons/ri";
+import useViewContext from '../../../../Context/viewContext/context';
 import './editProduct.css';
 
-const mockProduct = [
-    {
-        userId: 2234343,
-        userName: "hummbe jeffrey",
-        userEmail: "humbejeff@gmail.com",
-        userProfilePicture: [],
-        productId: 232323,
-        productName: "short nikka",
-        productCategory: "Furniture",
-        productType: "Chairs",
-        productCountry: "Nigeria",
-        productState: "Benue",
-        productUsage: "Never used",
-        productCurrency: "Naira",
-        productPrice: "200",
-        productDiscount: "",
-        productContactNumber: "334039438493",
-        productImages: [{}],
-        stars: [],
-        unstars: [],
-        comments: [],
-        interests: []
-    },
-]
+
 const categoryDataSet = [
     {
         category:"Electronics",
@@ -70,26 +48,37 @@ const transformProductData = async (product) => {
 
 export default function EditProduct(props) {
     const [editProduct, setEditProduct] = useState([]);
+    const { viewState, setViewState } = useViewContext();
    
     let EditProductComponent;
 
     useEffect(()=> {
-        transformProductData(mockProduct)
-        .then(product => {
-            console.log("product is ",product)
-            setEditProduct(product);
-        })
-    },[]);
+        if (viewState) {
+            transformProductData(viewState)
+            .then(product => {
+                setEditProduct(product);
+            })
+        }    
+    },[viewState]);
+    
+    useEffect(()=> {
+
+       return ()=> {
+        setViewState(null)
+       }
+    },[setViewState]);
 
     if (editProduct.length) {
-        EditProductComponent = <EditProductCompWrapper 
-                                product={mockProduct}
-                                images ={mockProduct.productImages}
-                                />;
+        
+        EditProductComponent = (
+            <EditProductCompWrapper 
+            product={viewState}
+            images ={viewState.productImages}
+            />
+        );
 
     } else {
-        EditProductComponent = <EmptyEditProductComp/>;
-
+        EditProductComponent = ( <EmptyEditProductComp/> );
     }
     return (
         <div className="placed-orders-container">
@@ -131,7 +120,6 @@ function EditProductCompWrapper(props) {
                 />
             )
         }
-       
         </div>
             <div className="store-product-edit-image-container">
             <p>product image</p>
