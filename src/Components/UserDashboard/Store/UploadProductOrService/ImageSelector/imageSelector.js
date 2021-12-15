@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { FileInput } from '../../../../Formik/formik';
@@ -7,18 +7,29 @@ import { BsExclamationCircle, } from 'react-icons/bs';
 
 
 
- export default function ProductImagesSelector({productImages,numberofimages, handleInputChange, handleSubmit, goBack, uploadingProduct, uploadingError, }) {
+
+    export default function ProductImagesSelector({
+        productImages,
+        numberofimages, 
+        handleInputChange, 
+        handleSubmit, 
+        goBack, 
+        uploadingProduct, 
+        uploadingError,
+        fileInputRef 
+    }) {
+    let labelClass = numberofimages ? "upload-images-label contains" : "upload-images-label";
     return (
+
         <div>
         <div className="upload-form-panel-heading">
             <p>NOTE:</p>
             <p>In order to enable buyers properly view your product,  
                 atleast three(3) images of the product taken from 
-                different angles/views should be selected below.
+                different angles/views should be selected.
             </p>
         </div>
             
-
         <Formik 
          initialValues = {{
             productImages: '',
@@ -35,26 +46,33 @@ import { BsExclamationCircle, } from 'react-icons/bs';
                         
                                 <FileInput
                                     label="Select Product Images"
-                                    labelClassName="upload-images-label"
+                                    labelClassName={ labelClass }
                                     labelSpanClassName="title"
                                     numberofimages = { numberofimages }
                                     name="productImages"
                                     type="file"
-                                    // TODO... replace icon with a proper image icon
+                                    // TODO... replace icon with a proper image icon 
                                     icon="Icon"
                                     multiple ="multiple"
                                     onChange ={ handleInputChange }
+                                    ref={ fileInputRef }
                                 
                                     errorClass="upload-form-textarea-error"
                                 />
+                                
                         </div> 
                     </div>
+                  
+                    <div className="upload-product-preview-images-container">
                     {
-                        productImages && productImages.length && (
-                            <ImagePreview productImages={productImages} />
-                        ) 
+                        (productImages && productImages.length > 0) ? (
+                            productImages.map((dataurl, i)=>
+                                <ImagePreview key = {i} { ...dataurl }/>
+                            )   
+                        ) : "" 
                     }
-
+                    </div>
+                    
                     <div className="upload-form-button-container">
                         <div className="upload-form-back-button-wrapper">
                             <button onClick={ goBack }>Back</button>
@@ -64,8 +82,8 @@ import { BsExclamationCircle, } from 'react-icons/bs';
                                 
                                 {
                                     uploadingProduct ? <span>Uploading Product...</span> : 
-                                    uploadingError ? <><BsExclamationCircle/> <span>Submit</span></> :
-                                    <span>Submit</span>
+                                    uploadingError ? <><BsExclamationCircle/> <span>Upload</span></> :
+                                    <span>Upload</span>
                                 }
                             </button>
                         </div>
@@ -74,34 +92,16 @@ import { BsExclamationCircle, } from 'react-icons/bs';
                 );
             }}
         </Formik>
-
-
-
         </div>
     )      
 }
 
-function  ImagePreview({productImages}) {
+function  ImagePreview({ dataurl }) {
+ 
     return (
-        <div className="upload-product-preview-images-container">
-            {
-                productImages && productImages.length && productImages.map((image, i) => 
-                <ImageWrapper key={i} {...image} />
-                ) 
-            }
-        </div>
-    )
-}
-
-
-function ImageWrapper({src}) {
-    return (
+      
         <div className="upload-product-preview-image-wrapper">
-            <img src = { src } alt="product" />
-        </div>
+            <img src = { dataurl } alt="product" id="preview"/>
+        </div>   
     )
 }
-
-
-
-
