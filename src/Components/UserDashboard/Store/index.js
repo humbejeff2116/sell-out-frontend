@@ -6,11 +6,11 @@
 import EditProduct from './EditProduct/editProduct';
 import Products from './Products/products';
 import StoreSettings from './StoreSettings/storeSettings';
-import UploadProductOrService from './UploadProductOrService/uploadProduct';
+import UploadProduct from './UploadProductOrService/uploadProduct';
 
 
 export {
-    UploadProductOrService,
+    UploadProduct,
     EditProduct,
     Products,
     StoreSettings,
