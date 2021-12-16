@@ -9,6 +9,7 @@ import { useField } from 'formik';
 import { ImWarning } from 'react-icons/im';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { BsExclamationCircle } from 'react-icons/bs';
+import { insertCommasToNumber } from '../../Library/index';
 // BsExclamationCircle
 // AiOutlineExclamationCircle
 
@@ -50,19 +51,50 @@ export const TextInput = ({ label, labelText, dontCheckError, labelTextClass, er
 
 };
 
-export const TextAreaInput = ({ label, labelText, labelTextClass, errorClass, labelClassName, ...props }) => {
+export const TextAreaInput = ({ 
+    label, 
+    labelText, 
+    labelTextClass, 
+    errorClass, 
+    labelClassName, 
+    formatValue, 
+    formatedValueClass, 
+    ...props 
+}) => {
 
     const [field, meta] = useField(props);
+    const [formatedValue, setFormatedValue] = useState("")
+    useEffect(()=> {
+        if (formatValue) {
+            if ( meta.value) {
+               return setInputValue(meta.value)
+            } else if(meta.touched && meta.error) {
+                return setInputValue("")
+            }   
+        }   
+    }, [formatValue, meta.touched, meta.value, meta.error]);
+    
+    const setInputValue = (value) => {
+        let formatedValue = insertCommasToNumber(value);
+        return setFormatedValue(formatedValue)
+    }
   
     return (
   
       <>
           <div className={labelClassName}>
             <label htmlFor={props.id || props.name}>
-                {label}
+                {label}{ (formatValue && formatedValue) && (<span>:</span>) }
+
                 <span className={ labelTextClass || ""}>{labelText || ""}</span>
             </label>
-              
+                {
+                    (formatValue && formatedValue) ? (
+                        <span className={ formatedValueClass || "" }>
+                            {formatedValue}
+                        </span>
+                    ) : "" 
+                }
           </div>
               <textarea 
                 className= {
@@ -222,9 +254,9 @@ export const  AnimSelect = ({ label, errorClass, labelClassName, selectClassName
         </>
     )
 }
-//  file input inspired by https://codepen.io/softopia/pen/LMmJLz
-export const FileInput = ({ label, errorClass, labelClassName, labelSpanClassName, ...props }) => {
 
+//  file input inspired by https://codepen.io/softopia/pen/LMmJLz
+export const FileInput = React.forwardRef(({ label, errorClass, labelClassName, labelSpanClassName, ...props}, ref) => {  
     const [field, meta] = useField(props);
   
     return (
@@ -239,7 +271,7 @@ export const FileInput = ({ label, errorClass, labelClassName, labelSpanClassNam
             <span className={labelSpanClassName}>
             {label}
             </span>
-            <input className={ props.inputClassName || "product-images" } type="file" {...field} {...props} />
+            <input className={ props.inputClassName || "product-images" } ref ={ref}  {...field} {...props} />
         </label>
         <div className={errorClass}>
         {
@@ -251,5 +283,4 @@ export const FileInput = ({ label, errorClass, labelClassName, labelSpanClassNam
       </>
   
     );
-  
-}
+});
