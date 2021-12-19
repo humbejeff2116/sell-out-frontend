@@ -126,7 +126,7 @@
     font-weight: bold;
     color: var(--color);
 }
-.getting-started-contact-body form input, textarea{
+.getting-started-contact-body form input,.getting-started-contact-body form textarea{
     width:96%; 
     padding:12px 12px 12px 5px;
     border:1px solid var(--prim-border-color);
