@@ -8,6 +8,7 @@ import { GetStartedContextProvider } from '../Context/gettingStartedContextProvi
 import { CartContextProvider } from '../Context/Cart/cartContextProvider';
 import { UploadProductContextProvider } from '../Context/UploadProductContext/uploadProductContextProvider';
 import { ViewContextProvider } from '../Context/viewContext/viewContextProvider';
+import { OrderContextProvider } from '../Context/Order/orderContextProvider';
 import AppRoutes from '../Routes/appRoutes';
 
 export default function App() {
@@ -18,7 +19,9 @@ export default function App() {
         <ViewContextProvider>
         <CartContextProvider>
         <UploadProductContextProvider>
-        <AppRoutes/>
+        <OrderContextProvider>
+            <AppRoutes/>
+        </OrderContextProvider>
         </UploadProductContextProvider>
         </CartContextProvider>
         </ViewContextProvider>
