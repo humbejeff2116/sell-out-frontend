@@ -4,6 +4,11 @@
 
 
 import React, {useEffect, useState} from 'react';
+import { getOrders, confirmDelivery } from '../../../../Utils/http.services';
+import useAuth from '../../../../Context/context';
+import useOrder from '../../../../Context/Order/context';
+import {ModalBox} from '../../../ModalComments/modalComments';
+import socket from '../../../Socket/socket';
 import image from '../../../../Images/avatar.jpg';
 import {FaRegEye} from 'react-icons/fa';
 import {GiConfirmed} from 'react-icons/gi';
@@ -14,21 +19,119 @@ import './placedOrders.css';
  
 
 
-const placedOrders = [
+const mockPlacedOrders = [
     {
         productsBoughtFromSeller:[{},{}]
     }
 ]
 
 export default function PlacedOrdersContainer(props) {
-    useEffect(() => {
-      
-        return () => {
+    const [showConfirmOrderModal, setShowConfirmOrderModal] = useState(false);
+    const [orderToConfirm, setOrderToConfirm] = useState(null);
+    const [confirmingOrder, setConfirmingOrder] = useState(false);
+    const [confirmOrderResponse, setConfirmOrderResponse] = useState("");
+    const [confirmOrderError,setConfirmOrderError] = useState(false)
+    const { user } = useAuth();
+    const {placedOrders, setOrders  } = useOrder();
+    let PlaceOrdersComponent;
 
+    useEffect(() => {
+        let mounted = true;
+         // TODO... remove useGetUserFunctionality when ready to use functionality
+         let useGetUserFunctionality = false
+        const getUserOrder = async () => {
+            try {
+                const orders = await getOrders(user);
+                setOrders(orders)
+            }catch(err) {
+                console.error(err.stack)
+            }  
+    
         }
-    }, [])
+         // TODO... remove useGetUserFunctionality when ready to use functionality
+        if ((mounted && user & useGetUserFunctionality ) && !placedOrders) {
+            getUserOrder(user);
+        }  
+        socket.on('productDataChange', function() {
+            if (mounted && user) {
+                getUserOrder(user);
+            }         
+        });
+
+        return ()=> {
+            mounted = false;
+        }
+    }, [user, placedOrders, setOrders]);
+ 
+    const closeConfirmDeliveryModal = () => {
+        setShowConfirmOrderModal(false);
+        setOrderToConfirm(null);
+        setConfirmingOrder(true)
+    }
+
+    const openConfirmDeliveryModal = (order) => {
+        setOrderToConfirm(order);
+        setShowConfirmOrderModal(true)
+
+    }
+
+    const confirmOrderDelivery = async (order, user) => {
+        setConfirmingOrder(true);
+        const confirmDeliveryResponse = await confirmDelivery({ order, user });
+        if (confirmDeliveryResponse.error) {
+            setConfirmOrderResponse(confirmDeliveryResponse.message);
+            setConfirmOrderError(true);
+            setConfirmingOrder(false);
+            return;
+        }
+
+        setConfirmOrderResponse(confirmDeliveryResponse.message);
+        setConfirmingOrder(false);
+        setConfirmOrderError(false);
+    }
+
+    const cancelConfirmDelivery = () => {
+        setShowConfirmOrderModal(false);
+        setOrderToConfirm(null);
+
+    }
+    if (placedOrders && placedOrders?.length > 0) {
+        PlaceOrdersComponent = (
+            
+            <PlacedOrdersWrapper
+            placedOrders = { placedOrders }
+            openConfirmDeliveryModal = { openConfirmDeliveryModal }
+            />
+
+        )
+    } else {
+        PlaceOrdersComponent = (
+
+            <NoPlacedOrders />
+
+        )
+
+    }
+   
     return (
         <div className="placed-orders-container">
+            {
+                (showConfirmOrderModal) && (
+                    <ModalBox 
+                    handleModal={closeConfirmDeliveryModal} 
+                    modalContainerWrapperName={"cart-checkout-modal-container-wrapper"}
+                    modalContainer={"cart-checkout-modal-container"}
+                    >
+                       <ConfirmDeliveryModalChild
+                       confirmDelivery = { confirmOrderDelivery }
+                       cancelConfirmDelivery = { cancelConfirmDelivery }
+                       order = { orderToConfirm }
+                       user = { user }
+                       />
+                    </ModalBox>
+                )
+
+            }
             <div  className="placed-orders-header">
                 <h3>Placed Orders</h3>
             </div>
@@ -48,13 +151,23 @@ export default function PlacedOrdersContainer(props) {
 
                 </div>
             </div>
-            {
-                placedOrders.map((order, i) =>
-                    <PlacedOrders key={i} {...order} />
-                )
-            }
+            { PlaceOrdersComponent }
            
         </div>
+    )
+}
+
+function PlacedOrdersWrapper({placedOrders, openConfirmDeliveryModal}) {
+    return (
+
+        <>
+        {
+            placedOrders.map((order, i) =>
+                <PlacedOrders key={i} {...order} openConfirmDeliveryModal = { openConfirmDeliveryModal }/>
+            )
+        }
+        </>
+
     )
 }
 
@@ -75,9 +188,9 @@ function PlacedOrders(props) {
                 </div>
             </div> 
             <div  className="placed-order-container">
-                {
-                props.productsBoughtFromSeller && props.productsBoughtFromSeller.map((order, i) =>
-                    <PlacedOrder key={i} {...order} />
+            {
+                (props.productsBoughtFromSeller && props.productsBoughtFromSeller.length > 0) && props.productsBoughtFromSeller.map((order, i) =>
+                    <PlacedOrder key={i} order = {order} openConfirmDeliveryModal = {props.openConfirmDeliveryModal} />
                 )
             }
             </div>
@@ -87,7 +200,8 @@ function PlacedOrders(props) {
 }
 
 function PlacedOrder(props) {
-    let deliveryStatusSpanClass = props.delivered ? "delivered" : "pending"
+    let deliveryStatusSpanClass = props.delivered ? "delivered" : "pending";
+ 
     return (
         <div className="placed-order">
         <div className="placed-order-details-container">
@@ -138,7 +252,7 @@ function PlacedOrder(props) {
                 </button>
             </div>
             <div className="placed-order-confirm-delivery-button">
-                <button>
+                <button onClick = {()=> props.openConfirmDeliveryModal(props.order)}>
                     {/* <GiConfirmed className="nav-icon dashboard"/> */}
                     Confirm delivery
                 </button>
@@ -172,6 +286,40 @@ function ViewProductDetails(props) {
                     </>
                 )
             } 
+        </div>
+    )
+}
+
+
+function ConfirmDeliveryModalChild(props) {
+    return (
+        <div className="cart-checkout-modal-body-container">
+        <div className="cart-checkout-modal-content">
+            <p>
+                Are you sure you want to confirm delivery?
+            </p>
+        </div>
+        <div className="cart-checkout-modal-buttons-container">
+            <div className="cart-checkout-modal-button">
+                <button onClick = { props.cancelConfirmDelivery }>Cancel</button>
+            </div>
+            <div className="cart-checkout-modal-button">
+               
+                <button onClick = { ()=> props.confirmDelivery(props.order, props.user) }>
+                    Confirm
+                </button>
+                   
+            </div>
+        </div>
+    </div>
+    )
+
+}
+
+function NoPlacedOrders(props) {
+    return (
+        <div>
+            not paced orders yet
         </div>
     )
 }
