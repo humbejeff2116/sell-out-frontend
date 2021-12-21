@@ -4,7 +4,10 @@
 
 
 import React, {useEffect, useState} from 'react';
+import { getOrders } from '../../../../Utils/http.services';
 import useAuth from '../../../../Context/context';
+import useOrder from '../../../../Context/Order/context';
+import socket from '../../../Socket/socket';
 import image from '../../../../Images/avatar.jpg';
 import {FaRegEye} from 'react-icons/fa';
 import { GoKebabHorizontal} from 'react-icons/go';
@@ -19,12 +22,52 @@ const soldProducts = [
 ]
 
 export default function SoldProducts(props) {
+    const { user } = useAuth();
+    const { soldProducts, setOrders } = useOrder();
+    let SoldProductsComponent;
     useEffect(() => {
-      
-        return () => {
-
+        let mounted = true;
+         // TODO... remove useGetUserFunctionality when ready to use functionality
+         let useGetUserFunctionality = false
+        const getUserOrder = async () => {
+            try {
+                const orders = await getOrders(user);
+                setOrders(orders)
+            }catch(err) {
+                console.error(err.stack)
+            }  
+    
         }
-    }, [])
+         // TODO... remove useGetUserFunctionality when ready to use functionality
+        if ( (mounted && user && useGetUserFunctionality ) && !soldProducts ) {
+            getUserOrder(user);
+        }  
+        socket.on('productDataChange', function() {
+            if (mounted && user) {
+                getUserOrder(user);
+            }         
+        });
+
+        return ()=> {
+            mounted = false;
+        }
+    }, [user, soldProducts, setOrders]);
+    if (soldProducts && soldProducts?.length > 0) {
+        SoldProductsComponent = (
+            
+            <SoldProductsCompWrapper
+            soldProducts = { soldProducts }
+            />
+
+        )
+    } else {
+        SoldProductsComponent = (
+
+            <NoSoldProducts/>
+
+        )
+
+    }
     return (
         <div className="placed-orders-container">
             <div  className="placed-orders-header">
@@ -54,22 +97,32 @@ export default function SoldProducts(props) {
                     </form>
                 </div>
             </div>
-            {
-                //  {/* TODO... replace buyerName with buyer name from order */}
-                soldProducts.map((order, i) =>
-                    <SoldProductsComp 
-                    key={i} 
-                    {...order} 
-                    orderProfile={ 
-                        <OrderProfile 
-                        {...order}
-                        buyerName={"Jeffrey"}
-                        />
-                    }
-                    />
-                )
-            }
+            { SoldProductsComponent }
         </div>
+    )
+}
+
+function SoldProductsCompWrapper({soldProducts}) {
+    return (
+
+        <>
+        {
+        //  {/* TODO... replace buyerName with buyer name from order */}
+        soldProducts.map((order, i) =>
+            <SoldProductsComp 
+            key={i} 
+            {...order} 
+            orderProfile = { 
+                <OrderProfile 
+                {...order}
+                buyerName={"Jeffrey"}
+                />
+            }
+            />
+        )
+        }
+        </>
+
     )
 }
 
@@ -294,6 +347,16 @@ function ViewProductDetails(props) {
             }
 
            
+        </div>
+    )
+
+}
+
+
+function NoSoldProducts(props) {
+    return (
+        <div>
+            no sold products
         </div>
     )
 
