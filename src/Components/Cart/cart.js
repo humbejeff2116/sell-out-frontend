@@ -18,12 +18,12 @@ import {
 import './cart.css';
 
 export default function Cart() {
-    const { user } = useAuth();
-    const { cartState, cartItems } = useCartContext();
+    const { cartItems } = useCartContext();
     let CartProductsComponent;
+    
     if (cartItems.length > 0) {
         CartProductsComponent = (
-            <CartProductsWrapper cartData={cartItems}/>
+            <CartProductsWrapper cartData = { cartItems } />
         );  
     } else {
         CartProductsComponent = (
@@ -32,7 +32,7 @@ export default function Cart() {
     }
     return (
         <div className="cart-container">
-            {CartProductsComponent}
+            { CartProductsComponent }
         </div>
     )
 }
@@ -46,9 +46,19 @@ function CartProductsWrapper(props) {
     const [placedOrderSuccess, setPlacedOrderSuccess] = useState(false);
     const [redirect, setRedirect] = useState("");    
     const {
-       totalSum
+        cartState,
+        cartItems,
+        totalSum
     } = useCartContext();
     let CheckoutModalChildComp;
+    useEffect(()=> {
+        return ()=> {
+            if (cartItems?.length > 0 && cartState?.length > 0) {
+                localStorage.setItem("cart", JSON.stringify(cartState));
+            }   
+        }
+    },[cartState, cartItems]);
+
     const closeCartModal = () => {
         setShowCartModal(false);
         setOfflinePaymentMethod(false);
@@ -274,8 +284,13 @@ function CartProduct(props) {
 
     const removeProduct = async (cartState, cartItems, sellerEmail, productId, user) => {
         const updatedState = await removeProductFromCart(cartState, removeFromCartActionPayload(sellerEmail, productId));
-
+        const updatedCartItems = updatedState.flatMap(item => item.productsUserBoughtFromSeller);
+        if (updatedCartItems.length < 1) {
+            localStorage.removeItem('cart');
+            return updateCartContextState([], user);
+        }
         updateCartContextState(updatedState, user);
+        localStorage.setItem('cart', JSON.stringify(updatedState));
         if(cartItems.length > 0) {
             window.scrollTo(0,0)
         }
