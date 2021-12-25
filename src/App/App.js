@@ -9,6 +9,7 @@ import { CartContextProvider } from '../Context/Cart/cartContextProvider';
 import { UploadProductContextProvider } from '../Context/UploadProductContext/uploadProductContextProvider';
 import { ViewContextProvider } from '../Context/viewContext/viewContextProvider';
 import { OrderContextProvider } from '../Context/Order/orderContextProvider';
+import { EditProductContextProvider } from '../Context/EditProduct/editProductContextProvider';
 import AppRoutes from '../Routes/appRoutes';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
         <AuthContextProvider >
         <GetStartedContextProvider>
         <ViewContextProvider>
+        <EditProductContextProvider >
         <CartContextProvider>
         <UploadProductContextProvider>
         <OrderContextProvider>
@@ -24,6 +26,7 @@ export default function App() {
         </OrderContextProvider>
         </UploadProductContextProvider>
         </CartContextProvider>
+        </EditProductContextProvider>
         </ViewContextProvider>
         </GetStartedContextProvider>
         </AuthContextProvider > 
