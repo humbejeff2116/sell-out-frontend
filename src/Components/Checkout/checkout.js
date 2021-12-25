@@ -1,31 +1,36 @@
-import React from "react";
+
+
+import React, { useState } from "react";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import socket from '../Socket/socket';
 import useAuth from "../../Context/context";
 import useCartContext from "../../Context/Cart/cartContext";
 import BackButton from '../BackButton/backButton';
+import { createOrder } from '../../Utils/http.services';
 import "./checkout.css";
 
 export default function Checkout(props) {
+  const [placedOrderMessage, setPlacedOrderMessage] = useState('');
+  const [error, setError] = useState(null);
   const {
     cartState,
-    cartItems,
     totalSum,
-    cartTotalProducts,
     sellerTotalSumData,
     createOrderData,
   } = useCartContext();
   const { user } = useAuth();
+  let CheckoutComponent;
 
-  const createOrder = async (cartState, sellerTotalSumData, orderId, orderTime) => {
-    try{
-      const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, orderId, orderTime);
-      // TODO... emit order details to db after buyer payment has been deducted
+  const placeOrder = async (cartState, sellerTotalSumData, user, orderId, orderTime) => {
+    try {
+      const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, user, orderId, orderTime);
+      const placedOrder = await createOrder(buyersPreOrder);
+      setPlacedOrderMessage(placedOrder?.message);
     }  catch(err) {
 
     } 
   };
-
+// TODO... return config if user is avalaible;
   const config = {
     public_key: process.env.REACT_APP_FLUTTER_WAVE_KEY,
     tx_ref: Date.now(),
@@ -50,12 +55,24 @@ export default function Checkout(props) {
     callback: async (response) => {
       alert(JSON.stringify(response));
       console.log(response);
-      // TODO... call the createOrder function here is response status is 200
-      await createOrder(cartState, sellerTotalSumData);
+      // TODO... call the placeOrder function here if response status is 200
+      await placeOrder(cartState, sellerTotalSumData, user);
       closePaymentModal(); // this will close the modal programmatically
     },
     onClose: () => {},
   };
+  if (cartState.length > 0) {
+    CheckoutComponent = (
+      <CheckoutComp
+      placedOrderMessage = { placedOrderMessage }
+      totalSum = { totalSum }
+      />
+    )
+  } else {
+    CheckoutComponent = (
+      <EmptyCheckout/>
+    )
+  }
 
   return (
     <div className="checkout-container">
@@ -65,10 +82,25 @@ export default function Checkout(props) {
       <div className="checkout-back-button-container">
         <BackButton buttonWrapperClassName="checkout-back-button"/>
       </div>
+      { CheckoutComponent }
+    </div>
+  );
+}
+
+function CheckoutComp({ placedOrderMessage, totalSum }) {
+  return (
+    <>
+      <div>
+      {
+          placedOrderMessage && (
+            <MessagePopup message = { placedOrderMessage } />
+          )
+        }
+
+      </div>
 
       <div className="checkout-body">
         <div className="checkout-content">
-          {/* <p>Total items in cart: <span>4</span></p> */}
           <span>Total payment amount: <span>£{totalSum}</span></span>
         </div>
         <div className="checkout-para">
@@ -77,6 +109,7 @@ export default function Checkout(props) {
 
         <div className="checkout-button-wrapper">
           <div className="checkout-button">
+            {/* TODO... replace button with flutterwave button */}
           <button>Flutterwave</button>
           {/* <FlutterWaveButton {...fwConfig} /> */}
           </div>
@@ -93,6 +126,25 @@ export default function Checkout(props) {
         </div>
 
       </div>
+    </>
+  )
+}
+
+
+function MessagePopup({ message }) {
+  return (
+    <div>
+      <p>{ message }</p>
     </div>
-  );
+  )
+}
+
+
+function EmptyCheckout(props) {
+  return (
+    <div>
+      No itesm in your checkout
+    </div>
+
+  )
 }
