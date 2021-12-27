@@ -31,6 +31,11 @@ export async function getProducts(queryData) {
     }
     return gatewayServerHTTP.get(`/products`);
 }
+export async function getSellerProducts(queryData) {
+    const sellerProducts =  await gatewayServerHTTP.get(`/products/${queryData.userId}/${queryData.userEmail}/${queryData.productCategory}`);
+    const products = sellerProducts.data;
+    return products;
+}
 
 export function createProduct(data) {
     const createProductResponse = gatewayServerHTTP.post(`/product`, data, { headers: { "Content-Type": "multipart/form-data" } } );
@@ -81,13 +86,20 @@ export async function createOrder(data) {
     return createdOrder;
 }
 export async function getOrders(user) {
-    const ordersResponse =  await gatewayServerHTTP.get(`/placed-orders/${user.id}/${user.userEmail}`);
+    const ordersResponse =  await gatewayServerHTTP.get(`/orders/${user.id}/${user.userEmail}`);
     const orders = ordersResponse.data;
     return orders;
 }
 // confirm delivery
 export async function confirmDelivery(data) {
-    const confirmDeliveryResponse =  await gatewayServerHTTP.post(`/placed-orders`, data);
+    const confirmDeliveryResponse =  await gatewayServerHTTP.post(`/confirm-delivery`, data);
     const confirmDelivery = confirmDeliveryResponse.data;
     return confirmDelivery;
+}
+
+// payments
+export async function getPayments(user) {
+    const paymentsResponse =  await gatewayServerHTTP.get(`/payments/${user.id}/${user.userEmail}`);
+    const payments = paymentsResponse.data;
+    return payments;
 }
