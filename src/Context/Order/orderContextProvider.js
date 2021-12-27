@@ -9,11 +9,18 @@ export function OrderContextProvider(props) {
     const [placedOrders, setPlacedOrders] = useState(null);
     const [soldProducts, setSoldProducts] = useState(null);
     const [deliveredProducts, setDeliveredProducts] = useState(null);
-    
-    const setOrders = ({placedOrders, soldProducts, deliveredProducts}) => {
+    const [paymentsMade, setPaymentsMade] = useState(null);
+    const [recievedPayments, setRecievedPayments] = useState(null);
+
+    const setOrders = ({ placedOrders, soldProducts, deliveredProducts }) => {
         setPlacedOrders(placedOrders);
         setSoldProducts(soldProducts);
         setDeliveredProducts(deliveredProducts);   
+    }
+
+    const setPayments = ({ paymentsMade, recievedPayments }) => {
+        setPaymentsMade(paymentsMade);
+        setRecievedPayments(recievedPayments)
     }
 
    
@@ -21,6 +28,9 @@ export function OrderContextProvider(props) {
         placedOrders,
         soldProducts,
         deliveredProducts,
+        paymentsMade,
+        recievedPayments,
+        setPayments,
         setOrders
     }
 

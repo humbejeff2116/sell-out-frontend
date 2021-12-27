@@ -13,6 +13,9 @@ const initialOrderContext = {
     placedOrders: null,
     soldProducts: null,
     deliveredProducts: null,
+    paymentsMade: null,
+    recievedPayments: null, 
+    setPayments: ()=>{}, 
     setOrders: ()=>{},
     
 }
