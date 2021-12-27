@@ -21,25 +21,29 @@ export  function CartContextProvider(props) {
     const [cartTotalNumberOfProducts, setCartTotalNumberOfProducts] = useState(null);
     const [totalSum, setTotatSum] = useState(null);
     const [sellerPaymentData, setSellerPaymentData] = useState(null);
+
     
     useEffect(()=> {
-      const cartProducts =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
-      setCartState(cartProducts);
-        return ()=>{
-        } 
+
+        const cartProducts =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+        const user =  localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+        if (cartProducts.length > 0) {
+            const cartItems = cartProducts.flatMap(item => item.productsUserBoughtFromSeller);
+            if (cartItems.length > 0 && user) {
+                return updateCartContextState(cartProducts, user);
+            } else {
+                return localStorage.removeItem('cart');
+            }
+        }
+         
     }, []);
 
-    useEffect(()=> {
-          return ()=>{
-            //   localStorage.setItem("cart", JSON.stringify(cartState));
-          } 
-    }, [cartState]);
     // function used to update context useState hooks after cart state changes
     const updateCartContextState = (state, user) => {
         const totalSum = state.length ? calculateCartTotalPrice(state) : null;
-        const sellerPaymentData = state.length ? createSellerPaymentData(state, user) : {};
+        const sellerPaymentData = state.length ? createSellerPaymentData(state, user) : null;
         const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : null;
-        const cartItems = state.flatMap(item => item.productsUserBoughtFromSeller);
+        const cartItems =state.length ?  state.flatMap(item => item.productsUserBoughtFromSeller) : [];
         setCartState(state);
         setCartItems(cartItems);
         setTotatSum(totalSum);

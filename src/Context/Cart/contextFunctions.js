@@ -203,7 +203,7 @@ function calculateTotalNumberOfProductsInCart(state = []) {
     totalProducts += allCartProducts.length;
     return totalProducts;
 }
-async function createOrderData(productsUserBought, sellerPaymentData, orderId, orderTime) {
+async function createOrderData(productsUserBought, sellerPaymentData, user, orderId, orderTime) {
     for (let i = 0; i < productsUserBought.length; i++) {
         productsUserBought[i].orderTime = orderTime;
         productsUserBought[i].orderId = orderId;
@@ -214,6 +214,7 @@ async function createOrderData(productsUserBought, sellerPaymentData, orderId, o
         sellerPaymentData[i].orderId = orderId
     }
     return ({
+        user: user,
         order: productsUserBought,
         payments: sellerPaymentData
     })
