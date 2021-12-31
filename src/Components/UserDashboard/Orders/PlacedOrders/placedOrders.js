@@ -52,10 +52,10 @@ export default function PlacedOrdersContainer(props) {
         if ((mounted && user & useGetUserFunctionality ) && !placedOrders) {
             getUserOrder(user);
         }  
-        socket.on('productDataChange', function() {
+        socket.on('orderDataChange', function() {
             if (mounted && user) {
                 getUserOrder(user);
-            }         
+            }             
         });
 
         return ()=> {

@@ -9,17 +9,10 @@ import useAuth from '../../../../Context/context';
 import useOrder from '../../../../Context/Order/context';
 import socket from '../../../Socket/socket';
 import image from '../../../../Images/avatar.jpg';
-import {FaRegEye} from 'react-icons/fa';
-import { GoKebabHorizontal} from 'react-icons/go';
+import { GoKebabHorizontal } from 'react-icons/go';
 import './soldProducts.css';
 import '../PlacedOrders/placedOrders.css';
 
-
-const soldProducts = [
-    {
-        productsBoughtFromSeller:[{},{}]
-    }
-]
 
 export default function SoldProducts(props) {
     const { user } = useAuth();
@@ -42,7 +35,7 @@ export default function SoldProducts(props) {
         if ( (mounted && user && useGetUserFunctionality ) && !soldProducts ) {
             getUserOrder(user);
         }  
-        socket.on('productDataChange', function() {
+        socket.on('orderDataChange', function() {
             if (mounted && user) {
                 getUserOrder(user);
             }         

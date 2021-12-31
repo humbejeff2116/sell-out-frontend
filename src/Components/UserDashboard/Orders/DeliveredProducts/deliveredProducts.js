@@ -42,7 +42,7 @@ export default function DeliveredProducts(props) {
         if ( (mounted && user && useGetUserFunctionality) && !deliveredProducts ) {
             getUserOrder(user);
         }  
-        socket.on('productDataChange', function() {
+        socket.on('orderDataChange', function() {
             if (mounted && user) {
                 getUserOrder(user);
             }         
