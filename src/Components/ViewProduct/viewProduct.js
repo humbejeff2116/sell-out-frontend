@@ -19,6 +19,7 @@ import {
 import useViewContext from '../../Context/viewContext/context';
 import { Star } from '../Product/Fragments/productFragments';
 import { useLocation, useHistory } from 'react-router-dom';
+import { getSellerProducts } from '../../Utils/http.services';
 import BackButton from '../BackButton/backButton';
 
 // import { getProducts } from '../../Utils/http.services';
@@ -131,19 +132,56 @@ const mockProducts = [
 
 export default function ViewProduct() {
     const [sellerProducts, setSellerProducts] = useState([]);
+    const [SimilarProducts, setSimilarProducts] = useState([]);
+    const [noSellerProductsFound, setNoSellerProdcutsFound] = useState(false);
     const [showAddToCartMessage, setShowAddToCartMessage] = useState(false);
     const { viewState, setViewState } = useViewContext();
     const location = useLocation();
+    let BottomProducts;
+
+// effect to get other products of seller
     useEffect(() => {
-       
+        const getBottomProducts = async (queryData) => {
+            try {
+                const bottomProducts = await getSellerProducts(queryData);
+                if (!bottomProducts.sellerProductsFound) {
+                   setNoSellerProdcutsFound(true);
+                   return setSimilarProducts(bottomProducts?.similarProducts);
+                }
+                setNoSellerProdcutsFound(false);
+                return setSellerProducts(bottomProducts?.sellerProducts);
+            } catch(err) {
+                console.error(err.stack)
+            }     
+        }
+        
+        if (viewState) {
+            const queryData = {
+                userId: viewState?.userId,
+                userEmail: viewState?.userEmail,
+                productCategory: viewState?.productCategory,
+            }
+          return getBottomProducts(queryData);
+        }
+        
+        return () => {
+   
+        }
+    }, [viewState]);
+    useEffect(() => {
 
         return () => {
-            if((location.pathname === "/home/view-product")){
+
+            const viewProductLocation = sessionStorage.getItem('view-product-location') ? 
+            sessionStorage.getItem('view-product-location') : null;
+            if (viewProductLocation && viewProductLocation === '/home/view-product') {
                return;
-            } 
-            setViewState(null);  
+            }
+            setViewState(null);
+              
         }
-    }, [location.pathname, setViewState])
+
+    }, [location.pathname, setViewState]);
 
     useEffect(() => {
         let timer = null;
@@ -164,6 +202,22 @@ export default function ViewProduct() {
     const handleAddToCartMessage = (bool) => {
         setShowAddToCartMessage(bool);
     }
+    if (noSellerProductsFound) {
+
+        BottomProducts = (
+            <SimilarProducts/>
+        )
+
+    } else {
+        BottomProducts = (
+
+            <SellerProducts 
+            sellerProducts = { mockProducts || sellerProducts }
+            />
+
+        )
+
+    }
     return (
         <>
         {
@@ -174,7 +228,10 @@ export default function ViewProduct() {
             )
         } 
         <div className="view-product-back-bttn-cntr">
-            <BackButton buttonWrapperClassName="view-product-back-bttn"/>
+            <BackButton 
+            buttonWrapperClassName="view-product-back-bttn" 
+            clearSessionStorageWithKey ={'view-product-location'}
+            />
         </div>
         <div className="view-product-container">
 
@@ -184,7 +241,8 @@ export default function ViewProduct() {
             </div>
 
             <div className="view-product-bottom">
-               <SellerProducts sellerProducts={mockProducts}/>
+                {/* TODO... return other similar products if seller has no other products */}
+              { BottomProducts }
             </div>
 
         </div>
@@ -393,6 +451,14 @@ function SellerProducts(props) {
                     )
             }
             </div>
+        </div>
+    )
+}
+
+function SimilarProducts(props) {
+    return (
+        <div>
+            similar products here
         </div>
     )
 }
