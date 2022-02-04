@@ -1,16 +1,13 @@
 import React from 'react';
 import image from '../../../Images/avatar.jpg';
 import {  AiOutlineStar, AiFillStar,} from 'react-icons/ai';
-import {  BsStar, BsStarFill} from 'react-icons/bs';
-import {  BiMessageAltEdit, BiMessageSquareEdit} from 'react-icons/bi';
+import { BiMessageSquareEdit} from 'react-icons/bi';
 import {  AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 
 
 
 
-
-function OpenComment(props) {
-    const {openCommentBox} =props;
+function OpenComment({ openCommentBox }) {
     return (
         <div className="index-product-reaction-comments">
            < BiMessageSquareEdit onClick={ openCommentBox } className="nav-icon"/>Reviews
@@ -18,8 +15,7 @@ function OpenComment(props) {
     )
 }
 // star
-function Star(props) {
-    const { starCount, starSeller, product, user, starsUserRecieved } = props;
+function Star({ starCount, starSeller, product, user, starsUserRecieved }) {
     const className =  starCount ? "index-product-profile-star filled" : "index-product-profile-star";
     let starIcon;
     if(starCount) {
@@ -28,7 +24,6 @@ function Star(props) {
         starIcon = < AiOutlineStar className="nav-icon" /> 
     }
 
-   
     return (
         <div className={className} onClick={()=> starSeller(product, user, starCount)}>
           {starIcon}
@@ -61,17 +56,16 @@ function Heart({ userLikedProduct, likeProduct, product, user, likesProductRecie
     )
 }
 
-function ProfileAvatar(props) {
-    const { product } = props;
+function ProfileAvatar({ product }) {
     const viewSeller = (product) => {
         // TODO... call view context function to save view id and redirect to view page
-        const { userId } = product;
+        // const { userId } = product;
     }
 
     return (
         <div className="index-product-profile">
-            <img src={image} alt="seller" width="100%" height="auto" />
-            <span onClick={viewSeller(product)}>{product.userName}</span>
+            <img src={ image } alt="seller" width="100%" height="auto" />
+            <span onClick = { viewSeller(product) }> { product.userName } </span>
         </div>
     )
 }
