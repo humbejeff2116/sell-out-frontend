@@ -128,8 +128,15 @@
     color:var(--text-color);
     background-color: var(--no-color);
     border-radius: 6px;
-    /* text-align: center; */
+    transition: all 0.3s ease;
     cursor:pointer;
+}
+.index-search-select-btn select:hover{
+    border:1px solid var(--color);
+}
+.index-search-select-btn select:focus{
+    border:1px solid var(--color);
+    box-shadow: none;
 }
 
 .index-search-form{
@@ -149,6 +156,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }
 
 .index-search-form form{
@@ -158,43 +166,45 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1%; 
+    /* padding: 1%; */
 }
 .index-search-form form input[type="search"]{
     outline: none;
-    width:91%;
-    height: 45px;
-    padding-left: 3%;
+    width:84%;
+    height: 48px;
+    padding: 0 1%;
     font-size: 0.9em;
-    border-top:1px solid var(--prim-border-color);
-    border-right:0;
-    border-bottom:1px solid var(--prim-border-color);
-    border-left:1px solid var(--prim-border-color);
-    border-radius:30px 0 0 30px;
+    border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
+    border-radius: 4px;
     color: var(--text-color);
-    caret-color: rgb(19, 182, 19); 
+    caret-color: rgb(19, 182, 19);
+    transition: all 0.3s ease; 
 }
 
+.index-search-form form input[type="search"]:hover{
+    border: 1px solid var(--color);
+}
 .index-search-form form input[type="search"]:focus{
-    /* border-top:1px solid var(--text-color);
-    border-bottom:1px solid var(--text-color);
-    border-left:1px solid var(--text-color); */
+    border: 1px solid var(--color);
+    outline: 1px solid var(--outline-color);
 }
 .index-search-form form button{
     outline: none;
-    width:9%;
-    height: 45px;
-    border-top:1px solid var(--prim-border-color);
-    border-right:1px solid var(--prim-border-color);
-    border-bottom:1px solid var(--prim-border-color);
-    border-left:0;
-    padding-right: 3%;
-    text-align: right;
-    border-radius:0 30px 30px 0;
+    width:15%;
+    height: 48px;
+    border:1px solid var(--prim-border-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
+    border-radius: 4px;
     font-weight: bold;
-    transition:all 0.3s ease-in-out;
+    transition: all 0.3s ease;
     cursor:pointer;
     background-color: #fff; 
     color: var(--text-color);
+}
+.index-search-form form button:hover{
+    border: 1px solid var(--color);
+    outline: 1px solid var(--outline-color);
 }
 .index-search-form-error{
     width:100%;
