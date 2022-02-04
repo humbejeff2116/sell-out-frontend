@@ -1,9 +1,4 @@
-
-
-
-
-
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './viewProduct.css';
 import image2 from '../../Images/product4.webp';
 import image from '../../Images/avatar.jpg';
@@ -11,40 +6,13 @@ import useCartContext from '../../Context/Cart/cartContext';
 import { addToCartActionPayload } from '../../Context/Cart/cartPayloads';
 import useAuth from '../../Context/context';
 import { DisplayedProduct } from '../Product/product';
-import {  AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
-import {
-    reduceCartProductActionPayload,
-    addCartProductQuantityActionPayload,
-} from '../../Context/Cart/cartPayloads';
+import {  AiOutlineHeart } from 'react-icons/ai';
 import useViewContext from '../../Context/viewContext/context';
-import { Star } from '../Product/Fragments/productFragments';
-import { useLocation, useHistory } from 'react-router-dom';
+import { Star, Heart } from '../Product/Fragments/productFragments';
 import { getSellerProducts } from '../../Utils/http.services';
 import BackButton from '../BackButton/backButton';
 
-// import { getProducts } from '../../Utils/http.services';
 
-
-const product = {
-    userId: 2234343,
-    userName: "hummbe jeffrey",
-    userEmail: "humbejeff@gmail.com",
-    userProfilePicture: "",
-    productId: 232323,
-    productName: "short nikka",
-    productCategory: "furniture",
-    productCountry: "Nigeria",
-    productState: "Benue",
-    productUsage: "never used",
-    productCurrency: "naira",
-    productPrice: 210,
-    productContactNumber: "334039438493",
-    productImages: [{}],
-    stars: [],
-    unstars: [],
-    comments: [],
-    interests: [],
-}
 
 const mockProducts = [
     {
@@ -132,11 +100,10 @@ const mockProducts = [
 
 export default function ViewProduct() {
     const [sellerProducts, setSellerProducts] = useState([]);
-    const [SimilarProducts, setSimilarProducts] = useState([]);
+    const [similarProducts, setSimilarProducts] = useState([]);
     const [noSellerProductsFound, setNoSellerProdcutsFound] = useState(false);
     const [showAddToCartMessage, setShowAddToCartMessage] = useState(false);
     const { viewState, setViewState } = useViewContext();
-    const location = useLocation();
     let BottomProducts;
 
 // effect to get other products of seller
@@ -151,7 +118,7 @@ export default function ViewProduct() {
                 setNoSellerProdcutsFound(false);
                 return setSellerProducts(bottomProducts?.sellerProducts);
             } catch(err) {
-                console.error(err.stack)
+                console.error(err)
             }     
         }
         
@@ -168,20 +135,6 @@ export default function ViewProduct() {
    
         }
     }, [viewState]);
-    useEffect(() => {
-
-        return () => {
-
-            const viewProductLocation = sessionStorage.getItem('view-product-location') ? 
-            sessionStorage.getItem('view-product-location') : null;
-            if (viewProductLocation && viewProductLocation === '/home/view-product') {
-               return;
-            }
-            setViewState(null);
-              
-        }
-
-    }, [location.pathname, setViewState]);
 
     useEffect(() => {
         let timer = null;
@@ -205,7 +158,9 @@ export default function ViewProduct() {
     if (noSellerProductsFound) {
 
         BottomProducts = (
-            <SimilarProducts/>
+            <SimilarProducts
+            similarProducts = { similarProducts }
+            />
         )
 
     } else {
@@ -216,7 +171,6 @@ export default function ViewProduct() {
             />
 
         )
-
     }
     return (
         <>
@@ -241,7 +195,6 @@ export default function ViewProduct() {
             </div>
 
             <div className="view-product-bottom">
-                {/* TODO... return other similar products if seller has no other products */}
               { BottomProducts }
             </div>
 
@@ -250,9 +203,8 @@ export default function ViewProduct() {
     )
 }
 
-function ProductImage(props) {
+function ProductImage({ product }) {
     const [viewedProductImage, setViewedProductImage] = useState("");
-    const { product } = props;
     useEffect(()=> {
         setViewedProductImage(product.productImages[0].src);
     },[product.productImages])
@@ -269,6 +221,7 @@ function ProductImage(props) {
                 
             </div>
             <div className="view-product-seller-stars">
+                {/* TODO... use Star component and implement star user functionality */}
                 seller stars
             </div>
         </div>
@@ -281,31 +234,30 @@ function ProductImage(props) {
                             <Thumbnail 
                             key={i} 
                             {...image} 
-                            currentlyViewedImage ={viewedProductImage} 
-                            setViewImage ={setProductImage}
+                            currentlyViewedImage = { viewedProductImage } 
+                            setViewImage = { setProductImage }
                             />
                         ) 
                     ) : ""    
                 }  
             </div>
             <div className="view-product-image">
-                <img src={viewedProductImage || image2} alt="product"/>
+                <img src = { viewedProductImage || image2 } alt="product"/>
             </div>
         </div>
         </div>
     )
 }
-function Thumbnail(props) {
-    const {src, currentlyViewedImage} = props;
+function Thumbnail({src, currentlyViewedImage, setViewImage}) {
     const thumbnailClass = ( src === currentlyViewedImage ) ? "view-product-thumbnail focus" : "view-product-thumbnail" 
     return (
-        <div className={ thumbnailClass } onClick={()=>props.setViewImage(src)}>
+        <div className={ thumbnailClass } onClick={()=> setViewImage(src)}>
             <img src={src || image2} alt="product"/>
         </div>
     )
 }
 
-function ProductDetails(props) {
+function ProductDetails({showAddToCartMessage, product}) {
     const [quantity, setQuantity] = useState("");
     const [productSize, setProductSize] = useState(null);
     const{ user } = useAuth();
@@ -314,10 +266,6 @@ function ProductDetails(props) {
         addProductToCart, 
         updateCartContextState,
     } = useCartContext();
-    const { 
-        showAddToCartMessage, 
-        product,
-    } = props;
     useEffect(()=> {
         setQuantity("1");
     },[]);
@@ -421,6 +369,7 @@ function ProductDetails(props) {
                     <button onClick={()=> addToCart(cartState, product, parseInt(quantity), productSize, user)}>Add to cart</button>
                     </div>
                     <div className="view-product-details-bottom-heart">
+                        {/* TODO... use imported Heart component and implement like product functionality */}
                         <span>
                         <AiOutlineHeart className="view-product-heart-icon"/>
                         </span>
@@ -433,7 +382,7 @@ function ProductDetails(props) {
 }
 
 
-function SellerProducts(props) {
+function SellerProducts({ sellerProducts }) {
    
     return (
         <div className="view-product-bottom-products-wrapper">
@@ -442,21 +391,23 @@ function SellerProducts(props) {
             </div>
             <div className="view-product-bottom-products-container">
             {
-                    props.sellerProducts && props.sellerProducts.map((product,i) =>
-                        <DisplayedProduct 
-                        key={i}  
-                        product={product} 
-                        panelClassName="view-product-bottom-products-panel"
-                        />
-                    )
+                sellerProducts && sellerProducts.map((product,i) =>
+                    <DisplayedProduct 
+                    key={i}  
+                    product={product} 
+                    panelClassName="view-product-bottom-products-panel"
+                    />
+                )
             }
             </div>
         </div>
     )
+
 }
 
-function SimilarProducts(props) {
+function SimilarProducts({similarProducts}) {
     return (
+        // TODO... build Similar products component
         <div>
             similar products here
         </div>
