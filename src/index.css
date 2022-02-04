@@ -33,7 +33,8 @@ code {
   --sec-bg-color: rgb(19, 182, 19);
 
   --border-color: #222;
-  --prim-border-color: #dad8d8;
+  /* --prim-border-color: #dad8d8; */
+  --prim-border-color: #c5c5c5;
   /* --prim-border-color: #bdbdbd; */
   --sec-border-color: #005ab4;
 
