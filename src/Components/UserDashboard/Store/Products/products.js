@@ -1,13 +1,13 @@
 
 
 
-import React, {useState, useEffect} from 'react';
-import {Redirect,useLocation, useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import { DisplayedProduct } from '../../../Product/product';
-import {ModalBox} from '../../../ModalComments/modalComments';
-import {deleteProduct} from '../../../../Utils/http.services';
-import {  BiTrash,BiEdit} from "react-icons/bi";
-import useViewContext from '../../../../Context/viewContext/context';
+import { ModalBox } from '../../../ModalComments/modalComments';
+import { deleteProduct } from '../../../../Utils/http.services';
+import { BiTrash, BiEdit } from "react-icons/bi";
+import useEditProductContext from '../../../../Context/EditProduct/context';
 import './products.css';
 
 const mockProducts = [
@@ -148,7 +148,7 @@ function StoreProduct({ setDeleteProductResponseMessage, setRedirect, product })
     const [deletingProduct, setDeletingProduct] = useState(false);
     const location = useLocation();
     const history = useHistory();
-    const { setViewState } = useViewContext();
+    const { setProductToEdit } = useEditProductContext();
     let deleteModalChild;
     const deleteStoreProduct = async (product) => {
         
@@ -165,7 +165,7 @@ function StoreProduct({ setDeleteProductResponseMessage, setRedirect, product })
     }
     const editProduct = (product) => {
 
-        setViewState([product]);
+        setProductToEdit([product]);
         history.push(location.pathname);
         setRedirect("/home/dashboard/store/edit-product");
     }
