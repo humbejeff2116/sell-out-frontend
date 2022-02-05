@@ -290,7 +290,7 @@
     /* margin-bottom: 0.5%; */
     padding-bottom: 1%;
 }
-.upload-form-textarea-label span{
+.upload-form-textarea-label-text{
     color: var(--color);
     font-size: 0.9rem;
 }
@@ -333,6 +333,12 @@
     align-items: center;
     margin-right: 1%;
     /* border:1px solid red; */
+}
+.upload-form-textarea-formated-value{
+    /* border:1px solid red; */
+    margin-left: 1%;
+    color: var(--color);
+    font-size: 0.9rem;
 }
 .upload-form-button-container{
     /* border:1px solid purple; */
