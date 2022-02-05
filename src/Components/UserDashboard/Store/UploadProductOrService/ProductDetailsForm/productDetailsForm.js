@@ -65,6 +65,8 @@ export default function UploadProductDetails({
                             type="text"
                             placeholder="e.g 2000"
                             errorClass="upload-form-textarea-error"
+                            formatValue= { true }
+                            formatedValueClass="upload-form-textarea-formated-value"
                         />
                         </div> 
                         {/* discount */}
@@ -73,6 +75,7 @@ export default function UploadProductDetails({
                                 label="Discount"
                                 labelClassName="upload-form-textarea-label"
                                 labelText=" (optional)"
+                                labelTextClass ="upload-form-textarea-label-text"
                                 name="productDiscount"
                                 type="text"
                                 placeholder="e.g 2000"
