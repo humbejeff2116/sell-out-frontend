@@ -9,19 +9,13 @@ import BackButton from '../BackButton/backButton';
 import { createOrder } from '../../Utils/http.services';
 import "./checkout.css";
 
-export default function Checkout(props) {
+export default function Checkout() {
   const [placedOrderMessage, setPlacedOrderMessage] = useState('');
-  const [error, setError] = useState(null);
-  const {
-    cartState,
-    totalSum,
-    sellerTotalSumData,
-    createOrderData,
-  } = useCartContext();
+  const { cartState, totalSum, sellerTotalSumData, createOrderData } = useCartContext();
   const { user } = useAuth();
   let CheckoutComponent;
 
-  const placeOrder = async (cartState, sellerTotalSumData, user, orderId, orderTime) => {
+  const placeOrder = async (cartState, sellerTotalSumData, user, orderId, orderTime = Date.now()) => {
     try {
       const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, user, orderId, orderTime);
       const placedOrder = await createOrder(buyersPreOrder);
@@ -60,12 +54,14 @@ export default function Checkout(props) {
       closePaymentModal(); // this will close the modal programmatically
     },
     onClose: () => {},
-  };
+  }
+
   if (cartState.length > 0) {
     CheckoutComponent = (
       <CheckoutComp
       placedOrderMessage = { placedOrderMessage }
       totalSum = { totalSum }
+      fwConfig = { fwConfig }
       />
     )
   } else {
@@ -87,7 +83,7 @@ export default function Checkout(props) {
   );
 }
 
-function CheckoutComp({ placedOrderMessage, totalSum }) {
+function CheckoutComp({ placedOrderMessage, totalSum, fwConfig }) {
   return (
     <>
       <div>
@@ -101,7 +97,7 @@ function CheckoutComp({ placedOrderMessage, totalSum }) {
 
       <div className="checkout-body">
         <div className="checkout-content">
-          <span>Total payment amount: <span>£{totalSum}</span></span>
+          <span>Total payment amount: <span>£{ totalSum }</span></span>
         </div>
         <div className="checkout-para">
           <p>Make payment using</p>
@@ -110,15 +106,16 @@ function CheckoutComp({ placedOrderMessage, totalSum }) {
         <div className="checkout-button-wrapper">
           <div className="checkout-button">
             {/* TODO... replace button with flutterwave button */}
-          <button>Flutterwave</button>
-          {/* <FlutterWaveButton {...fwConfig} /> */}
+          { 
+            navigator.onLine ? ( <FlutterWaveButton {...fwConfig} /> ) : ( <button>Flutterwave</button> ) 
+          }
           </div>
         </div>
 
         <div className="checkout-para">
           <p>or</p>
         </div>
-
+        {/* TODO... use paystack payment API */}
         <div className="checkout-button-wrapper">
           <div className="checkout-button">
             <button>Paystack</button>
