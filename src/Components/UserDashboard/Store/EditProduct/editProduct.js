@@ -5,14 +5,15 @@
 
 
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import {Link} from 'react-router-dom'
-import {TextInput,FileInput, AnimSelect, Select, TextAreaInput } from '../../../Formik/formik';
-import {  BiEdit} from "react-icons/bi";
-import { RiAddFill, RiCloseLine, RiSave2Line} from "react-icons/ri";
-import useViewContext from '../../../../Context/viewContext/context';
+import { Link } from 'react-router-dom';
+import { Select, TextAreaInput } from '../../../Formik/formik';
+import { BiEdit } from "react-icons/bi";
+import { RiAddFill, RiCloseLine, RiSave2Line } from "react-icons/ri";
+import useEditProductContext from '../../../../Context/EditProduct/context';
+import { ImWarning } from 'react-icons/im';
 import './editProduct.css';
 
 
@@ -34,46 +35,24 @@ const categoryDataSet = [
         type:[]
     }
 ]
-const transformProductData = async (product) => {
-    const transformedProduct = product.flatMap(prod => {
-        return transformProduct(prod); 
-    }).filter(prod => typeof prod.value !== "object" );
-
-    function transformProduct(prod = {}) {
-        return Object.keys(prod).map(keys => ({ keyName: keys, value: prod[keys] }));
-    }
-    return transformedProduct;
-}
-
 
 export default function EditProduct(props) {
-    const [editProduct, setEditProduct] = useState([]);
-    const { viewState, setViewState } = useViewContext();
-   
+    const { productToEdit, setProductToEdit } = useEditProductContext();
     let EditProductComponent;
 
     useEffect(()=> {
-        if (viewState) {
-            transformProductData(viewState)
-            .then(product => {
-                setEditProduct(product);
-            })
-        }    
-    },[viewState]);
-    
-    useEffect(()=> {
 
        return ()=> {
-        setViewState(null)
+        setProductToEdit(null)
        }
-    },[setViewState]);
+    },[setProductToEdit]);
 
-    if (editProduct.length) {
+    if (productToEdit && productToEdit.length > 0) {
         
         EditProductComponent = (
             <EditProductCompWrapper 
-            product={viewState}
-            images ={viewState.productImages}
+            product={ productToEdit }
+            images ={ productToEdit.productImages }
             />
         );
 
@@ -106,19 +85,15 @@ export default function EditProduct(props) {
 }
 
 
-
-function EditProductCompWrapper(props) {
+function EditProductCompWrapper({product}) {
 
     return (
         <div className="store-product-edit-wrapper">
         <div className="store-product-edit-details-container">
         {
-            props.product && props.product.map((product, i)=>
-                <EditProductItems
-                key={i} 
-                {...product}
-                />
-            )
+    
+            product && ( <EditProductItems {...product[0]} /> )
+        
         }
         </div>
             <div className="store-product-edit-image-container">
@@ -128,20 +103,26 @@ function EditProductCompWrapper(props) {
     )
 }
 
-function EditProductItems(props) {
+function EditProductItems({
+    productName,  
+    productCategory, 
+    productType, 
+    productUsage, 
+    productCurrency,
+    productPrice,
+    productDiscount,
+}) {
     const [formValues, setFormValues] = useState({});
     const [type , setType] = useState([]);
-    const [uploadingProduct , setUploadingProduct ] = useState(false);
-    const [uploadingError , setUploadingError] = useState(false);
-    const [response, setResponse] = useState('');
+   
     // const { user } = useAuth();
 
     const handleInputChange = function(e) {
         setFormValues(prevValues => ({
             ...prevValues,
             [e.target.name] : 
-            (e.target.type === "file" && e.target.files.length) ? e.target.files :
-            (e.target.type === "file" && e.target.files.length < 1 ) ? e.target.files[0] :
+            (e.target.type === "file" && e.target.files.length) ? [ ...e.target.files ] :
+            (e.target.type === "file" && e.target.files.length < 1 ) ? [ e.target.files[0] ] :
             e.target.value
         }))
         if (e.target.name === "productCategory") {
@@ -162,109 +143,128 @@ function EditProductItems(props) {
     }
     return (
         <>
-        <EditItem keyName={"Product name or description"} value={props.productName} EditBar= {
-            <EditBar 
-            initialValues ={{productName: props.productName}}
-            >
-                <TextAreaInput
-                    name="productName"
-                    type="text"
-                    />
-            </EditBar>
+        <EditItem 
+        keyName = { "Product name or description" } 
+        value = { productName } 
+        initialValues = { { productName: productName } }
+        editBarChildren = { 
+
+            <TextAreaInput 
+            name="productName" 
+            type="text" 
+            /> 
+
         }
         />
 
-        <EditItem keyName={"Category"} value={props.productCategory} EditBar= {
-            <EditBar 
-            initialValues ={{deliveryRegion: props.productCategory}} 
+        <EditItem 
+        keyName={ "Category" } 
+        value={ productCategory } 
+        initialValues ={ {deliveryRegion: productCategory} }
+        editBarChildren = {
+
+            <Select 
+            onChange={ handleInputChange } 
+            name="productCategory" 
+            value={ formValues?.productCategory } 
             >
-                <Select 
-                onChange={handleInputChange} 
-                name="productCategory" 
-                value={formValues?.productCategory} 
-                >
-                    <option value="">Select</option>
-                    <option value="Electronics">Electronics</option>
-                    <option value="Furniture">Furniture</option>
-                    <option  value="Books">Books</option>
-                    <option  value="Clothes">Clothes</option>
-                </Select>
-            </EditBar>
+                <option value="">Select</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Furniture">Furniture</option>
+                <option  value="Books">Books</option>
+                <option  value="Clothes">Clothes</option>
+
+            </Select>
+
         }
         />
 
         {
             ( type.length > 0 ) && (
-                <EditItem keyName={"Type"} value={props.productType} EditBar= {
-                    <EditBar 
-                    initialValues ={{productType: props.productType}}
-                    // yupObject={{ productType: Yup.string().required('product type is Required')}}
-                    >
-                        <Select name="productType" >
-                        {
-                            type.map((val,i) =>
-                                (val.name ==="--Select--") ?                                      
-                                <option key={i} value="">{val.name}</option> :
-                                <option key={i} value={val.name}>{val.name}</option>  
-                            )
-                        }
-                        </Select>
-                    </EditBar>
+                <EditItem 
+                keyName={"Type"} 
+                value={ productType } 
+                initialValues ={ { productType: productType } }
+                editBarChildren = {
+                  
+                    <Select name="productType" >
+                    {
+                        type.map((val,i) =>
+                            (val.name ==="--Select--") ?                                      
+                            <option key={i} value="">{val.name}</option> :
+                            <option key={i} value={val.name}>{val.name}</option>  
+                        )
+                    }
+                    </Select>
+
                 }
                 />
             )
         }
         
 
-        <EditItem keyName={"Usage"} value={props.productUsage} EditBar= {
-            <EditBar initialValues ={{productUsage: props.productUsage}}
-            // yupObject={{ productUsage: Yup.string().required(`product's usage is is Required`)}}
-            >
-                <Select name="productUsage" >
-                    <option value="">Select</option>
-                    <option value="Never used">Never used</option>
-                    <option value="Fairly used">Fairly used</option>
-                    <option value="2 years +">2 years +</option>
-                </Select>
-            </EditBar>
-        }
-        />
+        <EditItem 
+        keyName={ "Usage" } 
+        value={ productUsage } 
+        initialValues ={ { productUsage: productUsage } }
+        // yupObject={{ productUsage: Yup.string().required(`product's usage is is Required`)}}
+        editBarChildren = {
+          
+            <Select name="productUsage" >
 
-        <EditItem keyName={"Currency"} value={props.productCurrency} EditBar= {
-            <EditBar initialValues ={{productCurrency:props.productCurrency}}>
-               <Select name="productCurrency" >
-                    <option value="">Select</option>
-                    <option value="Naira">Naira</option>
-                    <option value="pounds"> British Pounds</option>
-                    <option value="dollar">U.S Dollar</option>
-                </Select>
-            </EditBar>
-        }
-        />
+                <option value="">Select</option>
+                <option value="Never used">Never used</option>
+                <option value="Fairly used">Fairly used</option>
+                <option value="2 years +">2 years +</option>
 
-        <EditItem keyName={"Price"} value={props.productPrice} EditBar= {
-            <EditBar initialValues ={{productPrice: props.productPrice}}>
-                <TextAreaInput
-                    name="productPrice"
-                    type="text"
-                    placeholder="e.g 2000"
-                />
-            </EditBar>
+            </Select>
+
         }
         />
 
         <EditItem 
-        keyName={"Discount"} 
-        noValue={"No discount has been set yet" }
-        value={props.productDiscount } 
-        EditBar= {
-            <EditBar initialValues ={{productDiscount: props.productDiscount}}>
-                 <TextAreaInput
-                    name="productDiscount"
-                    type="text"
-                    placeholder="e.g 2000"
-                />
-            </EditBar>
+        keyName={ "Currency" } 
+        value={ productCurrency }
+        initialValues ={ { productCurrency: productCurrency } } 
+        editBarChildren = {
+
+            <Select name="productCurrency" >
+
+                <option value="">Select</option>
+                <option value="Naira">Naira</option>
+                <option value="pounds"> British Pounds</option>
+                <option value="dollar">U.S Dollar</option>
+
+            </Select>
+
+        }
+        />
+
+        <EditItem 
+        keyName={ "Price" } 
+        value={ productPrice }
+        initialValues ={ { productPrice: productPrice } } 
+        editBarChildren = {
+           
+            <TextAreaInput
+            name="productPrice"
+            type="text"
+            placeholder="e.g 2000"
+            />
+        }
+        />
+
+        <EditItem 
+        keyName={ "Discount" } 
+        noValueText={ "No discount has been set yet" }
+        value={ productDiscount } 
+        initialValues = { { productDiscount: productDiscount } }
+
+        editBarChildren= { 
+            <TextAreaInput 
+            name="productDiscount" 
+            type="text" 
+            placeholder="e.g 2000" /> 
         }
         />
 
@@ -275,29 +275,65 @@ function EditProductItems(props) {
 
 
 
-function EditItem(props) {
+function EditItem({ 
+    initialValues, 
+    editBarChildren, 
+    keyName, 
+    value, 
+    noValueText,
+
+}) {
     const [showEditBar, setShowEditBar] = useState(false);
+    const [updatingProduct , setUpdatingProduct ] = useState(false);
+    const [updatingProductError , setUpdatingProductError] = useState(false);
+    const [updateProductResponse, setUpdateProductResponse] = useState('');
     let Button;
+    let EditBarComponent = (
+        <EditBar 
+        initialValues = { initialValues } 
+        submitForm = { submitForm }
+        updatingProduct = { updatingProduct } 
+        updatingProductError = { updatingProductError }
+        response = { updateProductResponse }
+        errorIcon = { <ImWarning/> }
+        >
+            { editBarChildren }
+        </EditBar>
+    )
+
+    function submitForm(values) {
+        setUpdatingProduct(true)
+        // setUpdatingProductError(true)
+        // setUpdateProductResponse("update successful")
+        alert(JSON.stringify(values, null, 2))
+    }
+
     const openEditBar = ( ) => {
         setShowEditBar(state => !state);
     }
+
     if (showEditBar) {
-            Button = <button onClick={openEditBar}> 
-                        <RiCloseLine className="store-icon-edit"/>
-                        Close
-                    </button>
-    } else {
-        Button = <button onClick={openEditBar}>
-                    <BiEdit title="Edit" className="store-icon-edit"/> 
-                    Edit
+            Button = (
+                <button onClick = { openEditBar }> 
+                    <RiCloseLine className="store-icon-edit"/>
+                    Close
                 </button>
+            )
+    } else {
+        Button = (
+            <button onClick = { openEditBar }>
+                <BiEdit title="Edit" className="store-icon-edit"/> 
+                Edit
+            </button>
+        )
     }
+    
     return (
         <div className="store-product-edit-details-group-container">
             <div className="store-product-edit-details-group">
             <div className="store-product-edit-details-group-left">
-                <div className="label"><span>{props.keyName}</span></div>
-                <div className="edit-product-detail"><span>{props.value || props.noValue }</span></div>
+                <div className="label"><span>{ keyName }</span></div>
+                <div className="edit-product-detail"><span>{ value || noValueText }</span></div>    
             </div>
 
             <div className="store-product-edit-details-group-right">     
@@ -305,7 +341,7 @@ function EditItem(props) {
                 
                 <div className="store-product-edit-details-group-edit-button">
                 { 
-                    (!props.value && !showEditBar) ? (
+                    (!value && !showEditBar) ? (
                         <button onClick={openEditBar}>
                         <RiAddFill className="store-icon-edit"/>
                         Add</button>
@@ -317,38 +353,51 @@ function EditItem(props) {
             </div>
             {/* edit bar */}
             {
-                showEditBar && ( props.EditBar )
+                showEditBar && ( EditBarComponent )
             }
         </div>
     )
 }
 
-function EditBar(props) {
-    const submitForm =()=>{
-
-    }
+function EditBar({ 
+    initialValues, 
+    yupObject, 
+    submitForm,
+    updatingProduct, 
+    updatingProductError,
+    response,
+    errorIcon,
+    children 
+}) {
+ 
     return (
          <div className="store-product-edit-details-group">
          <div className="store-product-edit-details-group-left">
+         <div><span>{ response }</span></div>
 
          <Formik
-         initialValues = { props.initialValues }
-         validationSchema = { Yup.object(props.yupObject)}
+         initialValues = { initialValues }
+         validationSchema = { Yup.object(yupObject)}
          onSubmit = { submitForm }
          >
              <Form>
                  {
-                    props.children
+                    children
                  }
+                 {/* TODO... move submit button in here */}
              </Form>
          </Formik>
          </div>
 
          <div className="store-product-edit-details-group-right">
              <div className="store-product-edit-details-group-edit-button save">
-                 <button onClick={submitForm}>
+                 <button type= "submit">
                     <RiSave2Line className="store-icon-edit"/>
-                    Save
+                    {
+                        updatingProduct ? <span>Updating Product...</span> : 
+                        updatingProductError ? <> { errorIcon } <span>Update</span></> :
+                        <span>Update</span>
+                    }
                 </button>
              </div>
          </div>
@@ -356,7 +405,7 @@ function EditBar(props) {
     )
 }
 
-function EmptyEditProductComp(props) {
+function EmptyEditProductComp() {
     return (
         <div className="edit-product-empty-container">
           
