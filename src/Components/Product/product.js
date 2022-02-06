@@ -1,41 +1,30 @@
 
 
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
-import {CommentBox} from './CommentBox/commentBox';
+import { CommentBox } from './CommentBox/commentBox';
 import './product.css';
-import image from '../../Images/avatar.jpg';
-import image2 from '../../Images/product3.webp';
 import ModalComment from '../ModalComments/modalComments';
 import ModalProduct from './ModalProduct/modalProduct';
-import  {
-    SingleImageComponent,
-    DoubleImageComponent,
-    TrippleImageComponent
-} from './ImageComp/imageComp';
+import  { SingleImageComponent } from './ImageComp/imageComp';
 import {
     OpenComment,
     Star,
     ProfileAvatar,
     Heart,
-
 } from './Fragments/productFragments';
-import {  AiOutlineHeart, AiFillHeart} from 'react-icons/ai';
 
 
 
-
-
-export  function DisplayedProduct(props) {
+export  function DisplayedProduct({ product, panelClassName, productCommentPanelName }) {
     let [starCount, setStarCount] = useState(0);
     const [starsUserRecieved, setStarsUserRecieved] = useState([]);
     const [starClicked, setStarClicked] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const [likesProductRecieved, setLikesProductRecieved] = useState([]);
     const [userLikedProduct, setUserLikedProduct] = useState(false);
-    const { product, panelClassName, productCommentPanelName } = props;
     const { user } = useAuth();
 
     useEffect(() => {
@@ -45,6 +34,7 @@ export  function DisplayedProduct(props) {
         setStarsUserRecieved(product.starsUserRecieved);
     }, [product, user]);
 
+    //TODO... ucomment code below to set stars user liked
     // useEffect(() => {
     //     setLikesProductRecieved(product.likesProductRecieved);
     // }, [ product.likesProductRecieved ]);
@@ -66,9 +56,9 @@ export  function DisplayedProduct(props) {
 
     const setStarOnLoad = (user, product, callback) => {
         const userEmail = user.userEmail;
-        const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved: null;
+        const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved : null;
         let starCount = 0;
-        if(starsUserRecieved) {
+        if (starsUserRecieved) {
             for (let i = 0; i < starsUserRecieved.length; i++) {
                 if (starsUserRecieved[i].starGiverEmail === userEmail) {
                     starCount = starsUserRecieved[i].star;
@@ -102,7 +92,7 @@ export  function DisplayedProduct(props) {
             socket.emit('starSeller', data );
             return;
         }
-        if(user) {
+        if (user) {
             setStarsUserRecieved(currentState => currentState.filter( star => star.starGiverEmail !== user.userEmail));
             setStarClicked(false);
             setStarCount(--starCount);
@@ -122,7 +112,11 @@ export  function DisplayedProduct(props) {
             user: user,
         }
         if (user) {
-            const like = { likeGiverEmail: user.userEmail, likeGiverId: user.id, likeGiverFullName: user.fullName }
+            const like = { 
+                likeGiverEmail: user.userEmail, 
+                likeGiverId: user.id, 
+                likeGiverFullName: user.fullName 
+            }
             let likedProduct = false;
             for (let i = 0; i < likesProductRecieved.length; i++) {
                 if (likesProductRecieved[i].likeGiverEmail === user.userEmail) {
@@ -138,10 +132,10 @@ export  function DisplayedProduct(props) {
             }
             setUserLikedProduct(true);
             setLikesProductRecieved([...likesProductRecieved, like]);
-            socket.emit('likeProduct', data );
+            socket.emit('likeProduct', data);
             return;
         }
-        socket.emit('likeProduct', data );
+        socket.emit('likeProduct', data);
     }
 
     const openCommentBox = () => {
@@ -150,7 +144,9 @@ export  function DisplayedProduct(props) {
     const closeCommentBox = () => {
         setShowComment(false);
     }  
-    let imageComponent =  <SingleImageComponent product={product} image={product.productImages[0]}/>;
+    let imageComponent = ( 
+        <SingleImageComponent product = { product } image = { product.productImages[0] }/>
+    )
 
     // if(showMobileComment) {
     //     // return (
@@ -163,25 +159,25 @@ export  function DisplayedProduct(props) {
     //     // )
     // }
 
-    if(showComment) {
+    if (showComment) {
         
         return (       
             <ModalComment  
-            handleClose={closeCommentBox}
+            handleClose = { closeCommentBox }
 
-            modalDisplayedProduct= {
+            modalDisplayedProduct = {
                 <ModalProduct
-                product={product}
-                ProductPanelClassName="modal-comment-product-panel"
+                product = { product }
+                ProductPanelClassName = "modal-comment-product-panel"
 
                 />
             }
             commentBox= {
                 <CommentBox
-                product={product}
-                closeCommentBox={closeCommentBox}
+                product = { product }
+                closeCommentBox = { closeCommentBox }
                 // productCommentPanelName="modal-product-panel"
-                commentBoxPanelClassName= "modal-comment-box-panel"
+                commentBoxPanelClassName = "modal-comment-box-panel"
                 />
             }
             >
@@ -190,16 +186,16 @@ export  function DisplayedProduct(props) {
 
     }
     return (
-        <div className={panelClassName}>
+        <div className = { panelClassName }>
             <div className="index-product-profile-panel">
-                <ProfileAvatar product={product} />
+                <ProfileAvatar product = { product } />
                <Star
-                product={product}
-                user = {user}
-                starsUserRecieved={starsUserRecieved}
-                starCount={starCount}
-                starClicked={starClicked}
-                starSeller={starSeller}
+                product = {product}
+                user = { user }
+                starsUserRecieved = { starsUserRecieved }
+                starCount = { starCount }
+                starClicked = { starClicked }
+                starSeller = { starSeller }
                />
             </div>
 
@@ -218,14 +214,14 @@ export  function DisplayedProduct(props) {
             <div className="index-product-reaction-panel">
                 <div className="index-product-reaction-star">
                    <Heart
-                   userLikedProduct={userLikedProduct}
-                   likeProduct={likeProduct}
-                   product={product}
-                   user={user}
-                   likesProductRecieved={likesProductRecieved}
+                   userLikedProduct = { userLikedProduct }
+                   likeProduct = { likeProduct }
+                   product = { product }
+                   user = { user }
+                   likesProductRecieved = { likesProductRecieved }
                    />
                 </div>
-                <OpenComment openCommentBox={openCommentBox}  />
+                <OpenComment openCommentBox = { openCommentBox } />
             </div>
         </div>
     )
