@@ -50,14 +50,19 @@ function CartProductsWrapper(props) {
         cartItems,
         totalSum
     } = useCartContext();
+    const { user } = useAuth();
     let CheckoutModalChildComp;
     useEffect(()=> {
         return ()=> {
             if (cartItems?.length > 0 && cartState?.length > 0) {
-                localStorage.setItem("cart", JSON.stringify(cartState));
+                const currentCartState = {
+                    cartState,
+                    currentUser: user,
+                }
+                localStorage.setItem("cart", JSON.stringify(currentCartState));
             }   
         }
-    },[cartState, cartItems]);
+    },[cartState, cartItems, user]);
 
     const closeCartModal = () => {
         setShowCartModal(false);

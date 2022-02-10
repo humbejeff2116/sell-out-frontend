@@ -25,14 +25,15 @@ export  function CartContextProvider(props) {
     
     useEffect(()=> {
 
-        const cartProducts =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+        const savedCartState =  localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : {};
         const user =  localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-        if (cartProducts.length > 0) {
-            const cartItems = cartProducts.flatMap(item => item.productsUserBoughtFromSeller);
-            if (cartItems.length > 0 && user) {
-                return updateCartContextState(cartProducts, user);
+        const cartStateOwner = savedCartState.currentUser
+        if (savedCartState?.cartState?.length > 0) {
+            const cartItems = savedCartState.cartState.flatMap(item => item.productsUserBoughtFromSeller);
+            if (cartItems?.length > 0 && (user?.userEmail === cartStateOwner?.userEmail )) {
+                return updateCartContextState(savedCartState?.cartState, user);
             } else {
-                return localStorage.removeItem('cart');
+                // return localStorage.removeItem('cart');
             }
         }
          
