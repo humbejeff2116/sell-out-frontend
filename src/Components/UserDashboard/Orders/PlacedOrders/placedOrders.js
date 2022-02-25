@@ -1,101 +1,157 @@
 
-
-
-
-
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { getOrders, confirmDelivery } from '../../../../Utils/http.services';
 import useAuth from '../../../../Context/context';
 import useOrder from '../../../../Context/Order/context';
-import {ModalBox} from '../../../ModalComments/modalComments';
+import { ModalBox } from '../../../ModalComments/modalComments';
 import socket from '../../../Socket/socket';
 import image from '../../../../Images/avatar.jpg';
-import {FaRegEye} from 'react-icons/fa';
-import {GiConfirmed} from 'react-icons/gi';
-import { GoKebabHorizontal} from 'react-icons/go';
+import { GiConfirmed } from 'react-icons/gi';
+import { GoKebabHorizontal } from 'react-icons/go';
+import { ImWarning } from 'react-icons/im';
 import './placedOrders.css';
 
 
- 
-
-
-const mockPlacedOrders = [
-    {
-        productsBoughtFromSeller:[{},{}]
-    }
-]
-
 export default function PlacedOrdersContainer(props) {
-    const [showConfirmOrderModal, setShowConfirmOrderModal] = useState(false);
+
+    const [showConfirmOrderDeliveryModal, setShowConfirmOrderDeliveryModal] = useState(false);
+
     const [orderToConfirm, setOrderToConfirm] = useState(null);
-    const [confirmingOrder, setConfirmingOrder] = useState(false);
-    const [confirmOrderResponse, setConfirmOrderResponse] = useState("");
-    const [confirmOrderError,setConfirmOrderError] = useState(false)
+
+    const [confirmingOrderDelivery, setConfirmingOrderDelivery] = useState(false);
+
+    const [confirmOrderDeliveryResponse, setConfirmOrderDeliveryResponse] = useState("");
+
+    const [confirmOrderDeliveryError,setConfirmOrderDeliveryError] = useState(false);
+
     const { user } = useAuth();
-    const {placedOrders, setOrders  } = useOrder();
+
+    const { placedOrders, setOrders } = useOrder();
+
     let PlaceOrdersComponent;
 
     useEffect(() => {
+
         let mounted = true;
          // TODO... remove useGetUserFunctionality when ready to use functionality
-         let useGetUserFunctionality = false
+
+         let useGetUserFunctionality = true;
+
         const getUserOrder = async () => {
+
             try {
+
                 const orders = await getOrders(user);
+
+                alert(JSON.stringify(orders, null, 2));
+
                 setOrders(orders)
+
             }catch(err) {
+
                 console.error(err.stack)
+
             }  
     
         }
+
+        const data  = { user }
+
          // TODO... remove useGetUserFunctionality when ready to use functionality
-        if ((mounted && user & useGetUserFunctionality ) && !placedOrders) {
-            getUserOrder(user);
-        }  
-        socket.on('orderDataChange', function() {
+        if ((mounted && user && useGetUserFunctionality ) && !placedOrders) {
+            
+            socket.emit('getUserProductOrders', data);
+            
+            // getUserOrder(user);
+        } 
+        
+        socket.on('getUserProductOrdersSuccess', function(response) {
+
             if (mounted && user) {
-                getUserOrder(user);
-            }             
+
+                setOrders(response.data)
+
+            }  
+
         });
 
+        socket.on('orderDataChange', function() {
+
+            if (mounted && user) {
+
+                // getUserOrder(user);
+                socket.emit('getUserProductOrders', data);
+
+            } 
+                         
+        });
+
+        socket.on('confirmDeliverySuccess', function(response) {
+            
+
+        })
+
         return ()=> {
+
             mounted = false;
+
         }
+
     }, [user, placedOrders, setOrders]);
  
     const closeConfirmDeliveryModal = () => {
-        setShowConfirmOrderModal(false);
+
+        setShowConfirmOrderDeliveryModal(false);
+
         setOrderToConfirm(null);
-        setConfirmingOrder(true)
+
+        setConfirmingOrderDelivery(false);
+
     }
 
-    const openConfirmDeliveryModal = (order) => {
+    const openConfirmDeliveryModal = (order, placedOrderId) => {
+
+        order.placedOrderId = placedOrderId;
+
         setOrderToConfirm(order);
-        setShowConfirmOrderModal(true)
+
+        setShowConfirmOrderDeliveryModal(true);
 
     }
 
     const confirmOrderDelivery = async (order, user) => {
-        setConfirmingOrder(true);
-        const confirmDeliveryResponse = await confirmDelivery({ order, user });
-        if (confirmDeliveryResponse.error) {
-            setConfirmOrderResponse(confirmDeliveryResponse.message);
-            setConfirmOrderError(true);
-            setConfirmingOrder(false);
-            return;
-        }
 
-        setConfirmOrderResponse(confirmDeliveryResponse.message);
-        setConfirmingOrder(false);
-        setConfirmOrderError(false);
+        // alert(JSON.stringify(order, null, 2))
+        // setConfirmingOrderDelivery(true);
+        // const confirmDeliveryResponse = await confirmDelivery({ order, user });
+        // if (confirmDeliveryResponse.error) {
+        //     setConfirmOrderDeliveryResponse(confirmDeliveryResponse.message);
+        //     setConfirmOrderDeliveryError(true);
+        //     setConfirmingOrderDelivery(false); 
+        //     return;
+        // }
+
+        // setConfirmOrderDeliveryResponse(confirmDeliveryResponse.message);
+        // setConfirmingOrderDelivery(false);
+        // setConfirmOrderDeliveryError(false);
+
+        const confirmOrderData = { order, user }
+
+        socket.emit('confirmDelivery', confirmOrderData)
     }
 
     const cancelConfirmDelivery = () => {
-        setShowConfirmOrderModal(false);
+
+        setConfirmingOrderDelivery(false);
+
+        setShowConfirmOrderDeliveryModal(false);
+
         setOrderToConfirm(null);
 
     }
+
     if (placedOrders && placedOrders?.length > 0) {
+
         PlaceOrdersComponent = (
             
             <PlacedOrdersWrapper
@@ -104,7 +160,9 @@ export default function PlacedOrdersContainer(props) {
             />
 
         )
+
     } else {
+
         PlaceOrdersComponent = (
 
             <NoPlacedOrders />
@@ -114,9 +172,11 @@ export default function PlacedOrdersContainer(props) {
     }
    
     return (
+
         <div className="placed-orders-container">
             {
-                (showConfirmOrderModal) && (
+                (showConfirmOrderDeliveryModal) && (
+
                     <ModalBox 
                     handleModal={closeConfirmDeliveryModal} 
                     modalContainerWrapperName={"cart-checkout-modal-container-wrapper"}
@@ -127,8 +187,10 @@ export default function PlacedOrdersContainer(props) {
                        cancelConfirmDelivery = { cancelConfirmDelivery }
                        order = { orderToConfirm }
                        user = { user }
+                       confirmingOrderDelivery = { confirmingOrderDelivery }
                        />
                     </ModalBox>
+
                 )
 
             }
@@ -138,7 +200,7 @@ export default function PlacedOrdersContainer(props) {
             <div className="placed-orders-search-container">
                 <div className="placed-orders-search">
                 <form>
-                    <label htmlFor="order-search"> Search by seller name or brand</label>
+                    <label htmlFor="order-search"> Search by user name or brand</label>
                     <input type="text" />
                 </form>
 
@@ -151,58 +213,124 @@ export default function PlacedOrdersContainer(props) {
 
                 </div>
             </div>
+
             { PlaceOrdersComponent }
            
         </div>
+
     )
+
 }
 
-function PlacedOrdersWrapper({placedOrders, openConfirmDeliveryModal}) {
+function PlacedOrdersWrapper({ placedOrders, openConfirmDeliveryModal }) {
+
     return (
 
         <>
         {
+
             placedOrders.map((order, i) =>
-                <PlacedOrders key={i} {...order} openConfirmDeliveryModal = { openConfirmDeliveryModal }/>
+
+                <PlacedOrders 
+                key = { i } 
+                {...order} 
+                openConfirmDeliveryModal = { openConfirmDeliveryModal }
+                />
+
             )
+
         }
         </>
 
     )
+
 }
 
-function PlacedOrders(props) {
+function PlacedOrders({ orderTime, ref, productsBought,_id, openConfirmDeliveryModal }) {
+
+    const orderDate = new Date(Number(orderTime))
     return (
+
         <div className="placed-order-wrapper">
             <div className="placed-order-intro">
                 <div>
                 <div className="placed-order-details-group">
-                <p>Order date: <span>wed 04 sep 2021</span></p>
+                <p>Date: <span>{ orderDate.toUTCString() }</span></p>
                 </div>
                 <div className="placed-order-details-group">
-                <p>Order Id: <span>pss12845zf4</span></p>
+                <p>Ref: <span>{ ref || 'no ref yet' }</span></p>
                 </div>
                 <div className="placed-order-details-group">
-                <p>Ordered products:</p>
+                <p>Ordered Products:</p>
                 </div>
                 </div>
             </div> 
             <div  className="placed-order-container">
             {
-                (props.productsBoughtFromSeller && props.productsBoughtFromSeller.length > 0) && props.productsBoughtFromSeller.map((order, i) =>
-                    <PlacedOrder key={i} order = {order} openConfirmDeliveryModal = {props.openConfirmDeliveryModal} />
+                (productsBought && productsBought.length > 0) && productsBought.map((order, i) =>
+
+                    <PlacedOrder 
+                    key = { i } 
+                    { ...order }
+                    order ={ order }
+                    placedOrderId = {  _id  } 
+                    openConfirmDeliveryModal = { openConfirmDeliveryModal } 
+                    />
+
                 )
             }
             </div>
             
         </div>
+
     )
 }
 
-function PlacedOrder(props) {
-    let deliveryStatusSpanClass = props.delivered ? "delivered" : "pending";
- 
+function PlacedOrder({
+    productsUserBoughtFromSeller, 
+    productsDelivered, 
+    sellerName, 
+    openConfirmDeliveryModal, 
+    order, 
+    placedOrderId
+}) {
+
+    const totalProductOrderAmount = getTotalAmount(productsUserBoughtFromSeller);
+
+    const deliveryStatusSpanClass = productsDelivered ? "delivered" : "pending";
+
+    const deliveryStatus = productsDelivered ? "delivered" : "pending";
+
+    const disableConfirmButton = productsDelivered ? true : false
+
+    function getTotalAmount(arr) {
+
+        let totalOrderAMount = 0.00;
+
+        for (let i = 0; i < arr.length; i++) {
+
+            totalOrderAMount += arr[i].productPrice * arr[i].productQty
+          
+        }
+
+        return totalOrderAMount;
+
+    }
+   
+    let ViewProductDetailsComp = (
+
+        <ViewProductDetails 
+        productsDelivered = { productsDelivered }
+        deliveryStatusSpanClass = { deliveryStatusSpanClass }
+        deliveryStatus = { deliveryStatus }
+        totalProductOrderAmount = { totalProductOrderAmount } 
+        numberOfProductsOrdered = { productsUserBoughtFromSeller.length }
+        />
+
+    )
+   
     return (
+
         <div className="placed-order">
         <div className="placed-order-details-container">
         <div className="placed-order-details-image-container">
@@ -218,11 +346,11 @@ function PlacedOrder(props) {
                     
                     <div className="sold-products-profile-details-wrapper">
 
-                    <img src={image} alt="seller" />
+                    <img src={ image } alt="seller" />
 
                     <div className="sold-products-profile-details">
                         <div>
-                            <span>John Doe joels omega</span>
+                            <span>{ sellerName }</span>
                         </div>
                        
                     </div>
@@ -232,44 +360,61 @@ function PlacedOrder(props) {
                     </div>
                     </div>
                     
-                    {/* <div  className="sold-products-profile-button">
-                        <button>view seller profile</button>
-                    </div> */}
                 </div>
                
             </div>
-            <ViewProductDetails deliveryStatusSpanClass={deliveryStatusSpanClass} />
+            { ViewProductDetailsComp }
         </div>
-
-            
+   
         </div>
 
         <div className="placed-order-buttons-container">
             <div className="placed-order-view-order-product-button">
                 <button>
                     {/* < FaRegEye className="nav-icon dashboard"/> */}
-                    View order products
+                    View order 
                 </button>
             </div>
-            <div className="placed-order-confirm-delivery-button">
-                <button onClick = {()=> props.openConfirmDeliveryModal(props.order)}>
-                    {/* <GiConfirmed className="nav-icon dashboard"/> */}
-                    Confirm delivery
+            <div className = { `placed-order-confirm-delivery-button ${ deliveryStatus }` }>
+                <button 
+                onClick = { ()=> openConfirmDeliveryModal(order, placedOrderId) } 
+                disabled = { disableConfirmButton } 
+                >
+                    
+                { 
+                    disableConfirmButton ?
+
+                    <><GiConfirmed className="nav-icon dashboard" /> <span> Delivered</span></> : 
+
+                    "Confirm delivery" 
+                }
+
                 </button>
             </div>
         </div>
 
         </div>
+
     )
+
 }
-function ViewProductDetails(props) {
+
+function ViewProductDetails({
+    deliveryStatusSpanClass, 
+    deliveryStatus, 
+    numberOfProductsOrdered, 
+    totalProductOrderAmount
+}) {
+
     const [showDetails, setShowDetails] = useState(false);
+
     return (
+
         <div>
             <div className="placed-order-details-group show-more">
-            <p>Delivery Status: <span className={props.deliveryStatusSpanClass}>Pending</span></p>
+            <p>Delivery Status: <span className= { deliveryStatusSpanClass }>{ deliveryStatus }</span></p>
             <div className="sold-products-profile-image-kebab-icon">
-                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                <GoKebabHorizontal className="nav-icon" onClick={ ()=>setShowDetails(prevstate => !prevstate) }/>
                 {/* View more */}
             </div>
             </div>
@@ -277,22 +422,33 @@ function ViewProductDetails(props) {
                 showDetails && (
                     <>
                     <div className="placed-order-details-group">
-                    <p>Number Of Products: <span>2</span></p>
+                    <p>Number Of Products: <span>{ numberOfProductsOrdered }</span></p>
                     </div>
 
                     <div className="placed-order-details-group">
-                    <p>Total Order Amount: <span className="diff">£30068.00</span></p>
+                    <p>Total Order Amount: <span className="diff">£{ totalProductOrderAmount }</span></p>
                     </div>
                     </>
                 )
             } 
         </div>
+
     )
+
 }
 
 
-function ConfirmDeliveryModalChild(props) {
+function ConfirmDeliveryModalChild({
+    cancelConfirmDelivery, 
+    confirmDelivery, 
+    order, 
+    user, 
+    confirmingOrderDelivery, 
+    confirmingOrderDeliveryError 
+}) {
+
     return (
+
         <div className="cart-checkout-modal-body-container">
         <div className="cart-checkout-modal-content">
             <p>
@@ -301,25 +457,34 @@ function ConfirmDeliveryModalChild(props) {
         </div>
         <div className="cart-checkout-modal-buttons-container">
             <div className="cart-checkout-modal-button">
-                <button onClick = { props.cancelConfirmDelivery }>Cancel</button>
+                <button onClick = { cancelConfirmDelivery }>Cancel</button>
             </div>
             <div className="cart-checkout-modal-button">
                
-                <button onClick = { ()=> props.confirmDelivery(props.order, props.user) }>
-                    Confirm
+                <button onClick = { ()=> confirmDelivery(order, user) } >
+                    {
+                        confirmingOrderDelivery ? <span>Confirming Delivery...</span> : 
+                        confirmingOrderDeliveryError ? <><ImWarning/> <span>Confirm</span></> :
+                        <span>Confirm</span>
+                    }
                 </button>
                    
             </div>
         </div>
     </div>
+
     )
 
 }
 
 function NoPlacedOrders(props) {
+
     return (
-        <div>
-            not paced orders yet
+
+        <div >
+            not placed orders yet
         </div>
+
     )
+
 }
