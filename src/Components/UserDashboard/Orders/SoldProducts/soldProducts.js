@@ -1,9 +1,5 @@
 
-
-
-
-
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { getOrders } from '../../../../Utils/http.services';
 import useAuth from '../../../../Context/context';
 import useOrder from '../../../../Context/Order/context';
@@ -14,38 +10,78 @@ import './soldProducts.css';
 import '../PlacedOrders/placedOrders.css';
 
 
-export default function SoldProducts(props) {
+export default function SoldProducts() {
+
     const { user } = useAuth();
+
     const { soldProducts, setOrders } = useOrder();
+
     let SoldProductsComponent;
+
     useEffect(() => {
+
         let mounted = true;
+
          // TODO... remove useGetUserFunctionality when ready to use functionality
-         let useGetUserFunctionality = false
+         let useGetUserFunctionality = true
+
         const getUserOrder = async () => {
+
             try {
+
                 const orders = await getOrders(user);
+
                 setOrders(orders)
+
             }catch(err) {
+
                 console.error(err.stack)
+
             }  
     
         }
+
+         const data  = { user }
+
          // TODO... remove useGetUserFunctionality when ready to use functionality
-        if ( (mounted && user && useGetUserFunctionality ) && !soldProducts ) {
-            getUserOrder(user);
+        if ((mounted && user && useGetUserFunctionality ) && !soldProducts ) {
+           
+            // getUserOrder(user);
+            socket.emit('getUserProductOrders', data);
+
         }  
-        socket.on('orderDataChange', function() {
+
+        socket.on('getUserProductOrdersSuccess', function(response) {
+
             if (mounted && user) {
-                getUserOrder(user);
-            }         
+
+                setOrders(response.data)
+
+            }  
+
+        });
+
+        socket.on('orderDataChange', function() {
+
+            if (mounted && user) {
+
+                // getUserOrder(user);
+                socket.emit('getUserProductOrders', data);
+
+            }   
+
         });
 
         return ()=> {
+
             mounted = false;
+
         }
+
     }, [user, soldProducts, setOrders]);
+
     if (soldProducts && soldProducts?.length > 0) {
+
         SoldProductsComponent = (
             
             <SoldProductsCompWrapper
@@ -53,7 +89,9 @@ export default function SoldProducts(props) {
             />
 
         )
+
     } else {
+
         SoldProductsComponent = (
 
             <NoSoldProducts/>
@@ -61,7 +99,9 @@ export default function SoldProducts(props) {
         )
 
     }
+
     return (
+
         <div className="placed-orders-container">
             <div  className="placed-orders-header">
                 <h3>Sold Products</h3>
@@ -69,7 +109,7 @@ export default function SoldProducts(props) {
             <div className="placed-orders-search-container">
                 <div className="placed-orders-search">
                     <form>
-                        <label htmlFor="order-search"> Search by buyer name or brand</label>
+                        <label htmlFor="order-search"> Search by user name or brand</label>
                         <input type="text" />
                     </form>
                 </div>
@@ -90,61 +130,97 @@ export default function SoldProducts(props) {
                     </form>
                 </div>
             </div>
+
             { SoldProductsComponent }
+
         </div>
+
     )
+
 }
 
-function SoldProductsCompWrapper({soldProducts}) {
+function SoldProductsCompWrapper({ soldProducts }) {
+
     return (
 
         <>
         {
-        //  {/* TODO... replace buyerName with buyer name from order */}
-        soldProducts.map((order, i) =>
-            <SoldProductsComp 
-            key={i} 
-            {...order} 
-            orderProfile = { 
-                <OrderProfile 
-                {...order}
-                buyerName={"Jeffrey"}
+
+            soldProducts.map((order, i) =>
+
+                <SoldProductsComp 
+                key = { i } 
+                {...order} 
                 />
-            }
-            />
-        )
+
+            )
+            
         }
         </>
 
     )
+
 }
 
-export function SoldProductsComp(props) {
-    let deliveryStatusSpanClass = props.delivered ? "delivered" : "pending";
+export function SoldProductsComp({delivered, ...props}) {
+
+    const deliveryStatusSpanClass = delivered ? "delivered" : "pending";
+
+    const deliveryStatus = delivered ? "delivered" : "pending";
+
+    let ViewOrderDetailsComp = (
+
+        <ViewOrderDetails 
+        deliveryStatusSpanClass = { deliveryStatusSpanClass }
+        deliveryStatus = { deliveryStatus } 
+        {...props} 
+        />
+
+    )
+
+    let OrderProfileComp = (
+
+        <OrderProfile { ...props }  />
+
+    )
+
     return (
+
         <div className="placed-order-wrapper">
             <div className="placed-order-intro">
                 <div>
-                   {
-                       props.orderProfile
-                   }
-                    <ViewOrderDetails deliveryStatusSpanClass={deliveryStatusSpanClass} />
+                   { OrderProfileComp }
+                   { ViewOrderDetailsComp }
                 </div>
             </div> 
             <div  className="placed-order-container">
             {
-                props.productsBoughtFromSeller && props.productsBoughtFromSeller.map((order, i) =>
-                    <SoldProduct key={i} {...order} />
+
+                props.productsSold.length > 0 && props.productsSold.map((order, i) =>
+
+                    <SoldProduct key = { i } { ...order } />
+
                 )
+
             }
             </div>  
         </div>
+
     )
+
 }
 
 
 function SoldProduct(props) {
+
+    let ViewProductDetailsComp = (
+
+        <ViewProductDetails { ...props } />
+
+    )
+
     return (
+
         <div className="placed-order">
          <div className="placed-order-details-container">
              <div className="placed-order-details-image-container">
@@ -152,7 +228,7 @@ function SoldProduct(props) {
 
              </div>
              <div className="placed-order-details-group-container">
-                <ViewProductDetails />
+               { ViewProductDetailsComp }
              </div>
         </div>
 
@@ -169,31 +245,49 @@ function SoldProduct(props) {
         </div>
 
         </div>
+
     )
+
 }
 
 
 export function OrderProfile(props) {
-     const {user} = useAuth();
-     if(user?.fullName === props.buyerName){
+
+    const { user } = useAuth();
+
+    if (user?.fullName === props.buyerUserName) {
+
         return (
-             <SellerOrderProfile {...props} />
+
+            <SellerOrderProfile { ...props } />
+
         )
-     }
+
+    }
+
     return (
+
         // TODO... component recieves shipping address as props from user object
-        <BuyerOrderProfile  {...props} />
+        <BuyerOrderProfile  { ...props } />
+
     )
+
 }
 
-export function SellerOrderProfile(props) {
-    const {sellerName, sellerProfileImage, sellerContact} = props
+export function SellerOrderProfile({ 
+    usedInDeliveryPage,
+    usedInPaymentsPage,
+    sellerUserName
+}) {
+
     return (
+
         <>
         <div className="placed-order-details-group header">
+
             {
-                props.usedInDeliveryPage ? <p>Recieved delivery from:</p> : 
-                props.usedInPaymentsPage ? <p>Made payment to:</p> :
+                usedInDeliveryPage ? <p>Recieved delivery from:</p> : 
+                usedInPaymentsPage ? <p>Made payment to:</p> :
                 <p>Bought products from: </p>
             }
             
@@ -203,11 +297,11 @@ export function SellerOrderProfile(props) {
                     
                     <div className="sold-products-profile-details-wrapper">
 
-                    <img src={image} alt="seller" />
+                    <img src={ image } alt="seller" />
 
                     <div className="sold-products-profile-details">
                         <div>
-                            <span>John Doe joels omega</span>
+                            <span>{ sellerUserName }</span>
                         </div>
                        
                     </div>
@@ -217,9 +311,7 @@ export function SellerOrderProfile(props) {
                     </div>
                     </div>
                     
-                    {/* <div  className="sold-products-profile-button">
-                        <button>view seller profile</button>
-                    </div> */}
+                   
                 </div>
                
             </div>
@@ -228,27 +320,32 @@ export function SellerOrderProfile(props) {
     )
 }
 
-export function BuyerOrderProfile(props) {
-    const {buyerName, buyerProfileImage, buyerContact, shippingAddress} = props
+export function BuyerOrderProfile({
+    usedInDeliveryPage,
+    usedInPaymentsPage,
+    buyerUserName
+}) {
+
+    // const { buyerName, buyerProfileImage, buyerContact, shippingAddress } = props;
     return (
         <>
         <div className="placed-order-details-group header">
         {
-                props.usedInDeliveryPage ? <p>Delivered products to:</p> : 
-                props.usedInPaymentsPage ? <p>Recieved payment from:</p> :
-                <p>Made sales to: </p>
-            }
+            usedInDeliveryPage ? <p>Delivered products to:</p> : 
+            usedInPaymentsPage ? <p>Recieved payment from:</p> :
+            <p>Made sales to: </p>
+        }
         </div>
         <div className="sold-products-profile-container">
                 <div className="sold-products-profile-image-wrapper">
                     
                     <div className="sold-products-profile-details-wrapper">
 
-                    <img src={image} alt="seller" />
+                    <img src={ image } alt="seller" />
 
                     <div className="sold-products-profile-details">
                         <div>
-                            <span>John Doe joels omega</span>
+                            <span>{ buyerUserName }</span>
                         </div>
                        
                     </div>
@@ -269,78 +366,125 @@ export function BuyerOrderProfile(props) {
     )
 }
 
-function ViewOrderDetails(props) {
+function ViewOrderDetails({
+    orderTime,
+    productsSold,
+    ref,
+    deliveryStatusSpanClass,
+    deliveryStatus
+}) {
+
     const [showDetails, setShowDetails] = useState(false);
+
+    const orderDate = new Date(Number(orderTime));
+
+    const totalProductOrderAmount = getTotalAmount(productsSold);
+
+    function getTotalAmount(arr) {
+
+        let totalOrderAMount = 0.00;
+
+        for (let i = 0; i < arr.length; i++) {
+
+            totalOrderAMount += arr[i].productPrice * arr[i].productQty
+          
+        }
+
+        return totalOrderAMount;
+
+    }
+
     return (
+
         <div>
             <div className="placed-order-details-group show-more">
             <div className="placed-order-details-group">
-                        <p>Order date: <span>wed 04 sep 2021</span></p>
-                    </div>
+                <p>Date: <span>{ orderDate.toUTCString() }</span></p>
+            </div>
             <div className="sold-products-profile-image-kebab-icon">
-                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                <GoKebabHorizontal className="nav-icon" onClick={ ()=> setShowDetails(prevstate => !prevstate) }/>
                 {/* View more */}
             </div>
             </div>
 
             {
+
                 showDetails && (
+
                     <>
-                   
                     <div className="placed-order-details-group">
-                        <p>Order Id: <span>pss12845zf4</span></p>
+                        <p>Ref: <span>{ ref || 'no ref yet' }</span></p>
                     </div>
                     <div className="placed-order-details-group">
-                        <p>Delivery status: <span className={props.deliveryStatusSpanClass}>Pending</span></p>
+                        <p>Delivery status: <span className = { deliveryStatusSpanClass }>{ deliveryStatus }</span></p>
                     </div>
                     <div className="placed-order-details-group">
-                        <p>Total order amount: <span className="diff">£68.00</span></p>
+                    <p>Total Order Amount: <span className="diff">£{ totalProductOrderAmount }</span></p>
                     </div>
+                    
                     <div className="placed-order-details-group">
                         <p>Order products:</p>
                     </div>
                     </>
+
                 )
+
             }
 
-           
         </div>
+
     )
 
 }
 
-function ViewProductDetails(props) {
+function ViewProductDetails({
+    productName,
+    productId,
+    productPrice,
+    productQty
+}) {
+
     const [showDetails, setShowDetails] = useState(false);
+
     return (
+        
         <div>
             <div className="placed-order-details-group show-more">
             <div className="placed-order-details-group">
-                <p>Product name: <span>John Doe</span></p>
+                <p>Product Name: <span>{ productName }</span></p>
             </div>
             <div className="sold-products-profile-image-kebab-icon">
-                <GoKebabHorizontal className="nav-icon" onClick={()=>setShowDetails(prevstate => !prevstate)}/>
+                <GoKebabHorizontal className="nav-icon" onClick={ ()=> setShowDetails(prevstate => !prevstate) }/>
                 {/* View more */}
             </div>
             </div>
 
             {
+
                 showDetails && (
+
                     <>
                     <div className="placed-order-details-group">
-                        <p>Product id: <span>px223ffr4</span></p>
+                        <p>Product id: <span>{ productId }</span></p>
                     </div>
                     <div className="placed-order-details-group">
-                        <p>Order quantity: <span>2</span></p>
+                        <p>Price: <span>£{ productPrice }</span></p>
                     </div>
                     <div className="placed-order-details-group">
-                        <p>Total sub amount: <span className="diff">£68.00</span></p>
+                        <p>Order quantity: <span>{ productQty }</span></p>
+                    </div>
+                    <div className="placed-order-details-group">
+                        <p>Total sub amount: <span className="diff">£{ productPrice * productQty }</span></p>
                     </div>
                     </>
+
                 )
+
             }
 
            
         </div>
+
     )
 
 }
