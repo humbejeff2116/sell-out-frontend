@@ -1,5 +1,4 @@
 
-
 import React, { useState } from "react";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import socket from '../Socket/socket';
@@ -10,20 +9,31 @@ import { createOrder } from '../../Utils/http.services';
 import "./checkout.css";
 
 export default function Checkout() {
+
   const [placedOrderMessage, setPlacedOrderMessage] = useState('');
+
   const { cartState, totalSum, sellerTotalSumData, createOrderData } = useCartContext();
+
   const { user } = useAuth();
+
   let CheckoutComponent;
 
   const placeOrder = async (cartState, sellerTotalSumData, user, orderId, orderTime = Date.now()) => {
+
     try {
+
       const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, user, orderId, orderTime);
+
       const placedOrder = await createOrder(buyersPreOrder);
+
       setPlacedOrderMessage(placedOrder?.message);
+
     }  catch(err) {
 
     } 
-  };
+    
+  }
+
 // TODO... return config if user is avalaible;
   const config = {
     public_key: process.env.REACT_APP_FLUTTER_WAVE_KEY,
@@ -41,36 +51,50 @@ export default function Checkout() {
       description: "Payment for items in cart",
       logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
-  };
+  }
 
   const fwConfig = {
     ...config,
     text: "Pay with Flutterwave",
     callback: async (response) => {
+
       alert(JSON.stringify(response));
+
       console.log(response);
+
       // TODO... call the placeOrder function here if response status is 200
       await placeOrder(cartState, sellerTotalSumData, user);
+
       closePaymentModal(); // this will close the modal programmatically
+
     },
     onClose: () => {},
   }
 
   if (cartState.length > 0) {
+
     CheckoutComponent = (
+
       <CheckoutComp
       placedOrderMessage = { placedOrderMessage }
       totalSum = { totalSum }
       fwConfig = { fwConfig }
       />
+
     )
+
   } else {
+
     CheckoutComponent = (
+
       <EmptyCheckout/>
+
     )
+
   }
 
   return (
+
     <div className="checkout-container">
       <div className="checkout-header">
         <h3>Checkout</h3>
@@ -80,19 +104,48 @@ export default function Checkout() {
       </div>
       { CheckoutComponent }
     </div>
-  );
+
+  )
+
 }
 
-function CheckoutComp({ placedOrderMessage, totalSum, fwConfig }) {
+function CheckoutComp({ placedOrderMessage, fwConfig }) {
+
+  const { cartState, totalSum, sellerTotalSumData, createOrderData } = useCartContext();
+
+  const { user } = useAuth();
+
+  let orderId = 0;
+
+  const placeOrder = async (cartState, sellerTotalSumData, user, orderId, orderTime = Date.now()) => {
+
+    try {
+
+      const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, user, orderId, orderTime);
+
+      socket.emit("createOrder", buyersPreOrder)
+
+      // const placedOrder = await createOrder(buyersPreOrder);
+      // setPlacedOrderMessage(placedOrder?.message);
+    }  catch(err) {
+
+    }
+
+  }
+
   return (
+
     <>
       <div>
       {
-          placedOrderMessage && (
-            <MessagePopup message = { placedOrderMessage } />
-          )
-        }
 
+        placedOrderMessage && (
+
+          <MessagePopup message = { placedOrderMessage } />
+
+        )
+
+      }
       </div>
 
       <div className="checkout-body">
@@ -107,7 +160,13 @@ function CheckoutComp({ placedOrderMessage, totalSum, fwConfig }) {
           <div className="checkout-button">
             {/* TODO... replace button with flutterwave button */}
           { 
-            navigator.onLine ? ( <FlutterWaveButton {...fwConfig} /> ) : ( <button>Flutterwave</button> ) 
+
+            navigator.onLine ? ( <FlutterWaveButton {...fwConfig} /> ) : ( 
+
+              <button onClick={() =>  placeOrder(cartState, sellerTotalSumData, user, orderId++ )}>Flutterwave</button> 
+
+            ) 
+
           }
           </div>
         </div>
@@ -124,24 +183,33 @@ function CheckoutComp({ placedOrderMessage, totalSum, fwConfig }) {
 
       </div>
     </>
+
   )
+
 }
 
 
 function MessagePopup({ message }) {
+
   return (
+
     <div>
       <p>{ message }</p>
     </div>
+
   )
+
 }
 
 
 function EmptyCheckout(props) {
+
   return (
+
     <div>
       No itesm in your checkout
     </div>
 
   )
+
 }
