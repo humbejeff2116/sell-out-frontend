@@ -1,87 +1,108 @@
 
-
-
-
-   import React, {useState, useEffect} from 'react';
+   import React, { useState } from 'react';
    import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
    import { ImWarning } from 'react-icons/im';
    import { Formik, Form } from 'formik';
    import * as Yup from 'yup';
-   import {TextInput, PasswordInput} from '../Formik/formik';
-   import socket from '../Socket/socket';
+   import { TextInput, PasswordInput } from '../Formik/formik';
    import useCartContext from '../../Context/Cart/cartContext';
    import useAuth from '../../Context/context';
    import { loginUser } from '../../Utils/http.services';
    import './login.css';
+   //    import socket from '../Socket/socket';
 
 export default function Login() {
+
     const [loginIn, setLoginIn] = useState(false);
+
     const [loginError, setLoginError] = useState(false);
+
     const [loginResponseMessage, setLoginResponseMessage] = useState(null);
+
     const [redirect, setRedirect] = useState('');
+
     const location = useLocation();
+
     const history = useHistory();
-    const {user, setUserData, setTokenData} = useAuth();
-    const {  clearCart, cartState, updateCartContextState } = useCartContext();
+
+    const { setUserData, setTokenData }  = useAuth();
+
+    const { updateCartContextState } = useCartContext();
 
     async function handleSubmit (values) {
+
         try{
+
             setLoginIn(true);
-            const loginData = values;
-            // socket.emit('login', loginData);
 
             const loggedInUserResponse = await loginUser(values);
+
             if (loggedInUserResponse.error) {
+
                 setLoginResponseMessage(loggedInUserResponse.message);
+
                 setLoginError(true);
+
                 setLoginIn(false);
+
                 return;
+
             }
-            if (loggedInUserResponse.data.isNewUser) {
-                setCartStateOnLogin(user, loggedInUserResponse.data.userEmail, clearCartState, cartState);
-                setUserData(loggedInUserResponse.data)
-                history.push(location.pathname);
-                setLoginError(false);
-                setLoginIn(false);
-                setLoginResponseMessage(null);
-               
-                return setRedirect('/getting-started');
-            }
+
+
             const TOKEN = loggedInUserResponse.token;
-            setCartStateOnLogin(user,loggedInUserResponse.data.userEmail, clearCartState, cartState);
+
+            setCartStateOnLogin(loggedInUserResponse.data);
+
             setUserData(loggedInUserResponse.data);
+
             setTokenData(TOKEN);
+
             setLoginError(false);
+
             setLoginIn(false);
-            setLoginResponseMessage("");
+
+            setLoginResponseMessage(null);
+
             history.push(location.pathname);
+
             setRedirect('/home');
 
         } catch(e) {
+
             setLoginError(true)
-        }     
+
+        } 
+
     }
-    const setCartStateOnLogin = (user, userEmail, clearCartState, cartState) => {
-        // check if the user context email is the same as the logged in user email
-        // if the same leave the cart context as is
-        // else clear the cart context
-        if(user && (user?.userEmail === userEmail)) {
+    
+    const setCartStateOnLogin = (user) => {
+       
+        const savedCartState =  localStorage.getItem(`${user.userEmail}-cart`) ? 
+        JSON.parse(localStorage.getItem(`${user.userEmail}-cart`)) : null;
+
+        if (!savedCartState) {
+
             return;
+
         }
-        return clearCartState(cartState);
-    }
-    const clearCartState = async (cartState) => {
-        const cart = await clearCart(cartState);
-            updateCartContextState(cart);
-            return;
+
+        return  updateCartContextState(savedCartState?.cartState, user);
+
     }
  
     if (redirect) {
+
         return (
+
             <Redirect to={redirect} />
+
         )
+
     }
+
     return (
+
         <>
         <div className="login-container">
         <div className="login-panel ">
@@ -153,4 +174,5 @@ export default function Login() {
         </>
 
     )
+
 }
