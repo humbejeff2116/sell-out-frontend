@@ -1,58 +1,80 @@
 
-
-
-
-
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useAuth from '../../../../Context/context';
 import useOrder from '../../../../Context/Order/context';
 import socket from '../../../Socket/socket';
 import { getPayments } from '../../../../Utils/http.services';
-import { BuyerOrderProfile } from '../../Orders/SoldProducts/soldProducts';
-import {PaymentComp} from '../MadePayments/paymentsMade';
+import { PaymentComp } from '../MadePayments/paymentsMade';
 import './paymentsRecieved.css';
 
 
-const paymentsMade = [
-    {
-        productsBoughtFromSeller:[{},{}]
-    }
-]
+export default function PaymentsRecieved() {
 
-export default function PaymentsRecieved(props) {
     const { user } = useAuth();
+
     const { recievedPayments, setPayments } = useOrder();
+
     let RecievedPaymentsComponent;
+
     useEffect(() => {
+
         let mounted = true;
+
          // TODO... remove useGetUserFunctionality when ready to use functionality
-         let useGetUserFunctionality = false
+         let useGetUserFunctionality = true;
+
         const getUserPayments = async () => {
+
             try {
+
                 const payments = await getPayments(user);
+
                 setPayments(payments);
-            }catch(err) {
+
+            } catch(err) {
+
                 console.error(err.stack)
+
             }  
     
         }
+
+        const userData = { user }
          // TODO... remove useGetUserFunctionality when ready to use functionality
-        if ( (mounted && user && useGetUserFunctionality ) && !recievedPayments ) {
-            getUserPayments(user);
-        }  
+        if ((mounted && user && useGetUserFunctionality ) && !recievedPayments ) {
+
+            // getUserPayments(user);
+            socket.emit('getUserPayments', userData);
+
+        } 
+
+        socket.on('getUserPaymentsSuccess', function(response) {
+
+            // alert(JSON.stringify(response, null, 2))
+            setPayments(response.data);
+
+        })
+
         socket.on('orderDataChange', function() {
+
             if (mounted && user) {
+
                 getUserPayments(user);
-            }         
-        });
+
+            } 
+
+        })
 
         return ()=> {
+
             mounted = false;
+
         }
+
     }, [user, recievedPayments, setPayments]);
 
     if (recievedPayments && recievedPayments?.length > 0) {
+
         RecievedPaymentsComponent = (
             
             <RecievedPaymentsCompWrapper
@@ -60,7 +82,9 @@ export default function PaymentsRecieved(props) {
             />
 
         )
+
     } else {
+
         RecievedPaymentsComponent = (
 
             <NoRecievedPayments/>
@@ -68,7 +92,9 @@ export default function PaymentsRecieved(props) {
         )
 
     }
+
     return (
+
         <div className="placed-orders-container">
         <div  className="placed-orders-header">
             <h3> Recieved Payments</h3>
@@ -88,34 +114,39 @@ export default function PaymentsRecieved(props) {
             </div>
         </div>
         { RecievedPaymentsComponent }
-    </div>
+        </div>
+
     )
+
 }
 
 function RecievedPaymentsCompWrapper({ recievedPayments }) {
+
     return (
+
         <>
          {
            
-           recievedPayments.map((payment, i) =>
-              <PaymentComp
-              key={i}
-              {...payment}
-              paymentProfile={
-                  <BuyerOrderProfile usedInPaymentsPage={true}/>
+            recievedPayments.map((payment, i) =>
 
-              } 
-              />
-           )
-       }
+              <PaymentComp key = { i } { ...payment } useBuyerOrderProfile= { true }/>
+            )
+
+        }
         </>
+
     )
+
 }
 
 function NoRecievedPayments(props) {
+
     return (
+
         <div>
             not recieved any payments yet
         </div>
+
     )
+
 }
