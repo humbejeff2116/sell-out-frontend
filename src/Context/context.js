@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 import { createContext, useContext } from 'react';
 
 export const MyContext = createContext();
@@ -18,7 +12,9 @@ const initialAuthContext = {
     setTokenData: () =>{},
     isAuthenticated: ()=>{},
     setViewUserProfileData: ()=>{},
+    logOut: ()=> {},
 }
+
 const initialGetStartedContext = {
     contactData: null,
     locationData: null,
@@ -37,15 +33,17 @@ const initialGetStartedContext = {
 }
 
 export const AuthContext = createContext(initialAuthContext);
+
 export const GetStartedContext = createContext(initialGetStartedContext);
 
 export default function useAuth() {
+
     return useContext(AuthContext);
+
 }
+
 export  function useGetStartedContext() {
+
     return useContext(GetStartedContext);
+
 }
-
-
-
-
