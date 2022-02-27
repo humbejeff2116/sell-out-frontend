@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CartContext } from './cartContext';
 
 import {
@@ -25,6 +25,35 @@ export  function CartContextProvider(props) {
     const [totalSum, setTotatSum] = useState(null);
 
     const [sellerPaymentData, setSellerPaymentData] = useState(null);
+
+    useEffect(() => {
+
+        const user = localStorage.getItem(`user`) ? JSON.parse(localStorage.getItem(`user`)) : null;
+
+        if (!user) {
+
+            return;
+
+        }
+
+        const savedCartState =  localStorage.getItem(`${user.userEmail}-cart`) ? 
+        JSON.parse(localStorage.getItem(`${user.userEmail}-cart`)) : null;
+        
+        const currentUserIsCartOwner = savedCartState.currentUser.userEmail === user.userEmail;
+
+        if (user && savedCartState) {
+
+            if (!currentUserIsCartOwner) {
+
+                return;
+
+            }
+
+            updateCartContextState(savedCartState?.cartState, user);
+
+        }
+
+    }, []);
 
     // function used to update context useState hooks after cart state changes
     const updateCartContextState = (state, user) => {
