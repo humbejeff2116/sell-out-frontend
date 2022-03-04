@@ -114,6 +114,12 @@ export function AuthContextProvider(props) {
     }
 
     const logOut = () => {
+        
+        setUser(null);
+
+        setToken(null);
+
+        setTokenExpiration(null);
 
         localStorage.removeItem('user')
 
