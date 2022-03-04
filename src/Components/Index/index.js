@@ -143,10 +143,12 @@ function FilterDisplayedProducts(props) {
 
     const [showClothingLinks, setShowClothingLinks] = useState(false);
 
+    const [socketConnected, setSocketConnected] = useState(false);
+
     const clothingLinks = Links.getClothingLinks()
 
     const maleClothingLinks = Links.getMaleClothingLinks()
-   
+
     useEffect(()=> {
 
         let mounted = true;
@@ -165,15 +167,61 @@ function FilterDisplayedProducts(props) {
 
                 console.error(err.stack)
 
-            } 
+            }
 
         }
 
-        if (mounted) {
+        if (socket.connected) {
 
+            setSocketConnected(true)
+           
+        } else {
+
+            socket.on('connect', ()=> {
+
+                setSocketConnected(true)
+               
+            })
+
+        }
+
+        if (socketConnected && mounted) {
+           
             getAllProducts();
 
-        }  
+        }
+   
+        
+
+        return ()=> {
+
+            mounted = false;
+            
+        }
+
+    }, [socketConnected]);  
+
+    useEffect(()=> {
+
+        let mounted = true;
+
+        async function getAllProducts() {
+
+            try {
+
+                const productsResponse = await getProducts();
+
+                const products = productsResponse.data;
+
+                setProducts(products)
+
+            } catch(err) {
+
+                console.error(err.stack)
+
+            }
+
+        }
 
         socket.on('productDataChange', function() {
 
@@ -185,15 +233,14 @@ function FilterDisplayedProducts(props) {
 
         });
 
+
         return ()=> {
 
             mounted = false;
-
-            socket.off("getProducts");
-
+            
         }
 
-    }, []);
+    }, [])
 
 
     useEffect(()=> {
