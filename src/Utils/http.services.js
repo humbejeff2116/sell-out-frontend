@@ -36,11 +36,15 @@ export async function getProducts(queryData) {
 
         const {gender, category, usage} = queryData;
 
-        return gatewayServerHTTP.get(`/products?gender=${gender}&category=${category}&usage=${usage}`);
+        const products = await gatewayServerHTTP.get(`/products?gender=${gender}&category=${category}&usage=${usage}`);
+
+        return products.data;
 
     }
+    
+    const products = await gatewayServerHTTP.get(`/products`);
 
-    return gatewayServerHTTP.get(`/products`);
+    return products.data
 
 }
 
@@ -151,5 +155,21 @@ export async function getPayments(user) {
     const paymentsResponse =  await gatewayServerHTTP.get(`/payments/${user.id}/${user.userEmail}`);
    
     return paymentsResponse.data;
+
+}
+
+export async function getProductReviews(productId) {
+
+    const productReviewsResponse =  await gatewayServerHTTP.get(`/reviews/${productId}`);
+   
+    return productReviewsResponse.data;
+
+}
+
+export async function getUserStars(userId) {
+
+    const starsResponse =  await gatewayServerHTTP.get(`/stars/${userId}`);
+   
+    return starsResponse.data;
 
 }
