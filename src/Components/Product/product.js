@@ -8,9 +8,11 @@ import ModalComment from '../ModalComments/modalComments';
 import ModalProduct from './ModalProduct/modalProduct';
 import  { SingleImageComponent } from './ImageComp/imageComp';
 import { OpenComment, Star, ProfileAvatar, Heart } from './Fragments/productFragments';
+import { getUserStars } from '../../Utils/http.services';
 
 
-export  function DisplayedProduct({ product, panelClassName, productCommentPanelName }) {
+export  function DisplayedProduct(props) {
+    const {product, panelClassName, productCommentPanelName } = props;
 
     let [starCount, setStarCount] = useState(0);
 
@@ -24,21 +26,80 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
 
     const [userLikedProduct, setUserLikedProduct] = useState(false);
 
+    const [userId, setUserId] = useState();
+
     const { user } = useAuth();
+   
+
 
     useEffect(() => {
 
-        if (user) { 
 
-            setStarOnLoad(user, product, setStarCount); 
+         const  userId = product.userId;
 
-        } 
+         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
-        setStarsUserRecieved(product.starsUserRecieved);
 
-    }, [product, user]);
+        const getSellerStars = async (userId) => {
 
-    //TODO... ucomment code below to set stars user liked
+            const sellerStarsResponse = await getUserStars(userId)
+           
+            if (sellerStarsResponse.error) return;
+
+            setStarCountOnLoad(user, sellerStarsResponse?.data?.starsUserRecieved, setStarCount);
+
+            setStarsUserRecieved(sellerStarsResponse?.data?.starsUserRecieved);
+
+        }
+        
+        getSellerStars(userId); 
+
+         
+
+    }, [ product ]);
+
+    useEffect(() => {
+      
+
+        let mounted = true;
+
+        const  userId = product.userId;
+        
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+        const getSellerStars = async (userId) => {
+
+            const sellerStarsResponse = await getUserStars(userId)
+           
+            if (sellerStarsResponse.error) return;
+
+            setStarCountOnLoad(user, sellerStarsResponse?.data?.starsUserRecieved, setStarCount);
+
+            setStarsUserRecieved(sellerStarsResponse?.data?.starsUserRecieved);
+
+        }
+
+    
+        socket.on('starUserDataChange', function() {
+
+           if (mounted) {
+                getSellerStars(userId);
+
+           }
+
+        });
+
+        return ()=> {
+
+            mounted = false;
+
+        }
+
+    }, [ product ]);
+
+    
+
+    //TODO... ucomment code below to set likes product recieved
     // useEffect(() => {
     //     setLikesProductRecieved(product.likesProductRecieved);
     // }, [ product.likesProductRecieved ]);
@@ -58,35 +119,38 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
     //     }    
     // }, [user, product.likesProductRecieved]);
 
-    const setStarOnLoad = (user, product, callback) => {
+    const setStarCountOnLoad = (user, starsUserRecieved, setStarCount) => {
 
-        const userEmail = user.userEmail;
+        const userEmail = user?.userEmail;
 
-        const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved : null;
+        // const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved : null;
 
         let starCount = 0;
 
-        if (starsUserRecieved) {
+        if (!starsUserRecieved  || !user) {
 
-            const len = starsUserRecieved.length;
+            return setStarCount(starCount);
+        }
 
-            let i;
-            
-            for ( i = 0; i < len; i++) {
+        const len = starsUserRecieved.length;
 
-                if (starsUserRecieved[i].starGiverEmail === userEmail) {
+        let i;
+        
+        for ( i = 0; i < len; i++) {
 
-                    starCount = starsUserRecieved[i].star;
+            if (starsUserRecieved[i].userEmail === userEmail) {
 
-                    break;
-                }
+                starCount = starsUserRecieved[i].star;
 
+                break;
             }
 
-            return callback(starCount);
-        } 
+        }
+
+        return setStarCount(starCount);
 
     }
+
   
     const starSeller = (product, user, star) => {
         
@@ -96,9 +160,9 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
 
                 const addeStar = {
                     star: star, 
-                    starGiverEmail: user.userEmail, 
-                    starGiverId: user.id,
-                    starGiverFullName: user.fullName
+                    userEmail: user.userEmail, 
+                    userId: user.id,
+                    userFullName: user.fullName
                 }
 
                 setStarsUserRecieved(currentState => [...currentState, addeStar]);
@@ -108,16 +172,17 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
                 setStarCount(++starCount);
 
             }
-           
+
             const data = {
                 product,
                 user,
                 starCount: starCount
             }
 
-            socket.emit('starSeller', data );
+            socket.emit('starSeller', data);
 
             return;
+              
 
         }
         
@@ -129,15 +194,18 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
 
             setStarCount(--starCount);
 
-        }
-       
-        const data = {
-            product,
-            user,
-            starCount: starCount
-        }
+            
 
-        socket.emit('starSeller', data );
+        }
+        const data = {
+                product,
+                user,
+                starCount: starCount
+            }
+    
+            socket.emit('starSeller', data );
+       
+        
 
     }
 
@@ -228,12 +296,8 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
     //     //      />
     //     // )
     // }
-
-    if (showComment) {
-        
-        return (    
-
-            <ModalComment  
+    let ModalComments = (
+        <ModalComment  
             handleClose = { closeCommentBox }
             modalDisplayedProduct = {
 
@@ -255,13 +319,14 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
 
             }
             />
-
-        )
-
-    }
+    )
 
     return (
-
+        
+        <>
+        {
+           showComment && ModalComments
+        }
         <div className = { panelClassName }>
             <div className="index-product-profile-panel">
                 <ProfileAvatar product = { product } />
@@ -300,6 +365,7 @@ export  function DisplayedProduct({ product, panelClassName, productCommentPanel
                 <OpenComment openCommentBox = { openCommentBox } />
             </div>
         </div>
+        </>
 
     )
 
