@@ -8,7 +8,7 @@ import socket from '../Socket/socket';
 import Header from './Header/header';
 import LandingInfoCard from './InfoCard/landingInfoCard';
 import LandingFooter from './Footer/landingFooter';
-import LandingProduct, {LandingServices} from './Product/product';
+import LandingProducts from './Product/product';
 import { ErrorModal } from '../ModalBox/errorModal';
 import './landing.css';
 import LoginModal from '../LoginModal/loginModal';
@@ -61,7 +61,7 @@ export default function LandingComponent(props) {
                 <LandingInfoCard/>
             </div>
             <div className="landing-center">
-                <LandingProduct />
+                <LandingProducts />
                 {/* <LandingServices  /> */}
             </div>
 
