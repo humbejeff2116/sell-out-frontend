@@ -72,15 +72,15 @@ function CartProductsWrapper({ cartData }) {
     useEffect(()=> {
 
         return ()=> {
-
-            if (cartItems?.length > 0 && cartState?.length > 0) {
+        
+            if (user && cartItems?.length > 0 && cartState?.length > 0) {
                 
                 const currentCartState = {
                     cartState,
                     currentUser: user,
                 }
 
-                localStorage.setItem("cart", JSON.stringify(currentCartState));
+                localStorage.setItem(`${user.userEmail}-cart`, JSON.stringify(currentCartState));
             }
 
         }
