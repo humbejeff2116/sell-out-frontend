@@ -1,14 +1,16 @@
 
-
-
 import React from 'react';
 import './loader.css';
 
 
-export function Loader(props) {
+export function Loader({loaderContainer, loader, ...props}) {
+
     return (
-        <div className={props.loaderContainer} >
-            <div className={props.loader}> </div>
+
+        <div className={loaderContainer} >
+            <div className={loader}> </div>
         </div>
+
     )
+    
 }
