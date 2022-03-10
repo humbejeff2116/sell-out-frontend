@@ -8,13 +8,15 @@ import ModalComment from '../ModalComments/modalComments';
 import ModalProduct from './ModalProduct/modalProduct';
 import  { SingleImageComponent } from './ImageComp/imageComp';
 import { OpenComment, Star, ProfileAvatar, Heart } from './Fragments/productFragments';
-import { getUserStars } from '../../Utils/http.services';
+import { getUserStars, getProductLikes } from '../../Utils/http.services';
 
 
 export  function DisplayedProduct(props) {
     const {product, panelClassName, productCommentPanelName } = props;
 
     let [starCount, setStarCount] = useState(0);
+
+    let [likeCount, setLikeCount] = useState(0);
 
     const [starsUserRecieved, setStarsUserRecieved] = useState([]);
 
@@ -33,7 +35,6 @@ export  function DisplayedProduct(props) {
 
 
     useEffect(() => {
-
 
          const  userId = product.userId;
 
@@ -59,12 +60,11 @@ export  function DisplayedProduct(props) {
     }, [ product ]);
 
     useEffect(() => {
-      
-
+        
         let mounted = true;
 
         const  userId = product.userId;
-        
+
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
         const getSellerStars = async (userId) => {
@@ -97,27 +97,105 @@ export  function DisplayedProduct(props) {
 
     }, [ product ]);
 
+    //get and set product likes
+    useEffect(() => {
+       
+        const  productId = product.productId;
+
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+        const getAllProductLikes = async (productId) => {
+
+            const productLikesResponse = await getProductLikes(productId)
+
+            // alert(JSON.stringify(productLikesResponse, null, 2))
+           
+            if (productLikesResponse.error) return;
+
+            setLikeCountOnLoad(user, productLikesResponse?.data, setLikeCount);
+
+            setLikesProductRecieved(productLikesResponse?.data);
+
+        }
+
+        getAllProductLikes(productId)
+
+    }, [ product ]);
+
+    // listen for  product like data change  socket event
+    useEffect(() => {
+      
+
+        let mounted = true;
+
+        const  productId = product._id;
+
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+        const getAllProductLikes = async (productId) => {
+
+            const productLikesResponse = await getProductLikes(productId)
+           
+            if (productLikesResponse.error) return;
+
+            setLikeCountOnLoad(user, productLikesResponse?.data, setLikeCount);
+
+            setLikesProductRecieved(productLikesResponse?.data);
+
+        }
+
     
+        socket.on('likePoductDataChange', function() {
 
-    //TODO... ucomment code below to set likes product recieved
-    // useEffect(() => {
-    //     setLikesProductRecieved(product.likesProductRecieved);
-    // }, [ product.likesProductRecieved ]);
+            if (mounted) {
 
-    // useEffect(() => {
-    //     const checkIfUserLikedProduct = (user, likes) => {
-    //         const { userEmail } = user;
-    //         for (let i = 0; i < likes.length; i++ ) {
-    //             if (likes[i].likeGiverEmail === userEmail) {
-    //                 setUserLikedProduct(true);
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     if(user) {
-    //         checkIfUserLikedProduct(user, product.likesProductRecieved);
-    //     }    
-    // }, [user, product.likesProductRecieved]);
+                getAllProductLikes(productId);
+
+            }
+
+        });
+
+        return ()=> {
+
+            mounted = false;
+
+        }
+
+    }, [ product ]);
+
+    
+    const setLikeCountOnLoad = (user, likesProductRecieved, setLikeCount) => {
+
+        const userEmail = user?.userEmail;
+
+        // const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved : null;
+
+        let likeCount = 0;
+
+        if (!likesProductRecieved || !likesProductRecieved.length > 0 || !user) {
+
+            return setLikeCount(likeCount);
+
+        }
+
+        const likesProductRecievedLen = likesProductRecieved.length;
+
+        let i;
+        
+        for ( i = 0; i < likesProductRecievedLen; i++) {
+
+            if (likesProductRecieved[i].userEmail === userEmail) {
+
+                likeCount = 1;
+
+                break;
+            }
+
+        }
+
+        return setLikeCount(likeCount);
+
+    }
 
     const setStarCountOnLoad = (user, starsUserRecieved, setStarCount) => {
 
@@ -188,7 +266,7 @@ export  function DisplayedProduct(props) {
         
         if (user) {
 
-            setStarsUserRecieved(currentState => currentState.filter( star => star.starGiverEmail !== user.userEmail));
+            setStarsUserRecieved(currentState => currentState.filter( star => star.userEmail !== user.userEmail));
 
             setStarClicked(false);
 
@@ -209,62 +287,62 @@ export  function DisplayedProduct(props) {
 
     }
 
-    const likeProduct = (product, user) => {
+    const likeProduct = (product, user, likeCount) => {
 
-        const data = {
-            product: product,
-            user: user,
-        }
+        
 
-        if (user) {
+        if (!likeCount) {
 
-            const like = { 
-                likeGiverEmail: user.userEmail, 
-                likeGiverId: user.id, 
-                likeGiverFullName: user.fullName 
-            }
+            if (user) {
 
-            let likedProduct = false;
-
-            let len = likesProductRecieved.length;
-
-            let i 
-
-            for (i = 0; i < len; i++) {
-
-                if (likesProductRecieved[i].likeGiverEmail === user.userEmail) {
-
-                    likedProduct = true;
-
-                    break;
-
+                const addedLike = {
+                    like: likeCount, 
+                    userEmail: user.userEmail, 
+                    userId: user.id,
+                    userFullName: user.fullName
                 }
 
-            }
+                setLikesProductRecieved(currentState => [...currentState, addedLike]);
 
-            if (likedProduct) {
+                // setStarClicked(true);
 
-                setUserLikedProduct(false);
-
-                setLikesProductRecieved(currentState => currentState.filter(like => like.likeGiverEmail !== user.userEmail ));
-
-                socket.emit('likeProduct', data );
-
-                return;
+                setLikeCount(++likeCount);
 
             }
 
-            setUserLikedProduct(true);
-
-            setLikesProductRecieved([...likesProductRecieved, like]);
+            const data = {
+                product,
+                user,
+                likeCount: likeCount
+            }
 
             socket.emit('likeProduct', data);
 
             return;
+              
+
+        }
+        
+        if (user) {
+
+            setLikesProductRecieved(currentState => currentState.filter( like=> like.userEmail !== user.userEmail));
+
+            // setStarClicked(false);
+
+            setLikeCount(--likeCount);
+
+            
 
         }
 
-        socket.emit('likeProduct', data);
+        const data = {
+                product,
+                user,
+                likeCount: likeCount
+        }
+    
+            socket.emit('likeProduct', data);
+
 
     }
 
@@ -356,10 +434,11 @@ export  function DisplayedProduct(props) {
                 <div className="index-product-reaction-star">
                    <Heart
                    userLikedProduct = { userLikedProduct }
-                   likeProduct = { likeProduct }
                    product = { product }
                    user = { user }
                    likesProductRecieved = { likesProductRecieved }
+                   likeCount = { likeCount }
+                   likeProduct = { likeProduct }
                    />
                 </div>
                 <OpenComment openCommentBox = { openCommentBox } />
