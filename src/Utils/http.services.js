@@ -173,3 +173,11 @@ export async function getUserStars(userId) {
     return starsResponse.data;
 
 }
+
+export async function getProductLikes(productId) {
+
+    const productLikesResponse =  await gatewayServerHTTP.get(`/product-likes/${productId}`);
+   
+    return productLikesResponse.data;
+
+}
