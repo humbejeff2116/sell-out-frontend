@@ -73,14 +73,24 @@ function CartProductsWrapper({ cartData }) {
 
         return ()=> {
         
-            if (user && cartItems?.length > 0 && cartState?.length > 0) {
-                
-                const currentCartState = {
-                    cartState,
-                    currentUser: user,
-                }
+            if (user) {
 
-                localStorage.setItem(`${user.userEmail}-cart`, JSON.stringify(currentCartState));
+                if (cartItems?.length > 0 && cartState?.length > 0) {
+
+                    const currentCartState = {
+                        cartState,
+                        currentUser: user,
+                    }
+    
+                    localStorage.setItem(`${user.userEmail}-cart`, JSON.stringify(currentCartState));
+
+                } else {
+
+                    localStorage.removeItem(`${user.userEmail}-cart`);
+
+                }
+                
+                
             }
 
         }
@@ -400,15 +410,11 @@ function CartProduct({ product }) {
 
         if (updatedCartItems.length < 1) {
 
-            localStorage.removeItem('cart');
-
             return updateCartContextState([], user);
 
         }
-
+        
         updateCartContextState(updatedState, user);
-
-        localStorage.setItem('cart', JSON.stringify(updatedState));
 
         if (cartItems.length > 0) {
 
