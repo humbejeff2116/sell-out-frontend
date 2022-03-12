@@ -78,10 +78,22 @@ async function removeProductFromCart(state = [], action) {
         return state;
     }
     //   filter product with product id
-    let newSellerProducts = sellerProducts.filter(product => {
+    const newSellerProducts = sellerProducts.filter(product => {
         return product.productId !== productId;
     });
     //  loop through the cart state and attach the new filtered seller product
+    if (newSellerProducts.length < 1) {
+
+        const newState = state.filter(product => {
+
+            return product.sellerEmail !== sellerEmail
+
+        })
+
+        return newState;
+
+    }
+
     for (let i = 0; i < state.length; i++) {
         if (state[i].sellerEmail === sellerEmail) {
             state[i].productsUserBoughtFromSeller = newSellerProducts;
@@ -204,9 +216,12 @@ function calculateTotalNumberOfProductsInCart(state = []) {
     return totalProducts;
 }
 async function createOrderData(productsUserBought, sellerPaymentData, user, orderId, orderTime) {
-    for (let i = 0; i < productsUserBought.length; i++) {
-        productsUserBought[i].orderTime = orderTime;
-        productsUserBought[i].orderId = orderId;
+    
+    const newCartState = productsUserBought.filter(product => product.productsUserBoughtFromSeller.length > 0);
+
+    for (let i = 0; i < newCartState.length; i++) {
+        newCartState[i].orderTime = orderTime;
+        newCartState[i].orderId = orderId;
     }
 
     for (let i = 0; i < sellerPaymentData.length; i++) {
@@ -215,7 +230,7 @@ async function createOrderData(productsUserBought, sellerPaymentData, user, orde
     }
     return ({
         user: user,
-        order: productsUserBought,
+        order: newCartState,
         payments: sellerPaymentData
     })
 }
