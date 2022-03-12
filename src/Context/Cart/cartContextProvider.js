@@ -30,28 +30,25 @@ export  function CartContextProvider(props) {
 
         const user = localStorage.getItem(`user`) ? JSON.parse(localStorage.getItem(`user`)) : null;
 
-        if (!user) {
+        const savedCartState =  localStorage.getItem(`${user.userEmail}-cart`) ? 
+        JSON.parse(localStorage.getItem(`${user.userEmail}-cart`)) : null;
+
+        if (!user || !savedCartState) {
 
             return;
 
         }
 
-        const savedCartState =  localStorage.getItem(`${user.userEmail}-cart`) ? 
-        JSON.parse(localStorage.getItem(`${user.userEmail}-cart`)) : null;
-        
         const currentUserIsCartOwner = savedCartState.currentUser.userEmail === user.userEmail;
 
-        if (user && savedCartState) {
+        if (!currentUserIsCartOwner) {
 
-            if (!currentUserIsCartOwner) {
-
-                return;
-
-            }
-
-            updateCartContextState(savedCartState?.cartState, user);
+            return;
 
         }
+
+        updateCartContextState(savedCartState?.cartState, user);
+        
 
     }, []);
 
