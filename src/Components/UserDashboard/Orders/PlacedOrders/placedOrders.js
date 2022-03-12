@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { getOrders, confirmDelivery } from '../../../../Utils/http.services';
 import useAuth from '../../../../Context/context';
 import useOrder from '../../../../Context/Order/context';
 import { ModalBox } from '../../../ModalComments/modalComments';
@@ -22,7 +21,7 @@ export default function PlacedOrdersContainer(props) {
 
     const [confirmOrderDeliveryResponse, setConfirmOrderDeliveryResponse] = useState("");
 
-    const [confirmOrderDeliveryError,setConfirmOrderDeliveryError] = useState(false);
+    const [confirmOrderDeliveryError, setConfirmOrderDeliveryError] = useState(false);
 
     const { user } = useAuth();
 
@@ -33,61 +32,68 @@ export default function PlacedOrdersContainer(props) {
     useEffect(() => {
 
         let mounted = true;
-         // TODO... remove useGetUserFunctionality when ready to use functionality
 
-         let useGetUserFunctionality = true;
-
-        const getUserOrder = async () => {
-
-            try {
-
-                const orders = await getOrders(user);
-
-                alert(JSON.stringify(orders, null, 2));
-
-                setOrders(orders)
-
-            }catch(err) {
-
-                console.error(err.stack)
-
-            }  
-    
-        }
+        let timer = null;
 
         const data  = { user }
+        
+        if ((mounted && user ) && (!placedOrders || !placedOrders.length > 0)) {
 
-         // TODO... remove useGetUserFunctionality when ready to use functionality
-        if ((mounted && user && useGetUserFunctionality ) && !placedOrders) {
-            
             socket.emit('getUserProductOrders', data);
             
-            // getUserOrder(user);
         } 
         
-        socket.on('getUserProductOrdersSuccess', function(response) {
+        socket.on('getUserProductOrdersSuccess', (response) => {
 
             if (mounted && user) {
-
+               
                 setOrders(response.data)
 
             }  
 
         });
 
-        socket.on('orderDataChange', function() {
+        socket.on('orderDataChange', () => {
 
             if (mounted && user) {
 
-                // getUserOrder(user);
-                socket.emit('getUserProductOrders', data);
+                timer = setTimeout(() => {
+
+                    socket.emit('getUserProductOrders', data);
+
+                }, 2000)
 
             } 
                          
         });
 
-        socket.on('confirmDeliverySuccess', function(response) {
+        socket.on('confirmDeliverySuccess', (response) => {
+            // TODO... set confirm delivery success or error message
             
+            setShowConfirmOrderDeliveryModal(false);
+
+            setOrderToConfirm(null);
+
+            setConfirmingOrderDelivery(false);
+
+            setConfirmOrderDeliveryResponse(response.message);
+
+            setConfirmOrderDeliveryError(false);
+
+        })
+
+        socket.on('confirmDeliveryError', (response) => {
+            // TODO... set confirm delivery success or error message
+            
+            setShowConfirmOrderDeliveryModal(false);
+
+            setOrderToConfirm(null);
+
+            setConfirmOrderDeliveryResponse(response.message);
+
+            setConfirmOrderDeliveryError(true);
+            
+            setConfirmingOrderDelivery(false);
 
         })
 
@@ -95,9 +101,15 @@ export default function PlacedOrdersContainer(props) {
 
             mounted = false;
 
+            if (timer) {
+
+                clearTimeout(timer)
+
+            }
+
         }
 
-    }, [user, placedOrders, setOrders]);
+    }, [user]);
  
     const closeConfirmDeliveryModal = () => {
 
@@ -121,23 +133,10 @@ export default function PlacedOrdersContainer(props) {
 
     const confirmOrderDelivery = async (order, user) => {
 
-        // alert(JSON.stringify(order, null, 2))
-        // setConfirmingOrderDelivery(true);
-        // const confirmDeliveryResponse = await confirmDelivery({ order, user });
-        // if (confirmDeliveryResponse.error) {
-        //     setConfirmOrderDeliveryResponse(confirmDeliveryResponse.message);
-        //     setConfirmOrderDeliveryError(true);
-        //     setConfirmingOrderDelivery(false); 
-        //     return;
-        // }
-
-        // setConfirmOrderDeliveryResponse(confirmDeliveryResponse.message);
-        // setConfirmingOrderDelivery(false);
-        // setConfirmOrderDeliveryError(false);
-
         const confirmOrderData = { order, user }
 
         socket.emit('confirmDelivery', confirmOrderData)
+
     }
 
     const cancelConfirmDelivery = () => {
@@ -178,9 +177,8 @@ export default function PlacedOrdersContainer(props) {
                 (showConfirmOrderDeliveryModal) && (
 
                     <ModalBox 
-                    handleModal={closeConfirmDeliveryModal} 
-                    modalContainerWrapperName={"cart-checkout-modal-container-wrapper"}
-                    modalContainer={"cart-checkout-modal-container"}
+                    handleModal = { closeConfirmDeliveryModal } 
+                    modalContainer = { "place-order-modal-container" }
                     >
                        <ConfirmDeliveryModalChild
                        confirmDelivery = { confirmOrderDelivery }
@@ -249,6 +247,7 @@ function PlacedOrdersWrapper({ placedOrders, openConfirmDeliveryModal }) {
 function PlacedOrders({ orderTime, ref, productsBought,_id, openConfirmDeliveryModal }) {
 
     const orderDate = new Date(Number(orderTime))
+
     return (
 
         <div className="placed-order-wrapper">
@@ -272,7 +271,7 @@ function PlacedOrders({ orderTime, ref, productsBought,_id, openConfirmDeliveryM
                     <PlacedOrder 
                     key = { i } 
                     { ...order }
-                    order ={ order }
+                    order = { order }
                     placedOrderId = {  _id  } 
                     openConfirmDeliveryModal = { openConfirmDeliveryModal } 
                     />
@@ -449,17 +448,17 @@ function ConfirmDeliveryModalChild({
 
     return (
 
-        <div className="cart-checkout-modal-body-container">
-        <div className="cart-checkout-modal-content">
+        <div className="placed-order-modal-body-container">
+        <div className="placed-order-modal-content">
             <p>
                 Are you sure you want to confirm delivery?
             </p>
         </div>
-        <div className="cart-checkout-modal-buttons-container">
-            <div className="cart-checkout-modal-button">
+        <div className="placed-order-modal-buttons-container">
+            <div className="placed-order-modal-button">
                 <button onClick = { cancelConfirmDelivery }>Cancel</button>
             </div>
-            <div className="cart-checkout-modal-button">
+            <div className="placed-order-modal-button">
                
                 <button onClick = { ()=> confirmDelivery(order, user) } >
                     {
