@@ -1,8 +1,8 @@
 import React from 'react';
-import image from '../../../Images/avatar.jpg';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import { BiMessageSquareEdit } from 'react-icons/bi';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import profileAvatar from '../../../Images/avatar4.png';
 
 
 function OpenComment({ openCommentBox }) {
@@ -86,10 +86,12 @@ function ProfileAvatar({ product }) {
         // const { userId } = product;
     }
 
+    const imageSrc = (product.userProfileImage === "no-image" || !product.userProfileImage ) ? null : product.userProfileImage 
+
     return (
 
         <div className="index-product-profile">
-            <img src={ image } alt="seller" width="100%" height="auto" />
+            <img src={ imageSrc || profileAvatar } alt="seller" width="100%" height="auto" />
             <span onClick = { viewSeller(product) }> { product.userName } </span>
         </div>
         

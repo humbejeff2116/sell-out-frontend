@@ -1,54 +1,62 @@
 
-
-
-
-
-
-
-
-
-import React, {useState, useEffect} from 'react';
-import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import {TextAreaInput,Select} from '../../Formik/formik';
-import socket from '../../Socket/socket';
+import { TextAreaInput, Select } from '../../Formik/formik';
 import { useGetStartedContext } from '../../../Context/context';
-import image from '../../../Images/avatar.jpg'
-
+//avatar SVG image gotten from https://svgrepo.com
+import image from '../../../Images/avatar2.png'
 import './location.css';
 import '../Contact/contact.css';
 
-
-
-
 export default function Location(props) {
+
     const [redirect, setRedirect] = useState('');
+
     const {locationData, setLocation, setIsContactDataSet } = useGetStartedContext();
+
     const location = useLocation();
+
     const history = useHistory();
 
     useEffect(() => {  
+
         window.scrollTo(0, 0);
+
     }, []);
     
 
     const handleSubmit =  (values) => {
+
         setLocation(values);
+
         history.push(location.pathname);
-        setRedirect('/getting-started/profile-image');     
+
+        setRedirect('/getting-started/profile-image');
+
     }
 
-    const goBack = () => {  
+    const goBack = () => { 
+
         setIsContactDataSet(false);
+
         history.push(location.pathname);
-        setRedirect('/getting-started/contact');   
+
+        setRedirect('/getting-started/contact'); 
+
     }
-    if(redirect) {
+
+    if (redirect) {
+
         return (
+
             <Redirect to={redirect} />
+
         )
+
     }
+
     return (
        
         <div className="getting-started-contact-container">
@@ -70,13 +78,15 @@ export default function Location(props) {
                     initialValues = {{
                         country: locationData ? locationData?.country : '',
                         city: locationData ? locationData?.city : '',
-                        address: locationData ? locationData?.address : '',
+                        residentialAddress: locationData ? locationData?.address : '',
+                        delieveryRegions: locationData ? locationData?.delieveryRegions : ''
                     }}
 
                     validationSchema = { Yup.object({
                         country: Yup.string().required('Country is required'),
                         city: Yup.string().required('City is required'),
-                        address: Yup.string().required('Address is required') 
+                        residentialAddress: Yup.string().required('Address is required'),
+                        // delieveryRegions: Yup.string().required(`Delivery region('s) is required`),
                     })}
 
                     onSubmit = { handleSubmit }
@@ -123,10 +133,24 @@ export default function Location(props) {
                     label="RESIDENTIAL ADDRESS"
                     labelClassName="location-form-group brand-name-label"
                     labelText=" (optional)"
-                    name="address"
+                    name="residentialAddress"
                     type="text"
                     errorClass="contact-form-error"
                     /> 
+
+                    <div className="location-form-state">
+                        <Select
+                        label="DELIVERY REGION('S)"
+                        labelClassName="location-form-group"
+                        name="delieveryRegions"
+                        errorClass="contact-form-error"
+                        >
+                            <option value="">Select</option>
+                            <option value="Abuja">Abuja</option>
+                            <option value="Abia">Abia</option>
+                            <option value="Adamawa">Adamawa</option>
+                        </Select>
+                    </div>
                 </div>
                 
                 <div className="getting-started-contact-buttons">
@@ -152,8 +176,3 @@ export default function Location(props) {
     )
 
 }
-
-
-
-
-

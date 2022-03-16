@@ -1,53 +1,64 @@
 
-
-
-
-import React, {useState, useEffect} from 'react';
-import { Link, Redirect, useLocation, useHistory  } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, TextAreaInput } from '../../Formik/formik';
-// import socket from '../../Socket/socket';
 import { useGetStartedContext } from '../../../Context/context';
-import image from '../../../Images/avatar.jpg';
+//avatar SVG image gotten from https://svgrepo.com
+import image from '../../../Images/avatar2.png';
 import useAuth from '../../../Context/context';
-
 import './contact.css';
 
-
-
-
 export default function Contact(props) {
+
     const [redirect, setRedirect] = useState('');
+
     const {contactData, setContact, setIsContactDataSet} = useGetStartedContext();
+
     const { user } = useAuth();
+
     const location = useLocation();
+
     const history = useHistory();
 
 
-    useEffect(() => {  
+    useEffect(() => { 
+
         window.scrollTo(0, 0);
+
     }, []);
     
-
     const handleSubmit = (values) => {
+
         setContact(values);
+
         history.push(location.pathname);
-        setRedirect('/getting-started/location');    
+
+        setRedirect('/getting-started/location');
+
     }
 
     const goBack = ( ) => { 
+
         setIsContactDataSet(false);
+
         history.push(location.pathname);
-        setRedirect('/getting-started');   
+
+        setRedirect('/getting-started');
+
     }
 
+    if (redirect) {
 
-    if(redirect) {
         return (
+
             <Redirect to={redirect} />
+
         )
+
     }
+
     return (
        
         <div className="getting-started-contact-container">
@@ -64,8 +75,6 @@ export default function Contact(props) {
                 </div>  
             </div>
 
-            
-            
             <div className="getting-started-contact-body">                            
                 <Formik
                     initialValues = {{
@@ -91,7 +100,7 @@ export default function Contact(props) {
                             <span>
                                 Your brand name which will be tagged on all your products is used to help your customers 
                                 identify items which are sold by you. If not set, it automatically defaults 
-                                to your names.
+                                to the names you signed up with.
                             </span>
                         </div>
                     <TextInput
@@ -134,7 +143,6 @@ export default function Contact(props) {
 
                     </div>
                 
-
                 <div className="getting-started-contact-buttons">
                 <div className="getting-started-contact-back-button">
                     <button onClick={()=> goBack()}>
@@ -142,7 +150,6 @@ export default function Contact(props) {
                     </button>
                 </div>
                 
-
                 <div className="getting-started-contact-next-button">
                     <button type="submit" >
                      Continue
@@ -158,5 +165,3 @@ export default function Contact(props) {
     )
 
 }
-
-
