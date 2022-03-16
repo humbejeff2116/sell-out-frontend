@@ -38,7 +38,7 @@ export  function DisplayedProduct(props) {
 
          const  userId = product.userId;
 
-         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        //  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
 
 
         const getSellerStars = async (userId) => {
@@ -57,7 +57,7 @@ export  function DisplayedProduct(props) {
 
          
 
-    }, [ product ]);
+    }, [ product, user ]);
 
     useEffect(() => {
         
@@ -102,13 +102,9 @@ export  function DisplayedProduct(props) {
        
         const  productId = product.productId;
 
-        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-
         const getAllProductLikes = async (productId) => {
 
             const productLikesResponse = await getProductLikes(productId)
-
-            // alert(JSON.stringify(productLikesResponse, null, 2))
            
             if (productLikesResponse.error) return;
 
@@ -120,12 +116,11 @@ export  function DisplayedProduct(props) {
 
         getAllProductLikes(productId)
 
-    }, [ product ]);
+    }, [ product, user ]);
 
     // listen for  product like data change  socket event
     useEffect(() => {
       
-
         let mounted = true;
 
         const  productId = product._id;
@@ -168,8 +163,6 @@ export  function DisplayedProduct(props) {
 
         const userEmail = user?.userEmail;
 
-        // const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved : null;
-
         let likeCount = 0;
 
         if (!likesProductRecieved || !likesProductRecieved.length > 0 || !user) {
@@ -200,8 +193,6 @@ export  function DisplayedProduct(props) {
     const setStarCountOnLoad = (user, starsUserRecieved, setStarCount) => {
 
         const userEmail = user?.userEmail;
-
-        // const starsUserRecieved = product.starsUserRecieved ? product.starsUserRecieved : null;
 
         let starCount = 0;
 
@@ -261,7 +252,6 @@ export  function DisplayedProduct(props) {
 
             return;
               
-
         }
         
         if (user) {
@@ -272,9 +262,8 @@ export  function DisplayedProduct(props) {
 
             setStarCount(--starCount);
 
-            
-
         }
+
         const data = {
                 product,
                 user,
@@ -283,13 +272,9 @@ export  function DisplayedProduct(props) {
     
             socket.emit('starSeller', data );
        
-        
-
     }
 
     const likeProduct = (product, user, likeCount) => {
-
-        
 
         if (!likeCount) {
 
@@ -303,8 +288,6 @@ export  function DisplayedProduct(props) {
                 }
 
                 setLikesProductRecieved(currentState => [...currentState, addedLike]);
-
-                // setStarClicked(true);
 
                 setLikeCount(++likeCount);
 
@@ -320,18 +303,13 @@ export  function DisplayedProduct(props) {
 
             return;
               
-
         }
         
         if (user) {
 
             setLikesProductRecieved(currentState => currentState.filter( like=> like.userEmail !== user.userEmail));
 
-            // setStarClicked(false);
-
             setLikeCount(--likeCount);
-
-            
 
         }
 
@@ -341,8 +319,7 @@ export  function DisplayedProduct(props) {
                 likeCount: likeCount
         }
     
-            socket.emit('likeProduct', data);
-
+        socket.emit('likeProduct', data);
 
     }
 
@@ -375,6 +352,7 @@ export  function DisplayedProduct(props) {
     //     // )
     // }
     let ModalComments = (
+
         <ModalComment  
             handleClose = { closeCommentBox }
             modalDisplayedProduct = {
@@ -397,6 +375,7 @@ export  function DisplayedProduct(props) {
 
             }
             />
+            
     )
 
     return (
@@ -422,11 +401,11 @@ export  function DisplayedProduct(props) {
                 { imageComponent }
                 <div className="index-product-image-details">
                     <div className="index-product-details-name">
-                        <span>blue denim close up andre 200 </span>
+                        <span>{product.productName} </span>
                     </div>
-                    <div className="index-product-details-price">
-                        <p>£300.00 (22% OFF) <span>£320.00</span></p>
-                    </div>
+
+                    <Price {...product} />
+
                 </div>
             </div>
 
@@ -445,6 +424,65 @@ export  function DisplayedProduct(props) {
             </div>
         </div>
         </>
+
+    )
+
+}
+
+
+export function Price({percentageOff, productPrice, className, showPriceTag}) {
+
+    const priceContainerClass = className ? className : "index-product-details-price";
+
+    if (percentageOff  && !showPriceTag) {
+
+        const percentOffPrice = (percentageOff / 100) * Number(productPrice)
+
+        const newPrice = Number(productPrice) - percentOffPrice;
+
+        return (
+
+            <div className={ priceContainerClass }>
+            <p> £{ newPrice.toFixed(2, 10) } { `(${percentageOff}% OFF)` } <span> £{ Number( productPrice).toFixed(2, 10) } </span></p>
+            </div>
+
+        )
+
+    }
+
+    if (percentageOff && showPriceTag) {
+
+        const percentOffPrice = (percentageOff / 100) * Number(productPrice)
+
+        const newPrice = Number(productPrice) - percentOffPrice;
+
+        return (
+
+            <div className={ priceContainerClass }>
+                <p>Price: <span className="price"> £{ newPrice.toFixed(2, 10) } { `(${percentageOff}% OFF)` }</span> <span className="original-price">£{ Number( productPrice).toFixed(2, 10) }</span></p>
+            </div>
+
+        )
+
+    }
+
+    if (!percentageOff && showPriceTag) {
+
+        return (
+
+            <div className={ priceContainerClass }>
+                <p>Price: <span className="price"> £{ Number( productPrice).toFixed(2, 10) }</span> </p>
+            </div>
+
+        )
+
+    }
+
+    return (
+
+        <div className={ priceContainerClass }>
+            <p> £{ Number( productPrice).toFixed(2, 10) }</p>
+        </div>
 
     )
 
