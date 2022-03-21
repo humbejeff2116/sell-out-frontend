@@ -1,8 +1,12 @@
 
-
-
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { FiSearch } from 'react-icons/fi'
+import { RiListSettingsFill } from 'react-icons/ri'
+import useAuth from '../../Context/context';
+import { Loader } from '../Loader/loader';
+import socket from '../Socket/socket';
+import SearchOmniBar from './searchOmnibar';
+import { SearchResultModalBar, SearchResultModalBarChild } from './searchResultsModal';
 
 
 const states = [
@@ -14,13 +18,294 @@ const states = [
 ]
 
 export function SearchProducts(props) {
+
+    const [searchedProducts, setSearchedProducts] = useState(null);
+
+    const [searchingProducts, setSearchingProducts] = useState(false);
+
+    const  [searchProductsError, setSearchProductsError] = useState(false);
+
+    // const [searchProductsMssg,  setSearchProductsMssg] = useState('');
+    
+    const [showOmnibar, setShowOmnibar] = useState(false)
+
+    const [searchQuery, setSearchQuery] = useState({});
+
+    const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(true)
+
+    const [returnedEmptySearch, setReturnedEmptySearch] = useState(false)
+
+    const [numberOfEmptySearch, setNumberOfEmptySearch] = useState(0)
+
+    const { user } = useAuth();
+
+    const _searchOmnibar = React.createRef();
+
+    let arr = [1,2,3,4,5,6,7,8,8,8,9,8,7,6,6,76,7,7]
+
+    let compTimer = null;
+
+     useEffect(()=> {
+
+         const closeSearchProductsOmnibar = (e) => {
+
+            if (_searchOmnibar.current)  closeSearchOmnibar()
+
+            function closeSearchOmnibar() {
+
+                if (showOmnibar && !_searchOmnibar.current.contains(e.target)) {
+
+                    setShowOmnibar(false);
+
+                    setReturnedEmptySearch(false)
+
+                    setSearchProductsError(false)
+                
+                }
+
+            }
+
+        }
+
+        window.addEventListener('click', closeSearchProductsOmnibar);
+
+        return ()=> {
+
+            window.removeEventListener('click', closeSearchProductsOmnibar);
+
+        }
+
+    }, [_searchOmnibar, showOmnibar]);
+
+    useEffect(()=> {
+
+        let timer = null;
+
+        socket.on("searchProductsSuccess", function(response) {
+
+            if (response.data.length < 1) {
+        
+               timer = setTimeout(() => {
+                    
+                    setSearchingProducts(false)
+
+                    setSearchProductsError(false)
+
+                    setReturnedEmptySearch(true)
+        
+                    // setSearchProductsMssg(response.message)
+
+                    setShowOmnibar(true)
+                    
+                }, 1000)
+
+                return;
+
+            }
+
+           timer = setTimeout(() => {
+                    
+                setSearchProductsError(false)
+    
+                setSearchingProducts(false)
+        
+                setShowOmnibar(false)
+        
+                // setSearchProductsMssg(response.message)
+        
+                setSearchedProducts(response.data)
+                
+            }, 1000)
+   
+           timer = setTimeout(() => {
+    
+                setShowSearchProductsResultModal(true)
+                
+            }, 1500)
+
+        })
+
+        socket.on("searchProductsError", function(response) {
+
+           timer = setTimeout(() => {
+                
+                setSearchingProducts(false)
+
+               setSearchProductsError(true)
+   
+            //    setSearchProductsMssg(response.message)
+
+               setShowOmnibar(true)
+               
+            }, 1000)
+
+           return;
+           
+        })
+
+        return ()=> {
+
+            if (timer) {
+                
+                clearTimeout(timer);
+            }
+
+        }
+
+    }, []);
+
+    useEffect(()=> {
+
+        return ()=> {
+
+            if (compTimer) clearTimeout(compTimer)
+        }
+
+    }, [compTimer])
+
+    
+    const handleInputChange = (e) => {
+
+        setSearchQuery(prevState => ({ ...prevState, [e.target.name] : e.target.value }))
+
+        setNumberOfEmptySearch(0)
+
+    }
+
+    const handleInputFocusChange  = (e) => {
+
+        setReturnedEmptySearch(false)
+
+        setSearchProductsError(false)
+
+        setShowOmnibar(true)
+
+        setNumberOfEmptySearch(0)
+
+    }
+
+    const getSearchProducts = async function(e) {
+    
+        try{
+    
+            e.preventDefault()
+    
+            if (!searchQuery.searchQuery) {
+               
+    
+                setNumberOfEmptySearch( prevstate => prevstate + 1 )
+    
+                return
+    
+            }
+    
+            if (user && searchQuery.searchQuery) {
+    
+                setSearchingProducts(true);
+    
+                setShowOmnibar(false)
+    
+                const data = { user, query: searchQuery?.searchQuery }
+    
+                socket.emit("searchProducts", data)
+    
+            }
+    
+            e.stopPropagation();
+    
+        } catch(err) {
+    
+           compTimer = setTimeout(() => {
+    
+                setSearchingProducts(false)
+    
+                setSearchProductsError(true)
+                // TODO... set error mssg
+                // setSearchProductsMssg("")
+    
+                setShowOmnibar(true)
+                
+            }, 1000)
+    
+        }
+    
+    }
+
+    const getSearchProductsOmnibar = async (searchQuery) => {
+
+        try{
+
+            if (!searchQuery.query) {
+
+                setNumberOfEmptySearch( prevstate => prevstate + 1 )
+
+                return
+
+            }
+            
+            if (user && searchQuery.query) {
+
+                setSearchQuery({})
+
+                setSearchingProducts(true);
+
+                setShowOmnibar(false)
+
+                const data = { user, query: searchQuery?.query }
+
+                socket.emit("searchProducts", data)
+
+            }
+
+        } catch(err) {
+
+            compTimer = setTimeout(() => {
+
+                setSearchingProducts(false)
+
+                setSearchProductsError(true)
+               
+                // setSearchProductsMssg("")
+
+                setShowOmnibar(true)
+                
+            }, 1000)
+
+        }
+
+    }
+
+    const closeSearchProductsBar = () => {
+
+        setShowSearchProductsResultModal(false);
+    }
+
+    const removeSearchItem = (e, item )=> {
+
+        const newsearchedProducts = searchedProducts.filter(searchItem => searchItem._id !== item._id);
+
+        setSearchedProducts(newsearchedProducts);
+
+        e.stopPropagation()
+
+    }
+
+    const omnibarClassName = numberOfEmptySearch > 0 ? "index-search-form error" : "index-search-form"
+
+    const SearchResultModalBarChildComp = (
+
+        <SearchResultModalBarChild
+        searchResults={ searchedProducts || arr }
+        removeSearchItem={ removeSearchItem }
+        />
+
+    )
+
     return (
+
         <div className="index-search-container">
             <div className="index-search-header-panel">
                 <div className="index-search-header">
-                    {/* <p>
-                        Filter search to alter default behaviour
-                    </p> */}
                     <p>
                         Search for products
                     </p>
@@ -28,25 +313,23 @@ export function SearchProducts(props) {
             </div>
             <div className="index-search-select">
 
-                {/* <div className="index-search-select-filter">
-                    
-                    <span>Filter search</span>
-                </div> */}
+                <div className="index-search-select-filter">
+                    {/* <GoSettings className="index-search-filter-icon"/> */}
+                    <RiListSettingsFill className="index-search-filter-icon"/>
+                </div>
 
                 <div className="index-search-select-btn">
-                   
                     <select>
                     <option>
-                        Country
+                    Country
                     </option>
-                        <option>
-                            Nigeria
-                        </option>
+                    <option>
+                    Nigeria
+                    </option>
                     </select>
                 </div>
 
                 <div className="index-search-select-btn">
-                   
                     <select>
                     {
                         states.map((state,i)=>
@@ -58,44 +341,87 @@ export function SearchProducts(props) {
                     </select>
                 </div>
 
-
-                <div className="index-search-select-btn">
-                   
+                <div className="index-search-select-btn">                   
                    <select>
-                   <option>
-                       Category
-                   </option>
-                       <option>
-                           All
-                       </option>
-                       <option>
-                           Electronics
-                       </option>
-                       <option>
-                           Furniture
-                       </option>
+                    <option>
+                    Category
+                    </option>
+                    <option>
+                    All
+                    </option>
+                    <option>
+                    Electronics
+                    </option>
+                    <option>
+                    Furniture
+                    </option>
                    </select>
                </div>
-            </div>
-            <div className="index-search-form">
-               <form>
-               <input type="search" placeholder="search for products"   name="searchproduct" />
 
-                <button type="submit" >
-                {/* {this.state.Searching ? 'Searching...' : 'Search'} */}
-                Search
-                </button>   
-               </form>
-               <div className="index-search-form-error">
-                            <div className="index-search-form-error-text">
-                            <span className="index-search-error">No products match your search</span>
-                            </div>
-                            <div className="index-search-form-error-close">
-                                <div className="index-search-form-error-close-icon"><i>x</i></div>
-                            </div>      
-                        </div>
-              
             </div>
+
+            <div className="index-search-form-wrapper">
+
+                <div className={ omnibarClassName } ref={_searchOmnibar}>
+                <form onSubmit= { getSearchProducts }>
+                    <input 
+                    type="search" 
+                    placeholder="search for products" 
+                    // value={ null } 
+                    onFocus=  { handleInputFocusChange } 
+                    onChange = { handleInputChange } 
+                    name="searchQuery" 
+                    />
+
+                    <button type="submit" disabled = { searchingProducts ? true: false } >
+                    {
+
+                        searchingProducts ? (
+
+                            <Loader
+                            // loaderContainer = {"index-search-button-loader-container"}
+                            loader = {"index-search-button-loader"}
+                            />
+
+                        ) :  ( <FiSearch className="index-search-button-icon"/> )
+
+                    }
+                    </button>   
+                </form>
+                {
+
+                    showOmnibar && (
+
+                        <SearchOmniBar 
+                        returnedEmptySearch = { returnedEmptySearch }
+                        searchError={ searchProductsError }
+                        searchProducts={ getSearchProductsOmnibar }
+                        />
+
+                    )
+
+                }
+
+                {
+
+                    showSearchProductsResultModal && (
+
+                        <SearchResultModalBar
+                        searchResults ={ searchedProducts || arr }
+                        closeModal = { closeSearchProductsBar }
+                        searchResultModalBarChild= { SearchResultModalBarChildComp }
+                        /> 
+
+                    )
+
+                }
+                
+                </div>
+
+            </div>
+            
         </div>
+
     )
+
 }
