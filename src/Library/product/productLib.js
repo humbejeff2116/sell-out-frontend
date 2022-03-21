@@ -54,7 +54,7 @@ ProductLib.prototype.likeProduct = async function(product, user, likeCount, setL
 
 }
 
-ProductLib.prototype.getAllProductLikes = async function(productId, user, setLikeCount, setLikesProductRecieved){
+ProductLib.prototype.getProductLikesAndSetLikeCount = async function(productId, user, setLikeCount, setLikesProductRecieved){
 
     const productLikesResponse = await getProductLikes(productId)
    

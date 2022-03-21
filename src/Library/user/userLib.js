@@ -4,7 +4,7 @@ import { getUserStars } from '../../Utils/http.services';
 
 function UserLib() {}
 
-UserLib.prototype.getSellerStars = async function(userId, user, setStarCount, setStarsUserRecieved) {
+UserLib.prototype.getSellerStarsAndSetStarCount = async function(userId, user, setStarCount, setStarsUserRecieved) {
 
     const sellerStarsResponse = await getUserStars(userId)
    
