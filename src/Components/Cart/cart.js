@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../Context/context';
-import image from '../../Images/avatar.jpg';
+import image from '../../Images/avatar4.png';
 import image2 from '../../Images/product3.webp';
 import { ModalBox } from '../ModalComments/modalComments';
 import useCartContext from '../../Context/Cart/cartContext';
@@ -11,6 +11,7 @@ import {
     addCartProductQuantityActionPayload,
     removeFromCartActionPayload,
 } from '../../Context/Cart/cartPayloads';
+import { Price } from '../Product/product';
 import './cart.css';
 
 export default function Cart() {
@@ -369,6 +370,7 @@ function PlacedOrderSuccess(props) {
 }
 
 function CartProduct({ product }) {
+    // alert(JSON.stringify(product, null, 2))
 
     const [quantity, setQuantity] = useState(""); 
 
@@ -424,17 +426,33 @@ function CartProduct({ product }) {
 
     }
 
+    const calculateProductSubTotal = ({ percentageOff, productPrice, productQty }) => {
+
+        if (percentageOff) {
+
+            const percentOffPrice = (percentageOff / 100) * Number(productPrice)
+
+            const newPrice = Number(productPrice) - percentOffPrice;
+
+            return ( newPrice *  productQty).toFixed(2, 10)    
+
+        } 
+
+        return (productPrice *  productQty).toFixed(2, 10)
+
+    }
+
     return (
 
             <div className="cart-product-panel">
                 {/* product profile image */}
             <div className="cart-product-profile" >
                 <div  className="cart-product-profile-image">
-                    <img src = { product.sellerProfilePicture || image} alt="avatar" />
+                    <img src = { product.sellerProfileImage || image} alt="avatar" />
                 </div>
 
                 <div className="cart-product-profile-info">
-                    <div> <span>{ product.sellerName || 'unknown'}</span></div>
+                    <div> <span>{ product.sellerName || ''}</span></div>
                 </div>
             </div>
             {/* product image */}
@@ -456,19 +474,17 @@ function CartProduct({ product }) {
                 <div className="cart-product-info" >
                     <div className="cart-product-info-span-group">
                         <p>
-                        {
-                            product.productName ||  "This is the product name"
-                        }
+                        { product.productName }
                         </p>
                     </div>
-                    <div className="cart-product-info-span-group ">
-                        <p>Price: <span className="price">{ `£${product.productPrice}` } (22% OFF)</span> <span className="original-price">{`£${product.productPrice}`}</span></p>
-                    </div>
+
+                    <Price {...product} className="cart-product-info-span-group" showPriceTag = { true } />
+
                     <div className="cart-product-info-span-group">
                         <p>Quantity: <span>{ product.productQty }</span></p>
                     </div>
                     <div className="cart-product-info-span-group">
-                        <p>Sub total: <span>{ `£${ (product.productPrice *  product.productQty).toFixed(2, 10) }` }</span></p>
+                        <p>Sub total: <span>{ `£${ calculateProductSubTotal(product) }` }</span></p>
                     </div>
                     {/* product add/reduce/remove buttons */}    
                     <div className="cart-product-buttons" >
