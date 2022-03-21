@@ -1,5 +1,5 @@
 
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import socket from '../Socket/socket';
 import { SearchProducts } from './searchProductsOrServices';
 import { PostProduct } from './postProduct';
@@ -8,8 +8,8 @@ import { DisplayedProduct } from '../Product/product';
 import { getProducts } from '../../Utils/http.services';
 import { NavLink } from 'react-router-dom';
 import Links from '../../Data/links';
+import { RiListSettingsFill } from 'react-icons/ri'
 import './index.css';
-
 
 
 const mockProducts = [
@@ -19,13 +19,14 @@ const mockProducts = [
         userEmail: "jeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
-        productName: "short nikka",
+        productName: "Denim blue shirt",
         productCategory: "furniture",
         productCountry: "Nigeria",
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
         productPrice: "214",
+        percentageOff: 5,
         productContactNumber: "334039438493",
         productImages: [{}],
         stars: [],
@@ -39,13 +40,14 @@ const mockProducts = [
         userEmail: "humbejeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
-        productName: "short nikka",
+        productName: "Fur pants",
         productCategory: "furniture",
         productCountry: "Nigeria",
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
         productPrice: "200",
+        percentageOff: 7,
         productContactNumber: "334039438493",
         productImages: [{}],
         stars: [],
@@ -59,13 +61,14 @@ const mockProducts = [
         userEmail: "humbejeff@gmail.com",
         userProfilePicture: "",
         productId: 232323,
-        productName: "short nikka",
+        productName: "Sweat shirt",
         productCategory: "furniture",
         productCountry: "Nigeria",
         productState: "Benue",
         productUsage: "never used",
         productCurrency: "naira",
         productPrice: "200",
+        percentageOff: 2,
         productContactNumber: "334039438493",
         productImages: [{}],
         stars: [],
@@ -88,27 +91,19 @@ export default function Index() {
 
         if (insideLoginError && mounted) {
 
-            timer = setTimeout(() => {
-
-                setinsideLoginError(''); 
-
-            }, 12000);
+            timer = setTimeout(() =>  setinsideLoginError(''), 12000);
 
         }
 
-        return ()=> {
+        return () => {
 
             mounted = false;
 
-            if (timer) {
-
-                clearTimeout(timer)
-
-            } 
+            if (timer)  clearTimeout(timer)
 
         }  
 
-    }, [insideLoginError]);
+    }, [ insideLoginError ]);
 
     return (
 
@@ -293,59 +288,27 @@ function FilterDisplayedProducts(props) {
         <div className="index-products-filter-heading">
             <p>Products</p>
         </div>
-        <div className="index-products-filter-buttons">
-            <div className="index-products-filter-select">
-                <label>Gender</label>
-                <select  name="gender" value = { queryValues.gender } onChange = { handleInputChange }>
-                    <option value="all">Default</option>
-                    <option value="female">Female</option>
-                    <option value="male">Male</option>
-                </select>
-            </div>
-            <div className="index-products-filter-select">
-                <label>Category</label>
-                <select name="category" value = { queryValues.category } onChange = { handleInputChange }>
-                    <option value="all"> Default</option>
-                    <option value="electronics"> Electronics </option>
-                    <option value="clothes">Clothes</option>
-                    <option value="accessories"> Accessories</option>
-                    <option value="others"> Others</option>
-                </select>
-            </div>
-            <div className="index-products-filter-select">
-                <label>Usage</label>
-                <select name="usage" value = { queryValues.usage } onChange = { handleInputChange }>
-                    <option value="all"> Default </option>
-                    <option value="new"> New </option>
-                    <option value="fairly used"> Fairly used </option>
-                    <option value="1 year+"> 1 year+ </option>
-                    <option value="2 years+"> 2 years+ </option>
-                    <option value="others"> Others </option>
-                </select>
-            </div>
-        </div>
-        <div className="index-clothing-category-links-container">
-            {
 
-                showClothingLinks && (queryValues?.gender === "female" || queryValues?.gender === "all") && 
-                (<ClothingCategoryLinks clothingLinks={clothingLinks}/>)
+        <FilterButtons
+        handleInputChange = { handleInputChange }
+        queryValues = { queryValues }
+        />
 
-            }
+        <FilterLinks
+        showClothingLinks = { showClothingLinks }
+        queryValues = { queryValues  }
+        clothingLinks = { clothingLinks }
+        maleClothingLinks = { maleClothingLinks }
+        />
 
-            {
-
-                showClothingLinks && queryValues?.gender === "male" && 
-                (<ClothingCategoryLinks clothingLinks={maleClothingLinks}/>)
-
-            }
-        </div>
         <div className="index-products-container">
         {
 
             mockProducts.map((product, i) =>
 
                 <DisplayedProduct 
-                key = { i }  
+                key = { i } 
+                {...product} 
                 product = { product } 
                 panelClassName="index-product-panel"
                 />
@@ -360,14 +323,138 @@ function FilterDisplayedProducts(props) {
 
 }
 
+function FilterLinks({ showClothingLinks, queryValues, clothingLinks, maleClothingLinks}) {
 
-function ClothingCategoryLinks(props) {
+    return (
+
+        <div className="index-clothing-category-links-container">
+        {
+
+            showClothingLinks && (queryValues?.gender === "female" || queryValues?.gender === "all") && (
+            
+                <ClothingCategoryLinks links = { clothingLinks }/>
+            
+            )
+
+        }
+
+        {
+
+            showClothingLinks && queryValues?.gender === "male" && (
+
+                <ClothingCategoryLinks links = { maleClothingLinks }/>
+
+            )
+
+        }
+        </div>
+
+    )
+}
+
+
+function  FilterButtons({ handleInputChange, queryValues }) {
+
+    const filterButtons = {
+
+        usageOptions : [
+            {name:'Usage', value: 'all'},
+            {value: 'New'},
+            { value: 'Fairly used'},
+            { value: '1 year+'},
+            { value: '2 years+'},
+            { value: 'Others'},
+        ],
+
+        genderOptions : [
+            {name:'Gender', value: 'all'},
+            {value: 'Female'},
+            { value: 'Male'},
+        ],
+
+        categoryOptions : [
+            {name:'Category', value: 'all'},
+            {value: 'Electronics '},
+            { value: 'Clothes'},
+            { value: 'Accessories'},
+            { value: '2 years+'},
+            { value: 'Others'},
+        ],
+
+    }
+
+    return (
+
+        <div className="index-products-filter-buttons">
+
+            <div className="index-search-select-filter">               
+                <RiListSettingsFill className="index-search-filter-icon"/>
+            </div>
+            <div className="index-products-filter-select">
+                <Select
+                name = { 'gender' } 
+                queryValues = { queryValues } 
+                handleInputChange = { handleInputChange } 
+                options = { filterButtons.genderOptions }
+                />
+            </div>
+            <div className="index-products-filter-select">
+                <Select
+                name = { 'category' } 
+                queryValues = { queryValues } 
+                handleInputChange = { handleInputChange } 
+                options = { filterButtons.categoryOptions }
+                />
+
+            </div>
+            <div className="index-products-filter-select">
+               <Select
+               name = { 'usage' } 
+               queryValues = { queryValues } 
+               handleInputChange = { handleInputChange } 
+               options = { filterButtons.usageOptions }
+               />
+            </div>
+        </div>
+    )
+}
+
+
+function Select ({ name, queryValues, handleInputChange, options, ...props }) {
+
+    return (
+
+        <select name={ name } value = { queryValues?.name } onChange = { handleInputChange }>
+        {
+
+            options.map((option, i) =>
+
+                <option 
+                key = { i } 
+                value = { option.name  ? option.name.toLowerCase() : option.value.toLowerCase() }
+                >
+
+                    { option.name  ? option.name : option.value }
+                    
+                </option>
+
+            )
+
+        }
+        </select>
+
+    )
+
+}
+
+
+function ClothingCategoryLinks({ links }) {
 
     return (
 
         <div className="index-clothing-category-links">
         {
-            props.clothingLinks.map((links, i) =>
+            links.map((links, i) =>
 
                 <ClothingLinks key = { i } { ...links } />
 
@@ -379,18 +466,18 @@ function ClothingCategoryLinks(props) {
 
 }
 
-function ClothingLinks(props) {
+function ClothingLinks({href, name, icon, ...props}) {
 
     return (
 
         <div classname="index-clothing-category-links-item">
             <NavLink
             exact 
-            to = { props.href } 
+            to = { href } 
             activeClassName="main-link-active"
             className="main-nav-link" 
-            title = { props.name } >
-                <i>{ props.icon }</i><span>{ props.name }</span> 
+            title = { name } >
+                <i>{ icon }</i><span>{ name }</span> 
             </NavLink> 
         </div>
 
