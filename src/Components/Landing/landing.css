@@ -4,31 +4,37 @@
 
 
 .landing-container{
-    /* border:1px solid black; */
+    /* border:3px solid black; */
     display:flex;
     flex-direction: column;
+    overflow-x: hidden;
+    height: 100%;
+    position: relative;
 }
 .landing-top{
-    /* border:1px solid var(--prim-border-color); */
+    /* border:1px solid red; */
     display:flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
 }
 .landing-info-card-contr{ 
     display:flex;
     flex-direction: column;
+    justify-content: center;
     border-radius: 6px;
     border:1px solid var(--prim-border-color);
     box-shadow:0 0 2px var(--box-shadow-color);
-    width:50%;
+    width:60%;
     margin:5% auto 1% auto;
-    min-height:60vh;
+    min-height:65vh;
     padding: 0.5%;
+    z-index: 1;
 }
 .landing-info-card-text-container{
     /* border:1px solid green; */
-    display:flex;
-    flex-direction: column;
+    /* display:flex;
+    flex-direction: column; */
     color: var(--text-color);
 }
 .landing-info-card-text-heading{
@@ -37,8 +43,10 @@
     justify-content: center;
     align-items: center;
 }
-.landing-info-card-text-heading h3{
+.landing-info-card-text-heading h1{
+    /* border:1px solid red; */
     font-size:3rem;
+    text-align: center;
 }
 
 .landing-info-card-text-paragraph{
@@ -50,8 +58,8 @@
 .landing-info-card-text-paragraph span{
     text-align: center;
     /* border:1px solid red; */
-    font-size:1.5rem;
-    font-weight: 400;
+    font-size:1.4rem;
+    /* font-weight: 500; */
     width:90%;  
 }
 .landing-info-card-button{
@@ -60,7 +68,7 @@
     display:flex;
     flex-direction: row;
     justify-content: center;
-    margin-top: auto;
+    /* margin-top: auto; */
 }
 .landing-info-card-login{
     /* border:1px solid black; */
@@ -71,34 +79,21 @@
 }
 
 .landing-info-card-login a{
-    width:70%;
+    width:80%;
     margin:0 auto 0 auto;  
 }
 .landing-info-card-login button{
-    height:50px;
+    height:56px;
     width:100%;
     margin:0 auto 0 auto;
-    font-size: 0.9rem;
-    border-radius: 4px;
+    font-size: 1rem;
+    border-radius: 30px;
     font-weight: bold;
     cursor:pointer;
-    border-radius: 4px;
-    /* border:1px solid var(--text-color);
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    color: var(--text-color); */
     transition: all 0.3s ease;
-
     border:1px solid var(--color);
-    border-radius: 4px;
     background-color: #f0f0f0;
     color: var(--color);
-
-
-     /* border:1px solid var(--text-color);
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    color: var(--text-color); */
 }
 .landing-info-card-login button:hover{
     
@@ -119,19 +114,19 @@
 }
 .landing-info-card-signup a{
     /* border:1px solid #222; */
-    width:70%;
+    width:80%;
     margin:0 auto 0 auto;
 }
 .landing-info-card-signup button{
     border-radius: 4px;
-    height:50px;
+    height:56px;
     width:100%;
     margin:0 auto 0 auto;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
     transition:all 0.3s ease;
     cursor:pointer;
-    border-radius: 4px;
+    border-radius: 30px;
     /* border:1px solid var(--sec-color);
     background-color: var(--color);
     color: #ffffff; */
@@ -167,6 +162,77 @@
 
 }
 
+
+.landing-top-image-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    z-index: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* border: 2px solid green */
+}
+
+.landing-top-background-image{
+    border: 1px solid purple;
+    /* display: none; */
+    position: absolute;
+    /* top: 0; */
+    left: 50%;
+
+
+    /* min width 768px */
+    display: block;
+    top: auto;
+    bottom: 0;
+
+    /* min width 1024px */
+    margin-left: -1280px;  
+
+}
+
+.landing-top-foreground-image-left{
+
+    position: absolute;
+    left: 2%;
+    height: 6%;
+    display: block;
+    /* height: auto; */
+    width: auto;
+    max-width: none;
+    /* margin-left: -750px; */
+    -webkit-transform: none;
+    transform: none;
+    z-index: 1;
+    /* border: 1px solid purple; */
+
+}
+
+.landing-top-foreground-image-right{
+    display: block;
+    right: 2%;
+    position: absolute;
+     height: 6%;
+     width: auto;
+    
+
+    /* border: 1px solid purple; */
+    /* width: 50%; */
+
+}
+
+.top{
+    top: 2%;
+}
+
+.bottom{
+    bottom: 2%; 
+}
 
 @media only screen and (max-width:500px) {
     .landing-top{
