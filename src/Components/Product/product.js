@@ -31,7 +31,7 @@ export  function DisplayedProduct(props) {
 
         const  userId = product.userId;
         
-        UserLib.getSellerStars(userId, user, setStarCount, setStarsUserRecieved)
+        UserLib.getSellerStarsAndSetStarCount(userId, user, setStarCount, setStarsUserRecieved)
 
     }, [ product, user ]);
 
@@ -57,7 +57,7 @@ export  function DisplayedProduct(props) {
        
         const  productId = product.productId;
 
-        ProductLib.getAllProductLikes(productId, user, setLikeCount, setLikesProductRecieved)
+        ProductLib.getProductLikesAndSetLikeCount(productId, user, setLikeCount, setLikesProductRecieved)
 
     }, [ product, user ]);
 
