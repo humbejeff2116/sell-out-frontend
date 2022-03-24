@@ -1,35 +1,23 @@
 
-
-
-import React, {useState} from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function LandingInfoCard() {
-    const [redirect, setRedirect] = useState('');
 
-    if(redirect) {
-        return (
-            <Redirect to={redirect} />
-        )
-    }
     return (
+
         <div className="landing-info-card-contr" >
             {/* info text */}
             <div className="landing-info-card-text-container" >
                 <div className="landing-info-card-text-heading">
-                <h3>This is the heading</h3>
+                <h1>Make selling easy and fun again</h1>
                 </div>
                 <div className="landing-info-card-text-paragraph">
                 <span>
-                Integer pulvinar leo id viverra feugiat. 
-                Pellentesque libero ut justo, semper at tempus vel, 
-                ultrices in ligula. Lorem ipsum dolor sit amet sed 
-                do eiusmod tempor incididunt ut lab
-                    
-                    </span>
-                </div>
-                
-               
+                Join the fastest growing digital community of individuals and independent brands
+                whose sole aim is to make money on the go while selling their products.
+                </span>
+                </div>  
             </div>
             {/* login sign up */}
             <div className="landing-info-card-button">
@@ -43,7 +31,8 @@ export default function LandingInfoCard() {
                 </div>
 
             </div>
-
         </div>
+
     )
+
 }
