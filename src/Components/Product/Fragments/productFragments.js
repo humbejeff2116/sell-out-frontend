@@ -18,25 +18,33 @@ function OpenComment({ openCommentBox }) {
 }
 
 // star
-function Star({ starCount, starSeller, product, user, starsUserRecieved }) {
-
-    const className =  starCount ? "index-product-profile-star" : "index-product-profile-star";
+function Star({ 
+    starCount, 
+    starSeller, 
+    product, 
+    user, 
+    starsUserRecieved, 
+    starIconClassName,
+    iconWrapperClassName,
+    setStarsUserRecieved,
+     setStarCount 
+}) {
 
     let starIcon;
 
     if (starCount) {
 
-        starIcon = <AiFillStar className="nav-icon" />
+        starIcon = <AiFillStar className={ starIconClassName || "nav-icon" }  />
 
     } else {
 
-        starIcon = < AiOutlineStar className="nav-icon" /> 
+        starIcon = < AiOutlineStar className={ starIconClassName || "nav-icon" }  /> 
 
     }
 
     return (
 
-        <div className={className} onClick = { ()=> starSeller(product, user, starCount) }>
+        <div className= { iconWrapperClassName || "index-product-profile-star"} onClick = { ()=> starSeller(product, user, starCount, setStarsUserRecieved, setStarCount) }>
           {starIcon}
             { 
                 (starsUserRecieved && starsUserRecieved.length) ? 
@@ -49,25 +57,34 @@ function Star({ starCount, starSeller, product, user, starsUserRecieved }) {
 }
 
 // Heart
-function Heart({ likeCount, likeProduct, product, user, likesProductRecieved }) {
-
-    // const likeIconClassName = likeCount ? "index-product-heart-bttn filled" : "index-product-heart-bttn"
+function Heart({ 
+    likeCount, 
+    likeProduct, 
+    product, 
+    user, 
+    likesProductRecieved, 
+    iconWrapperClassName,
+    heartIconClassName,
+    setLikesProductRecieved, 
+    setLikeCount, 
+    ...props 
+}) {
 
     let heartIcon;
 
     if (likeCount) {
 
-        heartIcon = <AiFillHeart className="nav-icon" />
+        heartIcon = <AiFillHeart className={ heartIconClassName || "nav-icon" } />
 
     } else {
 
-        heartIcon = < AiOutlineHeart className="nav-icon" />
+        heartIcon = < AiOutlineHeart className={ heartIconClassName || "nav-icon" } />
 
     }
 
     return (
 
-        <div className= "index-product-heart-bttn" onClick = { ()=> likeProduct(product, user, likeCount) }>
+        <div className= {iconWrapperClassName || "index-product-heart-bttn"} onClick = { ()=> likeProduct(product, user, likeCount, setLikesProductRecieved, setLikeCount) }>
           { heartIcon }
             { 
                 (likesProductRecieved && likesProductRecieved.length) ? 
@@ -79,24 +96,26 @@ function Heart({ likeCount, likeProduct, product, user, likesProductRecieved }) 
 
 }
 
-function ProfileAvatar({ product }) {
+function ProfileAvatar({ product, brandName, imageWrapperClassName }) {
+
+    const sellerBrandName = product?.brandName ?? product?.userName ?? brandName;
 
     const viewSeller = (product) => {
         // TODO... call view context function to save view id and redirect to view page
         // const { userId } = product;
     }
 
-    const imageSrc = (product.userProfileImage === "no-image" || !product.userProfileImage ) ? null : product.userProfileImage 
+    const imageSrc = (product?.userProfileImage === "no-image" || !product?.userProfileImage ) ? null : product?.userProfileImage 
 
     return (
 
-        <div className="index-product-profile">
+        <div className={ imageWrapperClassName || "index-product-profile" }>
             <img src={ imageSrc || profileAvatar } alt="seller" width="100%" height="auto" />
-            <span onClick = { viewSeller(product) }> { product.userName } </span>
+            <span onClick = { viewSeller(product) }> { sellerBrandName } </span>
         </div>
         
     )
-
+   
 }
 
 export {
