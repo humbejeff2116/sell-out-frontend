@@ -11,6 +11,8 @@
 .inside-login-template-panel{
     display:flex;
     flex-direction: row;
+    position: relative;
+    /* border:1px solid black; */
 
 }
 .login-template-left{

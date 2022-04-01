@@ -22,11 +22,15 @@
     flex-direction: column;
     border-radius: 4px;
     border: 1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    /* box-shadow:0 0 2px var(--box-shadow-color); */
     width:22%;
     margin: 2% 0 2% 0;
     min-height:65vh;
     padding:1%;
+}
+
+.landing-product-panel:hover{
+    box-shadow:0 0 3px var(--box-shadow-color);
 }
 
 

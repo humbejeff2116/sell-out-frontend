@@ -369,26 +369,34 @@
 }
 
 .add-to-cart-mssg {
-    /* border:1px solid green; */
+    border:1px solid green;
     position: relative;
     display:flex;
-    justify-content: flex-end;
-}
+    align-items: center;
 
-.add-to-cart-mssg span{
     position: fixed;
     top:10%;
-    margin-right: 4%;
+    right: 2%;
+
     padding: 0.6%;
     border-radius: 4px;
-    border:1px solid rgb(172, 255, 172);
+    /* border:1px solid rgb(172, 255, 172);
     border:1px solid var(--prim-color);
     color:var(--no-color);
     background-color:rgb(222, 253, 222);
-    background-color:var(--prim-color);
+    background-color:var(--prim-color); */
     animation-name:animateCartMssg;
     animation-duration:1s;
+    min-height: 3rem;
+
+    color: var(--success-color);
+    border: 1px solid var(--success-border-color);
+    background-color: var(--success-background-color);
 }
+
+/* .add-to-cart-mssg span{
+    
+} */
 
 @keyframes animateCartMssg{
     from{
@@ -397,7 +405,7 @@
         transition:all;
     }
     to{
-        right:0px;
+        right:2%;
         opacity:1;
         transition:all;
     }

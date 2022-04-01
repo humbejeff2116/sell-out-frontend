@@ -24,7 +24,7 @@
     justify-content: center;
     border-radius: 6px;
     border:1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    /* box-shadow:0 0 2px var(--box-shadow-color); */
     width:60%;
     margin:5% auto 1% auto;
     min-height:65vh;

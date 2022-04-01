@@ -29,7 +29,7 @@
     height:80px; 
     border: 1px solid var(--no-color);
     border-radius: 2px;
-    outline: 2px solid var(--prim-border-color);
+    outline: 1px solid var(--prim-border-color);
     margin:2% 0 2% 0; 
     padding: 2%;
     caret-color: var(--prim-color);
@@ -190,7 +190,7 @@
     border-radius: 6px;
     margin-bottom: 3%;
     padding-top: 2% ;
-     box-shadow:0 0 2px var(--box-shadow-color);
+     /* box-shadow:0 0 2px var(--box-shadow-color); */
     
     
 

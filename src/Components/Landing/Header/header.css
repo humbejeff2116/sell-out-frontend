@@ -7,7 +7,7 @@
     min-height: 8vh;
     border:1px solid var(--prim-border-color);
     border-radius: 4px;
-    box-shadow:0 0 1px var(--box-shadow-color);
+    /* box-shadow:0 0 1px var(--box-shadow-color); */
     width:90%;
     margin-left:auto;
     margin-right:auto;

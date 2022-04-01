@@ -8,7 +8,7 @@
 }
 
 .logout-content{
-    border: 2px solid var(--prim-border-color);
+    border: 1px solid var(--prim-border-color);
     border-radius: 4px;
     min-height: 17rem;
     width: 50%;
