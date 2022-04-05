@@ -1,63 +1,88 @@
 
-
-
-
-
-
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { ImWarning } from 'react-icons/im';
 import * as Yup from 'yup';
-import {TextInput, PasswordInput} from '../Formik/formik';
-import './signup.css';
-import socket from '../Socket/socket';
+import { TextInput, PasswordInput } from '../Formik/formik';
 import useAuth from '../../Context/context';
 import { signupUser } from '../../Utils/http.services';
-
-
-
-
-
+import './signup.css';
 
 export default function Signup() {
+
     const [creatingAccount, setCreatingAccount] = useState(false);
+
     const [creatingAccountError, setCreatingAccountError] = useState(false);
+
     const [signingUpResponseMessage, setSigningUpResponseMessage] = useState(null);
-    const [redirect, setRedirect] =useState('');
+
+    const [redirect, setRedirect] = useState('');
+
     const location = useLocation();
+
     const history = useHistory();
+
     const { setUserData, setTokenData } = useAuth();
     
     async function handleSubmit  (values) {
-        try{
+
+        try {
+
             setCreatingAccount(true);
+
             setCreatingAccountError(false);
-            const signupUserResponse = await signupUser(values);
-            if (signupUserResponse.userAlreadyExist) {
+
+            const { token, userAlreadyExist, message, data } = await signupUser(values);
+
+            const TOKEN = token;
+
+            if (userAlreadyExist) {
+
                 setCreatingAccountError(true);
-                setSigningUpResponseMessage(signupUserResponse.message);
+
+                setSigningUpResponseMessage(message);
+
                 setCreatingAccount(false);
+
                 return;
+
             }
+
             setCreatingAccountError(false);
-            setUserData(signupUserResponse.data)
+
+            // allow user access to getting started pages
+            sessionStorage.setItem('access-getting-started-page', JSON.stringify({ user: data, canAccessGettingStarted: true }))
+
+            setUserData(data)
+
+            setTokenData(TOKEN);
+
             setCreatingAccount(false);
+
             history.push(location.pathname);
+
             setRedirect('/getting-started');
+
         } catch(err) {
             
 
-        }     
+        }  
+
     }
  
-    if(redirect) {
+    if (redirect) {
+
         return (
+
             <Redirect to={redirect} />
+
         )
+
     }
+
     return (
+
         <div className="signup-container">
             <div className="signup-panel ">
                 <div className="signup-panel-heading">
@@ -65,9 +90,13 @@ export default function Signup() {
                 </div>
                 <div className="signup-panel-error">
                     {
+
                         signingUpResponseMessage && (
-                            <span>{signingUpResponseMessage}</span>
+
+                            <span> { signingUpResponseMessage } </span>
+
                         )
+
                     }
                 </div>
                 <div className="signup-panel-body">
@@ -88,27 +117,31 @@ export default function Signup() {
                     onSubmit = { handleSubmit }
                 >
                 <Form>
+
                 <TextInput
-                    label="EMAIL ADDRESS"
-                    labelClassName="signup-form-group"
-                    name="email"
-                    type="email"
-                    errorClass="signup-form-error"
+                label="EMAIL ADDRESS"
+                labelClassName="signup-form-group"
+                name="email"
+                type="email"
+                errorClass="signup-form-error"
                 />
-                   <TextInput
-                    label="FULL NAMES"
-                    labelClassName="signup-form-group"
-                    name="fullname"
-                    type="text"
-                    errorClass="signup-form-error"
+
+                <TextInput
+                label="FULL NAMES"
+                labelClassName="signup-form-group"
+                name="fullname"
+                type="text"
+                errorClass="signup-form-error"
                 />
+
                 <PasswordInput
-                    label="PASSWORD"
-                    labelClassName="signup-form-group"
-                    name="password"
-                    type="password"
-                    errorClass="signup-form-error"
+                label="PASSWORD"
+                labelClassName="signup-form-group"
+                name="password"
+                type="password"
+                errorClass="signup-form-error"
                 />
+
                  <div className="signup-button">
                     <button type="submit" >
                     {
@@ -137,5 +170,7 @@ export default function Signup() {
                 </div>    
             </div>
         </div>
+
     )
+
 }
