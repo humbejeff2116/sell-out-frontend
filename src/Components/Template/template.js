@@ -1,14 +1,11 @@
 
-
-
-
 import React from 'react';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import LeftSideBar from '../LeftSideBar/leftSideBar';
 import RightSideBar from '../RightSideBar/rightSideBar';
 import LandingFooter from '../Landing/Footer/landingFooter';
-import ProfileAvatar from '..//Profile/profileAvatar';
+import ProfileAvatar from '../Profile/profileAvatar';
 import IndexSideNav from '../IndexSideNav/indexSideNav';
 import IndexFooter from '../IndexFooter/indexFooter';
 import Notifications from '../NotificationsDropdown/notifications';
