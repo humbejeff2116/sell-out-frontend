@@ -5,7 +5,7 @@ import { RiListSettingsFill } from 'react-icons/ri'
 import useAuth from '../../Context/context';
 import { Loader } from '../Loader/loader';
 import socket from '../Socket/socket';
-import SearchOmniBar from './searchOmnibar';
+import SearchOmniBox from './searchOmnibox';
 import { SearchResultModalBar, SearchResultModalBarChild } from './searchResultsModal';
 
 
@@ -392,7 +392,7 @@ export function SearchProducts(props) {
 
                     showOmnibar && (
 
-                        <SearchOmniBar 
+                        <SearchOmniBox 
                         returnedEmptySearch = { returnedEmptySearch }
                         searchError={ searchProductsError }
                         searchProducts={ getSearchProductsOmnibar }

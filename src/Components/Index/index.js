@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import socket from '../Socket/socket';
-import { SearchProducts } from './searchProductsOrServices';
+import { SearchProducts } from './searchProducts';
 import { PostProduct } from './postProduct';
 import { ErrorModal } from '../ModalBox/errorModal';
 import { DisplayedProduct } from '../Product/product';
