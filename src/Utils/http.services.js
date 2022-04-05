@@ -1,25 +1,10 @@
 
 import httpBase from './http.config';
 
-const PRODUCT_SERVER_URI = `http://localhost:4003`;
+
 const GATEWAY_SERVER_URI = `http://localhost:4000`;
-const LOGIN_SERVER_URI = `http://localhost:4001`;
-const productServerHTTP = httpBase(PRODUCT_SERVER_URI);
-const loginServerHTTP = httpBase(LOGIN_SERVER_URI);
 const gatewayServerHTTP = httpBase(GATEWAY_SERVER_URI);
 // const gatewayServerMultipartHTTP = httpBase(GATEWAY_SERVER_URI, "multipart/form-data");
-
-export function getInterests(user) {
-
-    return loginServerHTTP.get(`/interests`, user);
-
-}
-
-export function getConfirmations(user) {
-
-    return loginServerHTTP.get(`/interests`, user);
-
-}
 
 export async function getUserNotifications(user) {
 
@@ -56,9 +41,9 @@ export async function getSellerProducts(queryData) {
 
 }
 
-export function createProduct(data) {
+export async function createProduct(data) {
 
-    const createProductResponse = gatewayServerHTTP.post(`/product`, data, { headers: { "Content-Type": "multipart/form-data" } } );
+    const createProductResponse = await gatewayServerHTTP.post(`/product`, data, { headers: { "Content-Type": "multipart/form-data" } } );
 
     return createProductResponse.data;
 
@@ -80,31 +65,30 @@ export async function updateProduct(data) {
 
 }
 
-export async function searchProducts(query) {
+export async function searchProducts({ searchQuery }) {
 
-    const searchroductsResponse =  await gatewayServerHTTP.post(`/search-products?q=${query}`);
+    const searchroductsResponse =  await gatewayServerHTTP.get(`/search-products?q=${searchQuery}`);
 
     return searchroductsResponse.data;
 
 }
 
-export function uploadService(data) {
+export async function updateUser(userData) {
 
-    return productServerHTTP.post(`/upload-service`, data);
+    const updateUserResponse = await gatewayServerHTTP.post(`/update-user`, userData, { headers: { "Content-Type": "multipart/form-data" } });
 
-}
-
-export function updateUser(userData) {
-
-    return loginServerHTTP.post(`/update-user`, userData);
+    return updateUserResponse.data;
 
 }
+
 // user
-export function getUser(data) {
+export async function getUser(data) {
 
-    const {id, userEmail} = data;
+    const { id, userEmail } = data;
 
-    return gatewayServerHTTP.get(`/user/:${id}/:${userEmail}`);
+    const userResponse =  await gatewayServerHTTP.get(`/user/:${id}/:${userEmail}`);
+
+    return userResponse.data;
 
 }
 
@@ -179,5 +163,13 @@ export async function getProductLikes(productId) {
     const productLikesResponse =  await gatewayServerHTTP.get(`/product-likes/${productId}`);
    
     return productLikesResponse.data;
+
+}
+
+export async function getAllUserPreviousSearch({userId}) {
+
+    const deliveryRegionsResponse =  await gatewayServerHTTP.get(`/user-prev-search/${userId}`);
+   
+    return deliveryRegionsResponse.data;
 
 }
