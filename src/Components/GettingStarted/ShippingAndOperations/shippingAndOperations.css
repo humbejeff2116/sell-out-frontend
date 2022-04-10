@@ -1,0 +1,104 @@
+.getting-started-operational-regions-container{
+
+    /* border: 1px solid red; */
+    /* padding: 2%; */
+
+}
+
+.getting-started-operational-region-container{
+    display: flex;
+    border: 1px solid var(--prim-border-color);
+    margin-bottom: 2%;
+    padding: 2%;
+    border-radius: 4px;
+   
+
+}
+
+.getting-started-operational-region-left{
+
+    /* border: 2px solid blue; */
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+
+}
+
+.getting-started-operational-region-left-child{
+
+    /* border: 3px solid yellow; */
+    padding: 2% 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    font-size: 0.781em;
+   
+    color: var(--text-color);
+
+}
+
+.getting-started-operational-region-left-child-tag{
+    font-weight: bold;
+
+    /* font-size: 0.781em;
+    font-weight: bold;
+    color: var(--text-color); */
+
+}
+
+.getting-started-operational-region-right{
+    /* border: 2px solid blue; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 20%;
+
+}
+
+.getting-started-operational-region-right-child{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--prim-border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* margin-right: 2%; */
+
+}
+
+.getting-started-operational-region-right-child:hover{
+   box-shadow: 0 0 2px var(--box-shadow-color);
+
+}
+
+.getting-started-operational-regions-form-group-child-container{
+
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+}
+
+.getting-started-operational-regions-form-group-child{
+    /* border:3px solid blue; */
+    width: 24%;
+
+}
+.getting-started-operational-regions-form-group-child.button{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: flex-end;
+    /* width: 20%; */
+
+}
+.getting-started-operational-regions-form-group-child button{
+    /* padding:12px; */
+    width: 100%;
+    height: 40px;
+
+}
