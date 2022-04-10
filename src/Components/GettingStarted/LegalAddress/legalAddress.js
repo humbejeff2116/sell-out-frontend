@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, TextAreaInput, Select } from '../../Formik/formik';
 import { useGetStartedContext } from '../../../Context/context';
+import image from '../../../Images/avatar2.png';
 import '../Contact/contact.css';
 
 export default function LegalAdress(props) {
@@ -65,6 +66,9 @@ export default function LegalAdress(props) {
                         Kindly enter your company, business or brand legal address details below 
                     </p>
                 </div>
+                <div className="getting-started-contact-img">
+                    <img src={image} alt="avatar" />
+                </div> 
             </div>
 
             <div className="getting-started-contact-body">                            

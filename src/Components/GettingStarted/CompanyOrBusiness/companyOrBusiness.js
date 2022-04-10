@@ -4,6 +4,7 @@ import { Redirect, useLocation, useHistory } from 'react-router-dom';
 import UnregisteredBusinessOrBrand from './UnregisteredBusinessOrBrand/unregisteredBusinessOrBrand';
 import RegisteredCompanyOrBusiness from './RegisteredCompanyOrBusiness/registeredCompanyOrBusiness';
 import { useGetStartedContext } from '../../../Context/context';
+import image from '../../../Images/avatar2.png';
 import '../Contact/contact.css';
 import './companyOrBusiness.css';
 
@@ -130,6 +131,9 @@ export default function CompanyOrBusiness(props) {
                         Kindly enter your company, business or brand details below 
                     </p>
                 </div>
+                <div className="getting-started-contact-img">
+                    <img src={image} alt="avatar" />
+                </div> 
             </div>
 
             <div className="getting-started-company-tabs-container">
