@@ -1,50 +1,5 @@
 
-.getting-started-profile-image{
-    min-height: 20vh;
-    width:26%;
-    padding:0.5% 0;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* border: 1px solid purple; */
-}
 
-.getting-started-profile-image img{
-    border-radius: 50%; 
-    height:140px;
-    width:140px;
-    object-fit: cover;
-    object-position: center;
-    border:1px solid red;
-    /* border:1px solid red; */
-}
-.getting-started-input{
-    border:1px solid red;
-    /* width:100px; */
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    position:relative;
-}
-.getting-started-input-icon{
-    border:1px solid red;
-     background-color: red;
-}
-.getting-started-input input{
-    width:65px;
-}
-.getting-started-error{
-    /* border:1px solid red; */
-    height:25px;
-    width:100%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-.getting-started-error span{
-    color: rgb(224, 44, 44);
-}
 
 .getting-started-profile-image-info{
     display:flex;
@@ -94,4 +49,166 @@
 .getting-started-profile-image-upload-button button{
     width:100%;
     height:45px;
+}
+
+
+.getting-started-response-mssg-container{
+    border:1px solid green;
+    position: relative;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top:10%;
+    right: 2%;
+    padding: 0.6%;
+    border-radius: 4px;
+    animation-name: animategettingStartedMssg;
+    animation-duration:1s;
+    z-index: 1;
+    min-height: 3rem;
+   
+    
+}
+
+.error{
+    color: var(--error-color);
+    border: 1px solid var(--error-border-color);
+    background-color: var(--error-background-color);
+    min-width: 25%;
+}
+
+.no-error{
+    color: var(--success-color);
+    border: 1px solid var(--success-border-color);
+    background-color: var(--success-background-color);
+    min-width: 20%;
+}
+
+.getting-started-response-mssg-container span{
+  margin-left: 2%; 
+}
+
+.getting-started-mssg-icon{
+    font-size:1.2rem;
+   
+}
+
+@keyframes animategettingStartedMssg{
+    from{
+        right: -50px;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        right:2%;
+        opacity:1;
+        transition:all;
+    }
+}
+
+
+
+
+.getting-started-profile-image{
+    min-height: 20vh;
+    width:30%;
+    /* padding:0.5% 0; */
+    display:flex;
+    flex-direction: column;
+    /* justify-content: flex-end; */
+    align-items: flex-end;
+    /* border: 1px solid purple; */
+    position: relative;
+}
+
+.getting-started-profile-image img{
+    border-radius: 50%; 
+    height:140px;
+    width:140px;
+    object-fit: cover;
+    object-position: center;
+    border:1px solid var(--prim-border-color);
+    /* border:1px solid red; */
+    background-color: var(--lighter-prim-border-color);
+    color: var(--prim-border-color)
+}
+.getting-started-input{
+    border:1px solid var(--prim-border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    position: absolute;
+    top:3.3rem;
+    right: 0;
+    visibility: hidden;
+    padding: 1.5%;  
+    transition: all 0.2s ease;
+    cursor: pointer;
+    color: var(--no-color);
+    background-color: var(--lighter-prim-border-color);
+    min-width: 17%;
+}
+.visible{
+    visibility: visible;
+}
+
+.getting-started-error{
+    border:1px solid var(--prim-border-color);
+    /* min-height:1.2rem; */
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    position: fixed;
+    top:10%;
+    right: 13%;
+    border-radius: 4px;
+    width: 22%;
+    animation-name:animateGettingStartedProfileImage;
+    animation-duration:1s;
+    background-color: var(--background-color);
+    z-index: 1;
+}
+
+@keyframes animateGettingStartedProfileImage{
+    from{
+        top: -50%;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        top:10%;
+        opacity:1;
+        transition:all;
+    }
+}
+.getting-started-error span{
+    color: var(--error-color);
+}
+
+.getting-started-input-label{
+   
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.getting-started-input-label i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* display: block; */
+    font-size: 1.5rem;
+   
+}
+
+/* .getting-started-input-label:hover i, .getting-started-input-label:hover .title{
+    color: var(--color);
+} */
+.getting-started-input input[type = "file"] {
+
+    display: none; 
 }
