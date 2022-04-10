@@ -3,12 +3,13 @@
     min-height: 20vh;
     display:flex;
     flex-direction: row;
-    border-bottom: 1px solid blue;
+    /* border: 1px solid blue; */
+    margin-bottom: 2%;
 }
 
 .getting-started-company-heading{
     width:100%;
-    border:3px solid green;
+    /* border:3px solid green; */
     display:flex;
     align-items: center;
     padding: 1%;
@@ -22,20 +23,16 @@
 }
 
 .getting-started-company-tabs-container{
-    border:3px solid red;
-    /* min-height: 20vh; */
+    /* border:3px solid red; */
     display: flex;
-    /* justify-content: space-between; */
-    /* padding: 1%; */
     margin-bottom: 2%;
 }
 
 .getting-started-company-tabs{
-    border:1px solid purple;
-    min-height: 8vh;
+    /* border:1px solid purple; */
+    min-height: 7vh;
     display: flex;
     width: 100%;
-    /* padding: 1%; */
     justify-content: space-between;
 }
 
@@ -60,14 +57,13 @@
     background-color: var(--color);
     color: var(--no-color);
     border: none;
-    /* box-shadow: 0 0 2px var(--box-shadow-color); */
 }
 
-.getting-started-company-form-inputs{
+/* .getting-started-company-form-inputs{
 
     border:3px solid blue;
 
-}
+} */
 
 .getting-started-company-form-inputs .brand-name{
     font-size: 0.9em;
@@ -77,25 +73,24 @@
 
 .getting-started-company-form-group-child-container{
 
-    border:1px solid red;
+    /* border:1px solid red; */
     display: flex;
     justify-content: space-between;
 
 }
 
 .getting-started-company-form-group-child{
-    border:3px solid blue;
+    /* border:3px solid blue; */
     width: 45%;
 
 }
 
 .company-form-group{
     display: flex;
-    /* justify-content: space-between; */
-    /* margin-top:2%; */
     margin-bottom:1%;
     width:100%;
-    border:2px solid purple;
+    /* border:2px solid purple; */
+    min-height: 1.3rem;
 }
 
 .company-form-group label{
@@ -103,6 +98,7 @@
     font-weight: bold;
     color: var(--text-color);
 }
+
 .company-form-group label span{
     font-size: 0.9em;
     font-weight: bold;
