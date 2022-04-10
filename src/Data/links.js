@@ -90,7 +90,7 @@ const LinksData = {
     indexSideNavFooterLinks : [
         { name: "Support", href: "/support", icon: <BiHelpCircle className="index-side-nav-icon" /> },
         { name: "Settings", href: "/home/settings", icon: <BiCog className="index-side-nav-icon"/> },
-        { name: "Logout", href: "/logout", icon: <BiLogOut className="index-side-nav-icon"/> }
+        { name: "Logout", href: "/home/logout", icon: <BiLogOut className="index-side-nav-icon"/> }
     ],
     dashboardSideNavLinks : [
         { name: "Dashboard", href: "/home/dashboard", icon: <BiHome className="index-side-nav-icon" /> },
@@ -139,13 +139,19 @@ const LinksData = {
     settingsSideNavFooterLinks : [
         { name: "Support", href: "/support", icon: <BiHome className="index-side-nav-icon" /> },
         { name: "Settings", href: "/home/settings", icon: <BiUser className="index-side-nav-icon"/> },
-        { name: "Logout", href: "/logout", icon: <RiBookOpenLine className="index-side-nav-icon"/> }
+        { name: "Logout", href: "/home/logout", icon: <RiBookOpenLine className="index-side-nav-icon"/> }
     ],
     gettingStartedSideNavLinks : [
         { name: "Getting Started", href: "/getting-started", icon: <BiHome className="index-side-nav-icon" /> },
-        { name: "Contact details", href: "/getting-started/contact", icon: <BiUser className="index-side-nav-icon"/> },
-        { name: "Location", href: "/getting-started/location", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
-        { name: "Profile Image", href: "/getting-started/profile-image", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
+        { name: "Company/Business", href: "/getting-started/application/company-or-business", icon: <BiUser className="index-side-nav-icon"/> },
+        { name: "Legal Address", href: "/getting-started/application/legal-address", icon: <BiUser className="index-side-nav-icon"/> },
+        { name: "Shipping/Operations", href: "/getting-started/application/shipping-and-operations", icon: <BiUser className="index-side-nav-icon"/> },
+        { name: "Profile Image", href: "/getting-started/application/profile-image", icon: <BiUser className="index-side-nav-icon"/> },
+        { name: "Confirmation", href: "/getting-started/application/confirmation", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
+
+        // { name: "Contact details", href: "/getting-started/contact", icon: <BiUser className="index-side-nav-icon"/> },
+        // { name: "Location", href: "/getting-started/location", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
+        
     ],
     footerMainLinks: [],
     footerSocialLinks:[
@@ -154,6 +160,24 @@ const LinksData = {
         { name:"Fa",title:"Facebook", href:"linkedin.com/jeffrey123", icon:< FaFacebookSquare className="landing-footer-social-nav-icon"/> },
         { name:"Tw",title:"Twitter", href:"linkedin.com/jeffrey123", icon:< FaTwitter className="landing-footer-social-nav-icon"/> }
     ],
+
+    clothingLinks: [
+        { name: "All", href: "/", icon: <BiHome className="nav-icon" /> },
+        { name: "Gowns", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Tops", href: "/about", icon: <BiUser className="nav-icon"/> },
+        { name: "Skirts", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Trousers", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Shoes", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Accessories", href: "/support", icon: <BiFolder className="nav-icon"/> },
+    ],
+
+    maleClothingLinks: [
+        { name: "All", href: "/", icon: <BiHome className="nav-icon" /> },
+        { name: "Tops", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Trousers", href: "/about", icon: <BiUser className="nav-icon"/> },
+        { name: "Shoes", href: "/community", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Accessories", href: "/support", icon: <BiFolder className="nav-icon"/> },
+    ]
 
 }
 
@@ -190,6 +214,13 @@ Links.prototype.getFooterMainLinks = function() {
 }
 Links.prototype.getFooterSocialLinks = function() {
     return this.data.footerSocialLinks;
+}
+Links.prototype.getClothingLinks = function() {
+    return this.data.clothingLinks;
+}
+
+Links.prototype.getMaleClothingLinks = function() {
+    return this.data.maleClothingLinks;
 }
 
 export default new Links();
