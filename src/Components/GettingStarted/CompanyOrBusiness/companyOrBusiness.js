@@ -12,13 +12,15 @@ export default function CompanyOrBusiness(props) {
 
     const [redirect, setRedirect] = useState('');
 
-    const [showUnregBusinessForm, setShowUnregBusinessForm]  = useState(false)
+    const [showUnregBusinessForm, setShowUnregBusinessForm]  = useState(false);
 
     const {
         registeredCompanyOrBusinessData, 
-        setRegisteredCompanyOrBusinessData, 
+        setRegisteredCompanyOrBusinessData,
         unregisteredBusinessData,
         setUnregisteredBusinessData,
+        setSubmittedFormPaths,
+        removePathName
     } = useGetStartedContext();
 
     const location = useLocation();
@@ -34,7 +36,7 @@ export default function CompanyOrBusiness(props) {
     }, []);
     
     const handleSubmit = (values) => {
-
+        
         if (showUnregBusinessForm) {
 
             if (registeredCompanyOrBusinessData) {
@@ -43,9 +45,11 @@ export default function CompanyOrBusiness(props) {
 
             }
 
-            setUnregisteredBusinessData(values)
+            setUnregisteredBusinessData(values);
 
-             history.push(location.pathname);
+            setSubmittedFormPaths( prevState => [...prevState, { href: location.pathname }]);
+
+            history.push(location.pathname);
 
             setRedirect('/getting-started/application/legal-address');
 
@@ -61,6 +65,8 @@ export default function CompanyOrBusiness(props) {
 
         setRegisteredCompanyOrBusinessData(values);
 
+        setSubmittedFormPaths( prevState => [...prevState, { href: location.pathname }]);
+
         history.push(location.pathname);
 
         setRedirect('/getting-started/application/legal-address');
@@ -68,6 +74,8 @@ export default function CompanyOrBusiness(props) {
     }
 
     const goBack = ( ) => { 
+
+        removePathName('/getting-started');
 
         history.push(location.pathname);
 
@@ -147,8 +155,8 @@ export default function CompanyOrBusiness(props) {
                     </div>
 
                     <div 
-                    className={ showUnregBusinessForm ? "getting-started-company-tabs-child active" : "getting-started-company-tabs-child" }
-                    onClick={ displayUnregBusinessForm } >
+                    className = { showUnregBusinessForm ? "getting-started-company-tabs-child active" : "getting-started-company-tabs-child" }
+                    onClick = { displayUnregBusinessForm } >
                         Unregistered Business/Personal Brand
                     </div>
 

@@ -14,6 +14,7 @@
     align-items: center;
     padding: 1%;
 }
+
 .getting-started-company-heading p{
     font-size: large;
     font-size:1.5rem;
@@ -48,15 +49,15 @@
     transition: all 0.2s ease;
 
 }
+
 .getting-started-company-tabs-child:hover{
     box-shadow: 0 0 3px var(--box-shadow-color);
-
 }
 
 .getting-started-company-tabs-child.active{
-    background-color: var(--color);
-    color: var(--no-color);
-    border: none;
+    color: var(--color);
+    font-weight: 550;
+    box-shadow: 0 0 2px var(--box-shadow-color);
 }
 
 /* .getting-started-company-form-inputs{
@@ -72,17 +73,14 @@
 }
 
 .getting-started-company-form-group-child-container{
-
     /* border:1px solid red; */
     display: flex;
     justify-content: space-between;
-
 }
 
 .getting-started-company-form-group-child{
     /* border:3px solid blue; */
     width: 45%;
-
 }
 
 .company-form-group{
