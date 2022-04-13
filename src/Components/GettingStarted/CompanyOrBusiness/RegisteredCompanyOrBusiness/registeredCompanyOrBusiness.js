@@ -4,15 +4,19 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextInput, TextAreaInput, Select } from '../../../Formik/formik';
 import { useGetStartedContext } from '../../../../Context/context';
+import Countries from '../../../../Data/countries';
 
 
 export default function RegisteredCompanyOrBusiness(props) {
 
-    const {
-        registeredCompanyOrBusinessData,
-    } = useGetStartedContext();
+    const { registeredCompanyOrBusinessData } = useGetStartedContext();
+
+    const africanCountries = Countries.getCountries({ continent:"Africa" });
+
+    const nigeraianStates = Countries.getCountryStates({ continent:"Africa", country:"Nigeria" });
 
     return (
+
         <Formik
         initialValues = {{
             countryOfIncorporation: registeredCompanyOrBusinessData ?  
@@ -30,8 +34,8 @@ export default function RegisteredCompanyOrBusiness(props) {
             nigerianTaxId: registeredCompanyOrBusinessData ?  
             registeredCompanyOrBusinessData?.nigerianTaxId : '',
 
-            taxClassification: registeredCompanyOrBusinessData ?  
-            registeredCompanyOrBusinessData?.taxClassification : '',
+            taxIdClassification: registeredCompanyOrBusinessData ?  
+            registeredCompanyOrBusinessData?.taxIdClassification : '',
         }}
 
         validationSchema = { Yup.object({
@@ -41,7 +45,7 @@ export default function RegisteredCompanyOrBusiness(props) {
             legalCompanyName: Yup.string().required('Legal company name is required'),
             yearOfFoundation: Yup.string().required('Year of foundation is required'),
             nigerianTaxId: Yup.string().required('Nigerian tax id is required'),
-            taxClassification: Yup.string().required('Tax classification is required'),
+            taxIdClassification: Yup.string().required('Tax classification is required'),
 
         })}
 
@@ -56,24 +60,43 @@ export default function RegisteredCompanyOrBusiness(props) {
                 name="countryOfIncorporation"
                 errorClass="contact-form-error"
                 >
-                    <option value="">Select</option>
-                    <option value="Nigeria">Nigeria</option>
-                    <option value="Ghana">Ghana</option>
-                    <option value="Congo">Congo</option>
+                <option value="">Select</option>
+                {
+                    africanCountries.map((country, i) =>
+
+                        <Options 
+                        key = { i }
+                        { ...country }
+                        />
+
+                    )
+
+                }
                 </Select>
 
-                <TextInput
+                <Select
                 label="State of Incorporation"
                 labelClassName="company-form-group"
                 name="stateOfIncorporation"
-                type="email"
                 errorClass="contact-form-error"
-                />
+                >
+                <option value="">Select</option>
+                {
+                    nigeraianStates.map((state, i) =>
+
+                        <Options 
+                        key = { i }
+                        { ...state }
+                        />
+
+                    )
+                    
+                }
+                </Select>
 
                 <TextInput
                 label="Legal Company Name"
                 labelClassName="company-form-group"
-                // labelText=" (optional)"
                 name="legalCompanyName"
                 type="text"
                 errorClass="contact-form-error"
@@ -82,7 +105,6 @@ export default function RegisteredCompanyOrBusiness(props) {
                 <TextInput
                 label="Year of Foundation"
                 labelClassName="company-form-group"
-                // labelText=" (optional)"
                 name="yearOfFoundation"
                 type="text"
                 errorClass="contact-form-error"
@@ -92,133 +114,21 @@ export default function RegisteredCompanyOrBusiness(props) {
                 label="Nigerian Tax ID"
                 labelClassName="company-form-group"
                 name="nigerianTaxId"
-                type="email"
+                type="text"
                 errorClass="contact-form-error"
                 placeholder ="XX-XXXXX"
                 />
 
                 <Select
-                label="Tax classification"
+                label="Tax ID classification"
                 labelClassName="company-form-group"
-                name="taxClassification"
+                name="taxIdClassification"
                 errorClass="contact-form-error"
                 >
                     <option value="">Select</option>
-                    <option value="Nigeria">Nigeria</option>
-                    <option value="Ghana">Ghana</option>
-                    <option value="Congo">Congo</option>
+                    <option value="FIRS">FIRS</option>
+                    <option value="JTB">JTB</option>
                 </Select>
-
-                    {/* 
-                    
-
-
-                    <div className="getting-started-company-form-group-child-container">
-
-                        <div className="getting-started-company-form-group-child">
-
-                            
-
-                        <Select
-                        label="Country of Incorporation"
-                        labelClassName="company-form-group"
-                        name="country"
-                        errorClass="contact-form-error"
-                        >
-                            <option value="">Select</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Congo">Congo</option>
-                        </Select>
-
-                        </div>
-
-                        <div className="getting-started-company-form-group-child">
-
-                        <TextInput
-                        label="State of Incorporation"
-                        labelClassName="company-form-group"
-                        name="contactEmail"
-                        type="email"
-                        errorClass="contact-form-error"
-                        />
-
-                        </div>
-
-                        </div>
-
-
-
-                        <div className="getting-started-company-form-group-child-container">
-
-                        <div className="getting-started-company-form-group-child">
-
-                            
-
-                        <TextInput
-                        label="Legal Company Name"
-                        labelClassName="company-form-group"
-                        // labelText=" (optional)"
-                        name="brandName"
-                        type="text"
-                        errorClass="contact-form-error"
-                        />
-
-                        </div>
-
-                        <div className="getting-started-company-form-group-child">
-
-                        <TextInput
-                        label="Nigerian Tax ID"
-                        labelClassName="company-form-group"
-                        name="contactEmail"
-                        type="email"
-                        errorClass="contact-form-error"
-                        placeholder ="XX-XXXXX"
-                        />
-
-                        </div>
-
-                        </div>
-
-
-
-                        <div className="getting-started-company-form-group-child-container">
-
-                        <div className="getting-started-company-form-group-child">
-
-                            
-
-                        <TextInput
-                        label="Year of Foundation"
-                        labelClassName="company-form-group"
-                        // labelText=" (optional)"
-                        name="brandName"
-                        type="text"
-                        errorClass="contact-form-error"
-                        />
-
-                        </div>
-
-                        <div className="getting-started-company-form-group-child">
-
-                        <Select
-                        label="Tax classification"
-                        labelClassName="company-form-group"
-                        name="country"
-                        errorClass="contact-form-error"
-                        >
-                            <option value="">Select</option>
-                            <option value="Nigeria">Nigeria</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Congo">Congo</option>
-                        </Select>
-
-                        </div>
-
-                        </div>
-                    
-                    */}
                 
                 <span className="brand-name">
                 Each information provided here and here off is owned by you and as such, 
@@ -246,6 +156,17 @@ export default function RegisteredCompanyOrBusiness(props) {
         </div>
         </Form>
         </Formik>
+
+    )
+
+}
+
+export function Options({ name, ...props }) {
+
+    return (
+
+        <option  value= { name } > { name } </option>
+
     )
 
 }
