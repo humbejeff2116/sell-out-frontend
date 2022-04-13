@@ -53,8 +53,8 @@
     display:flex;
     flex-direction:row;
     justify-content: space-between;
-    /* border:1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color); */
+    /* border:1px solid var(--prim-border-color); */
+    /* box-shadow:0 0 2px var(--box-shadow-color); */
     border-radius: 6px;
     margin-top: auto;
 
@@ -62,31 +62,38 @@
 .welcome-body-index-link{
     /* border:1px solid red; */
     display:flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     width:50%;
      color: var(--color);
 }
 .welcome-body-index-link-bttn{
     /* border:1px solid purple; */
-    width:30%;
+    /* width:30%; */
     margin-left: 1%;
 }
 .welcome-body-index-link-bttn a{
     text-decoration: none; 
     color: var(--color);
 }
+
+.welcome-body-index-link-bttn a:hover{
+    text-decoration: underline; 
+}
 .welcome-body-index-link-bttn button{
     
     width:100%;
     height:45px;
-    font-size: 0.9rem;
-    border:1px solid var(--color);
+    font-size: 0.85rem;
+    border:1px solid var(--prim-border-color);
     border-radius: 4px;
-    background-color:#f0f0f0;
+    background-color: #e9e9ed;
     font-weight: bold;
-    transition:all 0.3s ease-in-out;
+    transition:all 0.2s ease;
     cursor:pointer;
+}
+.welcome-body-index-link-bttn button:hover{
+    background-color: #d9d9df;
 }
 /* .welcome-body-index-link-bttn button:focus{
     outline:1px solid ;
@@ -97,17 +104,15 @@
     display:flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
 }
-.welcome-body-bttn a{
-    text-decoration: none; 
-    color: var(--bg-color);
-}
+
 .welcome-body-bttn button{
     height:45px;
     width:60%;
     border:1px solid var(--prim-color);
     background-color:var(--prim-color);
+    color: var(--background-color);
     font-size: 0.9rem;
     border-radius: 30px;
     font-weight: bold;
@@ -115,5 +120,11 @@
     cursor:pointer;
    
     /* border:1px solid var(--sec-color); */
+    
+}
+
+.welcome-body-bttn button:hover{
+   
+    background-color:var(--dark-prim-color);
     
 }

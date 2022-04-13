@@ -1,17 +1,25 @@
 
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import useAuth from '../../Context/context';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useHistory, Redirect } from 'react-router-dom';
+import useAuth, { useGetStartedContext } from '../../Context/context';
 import './gettingStarted.css';
 
 
 export default function GettingStarted() {
 
+    const [redirect, setRedirect] = useState('');
+
     const { user } = useAuth();
+
+    const { setSubmittedFormPaths } = useGetStartedContext();
+
+    const location = useLocation();
+
+    const history = useHistory();
 
     useEffect(() => { 
 
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
 
     }, []);
 
@@ -22,13 +30,35 @@ export default function GettingStarted() {
 
     }
 
+    const startProfileSetup = (e) => {
+
+        setSubmittedFormPaths(prevState => [...prevState, { href: location.pathname }]);
+
+        history.push(location.pathname);
+
+        setRedirect('/getting-started/application/company-or-business');
+
+        e.stopPropagation();
+
+    }
+
+    if (redirect) {
+
+        return (
+
+            <Redirect to={redirect} />
+
+        )
+
+    }
+
     return (
 
         <div className="welcome-container-wrapper">
           
             <div className="welcome-container">
                 <div className="welcome-header">
-                    <h2>Wish to sell your products on Fling ? Kindly set up a profile</h2>
+                    <h2>You wish to be part of Fling? Thats cool!!!</h2>
                 </div>
 
                 <div className="welcome-body">
@@ -37,24 +67,30 @@ export default function GettingStarted() {
                         
                         <p>Hi, <span >{`${user?.fullName || ""} `}</span></p>
                         <p> 
-                            Thank you for showing interest in using Fling.
-                            This platform enables you to buy or sell all sorts and categories of produts. To be able to use this platform
-                            to sell your products, or advertise your services, you will need to:
+                            Welcome and thank you for showing interest in being part of Fling.
+                            This is the fastest growing digital community of entreprenuers in 
+                            Africa, and the aim here is to buy/sell different varieties of products, 
+                            connect and hangout with like minded people.
+                            All you need to do is:
                         </p>
                         <ul>
                             <li>Fill out a profile which identifies your company, business or brand</li>
-                            <li>Submit your profile, upload your products catalogue and start selling using this platform</li>      
+                            <li>Submit your profile, get approved and yeagh you are part of us. Explore and see what the system has to offer you</li>      
                         </ul>
+
                         </div>
                         
                     <div className="welcome-body-bottom">
                         <div className="welcome-body-index-link">
-                            <p>You only wish to buy products for now ?</p>
-                            <div className="welcome-body-index-link-bttn">
-                                <button onClick={ removeGettingStartedPageAccess }><Link to="/home">Click me</Link></button>
+                            <div className="welcome-body-index-link-bttn" onClick={ removeGettingStartedPageAccess }>
+                                <Link to="/home">I only wish to buy products for now </Link>
                             </div>
                         </div>
-                        <div className="welcome-body-bttn"><button><Link to="/getting-started/application/company-or-business">Set up profile</Link></button></div>
+                        <div className="welcome-body-bttn">
+                            <button onClick= { startProfileSetup } >
+                                Set up profile
+                            </button>
+                        </div>
                     </div>
                     </div>
                 </div>    
