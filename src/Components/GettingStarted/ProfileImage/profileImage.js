@@ -38,6 +38,27 @@ export default function ProfileImage(props) {
 
     }, []);
 
+    useEffect(() => { 
+
+        let timer = null; 
+
+        if (profileError) {
+
+            timer = setTimeout(() => setProfileError(''), 4500)
+
+        }
+
+        return () => {
+            
+            if (timer) {
+                
+                clearTimeout(timer);
+
+            }
+        }
+
+    }, [profileError]);
+
     const goBack = ( ) => {
 
         setProfileImageURL(displayImageURL); 
