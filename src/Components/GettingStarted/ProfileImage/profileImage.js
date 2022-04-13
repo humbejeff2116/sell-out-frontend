@@ -6,15 +6,12 @@ import { ImWarning } from 'react-icons/im';
 //avatar SVG image gotten from https://svgrepo.com
 import image from '../../../Images/avatar2.png';
 import { FiCamera } from 'react-icons/fi';
-// import { BsExclamationCircle } from 'react-icons/bs';
 import './profileImage.css';
 import '../Contact/contact.css';
 
 export default function ProfileImage(props) {
 
     const [redirect, setRedirect] = useState('');
-
-    // const [imageFile, setImageFile] = useState(null);
 
     const [displayImageURL, setDisplayImageURL] = useState(null);
 
@@ -31,8 +28,8 @@ export default function ProfileImage(props) {
         profileImageURL, 
         setProfileImageFile,
         setProfileImageURL,
-        setIsLocationDataSet, 
-        setIsProfileDataSet, 
+        setSubmittedFormPaths,
+        removePathName
     } = useGetStartedContext();
 
     useEffect(() => {  
@@ -43,11 +40,9 @@ export default function ProfileImage(props) {
 
     const goBack = ( ) => {
 
-        setIsLocationDataSet(false)
-
-        setIsProfileDataSet(false)
-
         setProfileImageURL(displayImageURL); 
+
+        removePathName('/getting-started/application/shipping-and-operations')
 
         history.push(location.pathname);
 
@@ -59,9 +54,11 @@ export default function ProfileImage(props) {
 
         if (!profileImageFile) {
 
-            return setProfileError('Profle picture required')
+            return setProfileError('Profile picture is required')
 
         }
+
+        setSubmittedFormPaths( prevState => [...prevState, { href: location.pathname }]);
 
         history.push(location.pathname);
 
@@ -135,37 +132,31 @@ export default function ProfileImage(props) {
                 <div className="getting-started-profile-image">
                    
                     <div 
-                    className={ gettingStartedInputClassName }
-                    onMouseEnter ={showImageIcon}
-                    onMouseLeave = {hideImageIcon}   
+                    className = { gettingStartedInputClassName }
+                    onMouseEnter = { showImageIcon }
+                    onMouseLeave = { hideImageIcon }   
                     >
 
                         <ProfileImageSelector
-                        // label="Select Product Images"
-                        labelClassName={ "getting-started-input-label" }
+                        labelClassName = { "getting-started-input-label" }
                         labelSpanClassName="title"
-                        name="productImages"
+                        name="profileImage"
                         type="file"
-                        // TODO... replace icon with a proper image icon 
-                        icon= { <FiCamera/> }
+                        icon = { <FiCamera/> }
                         onChange = { handleImageChange }                
                         />
                            
                     </div>
 
                     <img 
-                    src={
+                    src = {
                         displayImageURL ? displayImageURL : 
                         profileImageURL ? profileImageURL : image 
                     } 
-                    alt=""
-                    onMouseEnter ={showImageIcon}
-                    onMouseLeave = {hideImageIcon}
+                    alt= ""
+                    onMouseEnter = { showImageIcon }
+                    onMouseLeave = { hideImageIcon }
                     />
-
-                    {/* <div className="getting-started-error">
-                        <span>{ profileError ? imageError : ''}</span>
-                    </div> */}
 
                 </div>  
             </div>
@@ -174,14 +165,14 @@ export default function ProfileImage(props) {
             <div className="getting-started-profile-image-info">
                 <span className="brand-name">
                     This image is usually tagged on all your products you put up for sale, 
-                    to enable buyers identify products which are being sold by you.
+                    to help potential buyers identify products which are being sold by you.
                 </span>
                 </div>
                 {/* buttons */}
                 <div className="getting-started-contact-buttons">
                     <div className="getting-started-contact-back-button">
-                        <button onClick={()=>goBack()} >
-                            Back
+                        <button onClick={ ()=> goBack() } >
+                        Back
                         </button>
                     </div>
                     <div className= { `getting-started-contact-next-button` } >
@@ -202,17 +193,18 @@ export default function ProfileImage(props) {
 }
 
 
-const ProfileImageSelector = ({labelClassName, labelSpanClassName, label, ...props}) => {
+const ProfileImageSelector = ({ labelClassName, labelSpanClassName, label, ...props }) => {
 
     return (
 
-        <label className={ labelClassName }  >
+        <label className = { labelClassName }  >
 
-            <i>{props.icon}</i>
+            <i>{ props.icon }</i>
 
-            <input className={ props.inputClassName || "product-images" } {...props} />
+            <input className = { props.inputClassName || "product-images" } { ...props } />
 
         </label>
+
     )
 
 } 
