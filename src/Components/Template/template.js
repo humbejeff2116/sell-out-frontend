@@ -10,6 +10,7 @@ import IndexSideNav from '../IndexSideNav/indexSideNav';
 import IndexFooter from '../IndexFooter/indexFooter';
 import Notifications from '../NotificationsDropdown/notifications';
 import Connections from '../Connections/connections';
+import GettingStartedSideNav from '../GettingStartedSideNav/gettingStartedSideNav';
 import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
 import './template.css';
@@ -114,13 +115,14 @@ function SettingsTemplateChildren(props) {
 export function GettingStartedTemplate(props) {
     return (
         <>
-        <Header dontShowMainNav={true}/>
+        <Header dontShowMainNav = {true } />
         <LeftSideBar 
-             fixed={true}
-            top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
-            center={props.leftSideBarCenter  ? props.leftSideBarCenter : <IndexSideNav links ={gettingStartedSideNavLinks}/>} 
-            bottom={props.leftSideBarBottom ? props.leftSideBarCenter : <IndexFooter/>} 
-            />
+        fixed={true}
+        className = "getting-started-left-side-bar-container"
+        top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
+        center={props.leftSideBarCenter  ? props.leftSideBarCenter : <GettingStartedSideNav links ={gettingStartedSideNavLinks}/>} 
+        bottom={props.leftSideBarBottom ? props.leftSideBarCenter : <IndexFooter/>} 
+        />
         <GettingStartedTemplateChildren children={props.children} />
         <LandingFooter footerClassName={'gettingStarted-footer'} />
         </>
