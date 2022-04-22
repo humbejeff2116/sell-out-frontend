@@ -70,11 +70,15 @@ function Accordion(props) {
 
     const [showAccordion, setShowAccordion] = useState(false);
 
-    const toggleAccordion = () => {
+    const toggleAccordion = (e) => {
+
+        e.preventDefault();
 
         setShowAccordion(state => !state);
 
         props.setAccordionOpen(state => !state);
+
+        e.stopPropagation();
 
     }
 
