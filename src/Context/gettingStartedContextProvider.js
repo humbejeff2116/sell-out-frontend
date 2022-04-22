@@ -20,6 +20,8 @@ export function GetStartedContextProvider(props) {
 
     const [shippingAndOperationsData, setShippingAndOperationsData] = useState(null);
 
+    const [operationalRegions, setOperationalRegions] = useState([])
+
     const [submittedFormPaths, setSubmittedFormPaths] = useState([])
 
     const getDetails = () => {
@@ -69,6 +71,9 @@ export function GetStartedContextProvider(props) {
         unregisteredBusinessData: unregisteredBusinessData,
         legalAddressData: legalAddressData,
         shippingAndOperationsData: shippingAndOperationsData,
+        operationalRegions: operationalRegions,
+        setOperationalRegions: setOperationalRegions,
+        
         submittedFormPaths: submittedFormPaths,
         setRegisteredCompanyOrBusinessData: setRegisteredCompanyOrBusinessData,
         setUnregisteredBusinessData: setUnregisteredBusinessData,
