@@ -30,8 +30,8 @@ export  function CartContextProvider(props) {
 
         const user = localStorage.getItem(`user`) ? JSON.parse(localStorage.getItem(`user`)) : null;
 
-        const savedCartState =  localStorage.getItem(`${user.userEmail}-cart`) ? 
-        JSON.parse(localStorage.getItem(`${user.userEmail}-cart`)) : null;
+        const savedCartState =  localStorage.getItem(`${user?.userEmail}-cart`) ? 
+        JSON.parse(localStorage.getItem(`${user?.userEmail}-cart`)) : null;
 
         if (!user || !savedCartState) {
 
