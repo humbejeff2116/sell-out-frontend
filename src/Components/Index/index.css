@@ -8,61 +8,82 @@
     margin-left: auto;
     margin-right: auto;
     padding:1%;
+    position: relative;
 }
 
 .index-post-container{
-    /* border:1px solid green; */
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 1%;
-    margin-bottom: 2%;
-    padding:1%;
-    border-radius: 6px;
     border:1px solid var(--prim-border-color);
     /* box-shadow:0 0 1px var(--box-shadow-color); */
+    margin-top: -1.7%;
+    margin-bottom: 2%;
+    background: url('https://ssl.gstatic.com/bfe/images/dashboard/covid_19_banner_l.svg') no-repeat left,
+                url('https://ssl.gstatic.com/bfe/images/dashboard/covid_19_banner_r.svg') no-repeat right;
+    background-size: auto, auto;
+    background-size: 23%;
+    /* border: 1px solid #dadce0; */
+    border: 1px solid var(--prim-border-color);
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    max-width: 976px;
+    text-align: center;
 }
 
 .index-post-writeup-container{
     /* border:1px solid red; */
-    width:70%;
-}
-
-/* .index-post-writeup{
-   
-} */
-
-.index-post-writeup p{
-    font-size: 1.2rem;
-    font-weight: bold; 
-    color: var(--text-color); 
-}
-
-.index-post-upload{
-    /* border:1px solid blue; */
-    width:23%;
-    display:flex;
+    display: inline-flex;
     flex-direction: column;
+    max-width: 400px;
+    margin: 32px 0;
+}
+
+.index-post-writeup-container h4 {
+    font-size: 1.2rem;
+    font-weight: 550;
+    margin: 0 0 10px 0;
+    color: var(--text-color);
+}
+
+.index-post-writeup{
+    font-size: 1rem;
+   font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text-color-opac-5);
+}
+
+
+.index-post-getting-started{
+    /* border:1px solid blue; */
+    /* width:23%; */
+    display:flex;
     justify-content: center;
-    align-items: flex-end;
 }
 
-.index-post-upload a{
-    min-width:70%;
+.index-post-getting-started a{
+    border: 1px solid var(--prim-border-color);
+    min-width:30%;
+    height: 100%;
+    padding: 2% 0;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition:all 0.2s ease;
+    cursor:pointer;
+    background-color: var(--background-color);
+    color:var(--color);
 }
 
-.index-post-upload button{
-    width:100%;
-    height: 45px;
-    border:0;
-    border-radius: 30px;
+.index-post-getting-started button{
+    /* width:100%; */
+    /* height: 45px; */
+    border: 1px solid var(--prim-border-color);
+    border-radius: 6px;
     font-size: 0.9em;
     font-weight: bold;
-    transition:all 0.3s ease;
+    transition:all 0.2s ease;
     cursor:pointer;
-    background-color: var(--prim-color);
-    /* background-color: #8bd3db; */
-    color:var(--no-color);
+    background-color: var(--background-color);
+    color:var(--color);
 }
 
 .index-post-upload button:hover{
@@ -81,7 +102,7 @@
     border:1px solid var(--prim-border-color);
     /* box-shadow:0 0 1px var(--box-shadow-color); */
     min-height:65vh;
-    padding:1%;
+    padding: 5%;
     border-radius: 6px;
 }
 
@@ -92,16 +113,31 @@
 
 .index-search-header{
     display:flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    /* justify-content: center;
+    align-items: center; */
      /* border:1px solid red; */
 }
 
-.index-search-header p{
-  font-size: 1.25rem;
-  font-weight: bold;
+.index-search-header > div{
+   text-align: center;
+   font-size: 1.2rem;
+  font-weight: 510;
   color:var(--text-color);
+}
+
+.index-search-header p{
+  font-size: 1rem;
+  /* font-weight: 550; */
+  color: var(--text-color-opac-5);
+  text-align: center;
   
+}
+
+.index-search-input-wrapper{
+    /* border:2px solid purple; */
+    /* width: 75%; */
+    /* margin: 0 auto; */
 }
 
 .index-search-select{
@@ -112,11 +148,19 @@
 }
 
 .index-search-select-filter{
-    /* border:1px solid red; */
+    border:1px solid var(--prim-border-color);
     display:flex;
     flex-direction:column;
     justify-content: center;
-    align-items: center;  
+    align-items: center;
+    height:40px; 
+    width: 40px;
+    border-radius: 30px; 
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.index-search-select-filter:hover{
+   box-shadow: 0 0 2px var(--box-shadow-color);
 }
 
 .index-search-select-filter span{
@@ -125,7 +169,7 @@
 
 .index-search-filter-icon{
     font-size: 1.2rem;
-    color: var(--text-color);
+    color: var(--color);
 }
 
 .index-search-select-btn{
@@ -144,7 +188,7 @@
     border: 1px solid var(--prim-border-color);
     color:var(--text-color);
     background-color: var(--no-color);
-    border-radius: 3px;
+    border-radius: 4px;
     transition: all 0.3s ease;
     cursor:pointer;
 }
@@ -214,12 +258,12 @@
 
 .index-search-form form input[type="search"] {
     outline: none;
-    width:86%;
+    width:100%;
     height: 48px;
-    padding: 0 1%;
+    padding: 0 8% 0 2%;
     font-size: 0.9em;
     border: 1px solid var(--prim-border-color);
-    border-radius: 4px;
+    border-radius: 30px;
     color: var(--text-color);
     caret-color: rgb(19, 182, 19);
     transition: all 0.3s ease;
@@ -237,16 +281,19 @@
 
 .index-search-form form input[type="search"]:focus{
     border: 1px solid var(--prim-border-color);
-    box-shadow:0 0 1px var(--box-shadow-color);
+    box-shadow:0 0 2px var(--box-shadow-color);
     outline: none;  
 }
 
 .index-search-form form button{
+    position: absolute;
+    top: 0;
+    right: 0;
     outline: none;
-    width:13%;
+    width:8%;
     height: 48px;
     border:1px solid var(--prim-border-color);
-    border-radius: 4px;
+    border-radius: 0 30px 30px 0;
     font-weight: bold;
     transition: all 0.3s ease;
     cursor:pointer;
@@ -270,7 +317,7 @@
 
 .index-products-filter-heading p{
     font-size: 1.2rem;
-    font-weight: bold;
+    font-weight: 550;
     color: var(--text-color);
 }
 
@@ -363,7 +410,7 @@
 /* search bar (dropdown) */
 .index-search-omnibar-container{
     position: relative;
-    width:86%;  
+    width:100%;  
 }
 
 .index-search-omnibar-wrapper{
@@ -373,7 +420,7 @@
     width:100%;
     border:1px solid var(--prim-border-color);
     /* box-shadow:  0 0 1px var(--box-shadow-color); */
-    height: 16rem;
+    height: 18rem;
     overflow-y: auto;
     background-color: var(--background-color);
     margin-top: 1%;
@@ -749,7 +796,7 @@
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     overflow-y:scroll;
-    z-index: 2;
+    z-index: 22;
     display: flex;
     flex-direction: column;
     /* border: 2px solid green;    */
@@ -759,7 +806,7 @@
     background-color:var(--no-color);
     z-index:1;
     animation-name:animateLeftside;
-    animation-duration:0.6s;
+    animation-duration:0.5s;
     width:70%;
     border:1px solid var(--no-color);
     position: relative;
@@ -822,8 +869,8 @@
     border: 3px solid var(--prim-border-color);
     border-radius: 50%;
     border-bottom: 3px solid var(--color);
-    width:1.2rem;
-    height: 1.2rem;
+    width:1.5rem;
+    height: 1.5rem;
     margin:auto;
     -webkit-animation: suspense-spin 1.2s linear infinite;
     animation: suspense-spin 0.85s linear infinite;
@@ -834,10 +881,10 @@
     border: 3px solid var(--prim-border-color);
     border-radius: 50%;
     border-bottom: 3px solid var(--color);
-    width:1.7rem;
-    height: 1.7rem;
+    width:2.2rem;
+    height: 2.2rem;
     margin:auto;
-    -webkit-animation: suspense-spin 1.2s linear infinite;
+    -webkit-animation: suspense-spin 0.85s linear infinite;
     animation: suspense-spin 0.85s linear infinite;
 }
 
@@ -858,4 +905,55 @@
     .index-search-result-user-details{
         flex-wrap: wrap;
     }
+}
+
+/* filter compiinent styles */
+
+.index-filter{
+    position: fixed;
+    top: 9vh;
+    height: 91vh;
+    width: 20%;
+    border-left: 1px solid var(--prim-border-color);
+    box-shadow: 0 0 2px var(--box-shadow-color);
+    z-index: 2;
+    transition:right 0.5s;
+  -webkit-transition: right 0.5s;
+    background-color: var(--background-color);
+}
+
+.index-filter.hide{
+    right: -25%;  
+}
+
+.index-filter.show{
+    right: 0;   
+}
+
+.index-filter-close-wrapper{
+    border: 1px solid green;
+    display: flex;
+    position: relative;
+    position: absolute;
+    top: 50%;
+}
+.index-filter-close-button-wrapper{
+    position: absolute;
+    top: 50%;
+    left: -6%;
+    border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
+    box-shadow: 0px 0px 2px var(--box-shadow-color);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    padding: 2% 0;
+    margin: 2% 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    color: var(--color);
+    cursor: pointer;
+
 }
