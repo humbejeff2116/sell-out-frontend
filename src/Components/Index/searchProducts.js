@@ -31,7 +31,7 @@ export function SearchProducts(props) {
 
     const [searchQuery, setSearchQuery] = useState({});
 
-    const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(true)
+    const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(false)
 
     const [returnedEmptySearch, setReturnedEmptySearch] = useState(false)
 
@@ -306,58 +306,30 @@ export function SearchProducts(props) {
         <div className="index-search-container">
             <div className="index-search-header-panel">
                 <div className="index-search-header">
+                    <div>
+                    Search for Products or Brands
+                    </div>
                     <p>
-                        Search for products
+                       
+                    Have product('s) in mind you'll like to buy
+                    or want to find out about a brand? <br />
+
+                   Get it done faster and easier with our search.
+
                     </p>
                 </div>
             </div>
+        <div className="index-search-input-wrapper">
             <div className="index-search-select">
 
-                <div className="index-search-select-filter">
+                <div   
+                className="index-search-select-filter" 
+                title="Filter Search"
+                onClick = {()=> props.toggleFilterComponent("search") }
+                >
                     {/* <GoSettings className="index-search-filter-icon"/> */}
                     <RiListSettingsFill className="index-search-filter-icon"/>
                 </div>
-
-                <div className="index-search-select-btn">
-                    <select>
-                    <option>
-                    Country
-                    </option>
-                    <option>
-                    Nigeria
-                    </option>
-                    </select>
-                </div>
-
-                <div className="index-search-select-btn">
-                    <select>
-                    {
-                        states.map((state,i)=>
-                        <option key={i} value="state.name">
-                            {state.name}
-                        </option>
-                        )
-                    }
-                    </select>
-                </div>
-
-                <div className="index-search-select-btn">                   
-                   <select>
-                    <option>
-                    Category
-                    </option>
-                    <option>
-                    All
-                    </option>
-                    <option>
-                    Electronics
-                    </option>
-                    <option>
-                    Furniture
-                    </option>
-                   </select>
-               </div>
-
             </div>
 
             <div className="index-search-form-wrapper">
@@ -366,7 +338,7 @@ export function SearchProducts(props) {
                 <form onSubmit= { getSearchProducts }>
                     <input 
                     type="search" 
-                    placeholder="search for products" 
+                    placeholder="Search for Products" 
                     // value={ null } 
                     onFocus=  { handleInputFocusChange } 
                     onChange = { handleInputChange } 
@@ -419,7 +391,7 @@ export function SearchProducts(props) {
                 </div>
 
             </div>
-            
+        </div>  
         </div>
 
     )
