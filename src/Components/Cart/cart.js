@@ -489,7 +489,7 @@ function CartProduct({ product }) {
                     {/* product add/reduce/remove buttons */}    
                     <div className="cart-product-buttons" >
                         <div className="cart-product-buttons-header">
-                            <span>Quantity</span>
+                            <span>Add/Reduce quantity</span>
                         </div>
                         <div className="cart-product-button-top">
                             <div className="cart-product-add-button">
