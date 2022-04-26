@@ -5,6 +5,7 @@ import { SearchProducts } from './searchProducts';
 import { PostProduct } from './postProduct';
 import { ErrorModal } from '../ModalBox/errorModal';
 import { DisplayedProduct } from '../Product/product';
+import FilterComponent from './filter'
 import { getProducts } from '../../Utils/http.services';
 import { NavLink } from 'react-router-dom';
 import Links from '../../Data/links';
@@ -82,6 +83,10 @@ const mockProducts = [
 export default function Index() {
 
     const [insideLoginError, setinsideLoginError] = useState('');
+
+    const [showFilter, setShowFilter] = useState(false);
+
+    const [filterType, setFilterType] = useState('')
     
     useEffect(()=> {
 
@@ -105,6 +110,46 @@ export default function Index() {
 
     }, [ insideLoginError ]);
 
+    const toggleFilter = (filterCategory) => {
+
+        if (showFilter) {
+
+            setFilterType("");
+
+        } else {
+
+            switch (filterCategory) {
+
+                case "search" :
+                    setFilterType("searchFilter");
+                    break;
+
+                case "products": 
+                    setFilterType("productsFilter")
+                    break;
+
+                default: 
+                throw new Error("proper filterCategory parameter is not specified");
+
+            }
+
+        }
+
+        setShowFilter(prevState => !prevState)
+
+    }
+
+    const closeFilter = () => {
+
+        setShowFilter(false)
+
+        setFilterType("")
+
+    }
+    
+
+    
+
     return (
 
         <div className="index-container">
@@ -120,13 +165,21 @@ export default function Index() {
                 )
             }
            <PostProduct/>
-           <SearchProducts/>
+           <FilterComponent
+           filterType = { filterType }
+           showFilter = { showFilter }
+           closeFilter = { closeFilter }
+           />
+           <SearchProducts 
+           toggleFilterComponent = { toggleFilter }
+           />
            <FilterDisplayedProducts/>
         </div>
 
     )
 
 }
+
 
 function FilterDisplayedProducts(props) {
 
@@ -390,7 +443,7 @@ function  FilterButtons({ handleInputChange, queryValues }) {
             <div className="index-search-select-filter">               
                 <RiListSettingsFill className="index-search-filter-icon"/>
             </div>
-            <div className="index-products-filter-select">
+            {/* <div className="index-products-filter-select">
                 <Select
                 name = { 'gender' } 
                 queryValues = { queryValues } 
@@ -414,7 +467,7 @@ function  FilterButtons({ handleInputChange, queryValues }) {
                handleInputChange = { handleInputChange } 
                options = { filterButtons.usageOptions }
                />
-            </div>
+            </div> */}
         </div>
     )
 }
