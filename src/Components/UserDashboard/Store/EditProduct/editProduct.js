@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 import React, { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -37,57 +31,58 @@ const categoryDataSet = [
 ]
 
 export default function EditProduct(props) {
+
     const { productToEdit, setProductToEdit } = useEditProductContext();
+
     let EditProductComponent;
 
     useEffect(()=> {
 
        return ()=> {
+
         setProductToEdit(null)
+
        }
+
     },[setProductToEdit]);
 
     if (productToEdit && productToEdit.length > 0) {
         
         EditProductComponent = (
+
             <EditProductCompWrapper 
             product={ productToEdit }
             images ={ productToEdit.productImages }
             />
-        );
+
+        )
 
     } else {
-        EditProductComponent = ( <EmptyEditProductComp/> );
-    }
-    return (
-        <div className="placed-orders-container">
-        <div className="placed-orders-header">
-            <h3> Edit Product</h3>
-        </div>
-        <div className="store-products-search-container">
-            <div className="store-products-search">
-                <form>
-                    <label htmlFor="order-search"> Search by product name or description</label>
-                    <div className="store-products-search-input">
-                        <input type="text" />
-                        <button>Search</button>
-                    </div>
-                   
-                </form>
-            </div>
-        </div>
 
-        <div className="store-product-edit-container">
-            { EditProductComponent }
-        </div>
-        </div>
+        EditProductComponent = ( <EmptyEditProductComp/> );
+
+    }
+
+    return (
+
+        <>
+        { EditProductComponent }
+        </>
+
     )
+
 }
 
 
 function EditProductCompWrapper({product}) {
 
     return (
+
+        <div className="placed-orders-container">
+        <div className="placed-orders-header">
+            <h3> Edit Product</h3>
+        </div>
+        <div className="store-product-edit-container">
         <div className="store-product-edit-wrapper">
         <div className="store-product-edit-details-container">
         {
@@ -100,7 +95,13 @@ function EditProductCompWrapper({product}) {
             <p>product image</p>
            </div>
         </div>
+        </div>
+        </div>
+
+       
+
     )
+
 }
 
 function EditProductItems({
@@ -112,36 +113,59 @@ function EditProductItems({
     productPrice,
     productDiscount,
 }) {
+
     const [formValues, setFormValues] = useState({});
+
     const [type , setType] = useState([]);
    
     // const { user } = useAuth();
 
     const handleInputChange = function(e) {
+
         setFormValues(prevValues => ({
+
             ...prevValues,
             [e.target.name] : 
             (e.target.type === "file" && e.target.files.length) ? [ ...e.target.files ] :
             (e.target.type === "file" && e.target.files.length < 1 ) ? [ e.target.files[0] ] :
             e.target.value
+
         }))
+
         if (e.target.name === "productCategory") {
+
             if (e.target.value) {
+
                 setTypeOptions(e.target.value, categoryDataSet, setType);
+
             }
+
         }
+
     }
+
     const setTypeOptions = function setTypeOptions(category, categoryDataSet, callback) {
+
         let type;
+
         for (let i = 0; i < categoryDataSet.length; i++) {
-            if(categoryDataSet[i].category === category) { 
+
+            if (categoryDataSet[i].category === category) { 
+
                 type = categoryDataSet[i].type;
+
                 break;
+
             }
+
         }
+
         return callback(type);
+
     }
+
     return (
+
         <>
         <EditItem 
         keyName = { "Product name or description" } 
@@ -181,6 +205,7 @@ function EditProductItems({
 
         {
             ( type.length > 0 ) && (
+
                 <EditItem 
                 keyName={"Type"} 
                 value={ productType } 
@@ -199,10 +224,11 @@ function EditProductItems({
 
                 }
                 />
+
             )
+
         }
         
-
         <EditItem 
         keyName={ "Usage" } 
         value={ productUsage } 
@@ -283,12 +309,19 @@ function EditItem({
     noValueText,
 
 }) {
+
     const [showEditBar, setShowEditBar] = useState(false);
+
     const [updatingProduct , setUpdatingProduct ] = useState(false);
+
     const [updatingProductError , setUpdatingProductError] = useState(false);
+
     const [updateProductResponse, setUpdateProductResponse] = useState('');
+
     let Button;
+
     let EditBarComponent = (
+
         <EditBar 
         initialValues = { initialValues } 
         submitForm = { submitForm }
@@ -299,36 +332,70 @@ function EditItem({
         >
             { editBarChildren }
         </EditBar>
-    )
 
-    function submitForm(values) {
-        setUpdatingProduct(true)
-        // setUpdatingProductError(true)
-        // setUpdateProductResponse("update successful")
-        alert(JSON.stringify(values, null, 2))
+    )
+    
+    const transformUpdateValue = (value = {}) => {
+     
+        const newObj = {}
+
+        for(let props in value) {
+
+            newObj.key = props;
+
+            newObj.value = value[props];
+
+        }
+
+        return newObj;
+
     }
 
+    function submitForm(values) {
+
+        // setUpdatingProduct(true)
+        // setUpdatingProductError(true)
+        // setUpdateProductResponse("update successful")
+
+        const transformedVal = transformUpdateValue(values)
+
+        alert(JSON.stringify(transformedVal, null, 2));
+
+    }
+
+
     const openEditBar = ( ) => {
+
         setShowEditBar(state => !state);
+
     }
 
     if (showEditBar) {
+
             Button = (
+
                 <button onClick = { openEditBar }> 
                     <RiCloseLine className="store-icon-edit"/>
                     Close
                 </button>
+
             )
+
     } else {
+
         Button = (
+
             <button onClick = { openEditBar }>
                 <BiEdit title="Edit" className="store-icon-edit"/> 
                 Edit
             </button>
+
         )
+
     }
     
     return (
+
         <div className="store-product-edit-details-group-container">
             <div className="store-product-edit-details-group">
             <div className="store-product-edit-details-group-left">
@@ -356,7 +423,9 @@ function EditItem({
                 showEditBar && ( EditBarComponent )
             }
         </div>
+
     )
+
 }
 
 function EditBar({ 
@@ -371,6 +440,7 @@ function EditBar({
 }) {
  
     return (
+
          <div className="store-product-edit-details-group">
          <div className="store-product-edit-details-group-left">
          <div><span>{ response }</span></div>
@@ -385,6 +455,7 @@ function EditBar({
                     children
                  }
                  {/* TODO... move submit button in here */}
+                 <button type="submit">submit</button>
              </Form>
          </Formik>
          </div>
@@ -402,30 +473,38 @@ function EditBar({
              </div>
          </div>
          </div>
+
     )
+
 }
 
 function EmptyEditProductComp() {
-    return (
-        <div className="edit-product-empty-container">
-          
-               <div className="edit-product-empty-content">
-                   <p>
-                       If you wish to edit any of your product ? You can easily carry out that action by:
-                       
-                   </p>
-                   <ol>
-                        <li> Simply searching for it using the search bar above. Or</li>
-                        <li> Selecting it from your products collection</li>
-                    </ol>
 
-               </div>
-               <div className="edit-product-empty-button-container">
-                   <div className="edit-product-empty-button-wrapper">
-                   <Link to="/home/dashboard/store/products"><button> Select Product To Edit</button></Link>
-                   </div>
-               </div>
-           
+    return (
+
+        <div className="store-product-empty-edit-container">
+        
+            <div className="edit-product-empty-container">
+            
+            <div className="edit-product-empty-content">
+                <h3>
+                    Edit Product   
+                </h3>
+                <div className="edit-product-empty-content-writeup">
+                    Make changes to your product and give it a fresh look
+                </div>
+
+            </div>
+            <div className="edit-product-empty-button-container">
+                <div className="edit-product-empty-button-wrapper">
+                <Link to="/home/dashboard/store/products">Select product</Link>
+                </div>
+            </div>
+        
+            </div>
         </div>
+        
+
     )
+    
 }
