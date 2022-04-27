@@ -5,6 +5,7 @@ import { ModalBox } from '../../../ModalComments/modalComments';
 import { AllStoreProducts} from '../Products/products';
 import useAuth from '../../../../Context/context';
 import { HiDotsHorizontal } from 'react-icons/hi';
+import { RiAddFill, RiCloseFill } from "react-icons/ri";
 import { FiBookmark } from 'react-icons/fi';
 import socket from '../../../Socket/socket';
 import './collections.css'
@@ -19,7 +20,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 23232343,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -36,6 +37,46 @@ const mockCollections = [
             },
             {
                 userId: 2234343,
+                userName: "hummbe effrey",
+                userEmail: "humbejeff@gmail.com",
+                userProfilePicture: "",
+                productId: 237672323,
+                productName: "short nikka",
+                productCategory: "furniture",
+                productCountry: "Nigeria",
+                productState: "Benue",
+                productUsage: "never used",
+                productCurrency: "naira",
+                productPrice: "200",
+                productContactNumber: "334039438493",
+                productImages: [{}],
+                stars: [],
+                unstars: [],
+                comments: [],
+                interests: []
+            },
+            {
+                userId: 2237684343,
+                userName: "hummbe effrey",
+                userEmail: "humbejeff@gmail.com",
+                userProfilePicture: "",
+                productId: 232323,
+                productName: "short nikka",
+                productCategory: "furniture",
+                productCountry: "Nigeria",
+                productState: "Benue",
+                productUsage: "never used",
+                productCurrency: "naira",
+                productPrice: "200",
+                productContactNumber: "334039438493",
+                productImages: [{}],
+                stars: [],
+                unstars: [],
+                comments: [],
+                interests: []
+            },
+            {
+                userId: 223409343,
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
@@ -59,47 +100,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
-                productName: "short nikka",
-                productCategory: "furniture",
-                productCountry: "Nigeria",
-                productState: "Benue",
-                productUsage: "never used",
-                productCurrency: "naira",
-                productPrice: "200",
-                productContactNumber: "334039438493",
-                productImages: [{}],
-                stars: [],
-                unstars: [],
-                comments: [],
-                interests: []
-            },
-            {
-                userId: 2234343,
-                userName: "hummbe effrey",
-                userEmail: "humbejeff@gmail.com",
-                userProfilePicture: "",
-                productId: 232323,
-                productName: "short nikka",
-                productCategory: "furniture",
-                productCountry: "Nigeria",
-                productState: "Benue",
-                productUsage: "never used",
-                productCurrency: "naira",
-                productPrice: "200",
-                productContactNumber: "334039438493",
-                productImages: [{}],
-                stars: [],
-                unstars: [],
-                comments: [],
-                interests: []
-            },
-            {
-                userId: 2234343,
-                userName: "hummbe effrey",
-                userEmail: "humbejeff@gmail.com",
-                userProfilePicture: "",
-                productId: 232323,
+                productId: 2398785672323,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -128,7 +129,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 2323676923,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -148,7 +149,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 232387854523,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -168,7 +169,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 23237670223,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -197,7 +198,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 232232890323,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -217,7 +218,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 232324343,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -237,7 +238,7 @@ const mockCollections = [
                 userName: "hummbe effrey",
                 userEmail: "humbejeff@gmail.com",
                 userProfilePicture: "",
-                productId: 232323,
+                productId: 65232323,
                 productName: "short nikka",
                 productCategory: "furniture",
                 productCountry: "Nigeria",
@@ -261,7 +262,9 @@ const mockCollections = [
 
 export default function Collections() {
 
-    const [collections, setCollections] = useState(null);
+    const [collections, setCollections] = useState([]);
+
+    const [allStoreProducts, setAllStoreProducts] = useState([]);
 
     const [collectionsErr, setCollectionsErr] = useState('');
 
@@ -273,11 +276,24 @@ export default function Collections() {
 
     const [redirect, setRedirect] = useState('');
 
+    const [socketConnected, setSocketConnected] = useState(false);
+
+    const [productsSelected, setProductsSelected] = useState([]);
+
+    const [showAddProductsToCollectionComp, setShowAddProductsToCollectionComp] = useState(false);
+
     const { user } = useAuth();
 
     let timer = null;
 
-    const [socketConnected, setSocketConnected] = useState(false);
+    let MoadlBoxChild;
+
+    const disableRemoveProductButton = (!productsSelected || productsSelected.length < 1 ) ? true : false
+
+    const collectionNavItemClassName = disableRemoveProductButton ? 
+    "store-collection-modal-nav-item disabled" : "store-collection-modal-nav-item enabled" 
+
+    
 
     useEffect(()=> {
 
@@ -329,7 +345,7 @@ export default function Collections() {
 
         }
 
-        if (socketConnected && mounted) {
+        if (socketConnected && mounted && user) {
            
             getUserCollections(user);
 
@@ -341,7 +357,7 @@ export default function Collections() {
             
         }
 
-    }, [socketConnected]);
+    }, [socketConnected, user]);
 
     useEffect(()=> {
 
@@ -356,22 +372,128 @@ export default function Collections() {
 
     }, [timer]);
 
+    const removeProductsFromCollection = () => {
+        alert(true)
+    }
 
-    const MoadlBoxChild = (
+    const addProductsToCollection = () => {
+        alert(true)
 
-        <div className="store-collection-modal-child-wrapper">
-        <div className="store-collection-modal-heading">
-            <h3>{ viewedCollection?.name } </h3>
-        </div>
-        <AllStoreProducts
-        storeContainerClassName ={"store-collection-products-container"}
-        productEditPanel={"store-collection-product-edit-panel"}
-        products = {viewedCollection?.products}
-        setDeleteProductResponseMessage={setDeleteProductResponseMessage}
-        setRedirect={setRedirect}
-        />
-        </div>
-    )
+    }
+    const setCollectionProducts = (product) => {
+
+        if (!productsSelected || productsSelected.length < 1) {
+
+            setProductsSelected([product]);
+
+            return;
+  
+        }
+
+        const productExist = productsSelected.findIndex( prod => prod.productId === product.productId)
+
+        if (productExist < 0) {
+
+            setProductsSelected( prevState => ([ ...prevState, product ]))
+
+            return
+
+        }
+        
+        const newSelectedProducts = productsSelected.filter(prod => prod.productId !== product.productId)
+    
+        setProductsSelected(newSelectedProducts)
+    }
+
+    const showAddToCollectionComponent = () => {
+
+        setProductsSelected([])
+        setShowAddProductsToCollectionComp(prevState => !prevState)
+
+    }
+
+
+    if (showAddProductsToCollectionComp) {
+
+        MoadlBoxChild = (
+
+            <div className="store-collection-modal-child-wrapper">
+            <div className="store-collection-modal-heading">
+                <div>
+                    
+                <h3>All Products </h3>
+                </div>
+                
+                <div className="store-collection-modal-nav">
+
+                    <div 
+                    className={ collectionNavItemClassName } 
+                    disabled={ disableRemoveProductButton }
+                    onClick={ addProductsToCollection }
+                    >
+                        Add Selected
+                    </div>
+
+                    <div 
+                    className="store-collection-modal-nav-item add"
+                    onClick = { showAddToCollectionComponent }
+                    title ="Close"
+                    >
+                        <RiCloseFill className="nav-icon"/>
+                    </div>
+                </div>
+            </div>
+            <AllStoreProducts
+            storeContainerClassName ={"store-collection-products-container"}
+            productEditPanel={"store-collection-product-edit-panel"}
+            products = { viewedCollection?.products }
+            setDeleteProductResponseMessage={ setDeleteProductResponseMessage }
+            setRedirect={ setRedirect }
+            setProductsSelected = { setCollectionProducts }
+            showSelect
+            />
+            </div>
+
+        )
+
+    } else {
+
+        MoadlBoxChild = (
+
+            <div className="store-collection-modal-child-wrapper">
+            <div className  ="store-collection-modal-heading">
+                <h3>{ viewedCollection?.name } </h3>
+                <div className="store-collection-modal-nav">
+                    <div 
+                    className={ collectionNavItemClassName } 
+                    disabled={ disableRemoveProductButton }
+                    onClick={ removeProductsFromCollection }
+                    >
+                        Remove Selected
+                    </div>
+                    <div 
+                    className="store-collection-modal-nav-item add"
+                    onClick = { showAddToCollectionComponent }
+                    title = "Add products"
+                    >
+                        <RiAddFill className="nav-icon"/>
+                    </div>
+                </div>
+            </div>
+            <AllStoreProducts
+            storeContainerClassName ={"store-collection-products-container"}
+            productEditPanel={"store-collection-product-edit-panel"}
+            products = { viewedCollection?.products }
+            setDeleteProductResponseMessage={ setDeleteProductResponseMessage }
+            setRedirect={ setRedirect }
+            setProductsSelected = { setCollectionProducts }
+            showSelect
+            />
+            </div>
+    
+        )
+
+    }
 
     const viewCollectionProducts = (e, collection) => {
 
@@ -422,7 +544,7 @@ export default function Collections() {
         <div className="store-collections-wrapper">
         {
             // TODO... refactor to remove mock collections when API data fetch complete
-           collections ? collections.map((collection, i) => 
+           (collections && collections.length > 0) ? collections.map((collection, i) => 
 
                 <Collection key ={i} {...collection}
                 setDeleteProductResponseMessage={setDeleteProductResponseMessage} 
