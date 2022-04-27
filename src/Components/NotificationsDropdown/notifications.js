@@ -1,63 +1,83 @@
 
-
-
-
-
-import React, {useState, useEffect} from 'react';
-import './notifications.css';
+import React, { useState, useEffect } from 'react';
 import socket from '../Socket/socket';
 import {  getUserNotifications } from '../../Utils/http.services';
-import useAuth from '../../Context/context';
+import { RiNotification3Line } from 'react-icons/ri';
 import image from '../../Images/avatar.jpg';
-import {MdNotificationsNone} from 'react-icons/md';
-import {RiNotification4Line, RiNotification3Line} from 'react-icons/ri'
-import {GrNotification} from 'react-icons/gr';
-import { BiBell } from "react-icons/bi";
+import './notifications.css';
+
 
 export default function Notifications(props) {
-    // const [initialNotificationLength, setInitialNotificationsLength] = useState(null);
+
     const [notifications, setNotifications] = useState([]);
-    const [ showNotifications, setShowNotifications ] = useState(false);
+
+    const [showNotifications, setShowNotifications] = useState(false);
+
     useEffect(()=> {
+
         let mounted = true;
+
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        
         const getNotifications = async (user, mounted) => {
+
             try {
-                const notificationResponse = await getUserNotifications(user)
-                const {data} = notificationResponse;
+
+                const { data } = await getUserNotifications(user)
+
                 if (mounted) {
-                    console.log(data)
+
                     setNotifications(data);
+
                 }
-            }catch(err) {
+                // TODO... handle error
+            } catch(err) {
 
             }  
         }
 
         if (user && mounted ) {
+
             getNotifications(user, mounted);
+
         }
 
         socket.on('userDataChange', function() {
+
             if (mounted) {
+
                 getNotifications(user, mounted);
-            }   
+
+            } 
+
         });
+
         socket.on('seenNotificationsSuccess', function() {
+
             if (mounted) {
+
                 getNotifications(user, mounted);
-            }   
+
+            } 
+
         });
         
         return () => {
+
             mounted = false;
-        }    
+
+        }  
+
     }, []);
 
     const toggleNotifications = () => {
+
         setShowNotifications(prevState => !prevState)
+
     }
+
     return (
+
         <>
         <div className="notifications-container">
             <NotificationIcon
@@ -73,105 +93,157 @@ export default function Notifications(props) {
             )
         }
         </>
+
     )
+
 }
-function NotificationsDropDown(props) {
+
+function NotificationsDropDown({ notifications, ...props }) {
+
     useEffect(()=> {
+
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-        checkIfNotificationsIsSeen(props.notifications)
+        
+        checkIfNotificationsIsSeen(notifications)
         .then(notSeen => {
-            if(notSeen) {
+
+            if (notSeen) {
+
                return  socket.emit('seenNotifications', user);
             }
+            
         })
+
     }, []);
+
     const checkIfNotificationsIsSeen = async (notifications) => {
+
          let notSeen = false;
+
         for (let i = 0; i < notifications.length; i++) {
+
             if(notifications[i].seen === false) {
+
                notSeen = true;
+
                break;
+
             }
+
         }
-        return notSeen
+
+        return notSeen;
+
     }
+
     return (
+
         <div className="notifications-dropdown-wrapper">
            
         <div className="notifications-dropdown-container">
             {
-                props.notifications.length ? props.notifications.map((notification, i) =>
-                    <NotificationsBox key={i}  {...notification} />
+                notifications.length > 0 ? notifications.map((notification, i) =>
+                    
+                    <NotificationsBox key = { i }  { ...notification } />
+                
                 ) : (
+
                     <div>
                     <p>no notifications yet</p>
                     </div>
+                
                 ) 
+            
             }
         </div> 
-        </div>   
+        </div> 
+
     )
+
 }
 
-// notification icon
-function NotificationIcon(props) {
+function NotificationIcon({ openNotifications, notifications, ...props }) {
+
     const notSeenNotificationsCount = (notifications) => {
+
         let j = 0;
+
         for (let i = 0; i < notifications.length; i++) {
-            if(notifications[i].seen === false) {
+
+            if (notifications[i].seen === false) {
+
                 j++
             }
+
         }
-        return j;   
+
+        return j;
+
     }
+
     return (
-        <div className="notifications-icon-wrapper" onClick={props.openNotifications}>
+
+        <div className="notifications-icon-wrapper" onClick = { openNotifications }>
             <RiNotification3Line className="notification-icon" />
             {
-                props.notifications && (
-                    notSeenNotificationsCount(props.notifications) > 0  ?
+                notifications && (
+
+                    notSeenNotificationsCount(notifications) > 0  ?
                     ( <NotificationAlert className="notifications-icon-alert"/> ) : ''
+
                 ) 
             }
         </div>
+
     )
+
 }
-export function NotificationAlert(props) {
+
+export function NotificationAlert({ className, ...props }) {
+
     return(
-        <div className={props.className}>
+
+        <div className={ className }>
 
         </div>
+
     )
 
 }
 
-function NotificationsBox(props) {
-    const {userName, userId, userProfileImage, action} = props;
+function NotificationsBox({ userName, userId, userProfileImage, action, ...props }) {
 
+    // TODO... implement vie profile functionality
     const viewProfile =() => {
 
     }
+
     return (
+
         <div className="notification-container">
 
         <div className="notification-header">
             <div className="notification-image">
-                <img src={image || userProfileImage} alt="profile" /> 
+                <img src={  userProfileImage || image } alt="profile" /> 
             </div>
 
             <div className="notification-name">
-                <span onClick={()=>viewProfile(userId)}><b>{userName}</b></span>
+                <span onClick = { ()=> viewProfile(userId) }>{ userName }</span>
+                <div className="notification-time">  
+                <span>2 weeks ago</span>
+            </div>
             </div>
 
-            <div className="notification-time">  
-                <span>2w</span>
+            <div className="notification-remove">  
+                x
             </div>
         </div>
 
         <div className="notification-details">
-            <span> {action} </span>
+            <span> { action } </span>
         </div>
             
         </div>
+
     )
 }
