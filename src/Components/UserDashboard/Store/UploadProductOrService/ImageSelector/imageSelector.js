@@ -1,107 +1,58 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import { FileInput } from '../../../../Formik/formik';
-import { BsExclamationCircle, } from 'react-icons/bs';
+import { BiImageAdd } from 'react-icons/bi';
 
+export default function ProductImagesSelector({
+    numberofimages, 
+    handleInputChange, 
+    fileInputRef,
+    noProductImageHasBeenSelected 
+}) {
 
+    let labelClass = (numberofimages > 0) ?  "upload-images-label contains" : 
+    noProductImageHasBeenSelected ? "upload-images-label error" : 
+    "upload-images-label";
 
-
-
-    export default function ProductImagesSelector({
-        productImages,
-        numberofimages, 
-        handleInputChange, 
-        handleSubmit, 
-        goBack, 
-        uploadingProduct, 
-        uploadingError,
-        fileInputRef 
-    }) {
-    let labelClass = numberofimages ? "upload-images-label contains" : "upload-images-label";
     return (
 
-        <div>
-        <div className="upload-form-panel-heading">
-            <p>NOTE:</p>
-            <p>In order to enable buyers properly view your product,  
-                atleast three(3) images of the product taken from 
-                different angles/views should be selected.
-            </p>
+        <>
+        <div className="upload-image-form-panel-heading">
+            <div>
+               Not more than four(4) images should be selected 
+            </div>
         </div>
             
-        <Formik 
-         initialValues = {{
-            productImages: '',
-              
-        }}
-        onSubmit =  { handleSubmit } 
-        >
-            {(formikProps) => {
-                const { values, handleChange } = formikProps;
-                return (
-                    <Form>
-                    <div>
-                        <div className="upload-form-group-child-input-image">
-                        
-                                <FileInput
-                                    label="Select Product Images"
-                                    labelClassName={ labelClass }
-                                    labelSpanClassName="title"
-                                    numberofimages = { numberofimages }
-                                    name="productImages"
-                                    type="file"
-                                    // TODO... replace icon with a proper image icon 
-                                    icon="Icon"
-                                    multiple ="multiple"
-                                    onChange ={ handleInputChange }
-                                    ref={ fileInputRef }
-                                
-                                    errorClass="upload-form-textarea-error"
-                                />
-                                
-                        </div> 
-                    </div>
-                  
-                    <div className="upload-product-preview-images-container">
-                    {
-                        (productImages && productImages.length > 0) ? (
-                            productImages.map((dataurl, i)=>
-                                <ImagePreview key = {i} { ...dataurl }/>
-                            )   
-                        ) : "" 
-                    }
-                    </div>
-                    
-                    <div className="upload-form-button-container">
-                        <div className="upload-form-back-button-wrapper">
-                            <button onClick={ goBack }>Back</button>
-                        </div>
-                        <div className="upload-form-button-wrapper next">
-                            <button type="submit">
-                                
-                                {
-                                    uploadingProduct ? <span>Uploading Product...</span> : 
-                                    uploadingError ? <><BsExclamationCircle/> <span>Upload</span></> :
-                                    <span>Upload</span>
-                                }
-                            </button>
-                        </div>
-                    </div>
-                    </Form>
-                );
-            }}
-        </Formik>
-        </div>
-    )      
-}
+        <Formik>
+        <Form>
+        <div>
+            <div className="upload-form-group-child-input-image">
+            
+                    <FileInput
+                        label="Select Product Images"
+                        labelClassName = { labelClass }
+                        labelSpanClassName="title"
+                        numberofimages = { numberofimages }
+                        name="productImages"
+                        type="file"
+                        icon= {
 
-function  ImagePreview({ dataurl }) {
- 
-    return (
-      
-        <div className="upload-product-preview-image-wrapper">
-            <img src = { dataurl } alt="product" id="preview"/>
-        </div>   
+                            <BiImageAdd className="upload-product-image-icon"/>
+                        }
+                        multiple ="multiple"
+                        onChange = { handleInputChange }
+                        ref={ fileInputRef }
+                        errorExist = { noProductImageHasBeenSelected }
+                        errorClass="upload-form-textarea-error"
+                    />
+                    
+            </div> 
+        </div>
+
+        </Form>
+        </Formik>
+        </>
+
     )
+
 }
