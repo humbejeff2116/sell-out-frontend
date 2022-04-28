@@ -214,7 +214,9 @@ export function AllStoreProducts({
     storeContainerClassName, 
     productEditPanel, 
     setDeleteProductResponseMessage, 
-    setRedirect, 
+    setRedirect,
+    setProductsSelected,
+    showSelect, 
     ...props
 }) {
     
@@ -229,6 +231,8 @@ export function AllStoreProducts({
                 setDeleteProductResponseMessage = { setDeleteProductResponseMessage }
                 setRedirect = { setRedirect }
                 productEditPanel = { productEditPanel }
+                setProductsSelected = { setProductsSelected }
+                showSelect = { showSelect }
                 />
             )
         }
@@ -239,7 +243,7 @@ export function AllStoreProducts({
 }
 
 
-export function StoreProduct({ setDeleteProductResponseMessage, productEditPanel, setRedirect, product }) {
+export function StoreProduct({ setDeleteProductResponseMessage, setProductsSelected, showSelect, productEditPanel, setRedirect, product }) {
 
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
 
@@ -333,6 +337,22 @@ export function StoreProduct({ setDeleteProductResponseMessage, productEditPanel
 
             }
             <div className="store-product-edit-icon-panel">
+                {
+
+                    showSelect && (
+
+                        <div className="store-product-edit-group">
+                            <div 
+                            className="store-product-edit-icon checkbox"
+                            onClick={ ()=> setProductsSelected(product) }
+                            >
+                                <input type="checkbox"/>
+                            </div>
+                        </div>
+
+                    )
+
+                }
                 <div className="store-product-edit-group">
                     <div className="store-product-edit-icon" onClick={ ()=> editProduct(product) }>
                         <BiEdit title="Edit" className="store-icon" />
