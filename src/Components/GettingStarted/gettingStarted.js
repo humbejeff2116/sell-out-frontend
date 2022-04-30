@@ -67,15 +67,13 @@ export default function GettingStarted() {
                         
                         <p>Hi, <span >{`${user?.fullName || ""} `}</span></p>
                         <p> 
-                            Welcome and thank you for showing interest in being part of Fling.
-                            This is the fastest growing digital community of entreprenuers in 
-                            Africa, and the aim here is to buy/sell different varieties of products, 
-                            connect and hangout with like minded people.
-                            All you need to do is:
+                            Welcome and thank's for showing interest in being part of Fling,
+                            a digital community where people come to buy or sell different varieties of products, 
+                            connect, hangout and share ideas with like minded people. All you need to do is
                         </p>
                         <ul>
                             <li>Fill out a profile which identifies your company, business or brand</li>
-                            <li>Submit your profile, get approved and yeagh you are part of us. Explore and see what the system has to offer you</li>      
+                            <li>Submit your profile, get approved and yeagh you are part of us. Explore and see the benefits the system has to offer you</li>      
                         </ul>
 
                         </div>
