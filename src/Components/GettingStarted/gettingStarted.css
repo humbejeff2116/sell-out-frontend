@@ -6,72 +6,80 @@
    align-items: center;
    min-height: 92vh;
 }
+
 .welcome-container{
     border:1px solid var(--prim-border-color);
-    /* box-shadow:0 0 2px var(--box-shadow-color); */
     width: 80%;
-    border-radius: 6px;
-   
+    border-radius: 6px; 
 }
+
 .welcome-header{
     min-height: 15vh;
     width:100%;
     border-bottom:1px solid var(--prim-border-color);
     display:flex;
-    /* justify-content: center; */
     align-items: center;
 }
+
 .welcome-header h2{
     /* border:1px solid green; */
    text-align: center;
-   font-size:1.5rem;
-   font-weight:600;
+   font-size: 1.2rem;
+   font-weight: 550;
    margin-left: 2%;
    color: var(--text-color);
 }
+
 .welcome-body{
     padding:2%;
     display:flex;
     flex-direction:row;
     /* border:1px solid black; */
 }
+
 .welcome-body-message{
-   
-    /* width:70%; */
     display:flex;
     flex-direction: column;
     /* border:1px solid red;   */
     color: var(--text-color);
 }
 
-.welcome-body-message p span{
-    font-weight: bold; 
-    /* color: var(--sec-color); */
+.welcome-body-message p {
+    line-height: 1.6;
+    color: var(--text-color-opac-9); 
 }
+
+.welcome-body-message ul li {
+    line-height: 1.6; 
+    color: var(--text-color-opac-9);
+}
+
+/* .welcome-body-message p span{
+    
+} */
+
 .welcome-body-bottom{
     min-height: 18vh;
     display:flex;
     flex-direction:row;
     justify-content: space-between;
-    /* border:1px solid var(--prim-border-color); */
-    /* box-shadow:0 0 2px var(--box-shadow-color); */
     border-radius: 6px;
     margin-top: auto;
-
 }
+
 .welcome-body-index-link{
     /* border:1px solid red; */
     display:flex;
-    /* justify-content: center; */
     align-items: center;
     width:50%;
-     color: var(--color);
+    color: var(--color);
 }
+
 .welcome-body-index-link-bttn{
     /* border:1px solid purple; */
-    /* width:30%; */
     margin-left: 1%;
 }
+
 .welcome-body-index-link-bttn a{
     text-decoration: none; 
     color: var(--color);
@@ -80,24 +88,7 @@
 .welcome-body-index-link-bttn a:hover{
     text-decoration: underline; 
 }
-.welcome-body-index-link-bttn button{
-    
-    width:100%;
-    height:45px;
-    font-size: 0.85rem;
-    border:1px solid var(--prim-border-color);
-    border-radius: 4px;
-    background-color: #e9e9ed;
-    font-weight: bold;
-    transition:all 0.2s ease;
-    cursor:pointer;
-}
-.welcome-body-index-link-bttn button:hover{
-    background-color: #d9d9df;
-}
-/* .welcome-body-index-link-bttn button:focus{
-    outline:1px solid ;
-} */
+
 .welcome-body-bttn{
     /* border:1px solid red; */
     width:30%;
@@ -110,21 +101,17 @@
 .welcome-body-bttn button{
     height:45px;
     width:60%;
-    border:1px solid var(--prim-color);
-    background-color:var(--prim-color);
+    border:none;
+    background-color:var(--color);
     color: var(--background-color);
     font-size: 0.9rem;
     border-radius: 30px;
     font-weight: bold;
-    transition:all 0.3s ease-in-out;
-    cursor:pointer;
-   
-    /* border:1px solid var(--sec-color); */
-    
+    transition:all 0.2s ease;
+    cursor:pointer; 
+    /* border:1px solid var(--sec-color); */   
 }
 
 .welcome-body-bttn button:hover{
-   
-    background-color:var(--dark-prim-color);
-    
+    background-color:var(--opaque-color);  
 }
