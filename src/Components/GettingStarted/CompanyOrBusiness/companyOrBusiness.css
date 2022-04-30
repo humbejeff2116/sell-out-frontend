@@ -16,11 +16,10 @@
 }
 
 .getting-started-company-heading p{
-    font-size: large;
-    font-size:1.5rem;
-   font-weight:600;
-   color: var(--text-color);
-   /* border:3px solid green; */   
+    font-size:1.2rem;
+    font-weight: 550;
+    color: var(--text-color);
+    /* border:3px solid green; */   
 }
 
 .getting-started-company-tabs-container{
@@ -44,20 +43,26 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 4px;
     color: var(--text-color);
     transition: all 0.2s ease;
-
+    font-size: 0.9rem;
 }
 
 .getting-started-company-tabs-child:hover{
-    box-shadow: 0 0 3px var(--box-shadow-color);
+    color: var(--color);
+    color: var(--background-color);
+    border: none;
+    border: none;
+    background-color: var(--color);
 }
 
 .getting-started-company-tabs-child.active{
-    color: var(--color);
+    color: var(--background-color);
     font-weight: 550;
-    box-shadow: 0 0 2px var(--box-shadow-color);
+    border: none;
+    border: none;
+    background-color: var(--color);
 }
 
 /* .getting-started-company-form-inputs{
