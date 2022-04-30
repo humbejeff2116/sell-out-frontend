@@ -19,16 +19,21 @@
     /* border:1px solid red; */
     height: 100%;
     width: 100%;
-    min-height: 7vh
+    min-height: 7vh;
+    font-size: 0.9rem;
+    border-radius: 0 30px 30px 0; 
 }
 
 .getting-started-side-nav-link:hover {
-    background-color: #e0e0e0;
+    background-color: #f0f0f0;
+    color: var(--color);
 }
 
 .getting-started-side-nav-item > .getting-started-side-link-active{
-    color: var(--no-color);
-    background-color: var(--color); 
+    color: var(--color);
+    font-weight: 550;
+    background-color: #e0e0e0;
+    border-radius: 0 30px 30px 0; 
 }
 
 .getting-started-side-nav-link i{
@@ -43,13 +48,12 @@
 }
 
 .getting-started-side-nav-icon{
-    width: 1.2em;
-    height:1.2em;
-    color: rgb(32, 187, 32);
+    width: 1.2rem;
+    height:1.2rem;
+    color: var(--color);
 }
 
 .getting-started-side-nav-link.form-data-set{
-    border-left: 2px solid rgb(32, 187, 32);
-    color: rgb(32, 187, 32);
-    font-weight: 550;
+    border-left: 2px solid var(--color);
+    color: var(--color);
 }
