@@ -52,13 +52,13 @@ export default function RegisteredCompanyOrBusiness(props) {
         onSubmit = { props.handleSubmit }
         >
         <Form id="contactForm">
-            <div className="getting-started-contact-form-inputs">
+            <div className="getting-started-application-template-form-inputs">
 
                 <Select
                 label="Country of Incorporation"
                 labelClassName="company-form-group"
                 name="countryOfIncorporation"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 >
                 <option value="">Select</option>
                 {
@@ -78,7 +78,7 @@ export default function RegisteredCompanyOrBusiness(props) {
                 label="State of Incorporation"
                 labelClassName="company-form-group"
                 name="stateOfIncorporation"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 >
                 <option value="">Select</option>
                 {
@@ -99,7 +99,7 @@ export default function RegisteredCompanyOrBusiness(props) {
                 labelClassName="company-form-group"
                 name="legalCompanyName"
                 type="text"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 />
 
                 <TextInput
@@ -107,7 +107,7 @@ export default function RegisteredCompanyOrBusiness(props) {
                 labelClassName="company-form-group"
                 name="yearOfFoundation"
                 type="text"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 />
 
                 <TextInput
@@ -115,7 +115,7 @@ export default function RegisteredCompanyOrBusiness(props) {
                 labelClassName="company-form-group"
                 name="nigerianTaxId"
                 type="text"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 placeholder ="XX-XXXXX"
                 />
 
@@ -123,7 +123,7 @@ export default function RegisteredCompanyOrBusiness(props) {
                 label="Tax ID classification"
                 labelClassName="company-form-group"
                 name="taxIdClassification"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 >
                     <option value="">Select</option>
                     <option value="FIRS">FIRS</option>
@@ -131,29 +131,15 @@ export default function RegisteredCompanyOrBusiness(props) {
                 </Select>
                 
                 <span className="brand-name">
-                Each information provided here and here off is owned by you and as such, 
+                Each data or information provided here and here off is owned by you and as such, 
                 can be changed, modified or removed at any time under your settings. 
-                Kindly go through our privacy policy if you haven't to know how
-                we use your information or how you can manage your data. 
+                Kindly go through our privacy policy if you haven't, to know how
+                we use your data or how you can manage it. 
                 </span>
 
             </div>
         
-        <div className="getting-started-contact-buttons">
-
-            <div className="getting-started-contact-back-button">
-                <button onClick={()=> props.goBack()}>
-                    Back
-                </button>
-            </div>
-            
-            <div className="getting-started-contact-next-button">
-                <button type="submit" >
-                    Continue
-                </button>
-            </div>
-
-        </div>
+        { props.prevAndNextButtons }
         </Form>
         </Formik>
 

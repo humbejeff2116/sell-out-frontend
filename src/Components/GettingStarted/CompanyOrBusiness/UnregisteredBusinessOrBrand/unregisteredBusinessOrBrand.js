@@ -12,7 +12,7 @@ export default function UnregisteredBusinessOrBrand(props) {
 
     const { unregisteredBusinessData } = useGetStartedContext();
 
-     const africanCountries = Countries.getCountries({continent: "Africa"});
+    const africanCountries = Countries.getCountries({continent: "Africa"});
 
     const nigeraianStates = Countries.getCountryStates({ continent: "Africa", country: "Nigeria" });
 
@@ -47,13 +47,13 @@ export default function UnregisteredBusinessOrBrand(props) {
         onSubmit = { props.handleSubmit }
         >
         <Form id="contactForm">
-            <div className="getting-started-contact-form-inputs">
+            <div className="getting-started-application-template-form-inputs">
 
                 <Select
                 label="Country Founded In"
                 labelClassName="company-form-group"
                 name="countryFoundIn"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 >
                 <option value="">Select</option>
                 {
@@ -73,7 +73,7 @@ export default function UnregisteredBusinessOrBrand(props) {
                 label="State Founded In"
                 labelClassName="company-form-group"
                 name="stateFoundIn"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 >
                 <option value="">Select</option>
                 {
@@ -94,7 +94,7 @@ export default function UnregisteredBusinessOrBrand(props) {
                 labelClassName="company-form-group"
                 name="businessOrBrandName"
                 type="text"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 />
 
                 <TextInput
@@ -102,32 +102,19 @@ export default function UnregisteredBusinessOrBrand(props) {
                 labelClassName="company-form-group"
                 name="YearOfFoundation"
                 type="text"
-                errorClass="contact-form-error"
+                errorClass="getting-started-application-template-form-error"
                 />
 
             <span className="brand-name">
                 Each information provided here and here off is owned by you and as such, 
                 can be changed, modified or removed at any time under your settings. 
-                Kindly go through our privacy policy if you haven't to know how
-                we use your information or how you can manage your data. 
+                Kindly go through our privacy policy if you haven't, to know how
+                we use your data or how you can manage it. 
             </span>
 
             </div>
         
-            <div className="getting-started-contact-buttons">
-            <div className="getting-started-contact-back-button">
-                <button onClick={()=> props.goBack()}>
-                    Back
-                </button>
-            </div>
-            
-            <div className="getting-started-contact-next-button">
-                <button type="submit" >
-                    Continue
-                </button>
-            </div>
-
-            </div>
+            { props.prevAndNextButtons }
         </Form>
         </Formik>
     )
