@@ -51,6 +51,7 @@
 .view-product-image-wrapper{
     border: 2px solid green;
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     width:70%;
     display:flex;
@@ -62,6 +63,7 @@
     justify-content: space-between;
     /* border: 3px solid green; */
     border-bottom: 1px solid var(--prim-border-color);
+    
     min-height: 10vh;
 }
 .view-product-profile-image{
@@ -115,6 +117,7 @@
     width:50px;
     height: 60px;
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     display: flex;
     justify-content: center;
     cursor: pointer;
@@ -144,6 +147,7 @@
     width:27%;
     margin:0 auto;
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     color: var(--text-color);
     display: flex;

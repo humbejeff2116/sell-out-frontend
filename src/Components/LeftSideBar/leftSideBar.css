@@ -26,6 +26,7 @@
     border-right:1px solid var(--prim-border-color);
     border-bottom:1px solid var(--prim-border-color);
     border-left:1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     width:85%;
     margin-left: auto;
     /* margin-right: auto; */
