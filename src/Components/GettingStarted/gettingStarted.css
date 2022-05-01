@@ -102,9 +102,9 @@
     height:45px;
     width:60%;
     border:none;
-    background-color:var(--color);
+    background-color:var(--color-opac-8);
     color: var(--background-color);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     border-radius: 30px;
     font-weight: bold;
     transition:all 0.2s ease;
