@@ -1,13 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { Redirect, useLocation, useHistory } from 'react-router-dom';
-import { useGetStartedContext } from '../../../Context/context';
-import { ImWarning } from 'react-icons/im';
-//avatar SVG image gotten from https://svgrepo.com
-import image from '../../../Images/avatar2.png';
 import { FiCamera } from 'react-icons/fi';
-import './profileImage.css';
-import '../Contact/contact.css';
+import { ImWarning } from 'react-icons/im';
+import  { GettingStartedPrevAndNextButtons } from '../Template/template';
+import { useGetStartedContext } from '../../../Context/context';
+//image credit to https://svgrepo.com
+import image from '../../../Images/avatar2.png';
 
 export default function ProfileImage(props) {
 
@@ -115,7 +114,8 @@ export default function ProfileImage(props) {
 
     const imageError = ( <> <ImWarning/> { profileError } </> )
 
-    const gettingStartedInputClassName = showImageSelector ? "getting-started-input visible" : "getting-started-input"
+    const gettingStartedInputClassName = showImageSelector ? 
+    "getting-started-application-template-input visible" : "getting-started-application-template-input"
 
     const showImageIcon = (e) => {
 
@@ -131,26 +131,25 @@ export default function ProfileImage(props) {
     
     return (
 
-        <div className="getting-started-contact-container">
-            {
-                profileError && (
+        <div className="getting-started-application-template-container">
+        {
+            profileError && (
 
-                    <div className="getting-started-error">
-                    <span>{ profileError ? imageError : ''}</span>
-                    </div>
+                <div className="getting-started-error">
+                <span>{ profileError ? imageError : ''}</span>
+                </div>
 
-                )
-            }
-            
-        <div className="getting-started-contact-panel">
+            )
+        }  
+        <div className="getting-started-application-template-panel">
             {/* avatar */}   
-            <div className="getting-started-contact-avatar">
-                <div className="getting-started-contact-heading">
+            <div className="getting-started-application-template-avatar">
+                <div className="getting-started-application-template-heading">
                     <p>
                         Kindly upload a profile image 
                     </p>
                 </div>
-                <div className="getting-started-profile-image">
+                <div className="getting-started-application-template-profile-img">
                    
                     <div 
                     className = { gettingStartedInputClassName }
@@ -181,30 +180,23 @@ export default function ProfileImage(props) {
 
                 </div>  
             </div>
-            {/* body */}
-            <div className="getting-started-contact-body">
+            <div className="getting-started-application-template-body">
             <div className="getting-started-profile-image-info">
                 <span className="brand-name">
                     This image is usually tagged on all your products you put up for sale, 
                     to help potential buyers identify products which are being sold by you.
                 </span>
                 </div>
-                {/* buttons */}
-                <div className="getting-started-contact-buttons">
-                    <div className="getting-started-contact-back-button">
-                        <button onClick={ ()=> goBack() } >
-                        Back
-                        </button>
-                    </div>
-                    <div className= { `getting-started-contact-next-button` } >
-                    <button 
-                    onClick={ ()=> handleSubmit(profileImageFile) }
-                    // disabled = { disableButton }
-                    >
+                <GettingStartedPrevAndNextButtons 
+                goBack = { goBack }
+                customSubmitButton = { 
+
+                    <button type="button" onClick = { ()=> handleSubmit(profileImageFile) }>
                     Continue
                     </button>
-                    </div>
-                </div>
+                    
+                }
+                />
             </div>  
         </div>
         </div>
