@@ -51,7 +51,7 @@ footer{
 
 .landing-footer-bottom{
     border:1px solid var(--prim-border-color);
-    /* box-shadow:0 0 2px var(--box-shadow-color); */
+    box-shadow:0 0 1px var(--box-shadow-color);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
