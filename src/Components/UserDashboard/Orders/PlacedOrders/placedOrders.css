@@ -18,6 +18,7 @@
 }
 .placed-orders-search-container{
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     display: flex;
     justify-content: space-between;
@@ -68,6 +69,7 @@
 
 .placed-order-wrapper{
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     /* box-shadow:0 0 2px var(--box-shadow-color); */
     border-radius: 6px;
     padding: 2% 2% 2% 2%;
@@ -87,6 +89,7 @@
 
 .placed-order{
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     /* box-shadow:0 0 2px var(--box-shadow-color); */
     border-radius: 6px;
     width:46.7%; 
