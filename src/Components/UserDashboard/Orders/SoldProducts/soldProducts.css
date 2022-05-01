@@ -9,6 +9,7 @@
     flex-direction: column;
     padding: 2%;
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
 }
 

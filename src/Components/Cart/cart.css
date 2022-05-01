@@ -34,6 +34,7 @@
 }
 .cart-products-total-panel{
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     width:70%;
     margin:0 auto;
@@ -82,7 +83,7 @@
     display: flex;
     flex-direction: column;
     border: 1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     width:70%;
     margin: 2% auto 5% auto;
@@ -324,6 +325,7 @@
     position: sticky;
     top:11vh;
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     width:85%;
     min-height: 20vh;
@@ -403,7 +405,7 @@
     flex-direction: column;
     justify-content: center;
     border: 1px solid var(--prim-border-color);
-    box-shadow:0 0 2px var(--box-shadow-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     padding: 0% 2%;
     width: 50%;

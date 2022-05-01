@@ -157,6 +157,7 @@
     flex-direction: column;
     justify-content: center;
     border: 1px solid var(--prim-border-color);
+    box-shadow:0 0 1px var(--box-shadow-color);
     border-radius: 6px;
     padding: 2%;
     min-height: 45vh;
