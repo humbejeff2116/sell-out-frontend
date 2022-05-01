@@ -43,7 +43,7 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 30px;
     color: var(--text-color);
     transition: all 0.2s ease;
     font-size: 0.9rem;
@@ -54,15 +54,15 @@
     color: var(--background-color);
     border: none;
     border: none;
-    background-color: var(--color);
+    background-color: var(--color-opac-8);
 }
 
 .getting-started-company-tabs-child.active{
     color: var(--background-color);
-    font-weight: 550;
+    /* font-weight: 550; */
     border: none;
     border: none;
-    background-color: var(--color);
+    background-color: var(--color-opac-8);
 }
 
 /* .getting-started-company-form-inputs{
