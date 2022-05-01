@@ -1,11 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Redirect, useLocation, useHistory } from 'react-router-dom';
+import GettingStartedFormTemplate, { GettingStartedPrevAndNextButtons } from '../Template/template';
 import UnregisteredBusinessOrBrand from './UnregisteredBusinessOrBrand/unregisteredBusinessOrBrand';
 import RegisteredCompanyOrBusiness from './RegisteredCompanyOrBusiness/registeredCompanyOrBusiness';
 import { useGetStartedContext } from '../../../Context/context';
-import image from '../../../Images/avatar2.png';
-import '../Contact/contact.css';
 import './companyOrBusiness.css';
 
 export default function CompanyOrBusiness(props) {
@@ -101,7 +100,13 @@ export default function CompanyOrBusiness(props) {
 
             <UnregisteredBusinessOrBrand
             handleSubmit = { handleSubmit }
-            goBack = { goBack }
+            prevAndNextButtons = {
+
+                <GettingStartedPrevAndNextButtons
+                goBack = { goBack }
+                />
+
+            }
             />
 
         )
@@ -112,7 +117,13 @@ export default function CompanyOrBusiness(props) {
 
             <RegisteredCompanyOrBusiness
             handleSubmit = { handleSubmit }
-            goBack = { goBack }
+            prevAndNextButtons = {
+
+                <GettingStartedPrevAndNextButtons
+                goBack = { goBack }
+                />
+
+            }
             />
             
         )
@@ -131,44 +142,35 @@ export default function CompanyOrBusiness(props) {
 
     return (
        
-        <div className="getting-started-contact-container">
-        <div className="getting-started-contact-panel">
-            <div className="getting-started-company-heading-container">
-                <div className="getting-started-company-heading">
-                    <p>
-                        Kindly enter your company, business or brand details below 
-                    </p>
-                </div>
-                <div className="getting-started-contact-img">
-                    <img src={image} alt="avatar" />
-                </div> 
-            </div>
+        <GettingStartedFormTemplate
+        headingText = "Kindly enter your company, business or brand details below"
+        >
 
             <div className="getting-started-company-tabs-container">
 
-                <div className="getting-started-company-tabs">
+            <div className="getting-started-company-tabs">
 
-                    <div 
-                    className = { !showUnregBusinessForm ? "getting-started-company-tabs-child active" : "getting-started-company-tabs-child" } 
-                    onClick = { displayRegCompanyForm }>
-                        Registered Company/Registered Business
-                    </div>
-
-                    <div 
-                    className = { showUnregBusinessForm ? "getting-started-company-tabs-child active" : "getting-started-company-tabs-child" }
-                    onClick = { displayUnregBusinessForm } >
-                        Unregistered Business/Personal Brand
-                    </div>
-
+                <div 
+                className = { !showUnregBusinessForm ? "getting-started-company-tabs-child active" : "getting-started-company-tabs-child" } 
+                onClick = { displayRegCompanyForm }>
+                    Registered Company/Registered Business
                 </div>
-                
+
+                <div 
+                className = { showUnregBusinessForm ? "getting-started-company-tabs-child active" : "getting-started-company-tabs-child" }
+                onClick = { displayUnregBusinessForm } >
+                    Unregistered Business/Personal Brand
+                </div>
+
             </div>
 
-            <div className="getting-started-contact-body">                            
-                { CompanyRegForm }
             </div>
-        </div>
-        </div>
+
+            <div className="getting-started-application-template-body">                            
+            { CompanyRegForm }
+            </div>
+
+        </GettingStartedFormTemplate>
     )
 
 }
