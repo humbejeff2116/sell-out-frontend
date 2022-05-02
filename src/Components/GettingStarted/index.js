@@ -7,6 +7,7 @@ import ShippingAndOperations from './ShippingAndOperations/shippingAndOperations
 import Confirmation from './Confirmation/confirmation';
 import './Template/template.css';
 import './ProfileImage/profileImage.css';
+import './CompanyOrBusiness/companyOrBusiness.css';
 
 export {
     GettingStarted,
