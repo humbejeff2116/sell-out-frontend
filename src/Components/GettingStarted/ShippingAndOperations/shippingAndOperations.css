@@ -86,3 +86,19 @@
 .getting-started-operational-regions-form-group-child button:hover{
     background-color: #d9d9df;
 }
+
+.getting-started-operational-regions-amount-contr{
+    /* border: 1px solid  red; */
+    position: relative;
+}
+
+.getting-started-operational-regions-amount-wrppr{
+    /* border: 1px solid  var(--prim-border-color); */
+    box-shadow: 0 0 3px var(--box-shadow-color);
+    border-radius: 4px;
+    position: absolute;
+    margin-top: -1rem;
+    width: 100%;
+    padding: 2% 4%;
+    background-color: var(--background-color);
+}
