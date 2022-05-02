@@ -5,7 +5,7 @@ import GettingStartedFormTemplate, { GettingStartedPrevAndNextButtons } from '..
 import UnregisteredBusinessOrBrand from './UnregisteredBusinessOrBrand/unregisteredBusinessOrBrand';
 import RegisteredCompanyOrBusiness from './RegisteredCompanyOrBusiness/registeredCompanyOrBusiness';
 import { useGetStartedContext } from '../../../Context/context';
-import './companyOrBusiness.css';
+// HINT... css imported in index module
 
 export default function CompanyOrBusiness(props) {
 
