@@ -2,13 +2,15 @@
 import React, { useEffect } from 'react';
 import { GettingStartedTemplate } from '../../Components/Template/template';
 import { Route, Switch } from 'react-router-dom';
-import GettingStarted from '../../Components/GettingStarted/gettingStarted';
+import {
+    GettingStarted,
+    ProfileImage,
+    CompanyOrBusiness,
+    LegalAdress,
+    ShippingAndOperations,
+    Confirmation
+} from '../../Components/GettingStarted/index';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
-import ProfileImage from '../../Components/GettingStarted/ProfileImage/profileImage';
-import CompanyOrBusiness from '../../Components/GettingStarted/CompanyOrBusiness/companyOrBusiness';
-import LegalAdress from '../../Components/GettingStarted/LegalAddress/legalAddress';
-import ShippingAndOperations from '../../Components/GettingStarted/ShippingAndOperations/shippingAndOperations';
-import Confirmation from '../../Components/GettingStarted/Confirmation/confirmation'
 
 import { RequireGettingStartedAuthentication } from '../../Components/Authentication/requireViewStateAuthentication';
 
