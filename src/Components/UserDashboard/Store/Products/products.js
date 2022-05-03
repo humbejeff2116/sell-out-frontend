@@ -1,13 +1,13 @@
 
 import React, { useState } from 'react';
 import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
+import { BiTrash, BiPencil } from "react-icons/bi";
 import { DisplayedProduct } from '../../../Product/product';
 import { ModalBox } from '../../../ModalComments/modalComments';
-import { deleteProduct } from '../../../../Utils/http.services';
-import { BiTrash, BiEdit } from "react-icons/bi";
 import { FilterButtonComponent } from '../../../Index/filter';
 import Collections from '../Collections/collections';
 import useEditProductContext from '../../../../Context/EditProduct/context';
+import { deleteProduct } from '../../../../Utils/http.services';
 import './products.css';
 
 const mockProducts = [
@@ -18,11 +18,11 @@ const mockProducts = [
         userProfilePicture: "",
         productId: 232323,
         productName: "short black shirt",
-        productCategory: "furniture",
+        productCategory: "Furniture",
         productCountry: "Nigeria",
         productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
+        productUsage: "Never used",
+        productCurrency: "Naira",
         productPrice: "200",
         productContactNumber: "334039438493",
         productImages: [{}],
@@ -38,11 +38,11 @@ const mockProducts = [
         userProfilePicture: "",
         productId: 232323,
         productName: "short nikka",
-        productCategory: "furniture",
+        productCategory: "Furniture",
         productCountry: "Nigeria",
         productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
+        productUsage: "Never used",
+        productCurrency: "Naira",
         productPrice: "200",
         productContactNumber: "334039438493",
         productImages: [{}],
@@ -58,11 +58,11 @@ const mockProducts = [
         userProfilePicture: "",
         productId: 232323,
         productName: "short nikka",
-        productCategory: "furniture",
+        productCategory: "Furniture",
         productCountry: "Nigeria",
         productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
+        productUsage: "Never used",
+        productCurrency: "Naira",
         productPrice: "200",
         productContactNumber: "334039438493",
         productImages: [{}],
@@ -78,11 +78,11 @@ const mockProducts = [
         userProfilePicture: "",
         productId: 232323,
         productName: "short nikka",
-        productCategory: "furniture",
+        productCategory: "Furniture",
         productCountry: "Nigeria",
         productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
+        productUsage: "Never used",
+        productCurrency: "Naira",
         productPrice: "200",
         productContactNumber: "334039438493",
         productImages: [{}],
@@ -95,7 +95,7 @@ const mockProducts = [
 
 
 export default function StoreProducts(props) {
-   
+    
     const [deleteProductResponseMessage, setDeleteProductResponseMessage] = useState('');
 
     const [showAllProducts, setShowAllProducts] = useState(true);
@@ -344,9 +344,8 @@ export function StoreProduct({ setDeleteProductResponseMessage, setProductsSelec
                         <div className="store-product-edit-group">
                             <div 
                             className="store-product-edit-icon checkbox"
-                            onClick={ ()=> setProductsSelected(product) }
                             >
-                                <input type="checkbox"/>
+                                <input type="checkbox" onClick={ (e)=> setProductsSelected(product) }/>
                             </div>
                         </div>
 
@@ -355,7 +354,7 @@ export function StoreProduct({ setDeleteProductResponseMessage, setProductsSelec
                 }
                 <div className="store-product-edit-group">
                     <div className="store-product-edit-icon" onClick={ ()=> editProduct(product) }>
-                        <BiEdit title="Edit" className="store-icon" />
+                        <BiPencil title="Edit" className="store-icon" />
                     </div>
                 </div>
 
