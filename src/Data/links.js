@@ -1,41 +1,37 @@
 
-import {BiHome, BiUser, BiFolder, BiCart,BiCartAlt, BiLogOut,BiHelpCircle, BiTrash,BiDislike,BiLike,
-     BiEdit, BiStore, BiStar,BiMenu,BiMinus,BiPlus,
-    BiBell, BiCog, BiCoinStack, BiMap, BiSearch} from "react-icons/bi";
-import {RiBookOpenLine, RiContactsBookLine, RiShoppingCartLine,RiCloseFill,RiMenuFill,
-    RiUserSettingsFill,RiSettings4Fill,RiLogoutBoxFill, RiShoppingCart2Line, RiLogoutBoxLine, RiLogoutCircleLine} from "react-icons/ri";
-import { FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare, FaRegStar, FaRegThumbsUp, 
-    FaRegThumbsDown, FaRegMoneyBillAlt, FaRegHeart,FaHeart } from 'react-icons/fa';
-import { FiHelpCircle, FiLogOut, FiBell, FiBellOff, FiSettings } from 'react-icons/fi';
-import { GiHelp } from 'react-icons/gi';
-import { MdHelpOutline, MdHelp } from 'react-icons/md';
-import { GoKebabHorizontal, GoKebabVertical, GoDashboard } from 'react-icons/go';
-import { AiOutlineDashboard, AiFillHome, AiOutlineStar, AiFillStar, AiOutlineHeart,AiFillHeart} from 'react-icons/ai';
-import {CgShoppingCart, CgLogOut, CgArrowLeft} from 'react-icons/cg';
-import {GrMoney} from 'react-icons/gr';
-import {BsWrench} from 'react-icons/bs';
-import {IoMdTimer} from 'react-icons/io';
+import {
+    BiHome, BiUser, BiFolder, BiCart, BiCartAlt, BiLogOut, BiStore, BiCog, 
+    BiMessageDetail, BiCoinStack, BiBuildings, BiHelpCircle,
+} from "react-icons/bi";
 
+import {
+    RiBookOpenLine, RiContactsBookLine, RiMapPinAddLine, RiListSettingsLine
+} from "react-icons/ri";
 
+import { 
+    FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare 
+} from 'react-icons/fa';
 
+import {
+    FiTruck 
+} from 'react-icons/fi';
 
+import { 
+    MdLaunch
+} from 'react-icons/md';
 
+import { 
+    GoDashboard 
+} from 'react-icons/go';
 
+import { 
+    CgProfile
+} from 'react-icons/cg';
 
+import {
+    IoMdTimer
+} from 'react-icons/io';
 
-export function setUnicode(unicode) {
-    let dummy;
-    let decoded;
-    if(!unicode){
-        return decoded ="";
-    }
-    dummy = document.createElement('textarea');
-    dummy.innerHTML = unicode;
-    decoded = dummy.value;
-    return decoded;
-}
-export const open = setUnicode('&#9776;')
-export const close = setUnicode('&times;')
 const LinksData = {
     landingMainLinks : [
         { name: "Home", href: "/", icon: <BiHome className="nav-icon" /> },
@@ -44,16 +40,25 @@ const LinksData = {
         { name: "Support", href: "/support", icon: <BiFolder className="nav-icon"/> },
         { name: "Contact", href: "/contact", icon: <BiCart className="nav-icon"/> }
     ],
+
     mainLinks : [
         { name: "Home", href: "/home", icon: <BiHome className="nav-icon" /> },
         { name: "Store", href: "/home/dashboard/store/products", icon: <BiStore className="nav-icon"/> },
         { name: "Orders", href: "/home/dashboard/orders/placed-orders", icon: <IoMdTimer className="nav-icon"/> },
         { name: "Cart", href: "/home/cart", icon: <BiCartAlt className="nav-icon"/> },
     ],
+
     indexSideNavLinks : [
-        
-        { name: "Home", href: "/home", icon: <BiHome className="index-side-nav-icon" /> },
-        { name: "Dashboard", href: "/home/dashboard", icon: <GoDashboard  className="index-side-nav-icon"/> },
+        { 
+            name: "Home", 
+            href: "/home", 
+            icon: <BiHome className="index-side-nav-icon" /> 
+        },
+        { 
+            name: "Metrics", 
+            href: "/home/dashboard", 
+            icon: <GoDashboard  className="index-side-nav-icon"/> 
+        },
         {
             accordion: true,
             name:"Store", 
@@ -65,35 +70,48 @@ const LinksData = {
                 {href:"/home/dashboard/store/settings", name:"Store settings", icon:""},
             ]
         },
-        // { name: "Orders", href: "/home/dashboard/orders/", icon: <IoMdTimer className="index-side-nav-icon"/> },
         {
             accordion: true,
             name:"Orders", 
             icon: <IoMdTimer className="index-side-nav-icon"/>,
             links: [
-                {href:"/home/dashboard/orders/placed-orders", name:"Placed Orders", icon:""},
-                {href:"/home/dashboard/orders/sold-products", name:"Sold Products", icon:""},
-                {href:"/home/dashboard/orders/delivered-products", name:"Delivered products", icon:""},
+                {href:"/home/dashboard/orders/placed-orders", name:"Pre Order", icon:""},
+                {href:"/home/dashboard/orders/sold-products", name:"Deliveries", icon:""},
             ]
         },
         {
             accordion: true,
             name:"Payments", 
-            icon: <BiCoinStack className="index-side-nav-icon"/> ,
+            icon: <BiCoinStack className="index-side-nav-icon"/>,
             links: [
                 {href:"/home/dashboard/payments/made-payments", name:"Made payments", icon:""},
                 {href:"/home/dashboard/payments/recieved-payments", name:"Recieved Payments", icon:""},
             ]
         },
-        { name: "Cart", href: "/home/cart", icon: <BiCartAlt className="index-side-nav-icon"/>},
+        { 
+            name: "Messages", 
+            href: "/home/messages", 
+            icon: <BiMessageDetail className="index-side-nav-icon"/>
+        },
+        { 
+            name: "Cart", 
+            href: "/home/cart", 
+            icon: <BiCartAlt className="index-side-nav-icon"/>
+        },
     ],
+
     indexSideNavFooterLinks : [
         { name: "Support", href: "/support", icon: <BiHelpCircle className="index-side-nav-icon" /> },
         { name: "Settings", href: "/home/settings", icon: <BiCog className="index-side-nav-icon"/> },
         { name: "Logout", href: "/home/logout", icon: <BiLogOut className="index-side-nav-icon"/> }
     ],
+
     dashboardSideNavLinks : [
-        { name: "Dashboard", href: "/home/dashboard", icon: <BiHome className="index-side-nav-icon" /> },
+        { 
+            name: "Dashboard", 
+            href: "/home/dashboard", 
+            icon: <BiHome className="index-side-nav-icon" /> 
+        },
         {
             accordion: true,
             name: "Store",
@@ -105,7 +123,6 @@ const LinksData = {
                 {href:"/home/dashboard/store/settings", name:"Settings", icon:""},
             ]
         },
-
         {
             accordion: true,
             name: "Orders",
@@ -116,7 +133,6 @@ const LinksData = {
                 {href:"/home/dashboard/orders/delivered-products", name:"Delivered Products", icon:""},
             ]
         },
-
         {
             accordion: true,
             name: "Payments",
@@ -128,6 +144,7 @@ const LinksData = {
         },
 
     ],
+
     settingsSideNavLinks : [
         { name: "Settings", href: "/home/settings", icon: <BiHome className="index-side-nav-icon" /> },
         { name: "Connections", href: "/account", icon: <BiUser className="index-side-nav-icon"/> },
@@ -136,24 +153,24 @@ const LinksData = {
         { name: "Blog", href: "/support", icon: <BiFolder className="index-side-nav-icon"/> },
         { name: "Service", href: "/support", icon: <RiContactsBookLine className="index-side-nav-icon"/>},
     ],
+
     settingsSideNavFooterLinks : [
         { name: "Support", href: "/support", icon: <BiHome className="index-side-nav-icon" /> },
         { name: "Settings", href: "/home/settings", icon: <BiUser className="index-side-nav-icon"/> },
         { name: "Logout", href: "/home/logout", icon: <RiBookOpenLine className="index-side-nav-icon"/> }
     ],
-    gettingStartedSideNavLinks : [
-        { name: "Getting Started", href: "/getting-started", icon: <BiHome className="index-side-nav-icon" /> },
-        { name: "Company/Business", href: "/getting-started/application/company-or-business", icon: <BiUser className="index-side-nav-icon"/> },
-        { name: "Legal Address", href: "/getting-started/application/legal-address", icon: <BiUser className="index-side-nav-icon"/> },
-        { name: "Shipping/Operations", href: "/getting-started/application/shipping-and-operations", icon: <BiUser className="index-side-nav-icon"/> },
-        { name: "Profile Image", href: "/getting-started/application/profile-image", icon: <BiUser className="index-side-nav-icon"/> },
-        { name: "Confirmation", href: "/getting-started/application/confirmation", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
 
-        // { name: "Contact details", href: "/getting-started/contact", icon: <BiUser className="index-side-nav-icon"/> },
-        // { name: "Location", href: "/getting-started/location", icon: <RiBookOpenLine className="index-side-nav-icon"/> },
-        
+    gettingStartedSideNavLinks : [
+        { name: "Getting Started", href: "/getting-started", icon: <MdLaunch className="index-side-nav-icon" /> },
+        { name: "Company/Business", href: "/getting-started/application/company-or-business", icon: <BiBuildings className="index-side-nav-icon"/> },
+        { name: "Legal Address", href: "/getting-started/application/legal-address", icon: <RiMapPinAddLine className="index-side-nav-icon"/> },
+        { name: "Operations", href: "/getting-started/application/shipping-and-operations", icon: <FiTruck className="index-side-nav-icon"/> },
+        { name: "Profile Image", href: "/getting-started/application/profile-image", icon: <CgProfile className="index-side-nav-icon"/> },
+        { name: "Confirmation", href: "/getting-started/application/confirmation", icon: <RiListSettingsLine className="index-side-nav-icon"/> },
     ],
+
     footerMainLinks: [],
+
     footerSocialLinks:[
         { name:"Li",title:"Linkedin", href:"linkedin.com/jeffrey123", icon:< FaLinkedinIn className="landing-footer-social-nav-icon"/> },
         { name:"Gi",title:"Github", href:"linkedin.com/jeffrey123", icon:< FaGithubSquare className="landing-footer-social-nav-icon"/> },
@@ -187,9 +204,11 @@ Links.prototype.data = LinksData;
 Links.prototype.getLandingMainLinks = function() {
     return this.data.landingMainLinks;
 }
+
 Links.prototype.getMainLinks = function() {
     return this.data.mainLinks;
 }
+
 Links.prototype.getIndexSidenavLinks = function() {
     return this.data.indexSideNavLinks;
 }
@@ -197,24 +216,31 @@ Links.prototype.getIndexSidenavLinks = function() {
 Links.prototype.getIndexSideNavFooterLinks = function() {
     return this.data.indexSideNavFooterLinks;
 }
+
 Links.prototype.getDashboardSideNavLinks = function() {
     return this.data.dashboardSideNavLinks;
 }
+
 Links.prototype.getSettingsSideNavLinks = function() {
     return this.data.settingsSideNavLinks;
 }
+
 Links.prototype.getSettingsSideNavFooterLinks = function() {
     return this.data.settingsSideNavFooterLinks;
 }
+
 Links.prototype.getGettingStartedSideNavLinks = function() {
     return this.data.gettingStartedSideNavLinks;
 }
+
 Links.prototype.getFooterMainLinks = function() {
     return this.data.footerMainLinks;
 }
+
 Links.prototype.getFooterSocialLinks = function() {
     return this.data.footerSocialLinks;
 }
+
 Links.prototype.getClothingLinks = function() {
     return this.data.clothingLinks;
 }
