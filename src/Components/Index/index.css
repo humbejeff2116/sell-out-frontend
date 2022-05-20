@@ -420,7 +420,7 @@
     width:100%;
     border:1px solid var(--prim-border-color);
     /* box-shadow:  0 0 1px var(--box-shadow-color); */
-    height: 18rem;
+    height: 21rem;
     overflow-y: auto;
     background-color: var(--background-color);
     margin-top: 1%;
