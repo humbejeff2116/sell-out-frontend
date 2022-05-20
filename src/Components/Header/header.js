@@ -1,32 +1,31 @@
 
-
-
-
-import React from 'react';
-import './header.css';
+import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import Links, { open, close } from '../../Data/links';
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiMenu } from "react-icons/bi";
 import { NotificationAlert } from '../NotificationsDropdown/notifications';
 import useCartContext from '../../Context/Cart/cartContext';
+import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
 import './header.css';
 
 
+export default function Header({ dontShowMainNav, ...props }) {
 
+    const mainLinks = useRef(Links.getMainLinks());
 
-
-
-
-export default function Header(props) {
-    const mainLinks = Links.getMainLinks();
     return (
         <header className="header-container" >
             <section className="header-logo">
-                <div className="header-logo-img"><img src={fling} alt="fling" /></div>
+                <div className="header-logo-img"><img src={ fling } alt="fling"/></div>
             </section>
             <section className="header-main-navigation">
-               { (props.dontShowMainNav) ? '' : <MainNavigation mainLinks={mainLinks}/> }
+            { 
+                (dontShowMainNav) ? '' : ( 
+
+                    <MainNavigation mainLinks={ mainLinks.current }/>
+
+                ) 
+            }
             </section>
             <section className="header-search-bar">
                 <SearchBar/>
@@ -34,93 +33,109 @@ export default function Header(props) {
         </header>
     )
 }
+
 function SearchBar(props) {
     return (
         <div className="header-search-bar-form-panel">
             <form>
-                <input type="search" placeholder="search for products" /><button>Search</button>
+                <input type="search" placeholder="search for products" />
+                <button>
+                   <BiSearch className="nav-icon"/>
+                </button>
             </form>
             <MobileNavIcon/>
         </div>
     )
 }
+
  function MobileNavIcon(props) {
     return (
         <div className="header-mobile-nav-container">
-           {/* <div className="header-mobile-nav-search-icon">
-               {open}
-           </div> */}
-           <div className="header-mobile-nav-icon">
-           {open}
-           </div>
+            <div className="header-mobile-nav-icon">
+                <BiMenu className="nav-icon"/>
+            </div>
         </div>
     )
 }
-function MainNavigation(props) {
-   
+
+function MainNavigation({ mainLinks, ...props }) { 
     return (
         <nav>
         {
-            props.mainLinks.map((link, i) =>
-                <NavLinks key={i} {...link} />
+            mainLinks?.map((link, i) =>
+
+                <NavLinks key = { i } { ...link } />
+
             )
         }
         </nav>
     )
 }
 
-function NavLinks(props) {
+function NavLinks({ name, href, icon, ...props }) {
+
     const {  cartTotalNumberOfProducts } = useCartContext();
+
     let Component;
-    if (props.name === "Cart") {
+
+    if (name.toLowerCase() === "cart") {
+
         Component = (
             <div className="main-nav-item" >
-            {
-                cartTotalNumberOfProducts > 0  ?
-                ( <NotificationAlert className="header-notifications-icon-alert"/> ) : ''
-            }
-            <NavLink
-            exact 
-            to={props.href} 
-            activeClassName="main-nav-link-active"
-            className="main-nav-link" 
-            title={props.name} 
-            >
-                <i>{props.icon}</i> 
-            </NavLink> 
+                {
+                    cartTotalNumberOfProducts > 0  && ( 
+
+                        <NotificationAlert className="header-notifications-icon-alert"/> 
+
+                    )
+                }
+                <NavLink
+                exact 
+                to={ href } 
+                activeClassName="main-nav-link-active"
+                className="main-nav-link" 
+                title={ name } 
+                >
+                    <i>{ icon }</i> 
+                </NavLink> 
             </div>
         )
-    } else if (props.name === "Orders") {
-        // TODO... write order notification alert
+
+    } else if (name.toLowerCase() === "orders") {
+
+        // TODO... implement new order alert functionality
         Component = (
             <div className="main-nav-item" >
-            <NavLink
-            exact 
-            to={props.href} 
-            activeClassName="main-nav-link-active"
-            className="main-nav-link" 
-            title={props.name} 
-            >
-                <i>{props.icon}</i> 
-            </NavLink> 
+                <NavLink
+                exact 
+                to={ href } 
+                activeClassName="main-nav-link-active"
+                className="main-nav-link" 
+                title={ name } 
+                >
+                    <i>{ icon }</i> 
+                </NavLink> 
             </div>
         )
 
     } else {
+
         Component = (
             <div className="main-nav-item" >
-            <NavLink
-            exact 
-            to={props.href} 
-            activeClassName="main-nav-link-active"
-            className="main-nav-link" 
-            title={props.name} 
-            >
-                <i>{props.icon}</i> 
-            </NavLink> 
+                <NavLink
+                exact 
+                to={ href } 
+                activeClassName="main-nav-link-active"
+                className="main-nav-link" 
+                title={ name } 
+                >
+                    <i>{ icon }</i> 
+                </NavLink> 
             </div>
         )
+
     }
+    
     return (
         <>
         { Component }
