@@ -16,7 +16,7 @@ import './cart.css';
 
 export default function Cart() {
 
-    const { cartItems } = useCartContext();
+    const { cartItems, cartState } = useCartContext();
 
     let CartProductsComponent;
     
@@ -24,7 +24,7 @@ export default function Cart() {
 
         CartProductsComponent = (
 
-            <CartProductsWrapper cartData = { cartItems } />
+            <CartProductsWrapper cartData = { cartState } />
 
         )
 
@@ -146,7 +146,7 @@ function CartProductsWrapper({ cartData }) {
 
     const placeOrder = () => {
 
-        // TODO... emit order to server here and return placedOrderSuccess to true;
+        // TODO... emit order to server here;
         setPlacingOrder(true)
 
     }
@@ -207,23 +207,31 @@ function CartProductsWrapper({ cartData }) {
             }
             <div className="cart-products-container">
                 <div className="cart-header">
-                <h3>Cart</h3>
+                    <h3>Cart</h3>
                 </div>
                 <div className="cart-products-panel">
                 { 
 
-                    cartData.map((cartItem, i) =>
+                    cartData.map(({ products, ...rest }) => (
 
-                        <CartProduct key = { i } product = { cartItem } />
+                        products.map((product, i) => 
 
-                    )
+                            <CartProduct 
+                            key={ i } 
+                            product={ product }
+                            { ...rest }
+                            />
+
+                        )
+
+                    ))
 
                 }
                 </div>
                 <div className="cart-products-total-container">
                     <div className="cart-products-total-panel">
                         <div className="cart-products-total-amount">
-                        <span className="cart-products-total-amount-span-bold">Total amount: </span> <span> { `£${totalSum}` }</span>
+                            <span className="cart-products-total-amount-span-bold">Total amount: </span> <span> { `£${totalSum}` }</span>
                         </div>
                         <div className="cart-products-total-checkout">
                             <button onClick = { openCartModal }>Checkout</button>
@@ -242,10 +250,10 @@ function CartProductsWrapper({ cartData }) {
 
 function CheckoutModalChild({ handleOfflinePayment, handleOnlinePayment }) {
     return (
+
         <div className="cart-checkout-modal-body-container">
             <div className="cart-checkout-modal-content">
                 <p>
-                    {/* Kindly select how you would like to handle transaction below */}
                     How would you like to handle your payment transaction?
                 </p>
             </div>
@@ -254,18 +262,18 @@ function CheckoutModalChild({ handleOfflinePayment, handleOnlinePayment }) {
                     <button onClick = { handleOfflinePayment }>Offline</button>
                 </div>
                 <div className="cart-checkout-modal-button">
-                   
-                        <Link to="/home/checkout"> 
+                    <Link to="/home/checkout"> 
                         <button onClick = { handleOnlinePayment }>
                             Online
                         </button>
-                        </Link>
-                    
+                    </Link>  
                 </div>
             </div>
         </div>
+
     )
 }
+
 function CheckoutOfflinePaymentMethod({ goBack, confirmOfflinePayment }) {
 
     return(
@@ -369,10 +377,9 @@ function PlacedOrderSuccess(props) {
 
 }
 
-function CartProduct({ product }) {
-    // alert(JSON.stringify(product, null, 2))
+function CartProduct({ product, ...props }) {
 
-    const [quantity, setQuantity] = useState(""); 
+    // const [quantity, setQuantity] = useState(""); 
 
     const { user } = useAuth();
 
@@ -425,7 +432,7 @@ function CartProduct({ product }) {
         }
 
     }
-
+// TODO... move code to library to avoid duplication
     const calculateProductSubTotal = ({ percentageOff, productPrice, productQty }) => {
 
         if (percentageOff) {
@@ -463,7 +470,7 @@ function CartProduct({ product }) {
                     [product.productImages[0]].map((image, i) =>
 
                         <div key = { i } className="cart-product-image-group">
-                        <img src = { image.src || image2 } alt="product" />
+                            <img src = { image.src || image2 } alt="product" />
                         </div>
 
                     )
@@ -494,7 +501,7 @@ function CartProduct({ product }) {
                         <div className="cart-product-button-top">
                             <div className="cart-product-add-button">
                                 <div className="cart-product-add-button-icon">
-                                <button onClick={ () =>reduceProductQuantity(cartState, product.sellerEmail, product.productId, user) }>-</button>
+                                <button onClick={ () =>reduceProductQuantity(cartState, props.sellerEmail, product.productId, user) }>-</button>
                                 </div>
                             </div>
                         
@@ -506,13 +513,13 @@ function CartProduct({ product }) {
 
                             <div className="cart-product-reduce-button">
                                 <div className="cart-product-add-button-icon">
-                                <button onClick = { () => addProductQuantity(cartState, product.sellerEmail, product.productId, user) }>+</button>
+                                <button onClick = { () => addProductQuantity(cartState, props.sellerEmail, product.productId, user) }>+</button>
                                 </div>
                             </div>
                         </div>
                         <div className="cart-product-button-bottom">
                             <div className="cart-product-remove-button">
-                                <button onClick={ () => removeProduct(cartState, cartItems, product.sellerEmail, product.productId, user) }>Remove</button>
+                                <button onClick={ () => removeProduct(cartState, cartItems, props.sellerEmail, product.productId, user) }>Remove</button>
                             </div>
                         </div>
                     </div>
@@ -533,15 +540,12 @@ function CartCheckoutComp({ onClick }) {
 
         <div className="cart-checkout-panel">
             <div className="cart-checkout-info">
-
                 <div className="cart-checkout-span-group">
-                <span className="cart-checkout-span-left">Total Price: <span className="cart-checkout-span-right">{ `£${totalSum}` }</span></span>
+                    <span className="cart-checkout-span-left">Total Amount: <span className="cart-checkout-span-right">{ `£${totalSum}` }</span></span>
                 </div>
-
                 <div  className="cart-checkout-span-group">
-                <span className="cart-checkout-span-left">Item('s) In Cart: <span className="cart-checkout-span-right">{ cartTotalNumberOfProducts }</span></span>
+                    <span className="cart-checkout-span-left">Item('s) In Cart: <span className="cart-checkout-span-right">{ cartTotalNumberOfProducts }</span></span>
                 </div>
-
                 <div className="cart-checkout-button-wrapper">
                     <div className="cart-checkout-button">
                         <button onClick = { onClick }>
@@ -549,7 +553,6 @@ function CartCheckoutComp({ onClick }) {
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -565,16 +568,13 @@ function EmptyCart(props) {
             <div className="cart-header">
                 <h3>Cart</h3>
             </div>
-
             <div className="empty-cart-body">
                 <div className="empty-cart-content">
                     <p> It seems you have no items in your cart at the moment.</p>
-                    {/* <p> Products you wish to buy show up here only after you have added them.</p> */}
                 </div>
-
                 <div className="empty-cart-button">
                     <div className="empty-cart-button-wrapper">
-                    <Link to="/home"><button> Let's Go Shopping</button></Link>
+                        <Link to="/home"><button> Let's Go Shopping</button></Link>
                     </div>
                 </div>
             </div>
