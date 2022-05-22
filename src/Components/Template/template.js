@@ -11,6 +11,7 @@ import IndexFooter from '../IndexFooter/indexFooter';
 import Notifications from '../NotificationsDropdown/notifications';
 import Connections from '../Connections/connections';
 import GettingStartedSideNav from '../GettingStartedSideNav/gettingStartedSideNav';
+import RequireAuthentication from '../Authentication/requireAuthentication';
 import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
 import './template.css';
@@ -20,51 +21,78 @@ const settingsSideNavFooterLinks = Links.getSettingsSideNavFooterLinks();
 const gettingStartedSideNavLinks = Links.getGettingStartedSideNavLinks();
 
 
-export  function IndexPageTemplate(props) {
+export  function IndexPageTemplateComp({ leftSideBarTop, leftSideBarCenter, leftSideBarBottom, children, ...props }) {
+
     return (
         <>
-        <Header/>
-        <div className="inside-login-template-panel">
-        <LeftSideBar 
-        fixed={true}
-        top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
-        center={ props.leftSideBarCenter ? props.leftSideBarCenter : <IndexSideNav/>} 
-        bottom={props.leftSideBarBottom ? props.leftSideBarBottom : <IndexFooter />} 
-        />
-        <IndexPageTemplateChildren children={props.children} />
-        <RightSideBar 
-        topComponent={props.rightSideBarTop ? props.rightSideBarTop : <Notifications/>} 
-        bottomComponent={props.rightSideBarBottom ? props.rightSideBarBottom  : <Connections/>} 
-        />
-        </div>
+            <Header/>
+            <div className="inside-login-template-panel">
+                <LeftSideBar 
+                fixed={ true }
+                top={ leftSideBarTop ? leftSideBarTop : <ProfileAvatar/> } 
+                center={ leftSideBarCenter ? leftSideBarCenter : <IndexSideNav/> } 
+                bottom={ leftSideBarBottom ? leftSideBarBottom : <IndexFooter /> } 
+                />
+                { children }
+            </div>
         </>
     )
 }
 
+const IndexPageTemplate = RequireAuthentication(IndexPageTemplateComp);
 
-export default function Template(props) {
+export{ IndexPageTemplate };
+
+export function IndexTemplateChildrenWithRightSideBar({ children, rightSideBarTop, rightSideBarBottom, ...props }) {
+    return (
+        <>
+            <IndexPageTemplateChildren children={ children } />
+            <RightSideBar 
+            topComponent={ rightSideBarTop ?  rightSideBarTop : <Notifications/> } 
+            bottomComponent={ rightSideBarBottom ?  rightSideBarBottom  : <Connections/> } 
+            />
+        </>
+    
+    )
+}
+
+export function IndexTemplateChildrenWithFooterAndNoRightSideBar({ children, ...props }) {
+    return (
+
+        <div className="index-template-children-with-footer-panel">
+            <SettingsTemplateChildren children={ children } />
+            <LandingFooter footerClassName={'gettingStarted-footer'} />
+        </div>
+
+    )
+}
+
+
+export default function Template({ children, ...props }) {
     return (
         <>
         <Header/>
         <div className="template-container">
-            {props.children}
+            { children }
         </div>
         <Footer/>
         </>
     )
 }
 
-export function LoginAndSignupTemplate(props) {
+export function LoginAndSignupTemplate({ children, ...props }) {
     return (
        
         <div className="login-template-container">
 
             <div className="login-template-left">
-                <section className="login-template-logo"><img src={fling} alt="fling" /></section>
+                <section className="login-template-logo">
+                    <img src={ fling } alt="fling" />
+                </section>
             </div>
 
             <div className="login-template-center">
-                {props.children}
+                { children }
             </div>
 
             <div className="login-template-right">
@@ -75,64 +103,64 @@ export function LoginAndSignupTemplate(props) {
 }
 
 
-function IndexPageTemplateChildren(props) {
+function IndexPageTemplateChildren({ children, ...props }) {
     return (
         <div className="inside-login-template-container">
             <div className="inside-login-template-center">
-                {props.children}
+                { children }
             </div>
         </div>
     )
 }
 
-export function SettingsPageTemplate(props) {
+export function SettingsPageTemplate({ leftSideBarTop, leftSideBarCenter, leftSideBarBottom, children, ...props }) {
     return (
         <>
         <Header/>
         <LeftSideBar 
-        fixed={true}
-        top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
-        center={ props.leftSideBarCenter ? props.leftSideBarCenter : <IndexSideNav links={settingsSideNavLinks}/>} 
-        bottom={props.leftSideBarBottom ? props.leftSideBarBottom : <IndexFooter links ={settingsSideNavFooterLinks}/>} 
+        fixed={ true }
+        top={ leftSideBarTop ?  leftSideBarTop : <ProfileAvatar/> } 
+        center={  leftSideBarCenter ?  leftSideBarCenter : <IndexSideNav links={settingsSideNavLinks}/> } 
+        bottom={ leftSideBarBottom ?  leftSideBarBottom : <IndexFooter links ={settingsSideNavFooterLinks}/> } 
         />
-        <SettingsTemplateChildren children={props.children} />
+        <SettingsTemplateChildren children={ children } />
         <LandingFooter footerClassName={'gettingStarted-footer'} />
         </>
     )
 }
 
-function SettingsTemplateChildren(props) {
+function SettingsTemplateChildren({ children, ...props }) {
     return (
         <div className="settings-template-container">
             <div className="settings-template-center">
-                {props.children}
+                { children }
             </div>
             
         </div>
     )
 }
 
-export function GettingStartedTemplate(props) {
+export function GettingStartedTemplate({ leftSideBarTop, leftSideBarCenter, leftSideBarBottom, children, ...props }) {
     return (
         <>
         <Header dontShowMainNav = {true } />
         <LeftSideBar 
         fixed={true}
         className = "getting-started-left-side-bar-container"
-        top={props.leftSideBarTop ? props.leftSideBarTop : <ProfileAvatar/>} 
-        center={props.leftSideBarCenter  ? props.leftSideBarCenter : <GettingStartedSideNav links ={gettingStartedSideNavLinks}/>} 
-        bottom={props.leftSideBarBottom ? props.leftSideBarCenter : <IndexFooter/>} 
+        top={ leftSideBarTop ?  leftSideBarTop : <ProfileAvatar/> } 
+        center={ leftSideBarCenter  ?  leftSideBarCenter : <GettingStartedSideNav links ={gettingStartedSideNavLinks}/> } 
+        bottom={ leftSideBarBottom ?  leftSideBarBottom : <IndexFooter/> } 
         />
-        <GettingStartedTemplateChildren children={props.children} />
+        <GettingStartedTemplateChildren children={ children } />
         <LandingFooter footerClassName={'gettingStarted-footer'} />
         </>
     )
 }
 
-function GettingStartedTemplateChildren(props) {
+function GettingStartedTemplateChildren({ children,  ...props }) {
     return (
         <div className="getting-started-template-container">
-            {props.children}
+            { children }
         </div>
     )
 }
