@@ -1,50 +1,93 @@
 
-
-
-
 import React, { Suspense } from 'react';
-import {Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-export default function Router(props) {
+export default function Router({ routes, ...props }) {
     return (
+
         <Switch>
-            {
-                props.routes && props.routes.map((route, i) =>
-                <Routes key={i} {...route} />
-                )
-            }
+        {
+            routes?.map((route, i) =>
+                <RouteComponent key={i} {...route}/>
+            )
+        }
         </Switch>
+
     )
 }
 
-function Routes({path, Component, suspense, SuspenseComponent, exact}) {
+export function RouteComponent({ path, exact, suspense, SuspenseComponent, Component, ...props }) {
+
+    if (suspense) {
+
+        if (exact) {
+    
+            return (
+                <Route exact path={path}>
+                    <Suspense fallback={ <SuspenseComponent/> }>
+                        <Component { ...props }/>
+                    </Suspense>
+                </Route>
+            )
+    
+        } else if (!exact) {
+    
+             return (
+                <Route path={path}>
+                    <Suspense fallback={ <SuspenseComponent/> }>
+                        <Component { ...props }/>
+                    </Suspense>
+                </Route>
+            )
+    
+        } 
+    
+    } else if (!suspense) {
+    
+        if (exact) {
+    
+            return (
+                <Route exact path={ path }>
+                    <Component { ...props }/>
+                </Route>
+            )
+    
+        } else {
+    
+            return (
+                <Route path={ path }>
+                    <Component { ...props }/>
+                </Route>
+           )
+    
+        } 
+        
+    }
+    
+}
+
+export function RouterWithTemplate({ template, typeOfTemplate, routes, ...props }) {
+
+    const Template = template;
+
     return (
         <>
         {
-            suspense && exact ? (
-                <Route exact path={path}>
-                <Suspense fallback={<SuspenseComponent/>}>
-                    <Component/>
-                </Suspense>
-                </Route>
-            ) :
-            suspense && !exact ?  (
-                <Route path={path}>
-                <Suspense fallback={<SuspenseComponent/>}>
-                    <Component/>
-                </Suspense>
-                </Route>
-            ) : 
-            !suspense && exact ? (
-                <Route exact path={path}>
-                    <Component/>
-                </Route>
-            ) : (
-                <Route path={path}>
-                    <Component/>
-                </Route>
-            )
+            <Template>
+                <Switch>
+                {
+                    routes?.map((route, i) => 
+
+                        <RouteComponent 
+                        key={i} 
+                        { ...route }
+                        />
+
+                    )
+                }
+                </Switch>
+            </Template>
         }
         </>
-    )
+    ) 
 }
