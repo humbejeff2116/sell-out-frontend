@@ -1,5 +1,5 @@
 
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import socket from '../../Socket/socket';
 import Header from '../Header/header';
 import LandingFooter from '../Footer/landingFooter';
@@ -9,11 +9,64 @@ import LoginModal from '../../LoginModal/loginModal';
 
 export function NotFoundTemplate({ notFoundComponent, ...props }) {
 
+    const [showLoginDropdown, setShowLoginDropdown] = useState(false);
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(()=> {
+
+        let mounted = true;
+
+        socket.on('unRegisteredUser', function(response) {
+
+            if (mounted) {
+
+                setErrorMessage(response.message)
+
+            }
+
+        })
+
+
+        return ()=> {
+
+            mounted = false
+
+        }
+
+    }, [])
+   
+    const closeLoginModal = () => {
+
+        setShowLoginDropdown(false); 
+
+    }
+
     return (
 
         <section className="landing-container">
             <div className="landing-top" >
-                <Header/>
+                <Header showLogin = { setShowLoginDropdown }/>
+                {
+
+                    showLoginDropdown && (
+
+                        <LoginModal show = { showLoginDropdown } handleClose = { closeLoginModal }/>
+
+                    )
+
+                }
+                {
+                    errorMessage && (
+
+                        <ErrorModal 
+                        errorMessage={ errorMessage }
+                        errorContainerClassName= "landing-error-container"
+                        panelClassName= "landing-error-modal"
+                        />
+
+                    )
+                }
                { notFoundComponent }
             </div>
             <div className="landing-footer" >
@@ -47,7 +100,7 @@ export function LandingSuspenseTemplate({ children, ...props }) {
 
 export function LandingTemplate({ landingTopChild, landingCenterChild, children, ...props }) {
 
-    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showLoginDropdown, setShowLoginDropdown] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -76,20 +129,20 @@ export function LandingTemplate({ landingTopChild, landingCenterChild, children,
    
     const closeLoginModal = () => {
 
-        setShowLoginModal(false); 
+        setShowLoginDropdown(false); 
 
     }
 
     return (
 
         <section className="landing-container">   
-            <div className="landing-top" >    
-            <Header/>
+            <div className="landing-top">    
+            <Header showLogin = { setShowLoginDropdown }/>
             {
 
-                showLoginModal && (
+                showLoginDropdown && (
 
-                    <LoginModal show = { showLoginModal } handleClose = { closeLoginModal }/>
+                    <LoginModal show = { showLoginDropdown } handleClose = { closeLoginModal }/>
 
                 )
 
@@ -98,9 +151,9 @@ export function LandingTemplate({ landingTopChild, landingCenterChild, children,
                 errorMessage && (
 
                     <ErrorModal 
-                    errorMessage={errorMessage}
-                    errorContainerClassName={"landing-error-container"}
-                    panelClassName = {"landing-error-modal"}
+                    errorMessage={ errorMessage }
+                    errorContainerClassName= "landing-error-container"
+                    panelClassName = "landing-error-modal"
                     />
 
                 )
