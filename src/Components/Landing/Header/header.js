@@ -8,7 +8,7 @@ import './header.css';
 
 const landingMainLinks = Links.getLandingMainLinks();
 
-export default function Header({ showLoginModal, ...props }) {
+export default function Header({ showLogin, ...props }) {
    
     return (
         <header className="landing-header">
@@ -30,7 +30,7 @@ export default function Header({ showLoginModal, ...props }) {
             </div>
             <div className="landing-header-login">
                 <div className="landing-login-item" >
-                    <button onClick={ ()=> showLoginModal(true) }>Login</button>
+                    <button onClick={ ()=> showLogin(prevState => !prevState) }>Login</button>
                     <MobileNavIcon/>
                 </div>
             </div>
@@ -52,6 +52,7 @@ export function MobileNavIcon({ ...props }) {
 
 function NavLinks({ href, name, ...props }) {
     return (
+
         <div className="landing-nav-item" >
             <NavLink
             exact 
@@ -63,5 +64,6 @@ function NavLinks({ href, name, ...props }) {
                 { name } 
             </NavLink> 
         </div>
+        
     ) 
 }
