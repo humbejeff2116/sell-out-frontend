@@ -1,0 +1,23 @@
+
+.store-collection-products-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    overflow-y:scroll;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid green;    */
+}
+
+.store-collection-products-modal-container-wrapper{
+    background-color:var(--background-color);
+    z-index:1;
+    width:75%;
+    border:1px solid var(--background-color);
+    position: relative;
+    left: 0;
+}
