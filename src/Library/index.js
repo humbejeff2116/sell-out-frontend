@@ -1,6 +1,7 @@
-import {insertCommasToNumber} from './library';
+import { insertCommasToNumber, calculateProductSubTotal } from './library';
 
 
 export {
-    insertCommasToNumber
+    insertCommasToNumber,
+    calculateProductSubTotal
 }
