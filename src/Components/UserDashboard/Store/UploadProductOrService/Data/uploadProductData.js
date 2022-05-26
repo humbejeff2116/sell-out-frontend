@@ -4,11 +4,11 @@ let data = {
      categoryDataSet: [
         {
             category:"Electronics",
-            type:[{name:"Select"}, {name:"phones"}, {name:"laptop"}, {name:"appliances"}]
+            type:[{name:"phones"}, {name:"laptop"}, {name:"appliances"}]
         },
         {
             category:"Furniture",
-            type:[{name:"Select"}, {name:"chairs"}, {name:"table"}, {name:"stool"}]
+            type:[{name:"chairs"}, {name:"table"}, {name:"stool"}]
         },
         {
             category:"Clothes",
