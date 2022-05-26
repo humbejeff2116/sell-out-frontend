@@ -94,119 +94,86 @@ const mockProducts = [
 ];
 
 
-export default function StoreProducts(props) {
-    
+export default function StoreProducts() {
     const [deleteProductResponseMessage, setDeleteProductResponseMessage] = useState('');
-
     const [showAllProducts, setShowAllProducts] = useState(true);
-
     const [redirect, setRedirect] = useState('');
-
     let storeProductsComponent;
 
     const displayAllProducts = () => {
-
-        setShowAllProducts(true);
-            
+        setShowAllProducts(true);        
     }
 
     const displayMyCollections = () => {
-
         setShowAllProducts(false);
-
     }
 
     if (showAllProducts) {
-
         storeProductsComponent = (
-
             <AllStoreProducts
             products = { mockProducts }
             setDeleteProductResponseMessage = { setDeleteProductResponseMessage }
             setRedirect = { setRedirect }
             />
         )
-
     } else { 
-
         storeProductsComponent = (
-
             <Collections/>
-
         )
-
     }
     
     if (redirect) {
-
         return (
-
-            <Redirect to = {redirect} />
-
+            <Redirect to = {  redirect}/>
         )
-
     }
     
     return (
-        
         <div className="placed-orders-container">
-
-        <div className="store-products-stats-container">
-            <div className="store-products-stats-child left">
-
-                <div className="store-products-stats-showcase-product">
-                    <h3>List a product</h3>
-                    <div className="store-products-showcase-writeup">
-                     Showcase more of your products to potential cutomers
+            <div className="store-products-stats-container">
+                <div className="store-products-stats-child left">
+                    <div className="store-products-stats-showcase-product">
+                        <h3>List a product</h3>
+                        <div className="store-products-showcase-writeup">
+                            Showcase more of your products to potential cutomers
+                        </div>
+                        <div className="store-products-showcase-link-wrapper">
+                            <Link to="/home/dashboard/store/upload-product">
+                                Upload Product Details
+                            </Link>
+                        </div>
                     </div>
-                    <div className="store-products-showcase-link-wrapper">
-                        <Link to="/home/dashboard/store/upload-product">
-                            Upload Product Details
-                        </Link>
+                </div>
+                <div className="store-products-stats-child">
+                </div>
+            </div>
+            <div className="placed-orders-header">
+                <h3> Store Items</h3>
+            </div>
+            <div className="store-products-filter-container">
+                <div className="store-products-filter-nav">
+                    <div 
+                    className={ showAllProducts ? "store-products-filter-nav-item active" : "store-products-filter-nav-item"}
+                    onClick = { displayAllProducts }
+                    >
+                        All products 
+                    </div>
+                    <div 
+                    className={ !showAllProducts ? "store-products-filter-nav-item active" : "store-products-filter-nav-item"}
+                    onClick = { displayMyCollections }
+                    >
+                        My collections  
                     </div>
                 </div>
-
+                <FilterButtonComponent
+                filterButtonClassName="store-products-filter"
+                filterIconClassName="store-products-filter-icon"
+                title="Filter products"
+                />
             </div>
-            <div className="store-products-stats-child">
-
-            </div>
+            { storeProductsComponent }
         </div>
-
-        <div className="placed-orders-header">
-            <h3> Store Items</h3>
-        </div>
-
-        <div className="store-products-filter-container">
-            <div className="store-products-filter-nav">
-
-                <div 
-                className={ showAllProducts ? "store-products-filter-nav-item active" : "store-products-filter-nav-item"}
-                onClick = { displayAllProducts }
-                >
-                All products 
-                </div>
-
-                <div 
-                className={ !showAllProducts ? "store-products-filter-nav-item active" : "store-products-filter-nav-item"}
-                onClick = { displayMyCollections }
-                >
-                My collections  
-                </div>
-
-            </div>
-            <FilterButtonComponent
-            filterButtonClassName={"store-products-filter"}
-            filterIconClassName={"store-products-filter-icon"}
-            title={"Filter products"}
-            />
-        </div>
-
-        { storeProductsComponent }
-
-        </div>
-
     )
-
 }
 
 export function AllStoreProducts({ 
@@ -219,12 +186,10 @@ export function AllStoreProducts({
     showSelect, 
     ...props
 }) {
-    
     return (
-
         <div className={ storeContainerClassName || "store-products-container"}>
         {
-            products?.length > 0 && products.map((product, i)=>
+            products?.length > 0 && products.map((product, i) =>
                 <StoreProduct 
                 key = { i }
                 product = { product }
@@ -237,130 +202,93 @@ export function AllStoreProducts({
             )
         }
         </div>
-
     )
-
 }
 
 
-export function StoreProduct({ setDeleteProductResponseMessage, setProductsSelected, showSelect, productEditPanel, setRedirect, product }) {
-
+export function StoreProduct({ 
+    setDeleteProductResponseMessage, 
+    setProductsSelected, 
+    showSelect, 
+    productEditPanel, 
+    setRedirect, 
+    product 
+}) {
     const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
-
     const [deletingProduct, setDeletingProduct] = useState(false);
-
     const location = useLocation();
-
     const history = useHistory();
-
     const { setProductToEdit } = useEditProductContext();
-
     let deleteModalChild;
 
-    const deleteStoreProduct = async (product) => {
-        
+    const deleteStoreProduct = async (product) => {  
         try {
-
             setDeletingProduct(true);
-
             const deleteProductResponse = await deleteProduct(product);
-
             setDeletingProduct(false);
-
             setShowDeleteProductModal(false);
-
             setDeleteProductResponseMessage(deleteProductResponse.message);
-
         } catch(err) {
         
-
         } 
-
     }
+
     const editProduct = (product) => {
-
         setProductToEdit([product]);
-
         history.push(location.pathname);
-
         setRedirect("/home/dashboard/store/edit-product");
-
     }
 
     const closeModal = () => {
-
         setShowDeleteProductModal(false);
-
     }
 
     const openModal =() => {
-
         setShowDeleteProductModal(true);
-
     }
 
     if (deletingProduct) {
-
         deleteModalChild = (
-
             <DeleteModalChildLoader />
-
         )
-
     } else {
-
         deleteModalChild = (
-
             <DeleteModalChild 
             removeProduct = { ()=> deleteStoreProduct(product) } 
             cancel = { closeModal } />
-
         )
-
     }
     
-
     return (
         <div className={ productEditPanel || "store-product-edit-panel" }>
             {
                 (showDeleteProductModal) && (
-
                     <ModalBox 
                     handleModal = { closeModal } 
-                    // modalContainerWrapperName={"store-products-modal-container-wrapper"}
-                    modalContainer = { "store-products-modal-container" }
+                    modalContainer = "store-products-modal-container" 
                     >
                         { deleteModalChild }
                     </ModalBox>
-
                 )
-
             }
             <div className="store-product-edit-icon-panel">
                 {
-
                     showSelect && (
-
                         <div className="store-product-edit-group">
-                            <div 
-                            className="store-product-edit-icon checkbox"
-                            >
+                            <div className="store-product-edit-icon checkbox">
                                 <input type="checkbox" onClick={ (e)=> setProductsSelected(product) }/>
                             </div>
                         </div>
-
                     )
-
                 }
                 <div className="store-product-edit-group">
                     <div className="store-product-edit-icon" onClick={ ()=> editProduct(product) }>
                         <BiPencil title="Edit" className="store-icon" />
                     </div>
                 </div>
-
                 <div className="store-product-edit-group">
                     <div className="store-product-edit-icon" onClick = { openModal }>
-                    <BiTrash title="Delete" className="store-icon"/>
+                        <BiTrash title="Delete" className="store-icon"/>
                     </div>
                 </div>
             </div>
@@ -369,44 +297,35 @@ export function StoreProduct({ setDeleteProductResponseMessage, setProductsSelec
             panelClassName="store-product-panel"
             />
         </div>
-
     )
-
 }
 
 function DeleteModalChild({ cancel, removeProduct }) {
-
     return (
-
         <div className="store-products-modal-body-container">
-        <div className="store-products-modal-content">
-            <p>
-                Are you sure you want to delete product?
-            </p>
-        </div>
-        <div className="store-products-modal-button-container">
-            <div className="store-products-modal-button left">
-                <button onClick = { cancel }>Cancel</button>
+            <div className="store-products-modal-content">
+                <p>
+                    Are you sure you want to delete product?
+                </p>
             </div>
-
-            <div className="store-products-modal-button">
-                <button onClick = { removeProduct }>Delete</button>
+            <div className="store-products-modal-button-container">
+                <div className="store-products-modal-button left">
+                    <button onClick = { cancel }>Cancel</button>
+                </div>
+                <div className="store-products-modal-button">
+                    <button onClick = { removeProduct }>Delete</button>
+                </div>
             </div>
         </div>
-        </div>
-
     )
 
 }
 
 function DeleteModalChildLoader({ onClick }) {
-
     return (
-
         <div className="store-products-modal-body-container">
-        deleting...
+            deleting...
         </div>
-
     )
 
 }
