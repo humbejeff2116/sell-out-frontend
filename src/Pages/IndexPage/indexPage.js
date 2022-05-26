@@ -1,23 +1,21 @@
 
-
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Index from '../../Components/Index/index';
-import { IndexPageTemplate} from '../../Components/Template/template';
+import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import { isAuthenticated } from '../../Services/services';
 
 
-
- function IndexPageComp() {
+ function IndexPageComp() {  
     useEffect(()=> {
         window.scrollTo(0,0);
     },[]);
-    return (
-        <IndexPageTemplate>
-            <Index/>
-        </IndexPageTemplate>
-    )
 
+    return (
+        <IndexTemplateChildrenWithRightSideBar>
+            <Index/>
+        </IndexTemplateChildrenWithRightSideBar>
+    )
 }
 
 const IndexPage = RequireAuthentication(IndexPageComp, isAuthenticated);
