@@ -8,7 +8,6 @@
  * 
  */
 export function insertCommasToNumber(number) {
-
     if (typeof number !== "number") {
         throw new Error('function parameter should be of type number')
     }
@@ -44,7 +43,7 @@ export function insertCommasToNumber(number) {
     }
      
     if (containsRealFraction) { 
-      numberArr = numberArr.slice(0, indexOfDecimalPoint)
+        numberArr = numberArr.slice(0, indexOfDecimalPoint)
     }
 
     //revers number array
@@ -52,15 +51,15 @@ export function insertCommasToNumber(number) {
     reversedNumberArrLength = reversedNumberArr.length ;
       
     while (formatedNumberChunksLength < reversedNumberArrLength) {
-      // push slices of reversed number in group of threes(3) into formated number array
-      formatedNumberChunks.push(reversedNumberArr.join("").substr(chunk, 3));
-      // increment the length of formated number 
-      formatedNumberChunksLength = formatedNumberChunks.join("").length;
-      chunk += 3;  
+        // push slices of reversed number in group of threes(3) into formated number array
+        formatedNumberChunks.push(reversedNumberArr.join("").substr(chunk, 3));
+        // increment the length of formated number 
+        formatedNumberChunksLength = formatedNumberChunks.join("").length;
+        chunk += 3;  
     }
     
     if (!containsRealFraction) {
-      return formatedNumberChunks.join(",").split("").reverse().join("") 
+        return formatedNumberChunks.join(",").split("").reverse().join("") 
     }
     
     return formatedNumberChunks.join(",").split("").reverse().join("") + decimalFragment.join("") 
@@ -92,11 +91,10 @@ export const getResizedImages = async (imageFiles = [], callback = f =>f) => {
     }
     
     function resizeImage(imageFile = {}) {
-
         return new Promise((res, rej) => {
             try {
-
                 const reader = new FileReader();
+
                 // Set the image once loaded into file reader
                 reader.onload = function(e) {
                     const img = document.createElement("img");
@@ -133,14 +131,11 @@ export const getResizedImages = async (imageFiles = [], callback = f =>f) => {
                     })
                 }
                 reader.readAsDataURL(imageFile);
-
             } catch(err) {
                 rej(err);
             }
         })
-
     }
-
 }
 
 /**
@@ -163,6 +158,20 @@ export function setUnicode(unicode = "") {
     return decoded;
 }
 
-export const open = setUnicode('&#9776;');
+export const calculateProductSubTotal = ({ percentageOff, productPrice, productQty }) => {
+    if (percentageOff) {
+        const percentOffPrice = (percentageOff / 100) * parseFloat(productPrice)
+        const newPrice = parseFloat(productPrice) - percentOffPrice;
 
+        return (newPrice *  productQty).toFixed(2, 10)    
+    } 
+
+    return (productPrice *  productQty).toFixed(2, 10)
+}
+
+export const calculateOrderSubTotal = (order) => {
+    return calculateProductSubTotal({ ...order })
+}
+
+export const open = setUnicode('&#9776;');
 export const close = setUnicode('&times;');
