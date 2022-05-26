@@ -13,9 +13,7 @@ export default function UploadProductDetails({
     setType, 
     categoryDataSet 
 }) {
-
     return (
-
         <Formik
         initialValues = {{
             productName: '',
@@ -40,13 +38,10 @@ export default function UploadProductDetails({
         onSubmit =  { handleSubmit }
         >
             {(formikProps) => {
-
                 const { values } = formikProps;
 
                 return (
-
-                    <Form>
-                        
+                    <Form className="upload-product-details-form">                        
                         <TextAreaInput
                         label="Product name"
                         labelClassName="upload-form-textarea-label"
@@ -56,7 +51,6 @@ export default function UploadProductDetails({
                         errorClass="upload-form-textarea-error"
                         dontShowErrorText
                         />
-
                         <TextAreaInput
                         label="Product description"
                         labelText=" (optional)"
@@ -68,7 +62,6 @@ export default function UploadProductDetails({
                         errorClass="upload-form-textarea-error"
                         dontShowErrorText
                         />
-
                         <TextAreaInput
                         label="Product price"
                         labelClassName="upload-form-textarea-label"
@@ -80,7 +73,6 @@ export default function UploadProductDetails({
                         formatedValueClass="upload-form-textarea-formated-value"
                         dontShowErrorText
                         />
-
                         <TextAreaInput
                         label="Product discount"
                         labelClassName="upload-form-textarea-label"
@@ -92,39 +84,39 @@ export default function UploadProductDetails({
                         errorClass="upload-form-textarea-error"
                         dontShowErrorText
                         />
-
                         <Select 
                         label="Product usage" 
                         name="productUsage" 
                         errorClass="upload-form-error"
                         labelClassName="upload-form-select-label"
                         selectClassName="upload-form-select"
+                        dontShowErrorText
                         >
                             <option value="">Select</option>
                             <option value="Never used">Never used</option>
                             <option value="Fairly used">Fairly used</option>
                             <option value="2 years +">2 years +</option>
                         </Select>
-
                         <Select 
                         label="Product currency" 
                         name="productCurrency" 
                         errorClass="upload-form-error"
                         labelClassName="upload-form-select-label"
                         selectClassName="upload-form-select"
+                        dontShowErrorText
                         >
                             <option value="">Select</option>
                             <option value="Naira">Naira</option>
                             <option value="pounds"> British Pounds</option>
                             <option value="dollar">U.S Dollar</option>
                         </Select>
-
                         <Select 
                         label="Product category" 
                         name="productCategory" 
                         errorClass="upload-form-error"
                         labelClassName="upload-form-select-label"
                         selectClassName="upload-form-select"
+                        dontShowErrorText
                         >
                             <option value="">Select</option>
                             <option value="Electronics">Electronics</option>
@@ -132,20 +124,17 @@ export default function UploadProductDetails({
                             <option  value="Books">Books</option>
                             <option  value="Clothes">Clothes</option>
                         </Select>
-
                         {
-                            ( values.hasOwnProperty("productCategory") && values.productCategory) && (
-
+                            (values.hasOwnProperty("productCategory") && values.productCategory) && (
                                 <div className="upload-form-group">
-                                <ProductTypeComp
-                                values = { values } 
-                                type = { type } 
-                                setTypeOptions = { setTypeOptions }
-                                categoryDataSet = { categoryDataSet }
-                                setType  = { setType }
-                                />
+                                    <ProductTypeComp
+                                    values = { values } 
+                                    type = { type } 
+                                    setTypeOptions = { setTypeOptions }
+                                    categoryDataSet = { categoryDataSet }
+                                    setType  = { setType }
+                                    />
                                 </div>
-
                             )
                         } 
                         <div className="upload-form-button-container">
@@ -153,81 +142,57 @@ export default function UploadProductDetails({
                                 <button type="submit">Save</button>
                             </div>
                         </div>
-                    
                     </Form>
-
                 )
-
-            }}
-            
+            }}  
         </Formik>
-
     )
-
 }
 
 function ProductTypeComp({ values}) {
-
     const [type , setType] = useState([]);
 
     useEffect(()=> {
-
         const categoryDataSet = UploadProductData.getCategoryData();
-
         setTypeOptions(values.productCategory, categoryDataSet, setType)
-
     }, [setType, values.productCategory]);
     
-    const setTypeOptions = function setTypeOptions(category, categoryDataSet, callback) {
-
+    const setTypeOptions = (category, categoryDataSet, callback) => {
         let type;
 
-        for (let i = 0; i < categoryDataSet.length; i++) {
-
+        for (let i in categoryDataSet) {
             if (categoryDataSet[i].category.toLowerCase() === category.toLowerCase()) { 
-
                 type = categoryDataSet[i].type;
-
                 break;
-
             }
-
         }
 
         return callback(type);
-
     }
 
     return (
-
         <>
-         <div className="upload-form-group-child">
+            <div className="upload-form-group-child">
             { 
                 (type?.length > 0 ) && (
-
                     <Select
                     label="Product type"
                     name="productType"
                     errorClass="upload-form-error"
                     labelClassName="upload-form-select-label"
                     selectClassName="upload-form-select"
+                    dontShowErrorText
                     >
+                    <option value="">Select</option>
                     {
                         type.map((val,i) =>
-
-                            (val.name === "Select") ?                                      
-                            <option key={i} value="">{val.name}</option> :
-                            <option key={i} value={val.name}>{val.name}</option> 
-
+                            <option key={ i } value = { val.name }>{ val.name }</option> 
                         )
                     }
                     </Select>
-
                 )
             }                            
-        </div>
+            </div>
         </>
-
     )
-
 }
