@@ -1,7 +1,7 @@
 
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Logout from '../../Components/Logout/logout';
-import { IndexPageTemplate } from '../../Components/Template/template';
+import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import { isAuthenticated } from '../../Services/services';
 
@@ -9,21 +9,15 @@ import { isAuthenticated } from '../../Services/services';
 
 
 function LogoutPageComp() {
-
     useEffect(()=> {
-
         window.scrollTo(0,0);
-
     },[]);
 
     return (
-
-        <IndexPageTemplate>
+        <IndexTemplateChildrenWithRightSideBar>
             <Logout/>
-        </IndexPageTemplate>
-
+        </IndexTemplateChildrenWithRightSideBar>
     )
-
 }
 
 const LogoutPage = RequireAuthentication(LogoutPageComp, isAuthenticated, "/");
