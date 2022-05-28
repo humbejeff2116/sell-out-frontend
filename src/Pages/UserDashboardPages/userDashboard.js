@@ -1,31 +1,16 @@
 
-
-
-
-
-
-
-import React, {useEffect} from 'react';
-import { IndexPageTemplate} from '../../Components/Template/template';
+import React, { useEffect } from 'react';
+import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import Router from '../../Components/Router/router';
 import {
-    PlacedOrders, 
-    SoldProducts, 
-    // ConfirmDelivery, 
-    DeliveredProducts
-} from '../../Components/UserDashboard/Orders/index';
+    PlacedOrdersComponent, 
+    Deliveries
+} from '../../Components/UserDashboard/Order/index';
 import {
-    PaymentsMade,
-    PaymentsRecieved,
+    Payments
 } from '../../Components/UserDashboard/Payments/index';
-import {
-    ProductsSold,
-    ProductsBought,
-    PaymentsMade as ActivityPaymentsMade,
-    PaymentsRecieved as ActivityPaymentsRecieved,
 
-} from '../../Components/UserDashboard/Activity/index';
 import {
     UploadProduct,
     Products,
@@ -33,44 +18,33 @@ import {
     EditProduct,
 } from '../../Components/UserDashboard/Store/index';
 import DashboardIndex from '../../Components/UserDashboard/Index/index';
- import  NotFoundPage from '../NotFoundPage/notFoundPage';
-
+import NotFound from '../../Components/NotFound/notFound';
 
 const dashboardRoutes = [
     // orders
     {path: "/home/dashboard", exact: true, Component: DashboardIndex},
-    {path: "/home/dashboard/orders/placed-orders", Component: PlacedOrders},
-    {path: "/home/dashboard/orders/sold-products", Component: SoldProducts},
-    // {path: "/home/dashboard/orders/confirm-delivery", Component: ConfirmDelivery},
-    {path: "/home/dashboard/orders/delivered-products", Component: DeliveredProducts},
+    {path: "/home/dashboard/orders/placed-orders", Component: PlacedOrdersComponent},
+    {path: "/home/dashboard/orders/deliveries", Component: Deliveries},
     // payments
-    {path: "/home/dashboard/payments/made-payments",  Component:  PaymentsMade},
-    {path: "/home/dashboard/payments/recieved-payments",  Component:  PaymentsRecieved},
-    // {path: "/home/dashboard/payments/pending-payments", Component: SoldProducts},
-    // activity
-    {path: "/home/dashboard/activity/sold-products", Component:  ProductsSold},
-    {path: "/home/dashboard/activity/bought-products", Component:  ProductsBought},
-    {path: "/home/dashboard/activity/made-payments", Component: ActivityPaymentsMade},
-    {path: "/home/dashboard/activity/recieved-payments", Component: ActivityPaymentsRecieved},
+    {path: "/home/dashboard/payments",  Component:  Payments},
     // store
     {path: "/home/dashboard/store/products", Component:  Products},
     {path: "/home/dashboard/store/upload-product", Component:  UploadProduct},
     {path: "/home/dashboard/store/edit-product", Component: EditProduct},
     {path: "/home/dashboard/store/settings", Component: StoreSettings}, 
-
-    {path: "/home/dashboard/*", Component: NotFoundPage,},
+    {path: "/home/dashboard/*", usedForHomeRoutes: true, Component: NotFound},
 ]
 
 function UserDashboardPageComp({match}) {
     useEffect(()=> {
         window.scrollTo(0,0);
     },[]);
+
     return (
-        // TODO... substitute index template with dashboard template
-        < IndexPageTemplate>
+        <IndexTemplateChildrenWithRightSideBar>
             <Router routes={dashboardRoutes}/>
-        </IndexPageTemplate>   
-    )
+        </IndexTemplateChildrenWithRightSideBar>   
+    )  
 }
 
 const UserDashboardPage = RequireAuthentication(UserDashboardPageComp);
