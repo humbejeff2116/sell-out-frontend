@@ -1,30 +1,25 @@
 
-
-
-
-
-
-
 import { createContext, useContext } from 'react';
-
 
 
 const initialOrderContext = {
     placedOrders: null,
-    soldProducts: null,
-    deliveredProducts: null,
-    paymentsMade: null,
-    recievedPayments: null, 
-    setPayments: ()=>{}, 
-    setOrders: ()=>{},
-    
+    placedOrdersSet: null,
+    sellerOrderDeliveries: {},
+    buyerOrderDeliveries: {},
+    deliveriesSet: null,
+    sellerPayments: {},
+    buyerPayments: {},
+    paymentsSet: null,
+    setPlacedOrders: ()=> {},
+    setSalesDelivery: ()=> {},
+    setSalesPayments: ()=> {},
 }
-
 
 export const OrderContext = createContext(initialOrderContext);
 
 
-export default function useOrder() {
+export default function useOrderContext() {
     return useContext(OrderContext);
 }
 

@@ -3,53 +3,66 @@ import { useState } from 'react';
 import { OrderContext } from './context';
 
 export function OrderContextProvider({children}) {
-  
-    const [placedOrders, setPlacedOrders] = useState(null);
+    const [placedOrders, setUserPlacedOrders] = useState(null);
+    const [placedOrdersSet, setPlacedOrdersSet] = useState(false);
+    const [sellerOrderDeliveries, setSellerOrderDeliveries] = useState({});
+    const [buyerOrderDeliveries, setBuyerOrderDeliveries] = useState({});
+    const [deliveriesSet, setDeliveriesSet] = useState(false);
+    const [sellerPayments, setSellerPayments] = useState({});
+    const [paymentsSet, setPaymentsSet] = useState(false);
+    const [buyerPayments, setBuyerPayments] = useState({});
 
-    const [soldProducts, setSoldProducts] = useState(null);
-
-    const [deliveredProducts, setDeliveredProducts] = useState(null);
-
-    const [paymentsMade, setPaymentsMade] = useState(null);
-
-    const [recievedPayments, setRecievedPayments] = useState(null);
-
-
-    const setOrders = ({ placedOrders, productsSellerSold, deliveredProducts }) => {
-
-        setPlacedOrders(placedOrders);
-
-        setSoldProducts(productsSellerSold);
-
-        setDeliveredProducts(deliveredProducts);
-
+    const setPlacedOrders = ({ placedOrders }) => {
+        if (!placedOrders) {
+            setUserPlacedOrders(null);
+            setPlacedOrdersSet(false);
+            return;
+        }
+        setUserPlacedOrders(placedOrders);
+        setPlacedOrdersSet(true);
     }
 
-    const setPayments = ({ paymentsMade, recievedPayments }) => {
-
-        setPaymentsMade(paymentsMade);
-
-        setRecievedPayments(recievedPayments)
-
+    const setSalesPayments = ({ sellerPayments, buyerPayments }) => {
+        if (!sellerPayments || !buyerPayments) {
+            setSellerPayments({});
+            setBuyerPayments({});
+            setPaymentsSet(false)
+            return;
+        }
+        setSellerPayments(sellerPayments);
+        setBuyerPayments(buyerPayments);
+        setPaymentsSet(true)
     }
 
-   
+     const setSalesDelivery = ({ sellerOrderDeliveries, buyerOrderDeliveries }) => {
+        if (!sellerOrderDeliveries || !buyerOrderDeliveries) {
+            setSellerOrderDeliveries({});
+            setBuyerOrderDeliveries({});
+            setDeliveriesSet(false);
+            return;
+        }
+        setSellerOrderDeliveries(sellerOrderDeliveries);
+        setBuyerOrderDeliveries(buyerOrderDeliveries);
+        setDeliveriesSet(true);
+    }
+
     const values = {
         placedOrders,
-        soldProducts,
-        deliveredProducts,
-        paymentsMade,
-        recievedPayments,
-        setPayments,
-        setOrders
+        placedOrdersSet,
+        sellerOrderDeliveries,
+        buyerOrderDeliveries,
+        deliveriesSet,
+        sellerPayments,
+        buyerPayments,
+        paymentsSet,
+        setPlacedOrders,
+        setSalesPayments,
+        setSalesDelivery
     }
 
-    return(
-
-        <OrderContext.Provider value = { values }>
+    return (
+        <OrderContext.Provider value={ values }>
             { children }
         </OrderContext.Provider>
-
     )
-
 }
