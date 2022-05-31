@@ -1,16 +1,15 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { 
     IndexTemplateChildrenWithFooterAndNoRightSideBar 
 } from '../../Components/Template/template';
 import Settings from '../../Components/Settings/settings';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
+import { usePageScrollTo } from '../hooks/hooks';
 
 
 function SettingsPageComp() {
-    useEffect(()=> {
-        window.scrollTo(0,0);
-    },[]);
+    usePageScrollTo();
 
     return (
         <IndexTemplateChildrenWithFooterAndNoRightSideBar>

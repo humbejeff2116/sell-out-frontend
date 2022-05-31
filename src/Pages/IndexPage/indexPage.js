@@ -1,16 +1,15 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Index from '../../Components/Index/index';
 import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import { isAuthenticated } from '../../Services/services';
+import { usePageScrollTo } from '../hooks/hooks';
 
 
- function IndexPageComp() {  
-    useEffect(()=> {
-        window.scrollTo(0,0);
-    },[]);
-
+ function IndexPageComp() { 
+    usePageScrollTo()
+    
     return (
         <IndexTemplateChildrenWithRightSideBar>
             <Index/>

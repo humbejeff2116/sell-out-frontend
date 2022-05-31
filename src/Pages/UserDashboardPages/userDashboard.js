@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 import Router from '../../Components/Router/router';
@@ -19,6 +19,7 @@ import {
 } from '../../Components/UserDashboard/Store/index';
 import DashboardIndex from '../../Components/UserDashboard/Index/index';
 import NotFound from '../../Components/NotFound/notFound';
+import { usePageScrollTo } from '../hooks/hooks';
 
 const dashboardRoutes = [
     // orders
@@ -36,9 +37,7 @@ const dashboardRoutes = [
 ]
 
 function UserDashboardPageComp({match}) {
-    useEffect(()=> {
-        window.scrollTo(0,0);
-    },[]);
+    usePageScrollTo();
 
     return (
         <IndexTemplateChildrenWithRightSideBar>

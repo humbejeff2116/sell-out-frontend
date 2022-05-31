@@ -1,13 +1,13 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
+import { usePageScrollTo } from '../hooks/hooks';
 import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import Checkout from '../../Components/Checkout/checkout';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
 
  function CheckoutPageComp() {
-    useEffect(()=> {
-        window.scrollTo(0,0);
-    },[]);
+    usePageScrollTo();
+
     return (
         <IndexTemplateChildrenWithRightSideBar>
             <Checkout/> 
