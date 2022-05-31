@@ -27,9 +27,9 @@
   /* upload product form styles */
   .upload-form-container{
     border-radius: 4px;
-    border:1px solid var(--prim-border-color);
+    border: 1px solid var(--prim-border-color);
     min-height: 79vh;
-    margin-top:2%;
+    margin-top: 2%;
     padding: 2%;
 }
 
@@ -65,7 +65,7 @@
     color: var(--text-color-opac-5);
 }
 
-.upload-form-panel form{
+.upload-product-details-form{
     position:relative;
     display:flex;
     flex-direction: column;
@@ -82,7 +82,7 @@
     padding-bottom: 2%;
 }
 
-.upload-form-panel select{
+.upload-product-details-form select{
     padding-left: 5px;
     border-radius: 4px;
     outline:none;  
@@ -94,16 +94,20 @@
     background-color: var(--background-color);
 }
 
-.upload-form-panel select.not-empty{
+.upload-product-details-form select.not-empty{
     border-color:var(--text-color);
     color: var(--text-color);
 }
 
-.upload-form-panel select:hover{
+.upload-product-details-form select.has-error{
+    border-color: #ff7979;
+}
+
+.upload-product-details-form select:hover{
     cursor: pointer;
 }
 
-.upload-form-panel select:focus{
+.upload-product-details-form select:focus{
     border:1px solid var(--text-color);
     color: var(--text-color);
     outline:none;   
@@ -151,30 +155,30 @@
     font-size: 0.9rem;
 }
 
-.upload-form-panel textarea{
+.upload-product-details-form textarea{
     padding: 7px 8px 5px 7px;
     border-radius: 4px;
     color: var(--text-color);
     background-color: var(--background-color);
     outline:none;  
-    width:98%;
+    width: 98%;
     height: 60px;
-    border:1px solid var(--text-color-opac-5);
+    border: 1px solid var(--text-color-opac-5);
     transition: all 0.3s ease;
     caret-color: var(--prim-color); 
     resize: vertical; 
 }
 
-.upload-form-panel textarea:focus{
+.upload-product-details-form textarea:focus{
     border:1px solid var(--text-color);
     outline:none;   
 }
 
-.upload-form-panel textarea.not-empty{
+.upload-product-details-form textarea.not-empty{
     border-color:var(--text-color);
 }
 
-.upload-form-panel textarea.has-error{
+.upload-product-details-form textarea.has-error{
     border-color: #ff7979;
 }
 
@@ -237,7 +241,7 @@
 }
 
 /* styles for image upload */
-.upload-form-panel-right form{
+.upload-product-image-form{
     width: 100%; 
 }
 
