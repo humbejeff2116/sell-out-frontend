@@ -11,6 +11,7 @@
         transition:all;
     }
 }
+
 .login-container{
     scroll-behavior:smooth;
     display:flex;
@@ -18,13 +19,11 @@
     min-height: 60vh;
     border-radius: 6px;
     border:1px solid var(--prim-border-color);
-    /* box-shadow:0 0 1px var(--box-shadow-color); */
     width:65%;
     margin-left:auto;
     margin-right: auto;
     margin-top:10%;
     margin-bottom: 10%;
-    /* margin:auto auto auto auto; */
 }
 
 .login-panel{
@@ -40,7 +39,6 @@
 }
 
 .login-panel-heading{
-    /* background-color:#ffffff; */
     text-align: center;
     /* border:1px solid #222; */
     margin-bottom:2%;
@@ -50,8 +48,7 @@
 .login-panel-body{
     display:flex;
     flex-direction:column;
-    color:var(--text-color); 
-   
+    color:var(--text-color);  
     /* border:1px solid green; */
 }
 
@@ -73,52 +70,56 @@
     width:99%;
     /* border:2px solid yellow; */
 }
+
 .login-form-group label{
     display:flex;
     font-size: 0.781em;
     font-weight: bold;
-    /* color:var(--text-color); */
 }
+
 .login-form-error{
     display: flex;
-    /* justify-content: space-between; */
     justify-content: flex-end;
-    /* padding-top: 0.2%; */
     width:99%;
     /* border:2px solid red; */
     min-height: 25px;
     color:var(--error-color); 
 }
+
 .login-form-error span{
-    display: flex;
-    
+    display: flex;   
 }
+
 .login-form-error  i{
     display: flex;
     align-items: center;
     margin-right: 1%;
     /* border:1px solid red; */
 }
+
 .login-panel form input{
     padding:12px 12px 12px 5px;
-    /* border-radius: 4px; */
+    border-radius: 2px;
     outline:none;
     color: var(--text-color);
     border:1px solid var(--prim-border-color);
     transition: all 0.2s ease;
-    caret-color: var(--prim-color);
+    caret-color: var(--color);
 }
+
 .login-panel form input:focus{
-    border:1px solid var(--text-color);
     outline: 1px solid var(--text-color);
-    /* outline: none;  */
-   
 }
 
 .login-panel form input.not-empty{
-    border-color:var(--text-color);
     outline: 1px solid var(--text-color);
+    background-color: var(--background-color);
 }
+
+.login-panel form input.has-error{
+    outline: 1px solid var(--error-color);
+}
+
 .login-forgot-pass{
     margin-bottom:2%;
     /* border:1px solid #222; */
@@ -140,7 +141,7 @@
 
 .login-panel button{
     width:100%;
-    height: 50px;
+    height: 45px;
     font-size: 0.9rem;
     font-weight: bold;
     transition:all 0.3s ease-in-out;
@@ -148,19 +149,18 @@
     border-radius: 4px;
     border:1px solid var(--color);
     background-color: var(--color);
-    color: #ffffff;
-    
+    color: #ffffff;  
 }
 
 .login-panel button:hover{
     border:1px solid var(--opaque-color);
-   background-color: var(--opaque-color);
-   
+   background-color: var(--opaque-color); 
 }
 
 .login-panel button:focus{
     outline: 1px solid var(--outline-color); 
 }
+
 /* sign up panel */
 .login-signup-panel{
     display:flex;
@@ -172,21 +172,25 @@
     /* border:1px solid red; */
     margin-bottom:2%;
 }
+
 .signup-link{
     display:flex;
     flex-direction: row;
     justify-content: flex-end;
     /* border:1px solid green; */
 }
+
 .signup-link-text{
     /* border:1px solid green; */
     /* width:50%;    */
     margin-right: 2%;
 }
+
 .signup-link-text p{
     text-align: center; 
     color: var(--text-color);
 }
+
 .signup-link-button{
     /* border:1px solid green; */
     display:flex;
@@ -195,16 +199,17 @@
     align-items: center;
     width:25%;
 }
+
 .signup-link-button a{
     /* border:1px solid #222; */
     width:100%;
     /* margin:0 auto 0 auto; */
     cursor:pointer;
 }
+
 .signup-link-button button{
     height:42px;
     width:100%;
-    /* margin:0 auto 0 auto; */
     cursor:pointer;
     font-size: 0.9rem;
     font-weight: bold;
@@ -216,12 +221,13 @@
     color: var(--text-color);
     transition: all 0.3s ease;
 }
-.signup-link-button button:hover{
-    
+
+.signup-link-button button:hover{  
     border:1px solid var(--text-color);
     background-color: var(--text-color);
     color: #ffffff;
 }
+
 .signup-link-button button:focus{
     outline: 1px solid var(--opaque-color);  
 }
@@ -232,6 +238,7 @@
         margin-top: auto;
         margin-bottom: auto;
     }
+
     .login-panel{
         width:60%;
     }
@@ -242,6 +249,7 @@
         width:85%;
         top:80%;   
     }
+
     .login-panel{
         width:80%;
     }
@@ -254,9 +262,11 @@
         margin-top: auto;
         margin-bottom: auto;
     }
+
     .login-panel{
         width:90%;
     }
+
     .login-form-group input{
         width:95%;
         height:45px;
@@ -277,6 +287,7 @@
     .login-form-group input{
         padding:2%;
     }
+
     .login-form-group input.not-empty + .placeholder,
     .login-form-group  input:focus + .placeholder{
         top:12px;
