@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { BiSearch, BiMenu } from "react-icons/bi";
 import { NotificationAlert } from '../NotificationsDropdown/notifications';
@@ -8,11 +8,9 @@ import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
 import './header.css';
 
+const mainLinks = Links.getMainLinks();
 
 export default function Header({ dontShowMainNav, ...props }) {
-
-    const mainLinks = useRef(Links.getMainLinks());
-
     return (
         <header className="header-container" >
             <section className="header-logo">
@@ -21,9 +19,7 @@ export default function Header({ dontShowMainNav, ...props }) {
             <section className="header-main-navigation">
             { 
                 (dontShowMainNav) ? '' : ( 
-
-                    <MainNavigation mainLinks={ mainLinks.current }/>
-
+                    <MainNavigation mainLinks={ mainLinks }/>
                 ) 
             }
             </section>
@@ -63,9 +59,7 @@ function MainNavigation({ mainLinks, ...props }) {
         <nav>
         {
             mainLinks?.map((link, i) =>
-
                 <NavLinks key = { i } { ...link } />
-
             )
         }
         </nav>
@@ -73,20 +67,15 @@ function MainNavigation({ mainLinks, ...props }) {
 }
 
 function NavLinks({ name, href, icon, ...props }) {
-
     const {  cartTotalNumberOfProducts } = useCartContext();
-
     let Component;
 
     if (name.toLowerCase() === "cart") {
-
         Component = (
             <div className="main-nav-item" >
                 {
                     cartTotalNumberOfProducts > 0  && ( 
-
                         <NotificationAlert className="header-notifications-icon-alert"/> 
-
                     )
                 }
                 <NavLink
@@ -102,7 +91,6 @@ function NavLinks({ name, href, icon, ...props }) {
         )
 
     } else if (name.toLowerCase() === "orders") {
-
         // TODO... implement new order alert functionality
         Component = (
             <div className="main-nav-item" >
@@ -117,9 +105,7 @@ function NavLinks({ name, href, icon, ...props }) {
                 </NavLink> 
             </div>
         )
-
     } else {
-
         Component = (
             <div className="main-nav-item" >
                 <NavLink
@@ -133,12 +119,11 @@ function NavLinks({ name, href, icon, ...props }) {
                 </NavLink> 
             </div>
         )
-
     }
     
     return (
         <>
-        { Component }
+            { Component }
         </>
     ) 
 }
