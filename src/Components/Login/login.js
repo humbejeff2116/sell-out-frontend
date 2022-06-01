@@ -12,153 +12,128 @@
    //    import socket from '../Socket/socket';
 
 export default function Login() {
-
     const [loginIn, setLoginIn] = useState(false);
-
     const [loginError, setLoginError] = useState(false);
-
     const [loginResponseMessage, setLoginResponseMessage] = useState(null);
-
     const [redirect, setRedirect] = useState('');
-
     const location = useLocation();
-
     const history = useHistory();
-
     const { setUserData, setTokenData }  = useAuth();
-
     const { updateCartContextState } = useCartContext();
 
     async function handleSubmit (values) {
+        setLoginIn(true);
 
         try{
+            const { error, message, token, data} = await loginUser(values);
 
-            setLoginIn(true);
-
-            const loggedInUserResponse = await loginUser(values);
-
-            if (loggedInUserResponse.error) {
-
-                setLoginResponseMessage(loggedInUserResponse.message);
-
+            if (error) {
+                setLoginResponseMessage(message);
                 setLoginError(true);
-
                 setLoginIn(false);
-
                 return;
-
             }
 
-
-            const TOKEN = loggedInUserResponse.token;
-
-            setCartStateOnLogin(loggedInUserResponse.data);
-
-            setUserData(loggedInUserResponse.data);
-
+            const TOKEN = token;
+            setCartStateOnLogin(data);
+            setUserData(data);
             setTokenData(TOKEN);
-
             setLoginError(false);
-
             setLoginIn(false);
-
             setLoginResponseMessage(null);
-
             history.push(location.pathname);
-
             setRedirect('/home');
-
-        } catch(e) {
-
+        } catch(err) {
+            // TODO... handle error
+            setLoginIn(false);
             setLoginError(true)
-
         } 
-
     }
     
     const setCartStateOnLogin = (user) => {
-       
-        const savedCartState =  localStorage.getItem(`${user.userEmail}-cart`) ? 
-        JSON.parse(localStorage.getItem(`${user.userEmail}-cart`)) : null;
+        const { userEmail } = user  
+        const savedCartState =  localStorage.getItem(`${userEmail}-cart`) ? (
+            JSON.parse(localStorage.getItem(`${userEmail}-cart`))
+        ) : null;
 
         if (!savedCartState) {
-
             return;
-
         }
 
         return  updateCartContextState(savedCartState?.cartState, user);
-
     }
  
     if (redirect) {
-
         return (
-
-            <Redirect to={redirect} />
-
+            <Redirect to={ redirect } />
         )
-
     }
 
     return (
-
         <>
-        <div className="login-container">
-        <div className="login-panel ">
-            <div className="login-panel-heading">
-                <h2>Login </h2>
-            </div>
-            <div className="login-panel-error">
-                    {
-                        ( <span>{loginResponseMessage || '' }</span> )
-                    }
-            </div>
-            <div className="login-panel-body">                            
-                <Formik
-                    initialValues = {{
-                        email: '',
-                        password: '',
-                    }}
+            <div className="login-container">
+                <div className="login-panel ">
+                    <div className="login-panel-heading">
+                        <h2>Login </h2>
+                    </div>
+                    <div className="login-panel-error">
+                        {
+                            <span>{ loginResponseMessage || ''  }</span>
+                        }
+                    </div>
+                    <div className="login-panel-body">                            
+                        <Formik
+                        initialValues = {{
+                            email: '',
+                            password: '',
+                        }}
 
-                    validationSchema = { Yup.object({
-                        email: Yup.string().email('Invalid email address').required('Email is Required'),
-                        password: Yup.string().required('password is required'),
-                    })}
+                        validationSchema = { 
+                            Yup.object({
+                                email: Yup.string().email('Invalid email address').required('Email is Required'),
+                                password: Yup.string().required('password is required'),
+                            })
+                        }
+                        
+                        onSubmit = { handleSubmit }
+                        >
+                            <Form>
+                                <TextInput
+                                    label="EMAIL ADDRESS"
+                                    labelClassName="login-form-group"
+                                    name="email"
+                                    type="email"
+                                    errorClass="login-form-error"
+                                    // dontShowErrorText
+                                />
+                                <PasswordInput
+                                    label="PASSWORD"
+                                    labelClassName="login-form-group"
+                                    name="password"
+                                    type="password"
+                                    errorClass="login-form-error"
+                                    // dontShowErrorText
+                                />
+                                <div className="login-forgot-pass">
+                                    <span>forgot your password?</span>
+                                </div>
 
-                    onSubmit = { handleSubmit }
-                >
-                <Form>
-                <TextInput
-                    label="EMAIL ADDRESS"
-                    labelClassName="login-form-group"
-                    name="email"
-                    type="email"
-                    errorClass="login-form-error"
-                />
-                <PasswordInput
-                    label="PASSWORD"
-                    labelClassName="login-form-group"
-                    name="password"
-                    type="password"
-                    errorClass="login-form-error"
-                />
-                <div className="login-forgot-pass">
-                    <span>forgot your password?</span>
-                </div>
-
-                <div className="login-button">
-                    <button type="submit" >
-                    {
-                        loginIn ? <span>Loging in...</span> : 
-                        loginError ? <><ImWarning/> <span>Log in</span></> :
-                        <span>Log in</span>
-                    }
-                    </button>
-                </div>
-                </Form>
-                </Formik>
-            </div>
+                                <div className="login-button">
+                                    <button type="submit" >
+                                    {
+                                        loginIn ? ( 
+                                            <span>Loging in...</span>
+                                        ) : loginError ? (
+                                            <><ImWarning/><span>Log in</span></>
+                                        ) : ( 
+                                            <span>Log in</span>
+                                        )
+                                    }
+                                    </button>
+                                </div>
+                            </Form>
+                        </Formik>
+                    </div>
                 </div>
                 <div className="login-signup-panel">
                     <div className="signup-link">
@@ -172,7 +147,5 @@ export default function Login() {
                 </div>
             </div>
         </>
-
     )
-
 }
