@@ -8,9 +8,12 @@ import RequireViewStateAuthentication from '../../Components/Authentication/requ
 
 
  function ViewProductPageComp() {
-     useEffect(()=>{
-         window.scrollTo(0,0);
-     }, [])
+    useEffect(()=> {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, [])
 
     return (
         <IndexTemplateChildrenWithFooterAndNoRightSideBar>
