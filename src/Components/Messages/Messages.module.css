@@ -1,0 +1,62 @@
+
+
+.chatContainer{
+    border: 1px solid red;
+    /* box-sizing: border-box; */
+    min-height: 85vh;
+    width: 100%;
+    position: relative;
+    /* top: 9vh; */
+    display: flex;
+}
+.leftBar{
+    border: 1px solid green;
+    min-width: 18%;
+    /* position: fixed; */
+    top: 0;
+}
+
+.chatAreaContainer{
+    border: 2px solid yellow;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 85vh;
+    
+}
+
+.chatAreaTop{
+    min-height: 6rem;
+    min-height: 15vh;
+    border: 1px solid purple;
+    /* max-height: 4rem;  */
+}
+
+.chatAreaCenter{
+    height: 25rem;
+    border: 1px solid red;
+    overflow-y: auto;
+    scrollbar-width:  thin;
+    padding: 1.5rem;
+}
+.mssg{
+    height: 20vh;
+    border: 1px solid red;
+}
+
+.chatAreaBottom{
+    min-height: 6rem;
+    min-height: 15vh;
+    margin-top: auto;
+    border: 1px solid green;
+}
+
+.rightBar{
+    border: 1px solid blue;
+    min-width: 18%;
+    /* margin-left:auto; */
+    /* position:fixed; */
+    right:0;
+    /* overflow-x: none; */
+    transition: width 0.3s ease;
+}
