@@ -1,0 +1,99 @@
+.reviewsContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index:1;
+    overflow-y:scroll;
+    z-index: 22;
+    display: flex;
+    flex-direction: column;
+    /* padding: 1%; */
+    /* border: 2px solid green;    */
+}
+    
+    .wrapper{
+      background-color: var(--no-color);
+      width: 90%;
+      z-index: 1;
+      animation-duration: 0.6s;
+      /* padding: 1%; */
+      margin-left: auto;  
+      /* height: 100vh;
+      overflow-y: auto; */
+    }
+    
+  .bttnWrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--prim-border-color);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    color: var(--prim-border-color);
+    font-weight: bold;
+    transition: all 0.2s ease;
+    position: fixed;
+    left: 2%;
+    top: 2%;
+     
+  }
+    
+.bttnWrapper:hover{
+    border: 2px solid var(--prim-border-color);
+}
+
+.panel{
+    border:2px solid yellow;
+    display:flex;
+    justify-content: space-between;
+    /* height: 100vh; */
+}
+
+.productPanel{
+    border: 1px solid green;
+    /* border: 1px solid var(--prim-border-color); */
+    background-color: var(--background-color);
+    width: 40%;
+    padding: 1%;
+    border-radius: 4px;
+}
+
+.reviewsPanel{
+    display: flex;
+    flex-direction: column;
+    /* box-shadow:0 0 1px var(--box-shadow-color); */
+    border: 1px solid var(--prim-border-color);
+    border: 3px solid green;
+    background-color: var(--background-color);
+    width: 60%;
+    padding: 1%;
+    border-radius: 4px;
+    height: 100vh;
+    overflow-y: auto;
+    position: relative;
+}
+  
+/* style for export modalBox child component */
+.modalBoxContainer{
+    background-color:var(--no-color);
+    width:70%;
+    z-index:1;
+    /* animation-name:animatetop; */
+    animation-duration:0.6s;
+    border-radius: 4px;
+    padding:1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;  
+}
+
+
+@media screen and (max-width:600px){
+
+    
+}
