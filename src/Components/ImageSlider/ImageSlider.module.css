@@ -1,0 +1,98 @@
+/* product image slider styles */
+
+.imageSLiderContainer{
+    /* border: 2px solid blue; */
+    display: flex;
+    /* min-height: 100%; */
+}
+
+.imageSLiderPanel{
+    width: 100%;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+/* .viewProductImageSLiderPanel:hover .viewProductImageSLiderPrevButton{
+    display: flex;
+}
+
+.viewProductImageSLiderPanel:hover .viewProductImageSLiderNextButton{
+    display: flex;
+} */
+
+.imageSLiderImage{
+    /* width: 400px;
+    height: 420px; */
+    /* border: 1px solid purple; */
+}
+
+.imageSLiderImage img {
+    max-width: 100%;
+    height: 100%; 
+    object-fit: contain;  
+}
+
+.imageSLiderPrevButton, .imageSLiderNextButton{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 1px solid var(--prim-border-color);
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    color: var(--color);
+}
+
+.imageSLiderPrevButton{
+   left: 2%;
+}
+
+.imageSLiderNextButton{
+    right: 2%;
+}
+
+.imageSLiderButtonIcon{
+    font-size: 1.1rem;
+}
+
+/* image slider thumbnails */
+.imageSLiderThumbnailsContainer{
+    border-right: 1px solid var(--prim-border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 10%;
+    /* border: 3px solid yellow; */
+    overflow-y: auto;
+    /* height: 65vh; */
+}
+
+.imageSliderThumbnail{
+    width:50px;
+    height: 60px;
+    border: 1px solid var(--prim-border-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0.7rem 0;
+}
+
+.imageSliderThumbnail .focus{
+    border-color: var(--color);  
+}
+
+.imageSliderThumbnail img{
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain; 
+}
