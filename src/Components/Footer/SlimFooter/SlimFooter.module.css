@@ -1,0 +1,58 @@
+
+
+
+
+.slimFooterContainer{
+    /* width: 100%; */
+    /* border: 3px solid red; */
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color-opac-8);
+    /* margin-left:18%; */
+    margin: 1% 0 1% 18%;
+}
+
+.landingFooterNavSection{
+    /* border: 2px solid black; */
+    min-width: 50%;
+}
+
+.landingFooterNav{
+    /* border: 1px solid green; */
+    display: flex;
+    /* justify-content: space-between; */
+}
+
+.landingFooterCountrySection{
+    /* border: 1px solid blue; */
+    display: flex;
+}
+
+.flagIcon {
+   margin-right: 0.5rem;
+   font-size: 1.2rem; 
+}
+
+.landingFooterItem{
+    padding: 0 0.8rem;
+    color: var(--text-color-opac-6);
+    font-size: 0.84rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav{
+    /* border-left: 1px solid var(--text-color-opac-6); */
+    border-left: 1px solid var(--prim-border-color);
+}
+
+.landingFooterItem a{
+   text-decoration: none;
+   color: var(--text-color-opac-6);
+}
+
+.landingFooterItem a:hover{
+    text-decoration: underline;
+    color: var(--text-color);
+}
