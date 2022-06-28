@@ -1,11 +1,9 @@
 
-footer{
-    margin-top: 1%;
-    padding:2% 1%;
-}
 
 .landing-footer-container{
     border-top:1px solid var(--prim-border-color);
+    margin-top: 1%;
+    padding:2% 1%;
 }
 
 .landing-footer-top{
@@ -39,14 +37,14 @@ footer{
     display:flex;
     flex-direction:column;
     align-self: center;
-    font-weight: 500;
     line-height: 1.6;
-    color: var(--text-color);
+    color: var(--text-color-opac-5);
 }
 
 .landing-footer-content-header{
     margin-bottom: 4%;
     font-weight: 600;
+    color: var(--text-color-opac-8);
     /* border:1px solid red; */
 }
 
@@ -57,8 +55,9 @@ footer{
     justify-content: space-between;
     flex-wrap: wrap;
     min-height: 8vh;
-    margin-top:1%;
+    margin-top: 1%;
     border-radius: 6px;
+    font-size: 0.85rem;
 }
 
 .landing-footer-bottom section{
@@ -100,14 +99,14 @@ footer{
 .landing-footer-social-item i{
     display: flex;
     padding :0.5rem;
-    color: var(--color);
+    color: var(--text-color-opac-5);
     /* border:1px solid black; */
 }
 
 .landing-footer-social-nav-icon{
     /* border:1px solid black; */
-    width: 1.2em;
-    height:1.2em;
+    width: 1.2rem;
+    height:1.2rem;
 }
 
 .landing-footer-copyright-section{
@@ -128,7 +127,7 @@ footer{
 
 .landing-footer-copyright a{
     text-decoration: none;
-    color: var(--color);
+    color: var(--text-color-opac-5);
 }
 
 .landing-footer-developer{
@@ -141,7 +140,7 @@ footer{
 
 .landing-footer-developer a{
     text-decoration: none;
-    color: var(--color);
+    color: var(--text-color-opac-5);
 }
 
 @media only screen and (max-width:500px) {
