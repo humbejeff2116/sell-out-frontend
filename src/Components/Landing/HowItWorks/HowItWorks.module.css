@@ -1,0 +1,20 @@
+
+
+.container{
+    border: 1px solid red;
+    min-height: 100vh;
+}
+
+.panel{
+    border: 1px solid black;
+    /* min-height: 50vh; */
+}
+
+.top{
+    min-height: 50vh;
+    /* border: 1px solid red; */
+}
+
+.bottom{
+    min-height: 30vh;
+}
