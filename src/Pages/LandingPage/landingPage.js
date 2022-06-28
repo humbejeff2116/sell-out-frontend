@@ -1,22 +1,13 @@
 
-import React, { useEffect } from 'react';
-import { 
-    LandingTemplate, 
-    LandingProducts, 
-    TopInfoCardComponent 
-} from '../../Components/Landing/landing';
+import React from 'react';
+import LandingComponent from '../../Components/Landing/landing';
+import { usePageScrollTo } from '../hooks/hooks';
 
 
 export default function LandingPage() {
-    useEffect(()=> {
-        window.scrollTo(0,0)          
-    }, []);
+    usePageScrollTo();
 
     return (
-        <LandingTemplate
-        landingTopChild ={ <TopInfoCardComponent/> }
-        landingCenterChild = { <LandingProducts/> }
-        >     
-        </LandingTemplate>
+        <LandingComponent/>
     )
 }
