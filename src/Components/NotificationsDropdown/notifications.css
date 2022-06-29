@@ -5,25 +5,38 @@
     justify-content: center;
 }
 
-.notifications-dropdown-wrapper{
-    position:absolute;
-    min-height:70vh;
-    top:14%;
-    right:20%;
-    width:300px;
-    background-color: var(--background-color);
-    /* border: 1px solid red; */
-}
-
 .notifications-dropdown-container{
-    margin-bottom:1%;
+    position: absolute;
     height:75vh;
     overflow-y: scroll; 
-    border-radius: 4px;
+    top: 14%;
+    right: 20%;
+    width: 310px;
     background-color: var(--background-color);
-    box-shadow: 0px 3px 8px var(--box-shadow-color);
-    /* scrollbar-width: thin; */
-    padding:0 3%;
+    box-shadow: 0px 3px 5px var(--box-shadow-color);
+    border-radius: 4px;
+}
+
+.notifications-dropdown-header{
+    position: sticky;
+    top: 0;
+    font-weight: 510;
+    color: var(--color);
+    display: flex;
+    box-shadow: 2px 0 4px var(--box-shadow-color);
+    border-bottom: 1px solid var(--prim-border-color);
+    padding: 0.8rem;
+    background-color: var(--background-color);
+    z-index: 1;
+}
+
+.notifications-dropdown-wrapper{
+    border-radius: 4px;
+    /* border: 1px solid red; */
+    padding: 0 0.8rem;
+    min-height: 68vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .notifications-icon-wrapper{
@@ -57,13 +70,13 @@
 }
 
 .notification-container{
-    border:1px solid var(--prim-border-color);
-    box-shadow: 0px 0px 2px var(--box-shadow-color);
-    background-color: var(--no-color);
-    margin-top:4%;
-    margin-bottom:4%;
+    /* border:1px solid var(--prim-border-color); */
+    box-shadow: 0px 0px 3px var(--box-shadow-color);
+    background-color: var(--background-color);
+    margin-top: 4%;
+    margin-bottom: 3%;
     border-radius: 6px;
-    padding:4%;
+    padding: 4%;
     position: relative;
 }
 
@@ -77,18 +90,16 @@
 
 .notification-image{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     /* border:2px solid black; */
-    width:20%;
+    margin-right: 0.4rem;
 }
 
 .notification-image img{
     margin-top: 5%;
     border-radius: 50%; 
-    height:35px;
-    width:35px;
+    height:32px;
+    width:32px;
     object-fit: cover;
     object-position: center;
     /* border:1px solid red; */
@@ -106,9 +117,8 @@
 
 .notification-details{
     /* border:1px solid black; */
-    display: flex;
     color: var(--text-color);
-    /* color: rgb(8, 8, 73, 0.8); */
+    font-size: 0.95rem;
 }
 
 .notification-time{
@@ -122,11 +132,10 @@
 
 .notification-remove{
     /* border:2px solid black; */
-    justify-self: flex-end;
-    align-self: flex-end;
     position: absolute;
-    top: 3%;
+    top: 4%;
     right: 4%;
     color: var(--text-color-opac-5);
     font-weight: bold;
+    cursor: pointer;
 }
