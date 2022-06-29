@@ -1,140 +1,74 @@
 
-
-import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FiArrowRight }  from 'react-icons/fi'
 import { DisplayedProduct } from '../../Product/product';
-import { getProducts } from '../../../Utils/http.services';
+import useSocketIsConnected from '../../Hooks/socketHooks'
 import socket from '../../Socket/socket';
+import { getProducts } from '../../../Utils/http.services';
 import './product.css';
 
 
 export default function LandingProducts(props) {
-
     const [products, setProducts] = useState([]);
+    const socketIsConnected = useSocketIsConnected();
 
-    const [socketConnected, setSocketConnected] = useState(false);
     useEffect(()=> {
-
         let mounted = true;
 
-        async function getAllProducts() {
-
-            try {
-
-                const productsResponse = await getProducts();
-
-                const products = productsResponse.data;
-
-                setProducts(products)
-
-            } catch(err) {
-
-                console.error(err.stack)
-
-            }
-
+        if (socketIsConnected && mounted) {  
+            getAllProducts(setProducts);
         }
-
-        if (socket.connected) {
-
-            setSocketConnected(true)
-           
-        } else {
-
-            socket.on('connect', ()=> {
-
-                setSocketConnected(true)
-               
-            })
-
-        }
-
-        if (socketConnected && mounted) {
-           
-            getAllProducts();
-
-        }
-   
-        
-
         return ()=> {
-
-            mounted = false;
-            
+            mounted = false;   
         }
-
-    }, [socketConnected]);  
+    }, [socketIsConnected]);  
 
     useEffect(()=> {
-
         let mounted = true;
-
-        async function getAllProducts() {
-
-            try {
-
-                const productsResponse = await getProducts();
-
-                const products = productsResponse.data;
-
-                setProducts(products)
-
-            } catch(err) {
-
-                console.error(err.stack)
-
-            }
-
-        }
 
         socket.on('productDataChange', function() {
-
             if (mounted) {
-
-                getAllProducts();
-
+                getAllProducts(setProducts);
             } 
-
         });
-
-
         return ()=> {
-
-            mounted = false;
-            
+            mounted = false;   
         }
+    }, []);
 
-    }, [])
+    async function getAllProducts(setProducts) {
+        try {
+            const { data } = await getProducts();
+            setProducts(data);
+        } catch(err) {
+            console.error(err)
+        }
+    }
    
     return (
-
         <>
-        <div  className="landing-product-heading">
-            <h3>Products</h3>
-        </div>
-        <div  className="landing-product-container">
-        {
-
-           products.length > 0 && products.map((product,i) =>
-
-                <DisplayedProduct 
-                key={i} 
-                product={product} 
-                panelClassName="landing-product-panel"
-                productCommentPanelName="landing-product-comment-panel"
-                />
-
-            )
-
-        }
-        </div>
-        <div className="landing-view-products-btn-cntr">
-            <div className="landing-view-products-btn-wrapper">
-            <button><Link to="/products">View more products</Link></button>
+            <div className="landing-product-heading">
+                <h3>Products</h3>
+                <div className="landing-view-products-btn-wrapper">
+                    <button>
+                        <Link to="/products">View more products</Link>
+                        <FiArrowRight className="landing-view-products-btn-icon"/>
+                    </button> 
+                </div>
             </div>
-        </div>
+            <div className="landing-product-container">
+            {
+                products.length > 0 && products.map((product, i) =>
+                    <DisplayedProduct 
+                    key={ i } 
+                    product={ product } 
+                    panelClassName = "landing-product-panel"
+                    productCommentPanelName = "landing-product-comment-panel"
+                    />
+                )
+            }
+            </div>
         </>
-
     )
-
 }
