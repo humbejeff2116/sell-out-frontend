@@ -2,33 +2,45 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GoKebabVertical } from 'react-icons/go';
-import { ModalBox } from '../ModalComments/modalComments';
+import { ModalBox } from '../ModalReviews/modalReviews';
 import {
     reduceCartProductActionPayload,
     addCartProductQuantityActionPayload,
     removeFromCartActionPayload,
 } from '../../Context/Cart/cartPayloads';
 import { Price } from '../Product/product';
+import EmptyState, { EmptyStateButton } from '../EmptyState/emptyState';
 import useCartContext from '../../Context/Cart/cartContext';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar4.png';
 import image2 from '../../Images/product3.webp';
+import bell from '../../Images/bell3.png';
 import './cart.css';
 
-export default function Cart() {
+export default function Cart({ 
+    dontShowHeading,
+    emptyCartHref,
+    emptyCartContainerClassName,
+    ...props 
+}) {
     const { cartItems, cartState } = useCartContext();
     let CartProductsComponent;
     
     if (cartItems.length > 0) {
         CartProductsComponent = (
-           <CartProductsWrapper cartData = { cartState } />
+           <CartProductsWrapper 
+           cartData = { cartState } 
+           dontShowHeading = { dontShowHeading }
+           />
         )
     } else {
         CartProductsComponent = (
-            <EmptyCart/>
+            <EmptyCart
+            href = { emptyCartHref }
+            emptyCartContainerClassName ={ emptyCartContainerClassName }
+            />
         )
     }
-
     return (
         <div className="cart-container">
             { CartProductsComponent }
@@ -36,7 +48,7 @@ export default function Cart() {
     )
 }
 
-function CartProductsWrapper({ cartData }) {
+function CartProductsWrapper({ dontShowHeading, cartData }) {
     const [showCartModal, setShowCartModal] = useState(false);
     const [offlinePaymentMethod, setOfflinePaymentMethod] = useState(false);
     const [confirmOfflinePaymentMethod, setConfirmOfflinePaymentMethod] = useState(false);
@@ -45,7 +57,7 @@ function CartProductsWrapper({ cartData }) {
     const [placedOrderSuccess, setPlacedOrderSuccess] = useState(false);
     const [redirect, setRedirect] = useState("");
     const { cartState, cartItems, totalSum } = useCartContext();
-    const { user } = useAuth();
+    const { user, userIsLoggedIn, setOutsideLoginPopUpMessage } = useAuth();
     let CheckoutModalChildComp;
 
     useEffect(()=> {
@@ -56,7 +68,6 @@ function CartProductsWrapper({ cartData }) {
                         cartState,
                         currentUser: user,
                     }
-    
                     localStorage.setItem(`${user.userEmail}-cart`, JSON.stringify(currentCartState));
                 } else {
                     localStorage.removeItem(`${user.userEmail}-cart`);
@@ -74,6 +85,15 @@ function CartProductsWrapper({ cartData }) {
     }
 
     const openCartModal =() => {
+        if (!userIsLoggedIn) {
+            const message = {
+                type: "unAuthenticated",
+                show: true,
+                message: "Hi, kindly login to checkout in a more secured environment"
+            }
+            setOutsideLoginPopUpMessage(message, true);
+            return;
+        }
         setShowCartModal(true);
     }
 
@@ -138,9 +158,13 @@ function CartProductsWrapper({ cartData }) {
                 )
             }
             <div className="cart-products-container">
-                <div className="cart-header">
-                    <h3>Cart</h3>
-                </div>
+                {
+                    dontShowHeading ? ""  : (
+                        <div className="cart-header">
+                            <h3>Cart</h3>
+                        </div>
+                    )
+                }
                 <div className="cart-products-panel">
                 { 
                     cartData.map(({ products, ...rest }) => (
@@ -218,7 +242,13 @@ function CheckoutOfflinePaymentMethod({ goBack, confirmOfflinePayment }) {
     )
 }
 
-function ConfirmOfflinePaymentOrder({ placingOrder, placedOrderSuccess, goBack, placeorder, ...props }) {
+function ConfirmOfflinePaymentOrder({ 
+    placingOrder, 
+    placedOrderSuccess, 
+    goBack, 
+    placeorder, 
+    ...props 
+}) {
     let ConfirmOfflinePaymentOrderComp;
 
     if (placingOrder) {
@@ -311,10 +341,8 @@ function CartProduct({ product, ...props }) {
         if (percentageOff) {
             const percentOffPrice = (percentageOff / 100) * Number(productPrice)
             const newPrice = Number(productPrice) - percentOffPrice;
-
             return ( newPrice *  productQty).toFixed(2, 10)    
         } 
-
         return (productPrice *  productQty).toFixed(2, 10)
     }
 
@@ -379,7 +407,11 @@ function CartProduct({ product, ...props }) {
     )
 }
 
-function CartProductProfile({ sellerProfileImage, sellerName, ...props}) {
+function CartProductProfile({ 
+    sellerProfileImage, 
+    sellerName, 
+    ...props
+}) {
     return (
         <div className="cart-product-avatar-Wrapper">
             <div className="cart-product-avatar" >
@@ -421,22 +453,26 @@ function CartCheckoutComp({ onClick }) {
     )
 }
 
-function EmptyCart(props) {
+function EmptyCart({ 
+    emptyCartContainerClassName,
+    href,  
+    ...props
+}) {
+    const containerClassName = emptyCartContainerClassName ? emptyCartContainerClassName : "emptyContainer";
+    const linkTo = href ? href : "/home"
     return (    
-        <div className="empty-cart-container">
-            <div className="cart-header">
-                <h3>Cart</h3>
-            </div>
-            <div className="empty-cart-body">
-                <div className="empty-cart-content">
-                    <p> It seems you have no items in your cart at the moment.</p>
-                </div>
-                <div className="empty-cart-button">
-                    <div className="empty-cart-button-wrapper">
-                        <Link to="/home"><button> Let's Go Shopping</button></Link>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <EmptyState
+        emptyContainerClassName = { containerClassName }
+        imageSrc = { bell }
+        imageAlt = "Illustration of an empty cart"
+        heading ="No Products In cart"
+        writeUp ="You have no products in your cart at the moment"
+        >
+            <EmptyStateButton
+            useLinkButton
+            emptyStateButtonText="View products"
+            href = { linkTo }
+            />
+        </EmptyState>
     )
 }
