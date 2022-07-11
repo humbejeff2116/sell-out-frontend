@@ -6,16 +6,20 @@ import {  Redirect } from 'react-router-dom';
 export default function  RequireViewStateAuthentication(RequireAuthentication, Component) {
     function AuthenticatedComponent(props) {
         const { viewState } = useViewContext();
-        let AuthComponent = RequireAuthentication(Component);
+        let AuthComponent = RequireAuthentication ?  RequireAuthentication(Component) : Component;
         
+        if (!RequireAuthentication && !viewState) {
+            return (
+                <Redirect to ='/products'/>
+            )
+        }
         if (!viewState) {
             return (
-                <Redirect to='/home' />
+                <Redirect to='/home'/>
             ) 
         }
-
         return (
-           <AuthComponent {...props} />
+           <AuthComponent {...props}/>
         )
     }
 
