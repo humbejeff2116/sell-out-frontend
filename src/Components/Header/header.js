@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { BiSearch, BiMenu } from "react-icons/bi";
 import { NotificationAlert } from '../NotificationsDropdown/notifications';
 import useCartContext from '../../Context/Cart/cartContext';
@@ -12,13 +12,17 @@ const mainLinks = Links.getMainLinks();
 
 export default function Header({ dontShowMainNav, ...props }) {
     return (
-        <header className="header-container" >
+        <header className="header-container">
             <section className="header-logo">
-                <div className="header-logo-img"><img src={ fling } alt="fling"/></div>
+                <div className="header-logo-img">
+                    <Link to="/">
+                        <img src={ fling } alt="Fling"/>
+                    </Link>
+                </div>
             </section>
             <section className="header-main-navigation">
             { 
-                (dontShowMainNav) ? '' : ( 
+                dontShowMainNav ? '' : ( 
                     <MainNavigation mainLinks={ mainLinks }/>
                 ) 
             }
@@ -59,7 +63,7 @@ function MainNavigation({ mainLinks, ...props }) {
         <nav>
         {
             mainLinks?.map((link, i) =>
-                <NavLinks key = { i } { ...link } />
+                <NavLinks key = { i } { ...link }/>
             )
         }
         </nav>
@@ -73,11 +77,6 @@ function NavLinks({ name, href, icon, ...props }) {
     if (name.toLowerCase() === "cart") {
         Component = (
             <div className="main-nav-item" >
-                {
-                    cartTotalNumberOfProducts > 0  && ( 
-                        <NotificationAlert className="header-notifications-icon-alert"/> 
-                    )
-                }
                 <NavLink
                 exact 
                 to={ href } 
@@ -85,11 +84,15 @@ function NavLinks({ name, href, icon, ...props }) {
                 className="main-nav-link" 
                 title={ name } 
                 >
-                    <i>{ icon }</i> 
+                {
+                    cartTotalNumberOfProducts > 0  && ( 
+                        <NotificationAlert className="header-notifications-icon-alert"/> 
+                    )
+                }
+                { icon } 
                 </NavLink> 
             </div>
         )
-
     } else if (name.toLowerCase() === "orders") {
         // TODO... implement new order alert functionality
         Component = (
@@ -101,7 +104,7 @@ function NavLinks({ name, href, icon, ...props }) {
                 className="main-nav-link" 
                 title={ name } 
                 >
-                    <i>{ icon }</i> 
+                    { icon } 
                 </NavLink> 
             </div>
         )
@@ -115,12 +118,11 @@ function NavLinks({ name, href, icon, ...props }) {
                 className="main-nav-link" 
                 title={ name } 
                 >
-                    <i>{ icon }</i> 
+                    { icon }
                 </NavLink> 
             </div>
         )
     }
-    
     return (
         <>
             { Component }
