@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { DisplayedProduct } from '../Product/product';
-import useAuth from '../../Context/context';
 import { getSellerProducts } from '../../Utils/http.services';
 import styles from './BottomProducts.module.css';
 
@@ -91,15 +90,17 @@ const mockProducts = [
 ];
 
 
-export default function BottomProductsWrapper({ viewState, ...props }) {
+export default function BottomProductsWrapper({ 
+    usedOutsideLogin,
+    viewState, 
+    ...props 
+}) {
     const [showStoreProducts, setShowStoreProducts] = useState(true);
     const [showSimilarProducts, setShowSimilarProducts]= useState(false);
     const [storeProducts, setStoreProducts] = useState([]);
     const [similarProducts, setSimilarProducts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
-    const{ user } = useAuth();
-    const { brandName, fullName } = user;
 
     useEffect(() => {
         const getBottomProducts = async (queryData) => {
@@ -120,7 +121,6 @@ export default function BottomProductsWrapper({ viewState, ...props }) {
                 setSimilarProducts(similarProducts);
                 setLoading(false);
             } catch(err) {
-                // alert(JSON.stringify(err, null, 2))
                 console.error(err);
                 setError({
                     exist: true,
@@ -137,7 +137,6 @@ export default function BottomProductsWrapper({ viewState, ...props }) {
                 userEmail,
                 productCategory,
             }
-
             return getBottomProducts(queryData);
         }
     }, [viewState]);
@@ -152,7 +151,6 @@ export default function BottomProductsWrapper({ viewState, ...props }) {
         setShowSimilarProducts(true);
     }
 
-
     const storeProductsTabHeaderClassName = showStoreProducts ? (
         `${styles.bottomProductsTabHeader} ${styles.tabsHeaderActive}`
     ) : (
@@ -164,6 +162,7 @@ export default function BottomProductsWrapper({ viewState, ...props }) {
     ) : (
         `${styles.bottomProductsTabHeader}` 
     )
+    const { userName, brandName } = viewState
 
     return (
         <div className={ styles.bottomPoductsWrapper }>
@@ -172,36 +171,33 @@ export default function BottomProductsWrapper({ viewState, ...props }) {
                 className = { storeProductsTabHeaderClassName } 
                 onClick = { showStoreProductsTab }
                 >
-                    {/* Breeze Collections */}
-                    { brandName ?? fullName }
+                    { brandName ?? userName }
                 </div>
-
                 <div 
                 className = { similarProductsTabHeaderClassName } 
                 onClick ={ showSimilarProdcutsTab }
                 >
                     Similar Products
                 </div>
-
-                <div className = { styles.bottomProductsEmptyTabHeader } >
-                   
+                <div className = { styles.bottomProductsEmptyTabHeader } >  
                 </div>
-
             </div>
-
             <div className={ styles.bottomPoductsContainer }>
             {
                 loading? "loading" : showStoreProducts ? (
                     <BottomProducts
-                    usedFor = "store"
+                    usedForUserProducts
                     products = { storeProducts.length > 0 ? storeProducts : mockProducts }
                     error = { error }
+                    productUsedOutsideLogin = { usedOutsideLogin }
+                    brandName = { brandName ?? userName }
                     />
                 ) : (
                     <BottomProducts
-                    usedFor = "similarProducts"
+                    usedForSimilarProducts
                     products = { similarProducts }
-                    error = { error } 
+                    error = { error }
+                    productUsedOutsideLogin ={ usedOutsideLogin }
                     />
                 )
             }
@@ -210,7 +206,15 @@ export default function BottomProductsWrapper({ viewState, ...props }) {
     )
 }
 
-function BottomProducts({ products, error, usedFor, brandName, ...props }) {
+function BottomProducts({ 
+    productUsedOutsideLogin,
+    products, 
+    error,
+    usedForUserProducts,
+    usedForSimilarProducts, 
+    brandName, 
+    ...props 
+}) {
     
     // if (error.exist) {
     //     return (
@@ -220,20 +224,23 @@ function BottomProducts({ products, error, usedFor, brandName, ...props }) {
     //         </div>
     //     )
     // }
-    if (products && products.length < 1 && usedFor.toLowerCase() === ("store").toLowerCase()) {
-        return (
-            <div className={ styles.bottomProductsEmpty }>
-                { brandName || "Breeze" } has no other products for sale at the moment
-                
-            </div>
-        )
-    } else if (products && products.length < 1 && usedFor.toLowerCase() === ("similarProducts").toLowerCase()) {
-        return (
-            <div className={ styles.bottomProductsEmpty }>
-                {/* There are no similar products for sale at the moment */}
-                We couldnt find any similar products at the moment
-            </div>
-        )
+    if (products && products.length < 1 ) {
+        if (usedForUserProducts) {
+            return (
+                <div className={ styles.bottomProductsEmpty }>
+                    { brandName } has no other products for sale at the moment
+                    
+                </div>
+            )
+        }
+        if (usedForSimilarProducts) {
+            return (
+                <div className={ styles.bottomProductsEmpty }>
+                    {/* There are no similar products for sale at the moment */}
+                    We couldnt find any similar products at the moment
+                </div>
+            )
+        }
     }
     return (
         <div className={ styles.bottomProductsWrapper }>
@@ -243,6 +250,7 @@ function BottomProducts({ products, error, usedFor, brandName, ...props }) {
                 key = { i }  
                 product = { product } 
                 panelClassName={ styles.bottomProductsPanel }
+                productUsedOutsideLogin = { productUsedOutsideLogin }
                 />
             )
         }
