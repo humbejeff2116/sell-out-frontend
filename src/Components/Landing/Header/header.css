@@ -3,15 +3,22 @@
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top:4%;
-    min-height: 8vh;
-    border:1px solid var(--prim-border-color);
+    margin-top: 4%;
+    min-height: 3.35rem;
+    border: 1px solid var(--prim-border-color);
     border-radius: 4px;
-    width:90%;
-    margin-left:auto;
-    margin-right:auto;
-    background-color: var(--bg-color);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--background-color);
     z-index: 1;
+    transition: all 0.3s ease-in-out;
+}
+
+.scrolled{
+    width: 100%;
+    position: sticky;
+    top: 0;
 }
 
 .landing-header-logo{
@@ -21,7 +28,6 @@
     flex-direction: column;
     justify-content: center;
     padding-left: 2%;
-
 }
 
 .landing-header-logo-img{
@@ -29,8 +35,6 @@
     width: 59px;
     height: 24px;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;  
 }
 
 .landing-header-logo-img img{
@@ -42,39 +46,36 @@
     width:100%;
     /* border: 1px solid black; */
     display:flex;
-    flex-direction: row;
 }
 
 .landing-header-navigation nav{
     width:100%;
     /* border: 1px solid yellow; */
     display:flex;
-    flex-direction: row;
     justify-content: center;
-
 }
 .landing-nav-item{
     /* border: 1px solid black; */
     display:flex;
     justify-content: center;
-    width:15%;
-    font-weight: 600;
+    min-width: 18%;
 }
 
 .landing-nav-link{   
     display:flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
+    /* word-break: normal; */
     text-decoration: none;
     transition:all 0.3s ease;
     /* border-bottom: 1px solid var(); */
-    border-bottom: 3px solid var(--bg-color);
-    padding:0 5%;
+    border-bottom: 2px solid var(--bg-color);
+    /* padding:0 5%; */
     color: var(--color);
 }
 
 .landing-nav-link:hover{   
-    border-bottom: 3px solid var(--color);
+    border-bottom: 2px solid var(--color);
     color: var(--color);
 }
 
@@ -88,7 +89,7 @@
 
 .landing-nav-link-active{
     color: var(--color);
-    border-bottom: 3px solid var(--color);
+    border-bottom: 2px solid var(--color);
 }
 
 .landing-header-login{
@@ -152,19 +153,6 @@
 }
 
 @media only screen and (max-width:500px) {
-
-    .landing-header{
-        margin-top:0%;
-        margin-left:0;
-        margin-right:0;
-        min-height: 8vh;
-        /* border: 1px solid blue; */
-        border:1px solid var(--prim-boder-color);
-        box-shadow:0 0 8px var(--box-shadow-color);
-        width:100%;
-        position: fixed;
-        top: 0;
-    }
 
     .landing-header-navigation{
         display:none;
