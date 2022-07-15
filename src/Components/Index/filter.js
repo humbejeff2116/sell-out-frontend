@@ -3,37 +3,15 @@ import { RiListSettingsFill } from 'react-icons/ri';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { BiFilter } from 'react-icons/bi';
 import { Sort } from '../Reviews/reviews';
+import useProductsContext from '../../Context/Products/context';
 import Links from '../../Data/links';
 import styles from './Filter.module.css';
 
 
-    const filterButtons = {
-        usageOptions : [
-            {name:'Usage', value: 'all'},
-            {value: 'New'},
-            { value: 'Fairly used'},
-            { value: '1 year+'},
-            { value: '2 years+'},
-            { value: 'Others'},
-        ],
-        genderOptions : [
-            {name:'Gender', value: 'all'},
-            {value: 'Female'},
-            { value: 'Male'},
-        ],
-        categoryOptions : [
-            {name:'Category', value: 'all'},
-            {value: 'Electronics '},
-            { value: 'Clothes'},
-            { value: 'Accessories'},
-            { value: '2 years+'},
-            { value: 'Others'},
-        ],
-    }
 
-    const clothingLinks = Links.getClothingLinks();
-    const maleClothingLinks = Links.getMaleClothingLinks();
-    const clothingTabs = Links.getClothingTabs();
+const clothingTabs = Links.getClothingTabs();
+const productUsageLinks = Links.getProductsUsage();
+const productsCategoryLinks = Links.getProductsCategory();
 
 export default function FilterComponent({ 
     filterType, 
@@ -97,7 +75,7 @@ function SearchFilterMenu({ showChild,...props }) {
             {/* category */}
             <div className={ styles.filterChildContainer }>
                 <FilterLinks
-                links = { clothingLinks }
+                links = { productsCategoryLinks }
                 title = "Category"
                 />
             </div>
@@ -129,35 +107,64 @@ function ProductsFilterMenu({ ...props }) {
     return (
         <div className={ styles.filterWrapper }>
             <FilterLinks
-            links = { clothingLinks }
+            links = { productsCategoryLinks }
             title = "Category"
             />
             <FilterLinks
-            links = { clothingLinks }
+            links = { productUsageLinks }
             title = "Usage"
             />
             <FilterTabs
-            title= "Clothings"
+            title= "Clothing"
             tabs = { clothingTabs }
             />
         </div>
     )
 }
 
-function FilterLinks({ links, title }) {
+
+function FilterLinks({ links, title, dontShowTitle }) {
     return (
         <div className={ styles.linksContainer }>
-            { title || '' }
+            { dontShowTitle ? '' : title  }
             <div className={ styles.categoryLinks }>
             {
-                links.map(({href, name, icon, ...rest}, i) =>
-                    <div className={ styles.categoryLinksItem }>
-                        { icon }<span>{ name }</span> 
-                    </div>  
+                links.map((link, i) =>
+                    <FilterLink
+                    {...link}
+                    title = { title }
+                    key={i}
+                    />  
                 )
             }
             </div>
         </div>
+    )
+}
+
+function FilterLink({ 
+    title, 
+    name,
+    type, 
+    icon, 
+    ...props 
+}) {
+    const { productsFilter, setProductsFilter } = useProductsContext(); // productsFilter -> ({type, filter})
+
+        const linkClassName = (
+            productsFilter?.val === name && productsFilter?.type.toLowerCase() === type.toLowerCase()
+        )  ? (
+        `${styles.categoryLinksItem} ${styles.categoryLinksItemActive}`
+    ) : (
+        `${styles.categoryLinksItem}`
+    )
+    return (
+        <div 
+        className={ linkClassName }
+        onClick={ ()=> setProductsFilter(title, name) }
+        >
+            { icon }<span>{ name }</span> 
+        </div> 
     )
 }
 
@@ -200,12 +207,14 @@ function FilterTabs({ title, tabs, ...props }) {
             </div>
             <FilterLinks
             links = { tabLinks }
+            title= { title }
+            dontShowTitle
             />
         </div>
     )
 }
 
-function Tab({ id, icon, name, viewedTabId, ...props }) {
+function Tab({ title, id, icon, name, viewedTabId, ...props }) {
     const tabClassName = viewedTabId === id ? (
         `${styles.categoryLinksItem} ${styles.categoryTab} ${styles.categoryTabActive}`
     ) : (
