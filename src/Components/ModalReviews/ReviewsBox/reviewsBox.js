@@ -1,21 +1,24 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { BiSend } from 'react-icons/bi'
+import { Loader } from '../../Loader/loader';
+import { ReviewsHeader, Review } from '../../Reviews/reviews';
+import EmptyState, { ErrorState } from '../../EmptyState/emptyState';
 import socket from '../../Socket/socket';
 import useAuth from '../../../Context/context';
 import { getProductReviews } from '../../../Utils/http.services';
-import { Loader } from '../../Loader/loader';
-import { ReviewsHeader, Review } from '../../Reviews/reviews';
+import bell from '../../../Images/bell3.png';
 import styles from './ReviewsBox.module.css';
 
 
-export function ReviewsBox(props) {
+export function ReviewsBox({ getReviews, reviewsBoxPanelClassName, product,   ...props }) {
     const [reviewValue, setReviewValue] = useState('');
     const [reviewError,  setReviewError] = useState(null);
     const [productReviews, setProductReviews] = useState(null);
-    const [productReviewsError, setProductReviewsError] = useState(false)
+    const [productReviewsError, setProductReviewsError] = useState(false);
     const { user } = useAuth();
-    const { reviewsBoxPanelClassName, product } = props;
-    const textBox = React.createRef();
+    const textBox = useRef();
+    const { productId } = product;
     let ReviewsPanel;
 
     useEffect(() => {
@@ -23,44 +26,33 @@ export function ReviewsBox(props) {
     }, [textBox]);
 
     useEffect(() => { 
-        getCurrentProductReviews(product.productId) 
-    }, [product]);
+        if (getReviews) getCurrentProductReviews(productId); 
+    }, [productId, getReviews]);
 
     useEffect(() => { 
         let mounted = true;
-
         socket.on('reviewDataChange', function() {
-            if (mounted) {
-                getCurrentProductReviews(product.productId)
-            } 
+            if (mounted) getCurrentProductReviews(productId);
         })
-
-        return ()=> {
-            mounted = false;
-        }
-    }, [product]);
+        return ()=> mounted = false;
+    }, [productId]);
 
     const makeReview = (product, user, reviewMessage) => {
         const message = reviewMessage.toString().trim();
-
         if (!message.length) {
             textBox.current.focus();
             return setReviewError('please type in a review') 
         }
-
         const data = {
             product: product,
             user: user,
             reviewMessage: reviewMessage
         }
-
         socket.emit('reviewProduct', data);
         textBox.current.value = '';
     }
 
-    const handleInputChange = e => {
-        setReviewValue( e.target.value )
-    }
+    const handleInputChange = e => setReviewValue(e.target.value);
 
     const getCurrentProductReviews = async (productId) => {
         try {
@@ -71,83 +63,79 @@ export function ReviewsBox(props) {
         }    
     }
 
-    if (!productReviews) {
+    if (!getReviews) {
+        ReviewsPanel = ""    
+    } else if (!productReviews) {
         ReviewsPanel = (    
             <Loader 
-            loaderContainer = { styles.container }
+            loaderContainer = { styles.loaderContainer }
             loader = { styles.loader }
             />
         )    
     } 
-    // else if (productReviews.length < 1) {
-    //     ReviewsPanel = (
-    //         <EmptyReviews/>
-    //     )
-    // } else if (productReviewsError) {
-    //     ReviewsPanel = (
-    //         <div>Error</div>
-    //     )
-    // }
+    else if (productReviews.length < 1) {
+        ReviewsPanel = (
+            <EmptyState
+            imageSrc = {bell} //TODO... return appropraite image
+            heading = "No Reviews"
+            writeUp = "Product has no reviews at the moment"
+            />   
+        )
+    } else if (productReviewsError) {
+        ReviewsPanel = (
+            <ErrorState
+            imageSrc = {bell} //TODO... return appropraite image
+            heading = "An Error Has Occured"
+            writeUp = {
+                `Something went wrong while getting reviews, 
+                but its not your fault. Try reloading`
+            }
+            reloadContent = { ()=> getCurrentProductReviews(productId) }
+            />
+        )
+    }
      else {
         ReviewsPanel = (
-            < ReviewsWrapper
+            <ReviewsWrapper
             productReviews = { productReviews }
             />
         )
     }
 
     return (
-        <div className={reviewsBoxPanelClassName}>
+        <div className={ reviewsBoxPanelClassName }>
             <ReviewsHeader  headerTitle= "Product Reviews"/>
             <div className={ styles.container }>         
-                {/* <div className="product-comment-error">
-                    <div>
-                    {
-                        reviewError && (
-                            <span> {reviewError} </span>
-                        )
-                    } 
-                    </div>
-                </div> */}
                 <div className={ styles.reviewsContainer }>
                     { ReviewsPanel }
                 </div>  
             </div> 
             <div className={ styles.inputContainer }>
-                <textarea placeholder="Type review" name="reviewMessage" onChange={handleInputChange} ref= {textBox} />
-                <div className={ styles.inputBttn } onClick={()=>makeReview(product, user, reviewValue)}>
-                    Send
+                <textarea 
+                placeholder="Type review" 
+                name="reviewMessage" 
+                onChange={ handleInputChange } 
+                ref= { textBox } 
+                />
+                <div className={ styles.inputBttn } onClick={ ()=> makeReview(product, user, reviewValue) }>
+                    <BiSend className={ styles.inputBttnIcon }/>
                 </div>  
             </div>
         </div>  
     )
 }
 
-function ReviewsWrapper(props) {
+function ReviewsWrapper({ productReviews, ...props }) {
     return (
         <>
-        {/* {     
-            (props.productReviews.map((review, i) =>
+        {     
+            productReviews.map((review, i) =>
                 <Review 
                 key = { i } 
-                {...review} 
+                { ...review } 
                 />
-            ))    
-        } */}
-        <Review/>
-        <Review/>
+            )    
+        }
         </>
-    )
-}
-
-
-function EmptyReviews(props) {
-    return (
-        <div>
-            <div>
-                Product has no reviews yet 
-            </div>
-
-        </div>
     )
 }
