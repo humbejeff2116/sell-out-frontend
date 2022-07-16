@@ -1,0 +1,21 @@
+
+.container{
+    border: 1px solid red;
+    padding: 1rem;
+}
+
+.top{
+    /* min-height: 100vh;
+    justify-content: center; */
+    /* border: 2px solid blue; */
+    border: 1px solid red;
+    margin-bottom: 1rem;
+}
+
+.containerChild{
+    border: 2px solid blue;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
