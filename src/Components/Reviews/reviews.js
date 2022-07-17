@@ -1,57 +1,104 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {  IoMdCheckmark } from 'react-icons/io';
 import { TiArrowSortedDown, TiArrowSortedUp } from 'react-icons/ti';
 import { GoSettings } from 'react-icons/go';
+import { reviewsSortData } from '../../Data/data';
 import profileAvatar from '../../Images/avatar4.png';
 import styles from './Reviews.module.css';
+
 
 export default function Reviews({ productReviewsContainer, ...props}) {
     return (
         <div className={ productReviewsContainer || styles.productReviewsContainer }>
-           <div className={ styles.productReviewsHeader }>
-            <div className={ styles.productReviewsHeaderText }>
-                200 shop reviews
-            </div>
-
-            <div className={ styles.productReviewsHeaderSortContainer }>
-                
-                <Sort/>
-            </div>
-            
-           </div>
-
+           <ReviewsHeader  headerTitle= "200 Store Reviews"/>
             <div className={ styles.productReviews }>
                 {/* {
                 props.reviews.map((review, i) => 
                     <Review key={ i } { ...review } />
                 )
             } */}
-
-            <Review />
+                <Review />
            </div>
         </div>
     )
 }
 
-function Sort(props) {
+export function ReviewsHeader({ reviewsHeaderContainerClassName, headerTitle, ...props}) {
+    return (
+        <div className={ reviewsHeaderContainerClassName || styles.productReviewsHeader }>
+            <div className={ styles.productReviewsHeaderText }>
+                { headerTitle }
+            </div>
+            <div className={ styles.productReviewsHeaderSortContainer }>  
+                <Sort/>
+            </div> 
+        </div>
+    )
+}
+
+export function Sort({
+    data, 
+    sortTitle, 
+    sortContainerClass,
+    sortContainerModifyClass,
+    sortContainerOpenClass, 
+    onSelectChange = f => f, 
+    ...props 
+}) {
     const [showMore, setShowMore] = useState(false);
+    const [selectedValue, setSelectedValue] = useState('');
+    let sortContainerClassName;
+    const sortDefault = data ? data[0].name : null;
+    const reviewsDefault = !data ? reviewsSortData[0].name : null 
+
+    useEffect(() => {
+        if (data) {
+            setSelectedValue(data[0].name);
+            return
+        }
+        setSelectedValue(reviewsSortData[0].name);
+    }, [data])
+
     const viewMoreDetails = () => {
         setShowMore(prevState => !prevState)
     }
+
+    const selectOption = (e) => {
+        let value;
+        if (e.target.tagName.toLowerCase() === "div") {
+            value = e.target.firstElementChild.value
+        } else {
+            value = e.target.value
+        }
+        setSelectedValue(value);
+        onSelectChange(value)
+    }
+
     const showMoreIcon = showMore ? ( 
         <TiArrowSortedUp className={ styles.showMoreIcon }/>
     ) : (
         <TiArrowSortedDown className={ styles.showMoreIcon } />
     )
 
-    const sortContainerClassName = showMore ? (
-        `${styles.reviewsSortContainer} ${styles.reviewsSortContainerOpen}`
-    ) : (
-        `${styles.reviewsSortContainer}` 
-    )
+    if (sortContainerOpenClass && sortContainerModifyClass && !sortContainerClass) {
+        sortContainerClassName = showMore ? (
+            `${styles.reviewsSortContainer} ${sortContainerModifyClass} ${sortContainerOpenClass}`   
+        ) : (
+            `${styles.reviewsSortContainer} ${sortContainerModifyClass}` 
+        )
+    }else if (sortContainerClass) {
+        sortContainerClassName = showMore ? sortContainerOpenClass :  sortContainerClass 
+    } else {
+        sortContainerClassName = showMore ? (
+            `${styles.reviewsSortContainer} ${styles.reviewsSortContainerOpen}`   
+        ) : (
+            `${styles.reviewsSortContainer}` 
+        )
+    }
 
-    const sortheaderClassName = showMore ? (
+    const sortHeaderClassName = showMore ? (
         `${styles.reviewsSortHeader} ${styles.reviewsSortHeaderOpen}`
     ) : (
         `${styles.reviewsSortHeader}` 
@@ -65,20 +112,36 @@ function Sort(props) {
     return (
         <div className={ sortContainerClassName }>
             <div className={ styles.reviewsSortWrapper }>
-                <div className={ sortheaderClassName } onClick ={ viewMoreDetails }>
+                <div className={ sortHeaderClassName } onClick ={ viewMoreDetails }>
                     <div className={ styles.sortIconWrapper }>
                         <GoSettings/>
-                        <span>Recomended</span>
+                        <span>{ selectedValue || sortDefault || reviewsDefault }</span> 
                         {showMoreIcon}
-                    </div>
-                    
+                    </div>  
                 </div>
-                
                 <div className={ styles.reviewsSortBodyContainer }>
                     <div className={ reviewSortBodyClassName }>
-                        <div>Recomended <IoMdCheckmark/></div>
-                        <div>Newest <IoMdCheckmark/></div>
-                        <div>Oldest <IoMdCheckmark/></div>
+                    {
+                        data ? (
+                            data.map((child, i) =>
+                                <SortChild 
+                                key = {i} 
+                                {...child}
+                                onClick = { selectOption }
+                                selectedValue = { selectedValue }
+                                /> 
+                            )
+                        ) : (
+                            reviewsSortData.map((child, i) =>
+                                <SortChild 
+                                key = {i} 
+                                {...child}
+                                onClick = { selectOption }
+                                selectedValue = { selectedValue }
+                                /> 
+                            )
+                        )
+                    }    
                     </div>
                 </div>
             </div> 
@@ -86,7 +149,41 @@ function Sort(props) {
     )
 }
 
-function Review(props) {
+Sort.propTypes = {
+    sortTitle: PropTypes.string, 
+    sortContainerClass: PropTypes.string,
+    sortContainerOpenClass: PropTypes.string, 
+    onSelectChange: PropTypes.func, 
+    props: PropTypes.object,
+}
+
+function SortChild({ 
+    onClick,
+    name, 
+    selectedValue,
+    ...props 
+}) {
+    return (
+        <div onClick={ onClick } className={ selectedValue === name ? styles.active : ""}>
+            <option 
+            value= { name }
+            >
+               { name } 
+            </option>
+           { selectedValue === name && <IoMdCheckmark className={styles.sortmarker}/> }
+        </div>
+    )
+}
+
+SortChild.propTypes = {
+    onClick: PropTypes.func,
+    name: PropTypes.string, 
+    selectedValue: PropTypes.string,
+    props: PropTypes.object,
+
+}
+
+export function Review(props) {
     return (
         <div className ={styles.reviewContainer}>
 
