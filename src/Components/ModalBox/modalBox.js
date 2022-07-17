@@ -86,7 +86,7 @@ export function BottomPopUpBox({
 }
 
 BottomPopUpBox.propTypes = {
-    usedFor: PropTypes.bool, 
+    usedFor: PropTypes.string, 
     errorContainerClassName: PropTypes.string,
     messageWrapperClassName: PropTypes.string,
     closeClassName: PropTypes.string,
