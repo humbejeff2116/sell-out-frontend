@@ -1,8 +1,7 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GoKebabVertical } from 'react-icons/go';
-import { ModalBox } from '../ModalReviews/modalReviews';
 import {
     reduceCartProductActionPayload,
     addCartProductQuantityActionPayload,
@@ -16,6 +15,8 @@ import image from '../../Images/avatar4.png';
 import image2 from '../../Images/product3.webp';
 import bell from '../../Images/bell3.png';
 import './cart.css';
+
+
 
 export default function Cart({ 
     dontShowHeading,
@@ -49,16 +50,8 @@ export default function Cart({
 }
 
 function CartProductsWrapper({ dontShowHeading, cartData }) {
-    const [showCartModal, setShowCartModal] = useState(false);
-    const [offlinePaymentMethod, setOfflinePaymentMethod] = useState(false);
-    const [confirmOfflinePaymentMethod, setConfirmOfflinePaymentMethod] = useState(false);
-    const [placingOrder, setPlacingOrder] = useState(false);
-    const [placeOrderUsingOfflinePayment, setPlaceOrderUsingOfflinePayment] = useState(false);
-    const [placedOrderSuccess, setPlacedOrderSuccess] = useState(false);
-    const [redirect, setRedirect] = useState("");
     const { cartState, cartItems, totalSum } = useCartContext();
     const { user, userIsLoggedIn, setOutsideLoginPopUpMessage } = useAuth();
-    let CheckoutModalChildComp;
 
     useEffect(()=> {
         return ()=> {
@@ -76,87 +69,22 @@ function CartProductsWrapper({ dontShowHeading, cartData }) {
         }
     },[cartState, cartItems, user]);
 
-    const closeCartModal = () => {
-        setShowCartModal(false);
-        setOfflinePaymentMethod(false);
-        setConfirmOfflinePaymentMethod(false)
-        setPlacingOrder(false)
-        setPlacedOrderSuccess(false)
-    }
-
-    const openCartModal =() => {
+    const goToCheckout =(e) => {
         if (!userIsLoggedIn) {
+            e.preventDefault();
             const message = {
                 type: "unAuthenticated",
                 show: true,
-                message: "Hi, kindly login to checkout in a more secured environment"
+                // message: "Hi, kindly login to checkout in a more secured environment"
+                message: "Hi, kindly login to perform checkout"
             }
             setOutsideLoginPopUpMessage(message, true);
             return;
         }
-        setShowCartModal(true);
-    }
-
-    const handleOfflinePayment = () => {
-        setOfflinePaymentMethod(true)
-    }
-
-    const handleOnlinePayment = () => {
-        
-    }
-
-    const goBack = () => {
-        setOfflinePaymentMethod(false);
-        setConfirmOfflinePaymentMethod(false)
-    }
-
-    const confirmOfflinePayment= () => {
-        setConfirmOfflinePaymentMethod(true)
-        setOfflinePaymentMethod(false)
-    }
-
-    const placeOrder = () => {
-        // TODO... emit order to server here;
-        setPlacingOrder(true)
-    }
-
-    if (offlinePaymentMethod) {
-        CheckoutModalChildComp = (
-            <CheckoutOfflinePaymentMethod
-            goBack={goBack}
-            confirmOfflinePayment={confirmOfflinePayment}
-            />
-        )
-    } else if(confirmOfflinePaymentMethod) {
-        CheckoutModalChildComp = (
-            <ConfirmOfflinePaymentOrder
-            goBack = { goBack }
-            placeorder = { placeOrder }
-            placingOrder = { placingOrder }
-            placedOrderSuccess = { placedOrderSuccess }
-            />
-        )
-    }else {
-        CheckoutModalChildComp = (
-            <CheckoutModalChild 
-            handleOfflinePayment = { handleOfflinePayment }
-            handleOnlinePayment = { handleOnlinePayment }
-            />
-        )
     }
 
     return (
         <div className="cart-products-wrapper">
-            {
-                (showCartModal) && (
-                    <ModalBox 
-                    handleModal = { closeCartModal } 
-                    modalContainer={"cart-checkout-modal-container"}
-                    >
-                       { CheckoutModalChildComp }
-                    </ModalBox>
-                )
-            }
             <div className="cart-products-container">
                 {
                     dontShowHeading ? ""  : (
@@ -178,130 +106,30 @@ function CartProductsWrapper({ dontShowHeading, cartData }) {
                     ))
                 }
                 </div>
-                <div className="cart-products-total-container">
-                    <div className="cart-products-total-panel">
+                <div className="cart-products-total-panel">
+                    <div className="cart-products-total-checkout">
                         <div className="cart-products-total-amount">
-                            <span className="cart-products-total-amount-span-bold">Total amount: </span> <span> { `£${totalSum}` }</span>
+                            <span className="cart-products-total-amount-span-bold">
+                                Total amount: 
+                            </span> 
+                            <span> 
+                                { ` £${totalSum}` }
+                            </span>
                         </div>
-                        <div className="cart-products-total-checkout">
-                            <button onClick = { openCartModal }>Checkout</button>
-                        </div>
+                        <Link  onClick = { goToCheckout } to="/home/checkout"> 
+                            Checkout
+                        </Link>
                     </div>
                 </div>
             </div>
             <div className="cart-product-checkout">
-                <CartCheckoutComp onClick = { openCartModal }/>
+                <CartCheckoutComp onClick = { goToCheckout }/>
             </div>
-        </div>
-    )
-}
-
-function CheckoutModalChild({ handleOfflinePayment, handleOnlinePayment }) {
-    return (
-        <div className="cart-checkout-modal-body-container">
-            <div className="cart-checkout-modal-content">
-                <p>
-                    How would you like to handle your payment transaction?
-                </p>
-            </div>
-            <div className="cart-checkout-modal-buttons-container">
-                <div className="cart-checkout-modal-button">
-                    <button onClick = { handleOfflinePayment }>Offline</button>
-                </div>
-                <div className="cart-checkout-modal-button">
-                    <Link to="/home/checkout"> 
-                        <button onClick = { handleOnlinePayment }>
-                            Online
-                        </button>
-                    </Link>  
-                </div>
-            </div>
-        </div>
-    )
-}
-
-function CheckoutOfflinePaymentMethod({ goBack, confirmOfflinePayment }) {
-    return(
-        <div className="cart-checkout-modal-body-container">  
-           <div className="cart-checkout-modal-offline-payment-content">
-                <p>
-                   By using the offline payment method, all financial transactions 
-                   related to this order, here off, is solely handled between 
-                   you and the seller('s) outside the knowledge of this platform.
-                </p>
-           </div>
-           <div className="cart-checkout-modal-place-order-button-container">
-                <div className="cart-checkout-modal-place-order-button back">
-                   <button  onClick={ goBack }>Go back</button>
-                </div>
-               <div className="cart-checkout-modal-place-order-button">
-                   <button onClick={ confirmOfflinePayment }>Place Order</button>
-                </div>
-           </div>
-        </div>
-    )
-}
-
-function ConfirmOfflinePaymentOrder({ 
-    placingOrder, 
-    placedOrderSuccess, 
-    goBack, 
-    placeorder, 
-    ...props 
-}) {
-    let ConfirmOfflinePaymentOrderComp;
-
-    if (placingOrder) {
-        ConfirmOfflinePaymentOrderComp = (
-            <PlacingOrder/>
-        )
-    } else if(placedOrderSuccess) {
-        ConfirmOfflinePaymentOrderComp = (
-            <PlacedOrderSuccess/>
-        )
-    } else {
-        ConfirmOfflinePaymentOrderComp = (
-            <>
-                <div className="cart-checkout-modal-offline-payment-content">
-                    <p>
-                        Are you sure you want to place order using offline payment method?
-                    </p>
-                </div>
-                <div className="cart-checkout-modal-place-order-button-container">
-                    <div className="cart-checkout-modal-place-order-button back">
-                        <button  onClick = { goBack }>Go back</button>
-                    </div>
-                    <div className="cart-checkout-modal-place-order-button">
-                        <button onClick = { placeorder }>Place Order</button>
-                    </div>
-                </div>
-            </>
-        )
-    }
-
-    return (
-        <div className="cart-checkout-modal-body-container">
-            { ConfirmOfflinePaymentOrderComp }
-        </div>
-    )
-}
-
-function PlacingOrder(props) {
-    return (
-        <div>placing order...</div>
-    )
-}
-
-function PlacedOrderSuccess(props) {
-    return (
-        <div>
-            Order placed successfully
         </div>
     )
 }
 
 function CartProduct({ product, ...props }) {
-    // const [quantity, setQuantity] = useState(""); 
     const { user } = useAuth();
     const {
         cartState,
@@ -443,9 +271,9 @@ function CartCheckoutComp({ onClick }) {
                 </div>
                 <div className="cart-checkout-button-wrapper">
                     <div className="cart-checkout-button">
-                        <button onClick = { onClick }>
+                        <Link to="/home/checkout" onClick = { onClick }> 
                             Checkout
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
