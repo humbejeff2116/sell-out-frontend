@@ -1,0 +1,8 @@
+
+.formGroup{
+    color: var(--text-color);
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+    font-weight: 510;
+    /* border: 3px solid red; */
+}
