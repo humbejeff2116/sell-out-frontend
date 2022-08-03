@@ -150,13 +150,17 @@ export function Price({ percentageOff, productPrice, className, showPriceTag }) 
         if (!showPriceTag) {
             return (
                 <div className={ priceContainerClass }>
-                    <p> £{ newPrice } { `(${percentageOff}% OFF)` } <span> £{ parseFloat(productPrice).toFixed(2, 10) } </span></p>
+                    <div> 
+                        <span className="price"> £{ newPrice } {`(${ percentageOff }% OFF)` }</span> <span className="original-price">£{ parseFloat( productPrice).toFixed(2, 10) }</span>
+                    </div>
                 </div>
             )
         } else {
             return (
                 <div className={ priceContainerClass }>
-                    <p>Price: <span className="price"> £{ newPrice } { `(${ percentageOff }% OFF)` }</span> <span className="original-price">£{ parseFloat( productPrice).toFixed(2, 10) }</span></p>
+                    <div>
+                        Price: <span className="price"> £{ newPrice } {`(${ percentageOff }% OFF)` }</span> <span className="original-price">£{ parseFloat( productPrice).toFixed(2, 10) }</span>
+                    </div>
                 </div>
             )
         }
@@ -166,13 +170,17 @@ export function Price({ percentageOff, productPrice, className, showPriceTag }) 
         if (showPriceTag) {
              return (
                 <div className={ priceContainerClass }>
-                    <p>Price: <span className="price"> £{ parseFloat(productPrice).toFixed(2, 10) }</span> </p>
+                    <div>
+                        Price: <span className="price"> £{parseFloat(productPrice).toFixed(2, 10)}</span> 
+                    </div>
                 </div>
             )
         } else {
             return (
                 <div className={ priceContainerClass }>
-                    <p> £{ parseFloat(productPrice).toFixed(2, 10) }</p>
+                    <div> 
+                        <span className="price"> £{parseFloat(productPrice).toFixed(2, 10)}</span>
+                    </div>
                 </div>
             )
         }
