@@ -4,21 +4,13 @@ import './leftSideBar.css';
 
 
 export default function LeftSideBar(props) {
-
     let leftSidebarClassName;
-
     if (props.fixed && props.className) {
-
         leftSidebarClassName = `${props.className} fixed`;
-
     } else if(props.fixed && !props.className) {
-
         leftSidebarClassName = `left-side-bar-container fixed`;
-
     } else {
-
         leftSidebarClassName = `left-side-bar-container`;
-
     }
     
     return (
