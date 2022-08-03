@@ -2,10 +2,8 @@
 
 .index-side-nav{
     /* border:1px solid var(--prim-border-color); */
-    border-radius: 6px;
-    display:flex;
+    display: flex;
     flex-direction: column;
-    margin: auto auto;
     width: 100%;
 }
 
@@ -15,46 +13,51 @@
 
 .index-side-nav-link{
     display:flex;
-    flex-direction: row;
     align-items: center;
     text-decoration: none;
     transition:all 0.1s ease;
-    color: var(--color);
-    padding:5% 2%;
-    border-radius: 0 30px 30px 0;
+    color: var(--text-color-opac-8);
+    padding: 0.5rem 0.2rem;
+    border-radius: 0 28px 28px 0;
     height: 100%;
     width: 100%;
     min-height: 7vh;
     font-size: 0.9rem;
+    font-weight: 510;
+    border: 1px solid var(--background-color);
+    border-left: 2px solid var(--background-color);
 }
 
 .index-side-nav-link:hover {
-    background-color:var(--hover-link-bg-color);
+    background-color: var(--hover-link-bg-color);
+    border-left: 2px solid var(--color);
 }
 
 .index-side-nav-item > .index-side-link-active{
     color: var(--color);
-    background-color:var(--active-link-bg-color);
-    font-weight: 550; 
+    background-color: var(--active-link-bg-color);
+    border: 1px solid var(--prim-border-color);
+    border-left: 2px solid var(--color);
+    font-weight: 550;
 }
 
 .index-side-nav-link-open-icon{
     /* border:1px solid green; */
     margin-left: auto;
-    margin-right: 10%;
+    margin-right: 2rem;
     font-size: 1.2rem;
     font-weight:bold;
-   display: none;
-   transition:all 0.1s ease;
+    display: none;
+    transition: all 0.2s ease;
 }
 
 .index-side-nav-link i{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    padding :0.2rem;
+    padding : 0.2rem;
     /* border:1px solid green;  */
-    margin-right: 5%;
+    margin-right: 0.8rem;
 }
 
 .index-side-nav-link:hover .index-side-nav-link-open-icon {
@@ -67,8 +70,7 @@
 
 
 .index-side-nav-icon{
-    width: 1.3rem;
-    height:1.3rem;
+    font-size: 1.3rem;
 }
 
 /* .index-side-nav-accordion-cntr{
@@ -78,7 +80,5 @@
 } */
 
 .index-side-nav-nested-items-container{
-    /* border-bottom:1px solid var(--prim-border-color); */
-    margin-left: auto;
-    margin: 5% 0 0 0;
+    border-left:1px solid var(--prim-border-color);
 }
