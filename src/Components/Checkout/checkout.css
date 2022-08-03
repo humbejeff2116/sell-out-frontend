@@ -1,8 +1,4 @@
 
-
-
-
-
 .checkout-container{
     /* border: 1px solid green;  */
     padding:1%;
@@ -10,93 +6,155 @@
     display: flex;
     flex-direction: column;
 }
+
 .checkout-header{
-    /* width:80%; */
     /* border: 1px solid yellow; */
     display: flex;
     justify-content: center; 
 }
+
 .checkout-header h3{ 
     font-size: 1.2rem;
-    font-weight: bold;
+    font-weight: 550;
     color: var(--text-color);
 }
+
 .checkout-back-button-container{
     /* border: 1px solid black; */
-    padding: 2% 0%;
-    width: 50%;
-    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;;
 }
 
-.checkout-back-button{
-    /* border: 3px solid purple; */
-    width: 15%;
-    /* padding: 1%; */
-}
+/* .checkout-back-button{
+    border: 3px solid purple;
+} */
 .checkout-back-button button{
     color: var(--color);
-    border:1px solid var(--prim-border-color);
-    background-color: var(--light-grey);
-    height:32px;
-    width:100%;
-    border-radius: 4px; 
+    border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%; 
     display:flex;
     justify-content: center;
     align-items: center; 
     cursor: pointer; 
-    transition: all 0.2s ease;
-    font-size:0.8rem;
+    transition: all 0.2s ease-in-out;
+    font-size: 1rem;
 }
+
 .checkout-back-button button:hover{
-    border:1px solid var(--color);
+    box-shadow:  0 0 5px var(--box-shadow-color);
+    transform: scale(1.05);
 }
+
 .checkout-back-button button:focus{
-    outline:none; 
+    transform: scale(1.05);
 }
 
-
-.checkout-body{
-    /* min-height: 60vh; */
+.checkout-payment-options{
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    border: 1px solid var(--prim-border-color);
-    /* box-shadow:0 0 1px var(--box-shadow-color); */
-    border-radius: 6px;
-    padding: 2% 0%;
-    width: 50%;
-    margin: auto auto;
-}
-.checkout-content{
-    /* border: 1px solid red;  */
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 2%;
-    color: var(--text-color);
-    text-align: center;
-    /* border: 1px solid black; */
-}
-.checkout-para{
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
     font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 2%;
     color: var(--text-color);
-    text-align: center;
-    /* border: 1px solid black; */
-    
 }
+
+.checkout-payment-options select{
+    padding: 8px 0;
+    border-radius: 28px;
+    border: 1px solid var(--prim-border-color);
+}
+
+.checkout-body{
+    box-shadow:0 0 1px var(--box-shadow-color);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 65vh;
+    border: 1px solid var(--prim-border-color);
+    border-radius: 4px; 
+}
+
+.checkout-body-child{
+    /* border: 1px solid purple; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.checkout-body-child:last-of-type{
+    border-left: 1px solid var(--prim-border-color);
+}
+
+.checkout-content-wrapper{
+    /* border: 1px solid red; */
+    width: 100%;
+}
+
+.checkout-total-wrapper{
+    display: flex;
+    /* border: 1px solid red;  */
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.checkout-total{
+    border-bottom: 1px solid var(--prim-border-color); 
+    font-size: 0.95rem;
+    font-weight: 510;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.checkout-total > div{
+    color: var(--color);
+    font-weight: normal;
+    font-weight: bold;
+}
+
+/* .checkout-total:last-of-type > div{
+
+} */
+.checkout-text{
+    font-size: 0.95rem;
+    margin: 2% 0;
+    color: var(--text-color-opac-5);
+    /* border: 1px solid black;  */
+}
+
+/* .checkout-or{
+    color: var(--color);
+
+} */
+
 .checkout-button-wrapper{
     /* border: 1px solid black; */
     display: flex;
     justify-content: center;
-
-
 }
+
 .checkout-button{
-    width: 55%;
+    width: 100%;
     /* border: 1px solid green; */
 }
+
 .checkout-button button{
     width: 100%;
     height: 45px;
+    border: none;
+    background-color: var(--color);
+    color: var(--background-color);
+    border-radius: 28px;
 }
