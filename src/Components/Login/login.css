@@ -13,28 +13,23 @@
 }
 
 .login-container{
-    scroll-behavior:smooth;
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     min-height: 60vh;
     border-radius: 6px;
-    border:1px solid var(--prim-border-color);
-    width:65%;
-    margin-left:auto;
-    margin-right: auto;
-    margin-top:10%;
-    margin-bottom: 10%;
+    border: 1px solid var(--prim-border-color);
+    width: 60%;
+    margin: 10% auto;
+    padding: 2rem 3rem;
 }
 
 .login-panel{
+    /* border:1px solid var(--prim-border-color); */
     display:flex;
     flex-direction:column;
-    width:90%;
+    width:100%;
     min-height:50vh;
-    margin-left:auto;
-    margin-right: auto;
-    margin-top:2.5%;
-    margin-bottom:2%;
+    margin: 0 auto;
     position:relative; 
 }
 
@@ -65,9 +60,9 @@
     display: flex;
     justify-content: space-between;
     padding-top: 2.5%;
-    margin-top:2%;
-    margin-bottom:1%;
-    width:99%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    width: 99%;
     /* border:2px solid yellow; */
 }
 
@@ -103,21 +98,19 @@
     outline:none;
     color: var(--text-color);
     border:1px solid var(--prim-border-color);
-    transition: all 0.2s ease;
     caret-color: var(--color);
 }
 
 .login-panel form input:focus{
-    outline: 1px solid var(--text-color);
+    outline: 2px solid var(--color);
 }
 
 .login-panel form input.not-empty{
-    outline: 1px solid var(--text-color);
-    background-color: var(--background-color);
+    outline: 2px solid var(--color);
 }
 
 .login-panel form input.has-error{
-    outline: 1px solid var(--error-color);
+    outline: 2px solid var(--error-color);
 }
 
 .login-forgot-pass{
@@ -126,12 +119,14 @@
 }
 
 .login-forgot-pass span{
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
+    color: var(--text-color-opac-5);
+    cursor:pointer;
 }
 
 .login-forgot-pass span:hover{
    text-decoration: underline;
-   cursor:pointer;
+   color: var(--color);
 }
 
 .login-button{
@@ -140,37 +135,35 @@
 }
 
 .login-panel button{
-    width:100%;
+    width: 100%;
     height: 45px;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 0.95rem;
+    font-weight: 600;
     transition:all 0.3s ease-in-out;
-    cursor:pointer;
+    cursor: pointer;
     border-radius: 4px;
-    border:1px solid var(--color);
-    background-color: var(--color);
-    color: #ffffff;  
+    border: none;
+    background-color: var(--color-opac-7);
+    color: var(--background-color);  
 }
 
 .login-panel button:hover{
-    border:1px solid var(--opaque-color);
-   background-color: var(--opaque-color); 
+   background-color: var(--color); 
 }
 
 .login-panel button:focus{
-    outline: 1px solid var(--outline-color); 
+    outline: 2px solid var(--prim-border-color); 
 }
 
 /* sign up panel */
 .login-signup-panel{
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    width:90%;
-    margin-left:auto;
+    width: 100%;
+    margin-left: auto;
     margin-right: auto;
     /* border:1px solid red; */
-    margin-bottom:2%;
 }
 
 .signup-link{
@@ -182,55 +175,46 @@
 
 .signup-link-text{
     /* border:1px solid green; */
-    /* width:50%;    */
-    margin-right: 2%;
+    margin-right: 0.4rem;
 }
 
 .signup-link-text p{
     text-align: center; 
-    color: var(--text-color);
+    color: var(--text-color-opac-5);
 }
 
 .signup-link-button{
     /* border:1px solid green; */
     display:flex;
-    flex-direction: row;
-    justify-content: flex-end;
     align-items: center;
-    width:25%;
 }
+
+.signup-link-icon{
+    font-size: 1.2rem;
+    margin-right: 0.3rem;
+}
+
 
 .signup-link-button a{
-    /* border:1px solid #222; */
-    width:100%;
-    /* margin:0 auto 0 auto; */
-    cursor:pointer;
-}
-
-.signup-link-button button{
-    height:42px;
-    width:100%;
-    cursor:pointer;
-    font-size: 0.9rem;
-    font-weight: bold;
-    border:none;
-    border-radius: 4px;
-    border:1px solid var(--text-color);
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 1rem;
+    /* border: 1px solid var(--background-color); */
+    border-radius: 28px;
+    background-color: var(--background-color);
+    color: var(--color);
     transition: all 0.3s ease;
 }
 
-.signup-link-button button:hover{  
-    border:1px solid var(--text-color);
-    background-color: var(--text-color);
-    color: #ffffff;
+.signup-link-button a:hover{  
+    background-color: var(--active-link-bg-color);
+    text-decoration: underline;
 }
 
-.signup-link-button button:focus{
-    outline: 1px solid var(--opaque-color);  
-}
 
 @media only screen  and (max-width: 910px) {
     .login-container{
