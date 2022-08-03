@@ -1,14 +1,9 @@
 
-
-
-
 .slimFooterContainer{
-    /* width: 100%; */
     /* border: 3px solid red; */
     display: flex;
     justify-content: space-between;
-    color: var(--text-color-opac-8);
-    /* margin-left:18%; */
+    color: var(--text-color-opac-5);
     margin: 1% 0 1% 18%;
 }
 
@@ -20,7 +15,6 @@
 .landingFooterNav{
     /* border: 1px solid green; */
     display: flex;
-    /* justify-content: space-between; */
 }
 
 .landingFooterCountrySection{
@@ -35,7 +29,6 @@
 
 .landingFooterItem{
     padding: 0 0.8rem;
-    color: var(--text-color-opac-6);
     font-size: 0.84rem;
     display: flex;
     justify-content: center;
@@ -43,16 +36,15 @@
 }
 
 .nav{
-    /* border-left: 1px solid var(--text-color-opac-6); */
     border-left: 1px solid var(--prim-border-color);
 }
 
 .landingFooterItem a{
    text-decoration: none;
-   color: var(--text-color-opac-6);
+   color: var(--text-color-opac-5);
 }
 
 .landingFooterItem a:hover{
     text-decoration: underline;
-    color: var(--text-color);
+    color: var(--color);
 }
