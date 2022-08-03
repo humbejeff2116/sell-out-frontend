@@ -2,6 +2,7 @@
    import React, { useState } from 'react';
    import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
    import { ImWarning } from 'react-icons/im';
+   import { RiUserAddLine } from 'react-icons/ri';
    import { Formik, Form } from 'formik';
    import * as Yup from 'yup';
    import { TextInput, PasswordInput } from '../Formik/formik';
@@ -141,7 +142,10 @@ export default function Login() {
                             <p>Dont have an account yet? </p>
                         </div>
                         <div className="signup-link-button">
-                            <Link to="/signup"><button> sign up </button></Link>
+                            <Link to="/signup">
+                                <RiUserAddLine className="signup-link-icon"/>
+                                Sign up
+                            </Link>
                         </div>  
                     </div>    
                 </div>
