@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { GoKebabVertical } from 'react-icons/go';
+import { RiDeleteBin2Line } from 'react-icons/ri';
 import {
     reduceCartProductActionPayload,
     addCartProductQuantityActionPayload,
@@ -15,7 +16,6 @@ import image from '../../Images/avatar4.png';
 import image2 from '../../Images/product3.webp';
 import bell from '../../Images/bell3.png';
 import './cart.css';
-
 
 
 export default function Cart({ 
@@ -177,57 +177,55 @@ function CartProduct({ product, ...props }) {
     return (
         <div className="cart-product-panel">
             <CartProductProfile { ...props } />
-            <div className="cart-product-images-panel">
-                <div className="cart-product-images">
+            <div className="cart-product-details-panel">
+                <div className="cart-product-image-container">
                 {
                     [product.productImages[0]].map((image, i) =>
-                        <div key = { i } className="cart-product-image-group">
+                        <div key = { i } className="cart-product-image-wrapper">
                             <img src = { image.src || image2 } alt="product" />
                         </div>
                     )
                 }
                 </div>
                 {/* product information */}
-                <div className="cart-product-info" >
-                    <div className="cart-product-info-span-group">
-                        <p>
-                        { product.productName }
-                        </p>
+                {/* TODO... extract */}
+                <div className="cart-product-details-container" >
+                    <div className="cart-product-details-child">
+                        <div>{ product.productName }</div>
                     </div>
-                    <Price {...product} className="cart-product-info-span-group" showPriceTag = { true } />
-                    <div className="cart-product-info-span-group">
-                        <p>Quantity: <span>{ product.productQty }</span></p>
+                    <Price {...product} className="cart-product-details-child cart-product-details-price"/>
+                    <div className="cart-product-details-child">
+                        <div>Quantity: <span>{ product.productQty }</span></div>
                     </div>
-                    <div className="cart-product-info-span-group">
-                        <p>Sub total: <span>{ `£${ calculateProductSubTotal(product) }` }</span></p>
+                    <div className="cart-product-details-child">
+                        <div>Sub total: <span>{ `£${ calculateProductSubTotal(product) }` }</span></div>
                     </div>
-                    {/* product add/reduce/remove buttons */}    
-                    <div className="cart-product-buttons" >
-                        <div className="cart-product-buttons-header">
-                            <span>Add/Reduce quantity</span>
-                        </div>
-                        <div className="cart-product-button-top">
-                            <div className="cart-product-add-button">
-                                <div className="cart-product-add-button-icon">
-                                <button onClick={ () =>reduceProductQuantity(cartState, props.sellerEmail, product.productId, user) }>-</button>
-                                </div>
-                            </div>                       
-                            <input  
-                            value = { product.productQty }
-                            onChange = { f => f }
-                            className="cart-product-input" type="text" 
-                            />
-                            <div className="cart-product-reduce-button">
-                                <div className="cart-product-add-button-icon">
-                                <button onClick = { () => addProductQuantity(cartState, props.sellerEmail, product.productId, user) }>+</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="cart-product-button-bottom">
-                            <div className="cart-product-remove-button">
-                                <button onClick={ () => removeProduct(cartState, cartItems, props.sellerEmail, product.productId, user) }>Remove</button>
-                            </div>
-                        </div>
+   
+                    <div className="cart-product-details-child cart-product-buttons" >
+                        <button 
+                        className="cart-product-button-icon"
+                        onClick={() =>reduceProductQuantity(cartState, props.sellerEmail, product.productId, user)}
+                        >
+                            -
+                        </button>                     
+                        <input  
+                        value = {product.productQty}
+                        onChange = {f => f}
+                        className="cart-product-input" type="text" 
+                        />
+                        <button 
+                        className="cart-product-button-icon"
+                        onClick = {()=> addProductQuantity(cartState, props.sellerEmail, product.productId, user) }
+                        >
+                            +
+                        </button>
+                    </div>
+                    <div className="cart-product-details-child cart-product-remove-button">
+                        <button 
+                        onClick={()=> removeProduct(cartState, cartItems, props.sellerEmail, product.productId, user)}>
+                            <RiDeleteBin2Line className="cart-delete-icon"/>
+                            Remove
+                        </button>
                     </div>
                 </div>  
             </div>
@@ -242,16 +240,19 @@ function CartProductProfile({
 }) {
     return (
         <div className="cart-product-avatar-Wrapper">
-            <div className="cart-product-avatar" >
-                <img src = { sellerProfileImage || image } alt="avatar" />
+            <div className="cart-product-avatar-left">
+                <div className="cart-product-avatar" >
+                    <img src = { sellerProfileImage || image } alt="avatar" />{/* TODO... remove image */}
+                </div>
                 <div className="cart-product-avatar-user-name">
-                    <div> 
-                        <span>{ sellerName }</span>
-                    </div>
+                    <span>
+                        { sellerName }
+                    </span>
                 </div>
-                <div className= "cart-product-avatar-kebab">
-                    <GoKebabVertical className="nav-icon"/>
-                </div>
+            </div>
+
+            <div className="cart-product-avatar-right">
+                <GoKebabVertical className="nav-icon"/>
             </div>
         </div>
     )
