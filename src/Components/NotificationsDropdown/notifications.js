@@ -62,8 +62,7 @@ export default function Notifications(props) {
         timer = setTimeout(() => setShowNotifications(false));  
     }
     // If a child receives focus, do not close the popover.  
-    const onFocusHandler = () => { 
-        alert(true)   
+    const onFocusHandler = () => {   
         clearTimeout(timer);  
     }
 
@@ -80,8 +79,10 @@ export default function Notifications(props) {
                 <NotificationIcon
                 openNotifications= { toggleNotifications }
                 notifications={ notifications }
+                notificationOpen={showNotifications}
                 />
             </div>
+            <div className="notifications-dropdown-container-wrapper">
             {
                 showNotifications && (
                     <NotificationsDropDown
@@ -94,6 +95,7 @@ export default function Notifications(props) {
                     /> 
                 )
             }
+            </div>
         </>
     )
 }
@@ -182,7 +184,12 @@ function EmptyNotifications(props) {
     )
 }
 
-function NotificationIcon({ openNotifications, notifications, ...props }) {
+function NotificationIcon({ 
+    openNotifications, 
+    notifications,
+    notificationOpen,
+     ...props 
+}) {
     const notSeenNotificationsCount = (notifications) => {
         let j = 0;
         let i = 0;
@@ -197,7 +204,7 @@ function NotificationIcon({ openNotifications, notifications, ...props }) {
 
     return (
         <div 
-        className="notifications-icon-wrapper" 
+        className={`notifications-icon-wrapper ${notificationOpen ? "notifications-open" : ""}`} 
         onClick = { openNotifications }
         >
             <RiNotification3Line className="notification-icon" />
@@ -214,7 +221,6 @@ function NotificationIcon({ openNotifications, notifications, ...props }) {
 export function NotificationAlert({ className, ...props }) {
     return(
         <div className={ className }>
-
         </div>
     )
 }
