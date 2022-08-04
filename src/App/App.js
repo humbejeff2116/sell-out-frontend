@@ -1,7 +1,4 @@
 
-
-
-
 import React from 'react';
 import { AuthContextProvider } from '../Context/authContextProvider';
 import { GetStartedContextProvider } from '../Context/gettingStartedContextProvider';
@@ -11,13 +8,14 @@ import { ViewContextProvider } from '../Context/viewContext/viewContextProvider'
 import { OrderContextProvider } from '../Context/Order/orderContextProvider';
 import { EditProductContextProvider } from '../Context/EditProduct/editProductContextProvider';
 import { ProductsContextProvider } from '../Context/Products/contextProvider';
+import { NavContextProvider } from '../Context/Navigation/contextProvider';
 import AppRoutes from '../Routes/appRoutes';
 
 export default function App() {
-   
     return (
-        <AuthContextProvider >
+        <AuthContextProvider>
         <GetStartedContextProvider>
+        <NavContextProvider>
         <ProductsContextProvider>
         <ViewContextProvider>
         <EditProductContextProvider >
@@ -31,6 +29,7 @@ export default function App() {
         </EditProductContextProvider>
         </ViewContextProvider>
         </ProductsContextProvider>
+        </NavContextProvider>
         </GetStartedContextProvider>
         </AuthContextProvider > 
     )
