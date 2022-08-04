@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineHeart } from 'react-icons/ai';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { 
     MdExpandMore, 
@@ -21,7 +20,11 @@ import './viewProduct.css';
 
 
 
-export default function ViewProduct() {
+export default function ViewProduct({ 
+    usedOutsideLogin, 
+    dontShowbackButton, 
+    ...props 
+}) {
     const [showAddToCartMessage, setShowAddToCartMessage] = useState(false);
     const { viewState, setViewState } = useViewContext();
   
@@ -49,14 +52,18 @@ export default function ViewProduct() {
                 message= "Product added to cart"
                 />
             )
+        }
+        {
+            dontShowbackButton ? "" : (
+                <div className="view-product-back-bttn-cntr">
+                    <BackButton 
+                    buttonWrapperClassName="view-product-back-bttn" 
+                    clearSessionStorageWithKey = "view-product-location"
+                    buttonIconClassName = "view-product-back-bttn-icon"
+                    />
+                </div>
+            )
         } 
-        <div className="view-product-back-bttn-cntr">
-            <BackButton 
-            buttonWrapperClassName="view-product-back-bttn" 
-            clearSessionStorageWithKey = "view-product-location"
-            buttonIconClassName = "view-product-back-bttn-icon"
-            />
-        </div>
         <div className="view-product-container">
             <div className="view-product-top">
                 <ProductImage { ...viewState } />
@@ -71,11 +78,19 @@ export default function ViewProduct() {
             </div>
             <BottomProductsWrapper
             viewState={ viewState }
+            usedOutsideLogin ={ usedOutsideLogin }
             />
         </div>
         </>
     )
 }
+
+
+const popUpMessageUsedFor  = {
+    success: "success",
+    error: "error"
+}
+
 
 function PopUpMessage({ 
     usedForSuccess, 
@@ -93,7 +108,6 @@ function PopUpMessage({
                         <div className="pop-up-success-child">
                             <IoMdCheckmarkCircleOutline className="pop-up-icon"/>
                             <div className="pop-up-text-container">
-                                {/* <div className="pop-up-text-header">Success</div> */}
                                 <span>{ message }</span>
                             </div>
                             
@@ -132,7 +146,6 @@ function ProductImage({
     product, 
     ...props 
 }) {
-    // alert(JSON.stringify(props))
     return (
         <div className="view-product-image-wrapper">
             <div className="view-product-profile" >
@@ -201,66 +214,64 @@ function ProductDetails({showAddToCartMessage, product}) {
         showAddToCartMessage(true);
     }
 
+    const  capitalize = (s="") => {
+        let [first, ...rest] = [...s];
+       return first.toUpperCase() + rest.join("");
+    }
+
     return (
         <div className="view-product-details-container">
-            <div className="view-product-details-top">
-            <div className="view-product-details">
-                <div className="view-product-details-name-wrapper">
-                    <div className="view-product-details-name">
-                        <p>{product.productName} <br />
-                        <span>Product code:</span> <span>{product.productId}</span>
-                        </p>
-                    </div> 
-                </div>  
-                <Price {...product} className = "view-product-details-price" />
-                <div className="view-product-details-usage">
-                    <p>Usage: <span>{product.productUsage}</span></p>
-                </div>
-                <div className="view-product-details-usage">
-                    <p>Supply Region('s): <span>Benue, Lagos, Abuja</span></p>
+            <div className="view-product-details-child view-product-details-name">
+                <div>{capitalize(product.productName)}</div>
+                <div className="view-product-details-code">
+                    Product code: <span>{product.productId}</span>
                 </div> 
+            </div>
+            <Price {...product} className="view-product-details-child view-product-details-price" />
+            <div className="view-product-details-child view-product-details-usage">
+                <div>
+                    Usage: <span>{product.productUsage}</span>
+                </div>
+            </div>
+            <div className="view-product-details-child view-product-details-usage">
+                <div>
+                    Supply Region('s): <span>Benue, Lagos, Abuja</span>
+                </div>
             </div>  
-            </div> 
-           <div className="view-product-details-bottom">
-                <div className="view-product-details-bottom-top">
-                   <div className="view-product-details-bottom-quantity-header">
-                       {/* <span>Quantity</span> */}
-                   </div>
-                   <div className="view-product-quantity-buttons-container">
-                    <div className="view-product-add-button">
-                            <div className="view-product-add-button-icon">
-                                <button onClick={()=> reduceProductQuantity()}>-</button>
-                            </div>
-                        </div>
-                        <input 
-                        value={quantity} 
-                        onChange={handleInputChange}
-                        className="view-product-input" type="text" 
-                        />
-                        <div className="view-product-add-button">
-                            <div className="view-product-add-button-icon">
-                                <button onClick={()=> addProductQuantity()}>+</button>
-                            </div>
-                        </div>
-                   </div>
-                </div>
-                <div className="view-product-details-bottom-bottom">
-                    <div className="view-product-details-bottom-add-to-cart">
-                    <button onClick={()=> addToCart(cartState, product, parseInt(quantity), productSize, user)}>Add to cart</button>
-                    </div>  
-                </div> 
-           </div>   
+            <div className="view-product-details-child view-product-details-qnty-wrpper">
+                <button 
+                className="view-product-add-button-icon"
+                onClick={()=> reduceProductQuantity()}
+                >
+                    -
+                </button>
+                <input 
+                value={quantity} 
+                onChange={handleInputChange}
+                className="view-product-input" type="text" 
+                />
+                
+                <button 
+                className="view-product-add-button-icon"
+                onClick={()=> addProductQuantity()}
+                >
+                    +
+                </button>
+            </div>
+            <div className="view-product-details-child view-product-details-add-to-cart">
+                <button 
+                onClick={()=> addToCart(cartState, product, parseInt(quantity), productSize, user)}
+                >
+                    Add to cart
+                </button>
+            </div>  
         </div>
     )
 
 }
 
-// {/* <div className="view-product-details-bottom-heart">
-//                         <span>
-//                         <AiOutlineHeart className="view-product-heart-icon"/>
-//                         </span>
-//                     </div> */}
 
+// TODO>>> uncomment prodps.details
 function AllProductDetails(props) {
     return (
         <div className = { styles.allProductDetailsContainer }>
