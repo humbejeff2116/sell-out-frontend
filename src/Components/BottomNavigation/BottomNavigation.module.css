@@ -1,0 +1,19 @@
+
+.container{
+    /* border: 1px solid red; */
+    position: fixed;
+    bottom: 0;
+    height:var(--top);
+    box-shadow: 0 0 8px var(--box-shadow-color);
+    padding: 0 1rem;
+    display: none;
+    width: 100%;
+    background-color: var(--background-color);
+}
+
+
+@media only screen and (max-width:500px) {
+    .container{
+        display: flex;
+    }
+}
