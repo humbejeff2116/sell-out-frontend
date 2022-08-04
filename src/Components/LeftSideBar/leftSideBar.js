@@ -1,16 +1,25 @@
 
 import React from 'react';
+import useNavContext from '../../Context/Navigation/context';
 import './leftSideBar.css';
 
 
-export default function LeftSideBar(props) {
+export default function LeftSideBar({
+    ...props
+}) {
+    const { showLeftSideBar } = useNavContext()
     let leftSidebarClassName;
-    if (props.fixed && props.className) {
-        leftSidebarClassName = `${props.className} fixed`;
-    } else if(props.fixed && !props.className) {
-        leftSidebarClassName = `left-side-bar-container fixed`;
+
+    if (props.fixed) {
+        if (props.className) {
+            leftSidebarClassName =  `${props.className} ${showLeftSideBar ? "left-side-bar-show" : ""} fixed`;
+        }
+        if (!props.className) {
+            leftSidebarClassName = `left-side-bar-container ${showLeftSideBar ? "left-side-bar-show" : ""} fixed`;
+        }
+        
     } else {
-        leftSidebarClassName = `left-side-bar-container`;
+        leftSidebarClassName = `left-side-bar-container ${showLeftSideBar ? "left-side-bar-show" : ""}`;
     }
     
     return (

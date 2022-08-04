@@ -4,13 +4,17 @@ import { NavLink, Link } from 'react-router-dom';
 import { BiSearch, BiMenu } from "react-icons/bi";
 import { NotificationAlert } from '../NotificationsDropdown/notifications';
 import useCartContext from '../../Context/Cart/cartContext';
+import useNavContext from '../../Context/Navigation/context';
 import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
 import './header.css';
 
 const mainLinks = Links.getMainLinks();
 
-export default function Header({ dontShowMainNav, ...props }) {
+export default function Header({ 
+    dontShowMainNav, 
+    ...props 
+}) {
     return (
         <header className="header-container">
             <section className="header-logo">
@@ -20,12 +24,14 @@ export default function Header({ dontShowMainNav, ...props }) {
                     </Link>
                 </div>
             </section>
-            <section className="header-main-navigation">
-            { 
-                dontShowMainNav ? '' : ( 
-                    <MainNavigation mainLinks={ mainLinks }/>
-                ) 
-            }
+            <section>
+                <section className="header-main-navigation-container">
+                { 
+                    dontShowMainNav ? '' : ( 
+                        <MainNavigation/>
+                    ) 
+                }
+                </section>
             </section>
             <section className="header-search-bar">
                 <SearchBar/>
@@ -34,13 +40,15 @@ export default function Header({ dontShowMainNav, ...props }) {
     )
 }
 
-function SearchBar(props) {
+function SearchBar({
+    ...props
+}) {
     return (
         <div className="header-search-bar-form-panel">
             <form>
-                <input type="search" placeholder="search for products" />
+                <input type="search" placeholder="Search For Products" />
                 <button>
-                   <BiSearch className="nav-icon"/>
+                   <BiSearch className="header-search-icon"/>
                 </button>
             </form>
             <MobileNavIcon/>
@@ -48,84 +56,97 @@ function SearchBar(props) {
     )
 }
 
- function MobileNavIcon(props) {
+ function MobileNavIcon({
+    ...props
+}) {
+    const { showLeftSideBar, openLeftSideBar } = useNavContext();
     return (
         <div className="header-mobile-nav-container">
-            <div className="header-mobile-nav-icon">
+            <div 
+            className={`header-mobile-nav-icon ${ showLeftSideBar ? "header-mobile-nav-icon-open" : ""}`}
+            onClick={openLeftSideBar}
+            >
                 <BiMenu className="nav-icon"/>
             </div>
         </div>
     )
 }
 
-function MainNavigation({ mainLinks, ...props }) { 
+export function MainNavigation({ links, ...props }) { 
     return (
-        <nav>
+        <nav className="header-main-navigation">
         {
+           links ? (
+                links?.map((link, i) =>
+                    <NavLinks key = { i } { ...link }/>
+                )
+           ) : (
             mainLinks?.map((link, i) =>
                 <NavLinks key = { i } { ...link }/>
             )
+        ) 
         }
         </nav>
     )
 }
 
-function NavLinks({ name, href, icon, ...props }) {
+function NavLinks({ 
+    name, 
+    href, 
+    icon, 
+    ...props 
+}) {
     const {  cartTotalNumberOfProducts } = useCartContext();
-    let Component;
+    const { showLeftSideBar, openLeftSideBar } = useNavContext();
+
+    const closeLeftSideBar = () => {
+        if (showLeftSideBar) return openLeftSideBar(false);
+    }
 
     if (name.toLowerCase() === "cart") {
-        Component = (
-            <div className="main-nav-item" >
-                <NavLink
-                exact 
-                to={ href } 
-                activeClassName="main-nav-link-active"
-                className="main-nav-link" 
-                title={ name } 
-                >
-                {
-                    cartTotalNumberOfProducts > 0  && ( 
-                        <NotificationAlert className="header-notifications-icon-alert"/> 
-                    )
-                }
-                { icon } 
-                </NavLink> 
-            </div>
+        return (
+            <NavLink
+            exact 
+            to={ href } 
+            activeClassName="main-nav-link-active"
+            className="main-nav-link" 
+            title={ name } 
+            onClick={()=> closeLeftSideBar()}
+            >
+            {
+                cartTotalNumberOfProducts > 0  && ( 
+                    <NotificationAlert className="header-notifications-icon-alert"/> 
+                )
+            }
+            { icon } 
+            </NavLink> 
         )
     } else if (name.toLowerCase() === "orders") {
         // TODO... implement new order alert functionality
-        Component = (
-            <div className="main-nav-item" >
-                <NavLink
-                exact 
-                to={ href } 
-                activeClassName="main-nav-link-active"
-                className="main-nav-link" 
-                title={ name } 
-                >
-                    { icon } 
-                </NavLink> 
-            </div>
+        return (
+            <NavLink
+            exact 
+            to={ href } 
+            activeClassName="main-nav-link-active"
+            className="main-nav-link" 
+            title={ name } 
+            onClick={()=> closeLeftSideBar()}
+            >
+                { icon } 
+            </NavLink> 
         )
     } else {
-        Component = (
-            <div className="main-nav-item" >
-                <NavLink
-                exact 
-                to={ href } 
-                activeClassName="main-nav-link-active"
-                className="main-nav-link" 
-                title={ name } 
-                >
-                    { icon }
-                </NavLink> 
-            </div>
+        return (
+            <NavLink
+            exact 
+            to={ href } 
+            activeClassName="main-nav-link-active"
+            className="main-nav-link" 
+            title={ name } 
+            onClick={()=> closeLeftSideBar()}
+            >
+                { icon }
+            </NavLink> 
         )
     }
-    return (
-        <>
-            { Component }
-        </>
-    ) 
 }
