@@ -5,10 +5,14 @@ export const MyContext = createContext();
 
 const initialAuthContext = {
     user: null,
+    userIsLoggedIn: null,
     token: null,
     tokenExpiration: null,
     viewUserProfileData: null,
+    outsideLoginPopUpMessage: null,
+    setOutsideLoginPopUpMessage: ()=>{},
     setUserData: ()=>{},
+    setUserIsLoggedIn: ()=>{},
     setTokenData: () =>{},
     isAuthenticated: ()=>{},
     setViewUserProfileData: ()=>{},
