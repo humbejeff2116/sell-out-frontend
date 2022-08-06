@@ -1,13 +1,11 @@
-/* product image slider styles */
 
-.imageSLiderContainer{
+.container{
     /* border: 2px solid blue; */
-    display: flex;
-    /* min-height: 100%; */
+    display: grid;
+    grid-template-columns: 12% 1fr;
 }
 
-.imageSLiderPanel{
-    width: 100%;
+.panel{
     /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
@@ -16,83 +14,155 @@
     position: relative;
     transition: all 0.3s ease;
 }
-/* .viewProductImageSLiderPanel:hover .viewProductImageSLiderPrevButton{
-    display: flex;
-}
 
-.viewProductImageSLiderPanel:hover .viewProductImageSLiderNextButton{
-    display: flex;
+/* .imageWrapper{
+    border: 1px solid purple;
 } */
 
-.imageSLiderImage{
-    /* width: 400px;
-    height: 420px; */
-    /* border: 1px solid purple; */
-}
-
-.imageSLiderImage img {
+.imageWrapper img {
     max-width: 100%;
     height: 100%; 
-    object-fit: contain;  
+    object-fit: contain; 
+    cursor: pointer; 
 }
 
-.imageSLiderPrevButton, .imageSLiderNextButton{
+.prevButton, .nextButton{
     width: 45px;
     height: 45px;
     border-radius: 50%;
     border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
     position: absolute;
     top: 50%;
     cursor: pointer;
-    display: flex;
     justify-content: center;
     align-items: center;
     transition: all 0.3s ease;
     color: var(--color);
+    display: none;
 }
 
-.imageSLiderPrevButton{
+.prevButton{
    left: 2%;
+   animation-name: animateLeft;
+   animation-duration: 1s;
 }
 
-.imageSLiderNextButton{
+.nextButton{
     right: 2%;
+    animation-name: animateRight;
+    animation-duration: 1s;
 }
 
-.imageSLiderButtonIcon{
+.showButton{
+    display: flex;
+}
+
+.prevButton:hover, .nextButton:hover{
+    box-shadow: 0 0 5px var(--box-shadow-color);
+}
+
+.prevButton:focus, .nextButton:focus{
+    box-shadow: 0 0 5px var(--box-shadow-color);
+}
+
+.buttonIcon{
     font-size: 1.1rem;
 }
 
+.noBorder{
+    border: none;
+}
+
+@keyframes animateLeft {
+    from{
+        left: -100%;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        right:0;
+        opacity: 1;
+        transition: all;
+    }
+}
+
+@-webkit-keyframes animateLeft {
+    from{
+        left: -100%;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        right:0;
+        opacity: 1;
+        transition: all;
+    }
+}
+
+@keyframes animateRight {
+    from{
+        right: -100%;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        right:0;
+        opacity: 1;
+        transition: all;
+    }
+}
+
+@-webkit-keyframes animateRight {
+    from{
+        right: -100%;
+        opacity:0;
+        transition:all;
+    }
+    to{
+        right:0;
+        opacity: 1;
+        transition: all;
+    }
+}
+
 /* image slider thumbnails */
-.imageSLiderThumbnailsContainer{
+.thumbnailsContainer{
     border-right: 1px solid var(--prim-border-color);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    width: 10%;
-    /* border: 3px solid yellow; */
+    padding: 0 1rem;
     overflow-y: auto;
-    /* height: 65vh; */
+    height: 65vh;
+    scrollbar-width: thin;
 }
 
-.imageSliderThumbnail{
-    width:50px;
+.thumbnailsContainer::-webkit-scrollbar{
+    width: 0.25rem;
+}
+
+.thumbnailWrapper{
+    width: 50px;
     height: 60px;
     border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
     border-radius: 4px;
     display: flex;
     justify-content: center;
     cursor: pointer;
-    margin: 0.7rem 0;
+    margin: auto;
 }
 
-.imageSliderThumbnail .focus{
-    border-color: var(--color);  
+.thumbnailWrapperOverflow{
+    margin: 1rem auto;
 }
 
-.imageSliderThumbnail img{
-    max-width: 100%;
+.thumbnailWrapper img{
+    width: 100%;
     height: 100%;
     object-fit: contain; 
+} 
+
+.focus{
+    outline: 2px solid var(--color); 
 }
