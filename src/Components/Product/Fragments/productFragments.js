@@ -1,5 +1,4 @@
 import React from 'react';
-import { AiOutlineStar, AiFillStar, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BiMessageSquareEdit } from 'react-icons/bi';
 import profileAvatar from '../../../Images/avatar4.png';
 
@@ -27,69 +26,6 @@ function ReviewsIconWrapper({ openReviews, dontShowReviews }) {
     )
 }
 
-function Star({ 
-    starCount, 
-    starSeller, 
-    product, 
-    user, 
-    starsUserRecieved, 
-    starIconClassName,
-    iconWrapperClassName,
-    setStarsUserRecieved,
-    setStarCount,
-    ...props 
-}) {
-    let starIcon;
-    let starsLength = starsUserRecieved.length; 
-
-    if (starCount) {
-        starIcon = <AiFillStar className={ starIconClassName || "nav-icon" }/>
-    } else {
-        starIcon = < AiOutlineStar className={ starIconClassName || "nav-icon" }/> 
-    }
-
-    return (
-        <div 
-        className= { iconWrapperClassName || "index-product-profile-star" } 
-        onClick = { ()=> starSeller(product, user, starCount, setStarsUserRecieved, setStarCount) }
-        >
-            { starIcon } { starsUserRecieved && starsLength > 0  && starsLength }
-        </div>
-    )
-}
-
-function Heart({ 
-    likeCount, 
-    likeProduct, 
-    product, 
-    user, 
-    likesProductRecieved, 
-    iconWrapperClassName,
-    heartIconClassName,
-    setLikesProductRecieved, 
-    setLikeCount,
-    showLikes, 
-    ...props 
-}) {
-    let heartIcon;
-    const likes = likesProductRecieved.length
-
-    if (likeCount) {
-        heartIcon = <AiFillHeart className={ heartIconClassName || "nav-icon" }/>
-    } else {
-        heartIcon = < AiOutlineHeart className={ heartIconClassName || "nav-icon" }/>
-    }
-
-    return (
-        <div 
-        className= { iconWrapperClassName || "index-product-heart-bttn" } 
-        onClick = { ()=> likeProduct(product, user, likeCount, setLikesProductRecieved, setLikeCount) }
-        >
-        { heartIcon } { showLikes ? (likesProductRecieved && likes > 0  && likes) : "" }  
-        </div>
-    )
-}
-
 function ProfileAvatar({ product, brandName, imageWrapperClassName }) {
     const sellerBrandName = product?.brandName ?? product?.userName ?? brandName;
     const viewSeller = (product) => {}
@@ -105,7 +41,5 @@ function ProfileAvatar({ product, brandName, imageWrapperClassName }) {
 
 export {
     ReviewsIconWrapper,
-    Star,
     ProfileAvatar,
-    Heart,
 }
