@@ -1,0 +1,19 @@
+
+.container{
+    /* border: 1px solid  red; */
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--sec-color);
+}
+
+.heartIcon{
+    font-size: 1.5rem;
+}
+
+@media only screen and (max-width:500px) {
+    .heartIcon{
+        font-size: 1.3rem;
+    }
+
+}
