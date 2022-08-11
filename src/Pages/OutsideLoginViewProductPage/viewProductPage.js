@@ -5,6 +5,12 @@ import RequireViewStateAuthentication from '../../Components/Authentication/requ
 
 
 function ViewProductPageComponent() {
+    React.useEffect(()=> {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, [])
     return (
         <ViewProduct/>
     )
