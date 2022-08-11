@@ -51,7 +51,7 @@ export  function DisplayedProduct({
                 showModalChild = { showReviewsChild }
                 />
             )}
-            <div className = { panelClassName }>
+            <div className = { panelClassName || "index-product-panel" }>
                 <div className="index-product-profile-panel">
                     <ProfileAvatar product = { product } />
                     <StarGiver
