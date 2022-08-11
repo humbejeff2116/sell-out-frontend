@@ -2,25 +2,26 @@
 .upload-product-editor-modal-container-wrapper{
     background-color:var(--background-color);
     z-index:1;
-    width:70%;
+    width: 80%;
     border:1px solid var(--background-color);
     position: relative;
     margin: auto;
 }
+
 .upload-product-editor-modal-child-wrapper{
     /* border: 1px solid black; */
     position: relative;
     height: 90vh;
-    /* overflow-y: auto; */
 }
 
 .upload-product-editor-header{
     height: 13vh;
     position: sticky;
     top: 0;
-    /* border: 1px solid blue; */
+    /* border-bottom: 1px solid var(--prim-border-color); */
     box-shadow: 0 0 5px var(--box-shadow-color);
-    padding: 0 0 0 2%;
+    padding: 0 1rem;
+    z-index: 1;
 }
 
 .upload-product-editor-header-top{
@@ -29,22 +30,26 @@
     justify-content: flex-end;
     align-items: center;
     height: 6.5vh;
-
 }
 
 .upload-product-editor-header-top-close{
-    margin-right: 2%;
-    color: #6d6d6d;
+    color: var(--text-color-opac-5);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
+
+.upload-product-editor-header-top-close:hover{
+    color: var(--text-color);
+}
+
 .upload-product-editor-close-icon{
     font-size: 1.2rem;
     font-weight: bold;
 }
 
 .upload-product-editor-header-bottom{
-    /* border: 1px solid #000000; */
+    /* border: 1px solid red; */
     display: flex;
-    /* align-items: center; */
     height: 6.5vh;
 }
 
@@ -53,46 +58,65 @@
     text-align: center;
     display: flex;
     align-items: center;
-    /* color: var(--text-color); */
-    color: rgb(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
 }
 
 .upload-product-editor-body-wrapper{
     height: 67vh;
-    /* border: 2px solid green; */
+    /* border: 3px solid red; */
     overflow-y: auto;
-    /* display: flex;
-    flex-direction: column; */
+    position: relative;
+    padding: 0 1rem;
 }
 
 .upload-product-editor-hint{
     margin: 1% 0;
     font-size: 0.7rem;
     font-weight: bold;
-    padding: 0 2%;
-    color: rgb(0, 0, 0, 0.7);
+    color: rgba(0, 0, 0, 0.8);
+    /* border: 1px solid red; */
 }
 
 .upload-product-editor-body{
-    /* border: 2px solid blue; */
+    border: 1px solid var(--prim-border-color);
     display: flex;
     min-height: 100%;
-    /* padding: 0 2%; */
-
 }
 
 .upload-product-editor-thumbnails{
     width: 15%;
-    border: 3px solid red;
-    /* height: 69vh; */
+    border-right: 1px solid var(--prim-border-color);
     overflow-y: auto;
+    overflow-x: hidden;
     height: 67vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    position: relative;
+}
+
+.upload-product-editor-thumbnails:last-of-type{
+    border-right: none;
+    border-left: 1px solid var(--prim-border-color);
+}
+
+.upload-product-editor-thumbnails-header{
+    position: sticky;
+    top: 0;
+    border-bottom: 1px solid var(--prim-border-color);
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 0.4rem 0;
+    text-align: center;
+    background-color: var(--background-color);
+    color: rgba(0, 0, 0, 0.8);
 }
 
 .upload-product-editor-panel{
     width: 85%;
-    border: 2px solid red;
+    /* border: 2px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -106,26 +130,44 @@
     border: 1px solid purple;
 }
 
-.upload-product-editor-prev-button, .upload-product-editor-next-button {
+.upload-product-editor-button{
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    border: 1px solid purple;
+    border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
     position: absolute;
     top: 50%;
     cursor: pointer;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
-
+    color: var(--color);
+    transition: all 0.3s ease;
 }
 
-.upload-product-editor-prev-button {
+.showButton{
+    display: flex;
+}
+
+.prev-button{
    left: 2%;
 }
 
-.upload-product-editor-next-button{
+.next-button{
     right: 2%;
+}
+
+.upload-product-editor-button:hover{
+    box-shadow: 0 0 5px var(--box-shadow-color);
+}
+
+.upload-product-editor-button:focus{
+    box-shadow: 0 0 5px var(--box-shadow-color);
+}
+
+.buttonIcon{
+    font-size: 1.1rem;
 }
 
 .upload-product-editor-footer{
@@ -133,7 +175,8 @@
     position: sticky;
     bottom: 0;
     width: 100%;
-    border: 1px solid blue;
+    /* border-top: 1px solid var(--prim-border-color); */
+    box-shadow: 0 0 5px var(--box-shadow-color);
     display: flex;
     align-items: center;
     justify-content: flex-end;
