@@ -1,7 +1,6 @@
 
 .profile-avatar-container{
-    /* border:1px solid var(--prim-border-color);
-    border-radius: 6px; */
+    /* border:1px solid var(--prim-border-color);*/
     display:flex;
     flex-direction: column;
     justify-content: space-between;
@@ -9,23 +8,24 @@
     padding: 2% 2%;
   
 }
+
 .profile-avatar-image{
-    /* border:1px solid red; */
-    height:60px;
-    width:60px;
-    /* align-self: center; */
+    border: 2px solid var(--prim-border-color);
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
 }
+
 .profile-avatar-image img{
     border-radius: 50%; 
-    height:60px;
-    width:60px;
-    object-fit: cover;
-    object-position: center;
-    /* border:1px solid red; */
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
+
 .profile-avatar-username{
     /* border:1px solid red; */
-    color: var(--color);
-    font-weight: bold;
+    color: var(--text-color-opac-8);
+    font-weight: 510;
     font-size: 0.9rem;
 }
