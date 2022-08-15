@@ -1,3 +1,10 @@
+
+*{
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,21 +16,66 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
 :root{
-  /* div variables */
-  --color: #005ab4;
+  --color: #1a73e8;
+  --color-opac-9: rgba(26, 115, 232, 0.9);
+  --color-opac-8: rgba(26, 115, 232, 0.8);
+  --color-opac-7: rgba(26, 115, 232, 0.7);
+  --color-opac-6: rgba(26, 115, 232, 0.6);
+  --color-opac-5: rgba(26, 115, 232, 0.5);
+  --color-opac-4: rgba(26, 115, 232, 0.4);
+  --color-opac-3: rgba(26, 115, 232, 0.3);
+  --color-opac-2: rgba(26, 115, 232, 0.2);
+
   --prim-color: rgb(19, 182, 19);
+  --prim-color-opac-8: rgb(19, 182, 19, 0.8);
+  --prim-color-opac-7: rgb(19, 182, 19, 0.7);
+  --prim-color-opac-6: rgb(19, 182, 19, 0.6);
+  --prim-color-opac-5: rgb(19, 182, 19, 0.5);
+
+  --dark-prim-color: rgb(22, 36, 22);
   --sec-color: rgb(255, 84, 84);
-  --no-color:#ffffff;
-  --error-color: red;
+  --no-color: #ffffff;
+
+  --error-color: rgb(151, 36, 36);
+  --error-background-color:#ffeaec; 
+  --error-border-color:rgb(250, 204, 204);
+  --error-border-color2: rgb(228, 94, 94);
+
+  --success-color: rgb(30, 163, 30);
+  --success-background-color:rgb(241, 255, 241);
+  --success-border-color: rgb(198, 255, 198);
+
+  --background-color: #ffffff;
+  --background-color-ash:#e0e0e0;
+
+  --link-hover-bg-color: #f0f0f0;
+  --active-link-bg-color1: #e0e0e0;
+  --hover-link-bg-color: rgb(242, 255, 255);
+  --active-link-bg-color: rgb(234, 255, 255);
+  
 
   --opaque-color:#0074e7;
   --opaque-prim-color:rgb(23, 211, 23);
 
-  --text-color:rgb(8, 8, 73);
+  --text-color: rgb(8, 8, 73, 0.9);
+  --text-color-opac-9: rgb(8, 8, 73, 0.9);
+  --text-color-opac-8: rgb(8, 8, 73, 0.8);
+  --text-color-opac-7: rgb(8, 8, 73, 0.7);
+  --text-color-opac-6: rgb(8, 8, 73, 0.6);
+  --text-color-opac-5: rgb(8, 8, 73, 0.5);
+
+  --input-border-error: #ff7979;
+
+  --button-border-color1: #a7a7a7;
+  --button-background-color1: #e9e9ed;
+  --button-hover-background-color1: #dbdbdb;
+
+  --caret-color: rgb(0, 255, 255);
+
 
   --outline-color:rgb(96, 96, 219);
   --light-grey: #f0f0f0;
@@ -33,41 +85,41 @@ code {
   --sec-bg-color: rgb(19, 182, 19);
 
   --border-color: #222;
-  /* --prim-border-color: #dad8d8; */
-  --prim-border-color: #c5c5c5;
-  /* --prim-border-color: #bdbdbd; */
+  --prim-border-color: #d3d3d3;
+  --lighter-prim-border-color: #e0e0e0;
+  --select-background-color: #e9e9ed;
   --sec-border-color: #005ab4;
-
   --box-shadow-color: rgba(117, 116, 116, 0.6);
+  --close-icon-color:rgba(117, 116, 116, 0.6); 
 
-  /* button variables */
   --button-color: rgb(8, 8, 73);
   --prim-button-color: #ffffff;
-
   --button-outline-color: #489cf0;
-
   --button-bg-color: rgb(19, 182, 19);
   --prim-button-bg-color: #005ab4;
-
   --button-border-color:rgb(8, 8, 73);
   --prim-button-border-color: #005ab4;
 
-
-  --top:9vh;
+  --top: 3.8rem;
   --sidebar-width: 15%;
-  
+  --left-sidebar-width: 18%;
 
+  --test: #dcf3f7;
+  --test2: #8bd3db;
 }
 
 .nav-icon{
-  font-size:1.4em;
+  font-size:1.5rem;
   cursor: pointer;
-  /* border: 1px solid red; */
- 
+  /* border: 1px solid red; */ 
+}
+
+.main-nav-icon{
+  font-size: 1.5rem;
 }
 
 
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
   width:0.25rem;
 }
 
@@ -83,6 +135,32 @@ code {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+} */
+
+@-webkit-keyframes suspense-spin{
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes suspense-spin{
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes animateEmptyState{
+  from{
+      opacity:0;
+      transition:all;
+  }
+  to{
+      opacity:1;
+      transition:all;
+  }
 }
 
 
+@media only screen and (max-width:500px) {
+  :root{
+    --top: 4rem;
+  }
+}
