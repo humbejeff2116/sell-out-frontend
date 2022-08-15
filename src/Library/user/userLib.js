@@ -3,25 +3,28 @@ import socket from '../../Components/Socket/socket';
 import { getUserStars } from '../../Utils/http.services';
 
 function UserLib() {}
+UserLib.prototype.getSellerStarsAndSetStarCount = async function(
+    userId, 
+    user, 
+    setStarCount, 
+    setStarsUserRecieved
+) {
+    const { error, data } = await getUserStars(userId);
 
-UserLib.prototype.getSellerStarsAndSetStarCount = async function(userId, user, setStarCount, setStarsUserRecieved) {
-
-    const sellerStarsResponse = await getUserStars(userId)
-   
-    if (sellerStarsResponse.error) return;
-
-    this.setStarCountOnLoad(user, sellerStarsResponse?.data?.starsUserRecieved, setStarCount);
-
-    setStarsUserRecieved(sellerStarsResponse?.data?.starsUserRecieved);
-
+    if (error) return;
+    this.setStarCountOnLoad(user, data?.starsUserRecieved, setStarCount);
+    setStarsUserRecieved(data?.starsUserRecieved);
 }
 
-UserLib.prototype.starSeller = function(product, user, starCount, setStarsUserRecieved, setStarCount) {
-        
+UserLib.prototype.starSeller = function(
+    product, 
+    user, 
+    starCount, 
+    setStarsUserRecieved, 
+    setStarCount
+) {    
     if (!starCount) {
-
         if (user) {
-
             const addeStar = {
                 star: starCount, 
                 userEmail: user.userEmail, 
@@ -30,11 +33,7 @@ UserLib.prototype.starSeller = function(product, user, starCount, setStarsUserRe
             }
 
             setStarsUserRecieved(currentState => [...currentState, addeStar]);
-
-            // setStarClicked(true);
-
             setStarCount(++starCount);
-
         }
 
         const data = {
@@ -42,75 +41,58 @@ UserLib.prototype.starSeller = function(product, user, starCount, setStarsUserRe
             user,
             starCount: starCount
         }
-
         socket.emit('starSeller', data);
-
-        return;
-          
+        return;   
     }
     
     if (user) {
-
-        setStarsUserRecieved(currentState => currentState.filter( star => star.userEmail !== user.userEmail));
-
-        // setStarClicked(false);
-
+        setStarsUserRecieved(currentState => currentState.filter(star => star.userEmail !== user.userEmail));
         setStarCount(--starCount);
-
     }
 
     const data = {
-            product,
-            user,
-            starCount: starCount
-        }
-
-        socket.emit('starSeller', data );
-   
+        product,
+        user,
+        starCount: starCount
+    }
+    socket.emit('starSeller', data); 
 }
 
-UserLib.prototype.setStarCountOnLoad = function (user, starsUserRecieved, setStarCount) {
-
+UserLib.prototype.setStarCountOnLoad = function (
+    user, 
+    starsUserRecieved, 
+    setStarCount
+) {
     const userEmail = user?.userEmail;
-
     let starCount = 0;
 
     if (!starsUserRecieved  || !user) {
-
         return setStarCount(starCount);
     }
 
-    const len = starsUserRecieved.length;
-
     let i;
-    
-    for ( i = 0; i < len; i++) {
-
+    const len = starsUserRecieved.length;
+    for (i = 0; i < len; i++) {
         if (starsUserRecieved[i].userEmail === userEmail) {
-
             starCount = starsUserRecieved[i].star;
-
             break;
         }
-
     }
-
     return setStarCount(starCount);
-
 }
 
-UserLib.prototype.getSellerStarsWhenUserDataChange = function ({mounted, userId, user, setStarCount, setStarsUserRecieved}) {
-
+UserLib.prototype.getSellerStarsWhenUserDataChange = function ({
+    mounted, 
+    userId, 
+    user, 
+    setStarCount, 
+    setStarsUserRecieved
+}) {
     socket.on('starUserDataChange', function() {
-
         if (mounted) {
-
-            this.getSellerStars({userId, user, setStarCount, setStarsUserRecieved})
-    
+            this.getSellerStarsAndSetStarCount({userId, user, setStarCount, setStarsUserRecieved});
         }
-    
     });
-
 }
 
 export default new UserLib();
