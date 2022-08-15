@@ -5,63 +5,50 @@ import { updateUser } from '../Utils/http.services';
 
 
 export function GetStartedContextProvider(props) {
-
-    // const [personalDetailsData, setPersonalDetailsData] = useState(null);
-
     const [profileImageFile, setProfileImageFile] = useState(null);
-
     const [profileImageURL, setProfileImageURL] = useState(null);
-
     const [registeredCompanyOrBusinessData, setRegisteredCompanyOrBusinessData] = useState(null);
-
     const [unregisteredBusinessData, setUnregisteredBusinessData] = useState(null);
-
     const [legalAddressData, setLegalAddressData] = useState(null);
-
     const [shippingAndOperationsData, setShippingAndOperationsData] = useState(null);
-
-    const [operationalRegions, setOperationalRegions] = useState([])
-
-    const [submittedFormPaths, setSubmittedFormPaths] = useState([])
-
+    const [operationalRegions, setOperationalRegions] = useState([]);
+    const [submittedFormPaths, setSubmittedFormPaths] = useState([]);
     const getDetails = () => {
-
-        return ({ })
-
+        return ({
+            registeredCompanyOrBusinessData,
+            unregisteredBusinessData,
+            legalAddressData,
+            shippingAndOperationsData,
+            operationalRegions
+        })
     }
 
     const handleSubmit = async (user, updateUserCallback, setCreatingProfile) => {
-
-        setCreatingProfile(true)
-        // TODO... add other form values
-        const values = { ...profileImageFile }
-
-        console.log("values are", values)
-
+        setCreatingProfile(true);
+        const companyOrBusinessData = registeredCompanyOrBusinessData ? 
+        {...registeredCompanyOrBusinessData, registered: true} : {...unregisteredBusinessData, registered: true}
         const formData = new FormData();
 
-        formData.append('userEmail', user.userEmail);
-
-        formData.append('userId', user.id);
-        
-        for (let keys in values) {
-
-            formData.append(keys, values[keys]);
-
+        formData.append('user', JSON.stringify({id: user.id, userEmail: user.userEmail}));
+        formData.append('companyOrBusinessData', JSON.stringify(companyOrBusinessData));
+        formData.append('legalAddressData', JSON.stringify(legalAddressData));
+        formData.append('shippingAndOperationsData', JSON.stringify(shippingAndOperationsData));
+         formData.append('operationalRegionsData', JSON.stringify(operationalRegions));
+        for (let key in profileImageFile) {
+            formData.append(key, profileImageFile[key]);
         }
 
-        const updatedUser = await updateUser(formData)
-
-        updateUserCallback(updatedUser)
-        
+        try {
+            const updatedUser = await updateUser(formData);
+            updateUserCallback(updatedUser);  
+        } catch(err) {
+            console.log(err)
+        } 
     }
 
     const removePathName = (pathname = "") => {
-
         const filteredPathNames = submittedFormPaths.filter(path => path.href !== pathname);
-
-        return setSubmittedFormPaths(filteredPathNames)
-
+        return setSubmittedFormPaths(filteredPathNames);
     }
 
     const values = {
@@ -72,9 +59,8 @@ export function GetStartedContextProvider(props) {
         legalAddressData: legalAddressData,
         shippingAndOperationsData: shippingAndOperationsData,
         operationalRegions: operationalRegions,
-        setOperationalRegions: setOperationalRegions,
-        
         submittedFormPaths: submittedFormPaths,
+        setOperationalRegions: setOperationalRegions,
         setRegisteredCompanyOrBusinessData: setRegisteredCompanyOrBusinessData,
         setUnregisteredBusinessData: setUnregisteredBusinessData,
         setLegalAddressData: setLegalAddressData,
@@ -88,11 +74,8 @@ export function GetStartedContextProvider(props) {
     }
 
     return(
-
         <GetStartedContext.Provider value = { values } >
             { props.children }
         </GetStartedContext.Provider>
-
     )
-
 }
