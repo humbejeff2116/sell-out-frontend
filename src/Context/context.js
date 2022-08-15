@@ -16,7 +16,8 @@ const initialAuthContext = {
     setTokenData: () =>{},
     isAuthenticated: ()=>{},
     setViewUserProfileData: ()=>{},
-    logOut: ()=> {},
+    logOut: ()=>{},
+    wipeToken: ()=>{}
 }
 
 const initialGetStartedContext = {
@@ -42,17 +43,10 @@ const initialGetStartedContext = {
 }
 
 export const AuthContext = createContext(initialAuthContext);
-
 export const GetStartedContext = createContext(initialGetStartedContext);
-
 export default function useAuth() {
-
     return useContext(AuthContext);
-
 }
-
 export  function useGetStartedContext() {
-
     return useContext(GetStartedContext);
-
 }
