@@ -1,6 +1,7 @@
 
 import React, { useState, memo } from 'react';
 import { NavLink } from 'react-router-dom';
+import useNavContext from '../../Context/Navigation/context';
 import Links from '../../Data/links';
 import './indexSideNav.css';
 
@@ -10,13 +11,11 @@ const indexSideNavLinks = Links.getIndexSidenavLinks();
 export default function IndexSideNav({ links }) {
     return (
         <nav className="index-side-nav">
-        {
-            links ? links.map((link, i) =>
-                <NavigationLink key = { i } { ...link }/>
-            ) : indexSideNavLinks?.map((link, i) =>
-                <NavigationLink key = { i } { ...link }/>
-            )
-        }
+        {links ? links.map((link, i) =>
+            <NavigationLink key = { i } { ...link }/>
+        ) : indexSideNavLinks?.map((link, i) =>
+            <NavigationLink key = { i } { ...link }/>
+        )}
         </nav>
     )
 }
@@ -25,7 +24,12 @@ function NavigationLink({
     match, 
     ...props 
 }) {
-    const [expandAccordion, setExpandAccordion] = useState(false)
+    const [expandAccordion, setExpandAccordion] = useState(false);
+    const { showLeftSideBar, openLeftSideBar } = useNavContext();
+
+    const closeLeftSideBar = () => {
+        if (showLeftSideBar) return openLeftSideBar(false);
+    }
 
     const toggleAccordion = (e) => {
         e.preventDefault();
@@ -37,24 +41,23 @@ function NavigationLink({
 
     return (
         <div className = { navItemClassName }>
-        {
-            props.accordion ? (
-                <Accordion 
-                {...props} 
-                expandAccordion = { expandAccordion }
-                toggleAccordion = { toggleAccordion }
-                /> 
-            ) : (
-                <NavLink
-                exact 
-                to = { props.href } 
-                activeClassName="index-side-link-active"
-                className="index-side-nav-link" 
-                >
-                    <i>{ props.icon }</i>{ props.name } 
-                </NavLink> 
-            )
-        }  
+        {props.accordion ? (
+            <Accordion 
+            {...props} 
+            expandAccordion = { expandAccordion }
+            toggleAccordion = { toggleAccordion }
+            /> 
+        ) : (
+            <NavLink
+            exact 
+            onClick={()=> closeLeftSideBar()}
+            to = { props.href } 
+            activeClassName="index-side-link-active"
+            className="index-side-nav-link" 
+            >
+                <i>{ props.icon }</i>{ props.name } 
+            </NavLink> 
+        )}  
         </div>
     ) 
 }
@@ -85,17 +88,13 @@ const Accordion = memo(({
             >
                 <i>{ props.icon }</i>{ props.name } { AccordionIcon }
             </NavLink> 
-            {
-                expandAccordion && (
-                    <div className="index-side-nav-nested-items-container">
-                    {
-                        props.links.map((link, i) =>
-                            <NavigationLink  key = { i }  { ...link }/>
-                        )
-                    }
-                    </div>  
-                )
-            }
+            {expandAccordion && (
+                <div className="index-side-nav-nested-items-container">
+                {props.links.map((link, i) =>
+                    <NavigationLink  key = { i }  { ...link }/>
+                )}
+                </div>  
+            )}
         </div>
     )
 })
