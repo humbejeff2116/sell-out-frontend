@@ -593,7 +593,6 @@ export function FilterDisplayedProducts({
                     key = { i } 
                     {...product} 
                     product = { product } 
-                    panelClassName={ styles.productPanel }
                     productUsedOutsideLogin
                     />
                 )
