@@ -40,7 +40,7 @@ export default function ModalReviews({
                         product = { product }
                         dontShowModal
                         dontShowReviews
-                        panelClassName = { styles.productPanel }
+                        // panelClassName = { styles.productPanel }
                         /> 
                     </div>                                 
                     <ReviewsBox
