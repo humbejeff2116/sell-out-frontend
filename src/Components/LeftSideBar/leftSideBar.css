@@ -6,6 +6,7 @@
     margin: 0;
     padding:0;
     height: 90vh;
+    height: calc(100vh - var(--top));
     width: 18%;
     overflow-x: none;
     overflow-y: auto;
@@ -62,8 +63,17 @@
 
 @media only screen and (max-width:500px) {
     .left-side-bar-container{
-        width:0%;
-        overflow-x: auto; 
+        /* display: none; */
+        width: 50%;
+        background-color: var(--background-color);
+        border-right: 1px solid var(--prim-border-color);
+        box-shadow: 0 0 4px var(--box-shadow-color);
+        left: -50%;
+        transition: all 0.3s ease;
+    }
+
+    .left-side-bar-show{
+        left: 0
     }
 
      
