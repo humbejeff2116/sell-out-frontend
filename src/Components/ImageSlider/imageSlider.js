@@ -65,8 +65,7 @@ export default function ImageSLider({
     }
 
     const isLastImage = () => {
-        const lastImageSrc = sliderImages[sliderImages.length - 1].src;
-        if (viewedImage === lastImageSrc) { 
+        if (currentViewedImageIndex.current === images.length - 1) {
             return true;
         }
         return false;
@@ -102,7 +101,7 @@ export default function ImageSLider({
                         ${removeButtonBorder ? styles.noBorder : ""} 
                         ${isFirstImage() ? "" : styles.showButton}
                     `} 
-                    onClick = {prevImage}
+                    onClick = { prevImage }
                     >
                         <MdArrowBackIosNew className={styles.buttonIcon}/>
                     </button>   
@@ -114,7 +113,7 @@ export default function ImageSLider({
                         ${removeButtonBorder ? styles.noBorder : ""}
                         ${isLastImage() ? "" : styles.showButton}
                     `} 
-                    onClick = {nextImage}
+                    onClick = { nextImage }
                     >
                         <MdArrowForwardIos className={styles.buttonIcon}/>
                     </button>
