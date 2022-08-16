@@ -24,8 +24,11 @@ export default function Login() {
 
     async function handleSubmit (values) {
         setLoginIn(true);
+        const currentLocation = sessionStorage.getItem("currentLocation") ? (
+            JSON.parse(sessionStorage.getItem("currentLocation"))
+        ) : null;
 
-        try{
+        try {
             const { error, message, token, data} = await loginUser(values);
 
             if (error) {
@@ -43,7 +46,7 @@ export default function Login() {
             setLoginIn(false);
             setLoginResponseMessage(null);
             history.push(location.pathname);
-            setRedirect('/home');
+            return currentLocation ? setRedirect(currentLocation) : setRedirect('/home')
         } catch(err) {
             // TODO... handle error
             setLoginIn(false);
