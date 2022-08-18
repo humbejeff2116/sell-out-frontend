@@ -17,21 +17,23 @@
     display: flex;
 }
 
-.landingFooterCountrySection{
-    /* border: 1px solid blue; */
-    display: flex;
-}
+/* .landingFooterCountrySection{
+    border: 1px solid blue;
+} */
 
 .flagIcon {
    margin-right: 0.5rem;
-   font-size: 1.2rem; 
+   font-size: 1.2rem;
+}
+
+.bugIcon{
+    margin-right: 0.2rem;
 }
 
 .landingFooterItem{
     padding: 0 0.8rem;
     font-size: 0.84rem;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -42,9 +44,31 @@
 .landingFooterItem a{
    text-decoration: none;
    color: var(--text-color-opac-5);
+   display: flex;
+   align-items: center;
+   /* border: 1px solid var(--prim-border-color); */
 }
 
 .landingFooterItem a:hover{
     text-decoration: underline;
     color: var(--color);
+}
+
+@media only screen and (max-width:500px) {
+
+    .slimFooterContainer{
+        /* border: 3px solid red; */
+        margin: 1%  0;
+    }
+    .landingFooterNav .landingFooterItem:first-of-type{
+        display: none;
+    }
+    .landingFooterCountrySection{
+        /* border: 1px solid blue; */
+        margin-left: auto;
+    }
+    .flagIcon {
+        margin-right: 0.5rem;
+        font-size: 0.84rem;
+    }
 }
