@@ -1,25 +1,26 @@
 
-
-
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { RiBugFill} from 'react-icons/ri';
 import styles from './SlimFooter.module.css';
 
 
 
 const links = [
     {name: "Terms", href: "/#"},
-    {name: "Privacy Policy", href: "/#"},
+    {name: "Privacy", href: "/#"},
     {name: "Help", href: "/#"},
     {name: "About", href: "/#"},
     {name: "Invest", href: "/#"},
-    {name: "Report Bug", href: "/#"}
+    {name: "Bug", href: "/#", icon:<RiBugFill className={ styles.bugIcon }/>}
 ]
 
 
 
-export default function SlimFooter({ footerContainerClassName, footerLinks, ...props }) {
+export default function SlimFooter({ 
+    footerContainerClassName, 
+    footerLinks, 
+    ...props 
+}) {
     return (
         <footer className ={ styles.slimFooterContainer }>
             <section className={ styles.landingFooterNavSection }>
@@ -27,18 +28,15 @@ export default function SlimFooter({ footerContainerClassName, footerLinks, ...p
                     <div className={ styles.landingFooterItem }>
                         <span>&copy;{ new Date().getFullYear() } @jeff.codes</span>
                     </div>              
-                    {
-                        links.map((link, i) =>
-                            <FooterLinks  key={i} {...link} />
-                        )
-                    }    
+                    {links.map((link, i) =>
+                        <FooterLinks  key={i} {...link} />
+                    )}    
                 </nav>
             </section>
-
              <section className={ styles.landingFooterCountrySection }>
                 <div className={ styles.landingFooterItem }>
                     <span className={ styles.flagIcon }>&#127475;&#127468;</span>
-                    <span>Nigeria</span>
+                    <span className={ styles.flagCountry }>Nigeria</span>
                 </div>
             </section>     
         </footer>
@@ -46,10 +44,15 @@ export default function SlimFooter({ footerContainerClassName, footerLinks, ...p
 }
 
 
-function FooterLinks({ href, name, ...props }) {
+function FooterLinks({ 
+    href, 
+    name, 
+    icon, 
+    ...props 
+}) {
     return (
-      <div className={ `${styles.landingFooterItem} ${styles.nav}` }>
-        <span><a href={ href }>{ name }</a></span>
-      </div>  
+        <div className={ `${styles.landingFooterItem} ${styles.nav}` }>
+            <a href={ href }>{icon|| ""}{name}</a>
+        </div>  
     )
 }
