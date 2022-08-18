@@ -10,7 +10,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "hummbe jeffrey",
         userEmail: "humbejeff@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "short andres denim combat ",
         productCategory: "furniture",
@@ -31,7 +31,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "hummbe jeffrey",
         userEmail: "humbeeff@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "blue tantarum maryland jean",
         productCategory: "furniture",
@@ -51,7 +51,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "hummbe jeffrey",
         userEmail: "humbeff@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "short nikka",
         productCategory: "furniture",
@@ -71,7 +71,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "hummbe jeffrey",
         userEmail: "humbjef@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "short nikka",
         productCategory: "furniture",
@@ -103,6 +103,7 @@ export default function BottomProductsWrapper({
     const [error, setError] = useState({});
 
     useEffect(() => {
+        let timer = null;
         const getBottomProducts = async (queryData) => {
             setLoading(true);
             try {
@@ -115,7 +116,7 @@ export default function BottomProductsWrapper({
                 } = await getSellerProducts(queryData);
                 if (sellerProducts.length < 1) { 
                     setShowStoreProducts(false);
-                    setShowSimilarProducts(true)
+                    setShowSimilarProducts(true);
                 }
                 setStoreProducts(sellerProducts);
                 setSimilarProducts(similarProducts);
@@ -137,7 +138,14 @@ export default function BottomProductsWrapper({
                 userEmail,
                 productCategory,
             }
-            return getBottomProducts(queryData);
+            // get bottom component products after window has scrolled to top
+            timer = setTimeout(() => {
+                return getBottomProducts(queryData);
+            }); 
+        }
+
+        return ()=> {
+            if (timer) clearTimeout(timer);
         }
     }, [viewState]);
 
@@ -249,7 +257,6 @@ function BottomProducts({
                 <DisplayedProduct 
                 key = { i }  
                 product = { product } 
-                panelClassName={ styles.bottomProductsPanel }
                 productUsedOutsideLogin = { productUsedOutsideLogin }
                 />
             )
