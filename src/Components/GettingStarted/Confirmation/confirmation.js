@@ -185,21 +185,21 @@ export default function ProfileImage(props) {
                             }
                             topComponent={
                                 <>
-                                    <div className={ styles.operationLabel}>
-                                        Operational regions and cost of delivery
-                                    </div>
-                                    {formDetails?.operationalRegions.length > 0 && 
-                                    formDetails?.operationalRegions.map((region, i) =>
-                                        <Region
-                                        key = { i }
-                                        { ...region }
-                                        dontShowDelete
-                                        />
-                                    )}
+                                <div className={styles.operationLabel}>
+                                    Operational regions and cost of delivery
+                                </div>
+                                {formDetails?.operationalRegions.length > 0 && 
+                                formDetails?.operationalRegions.map((region, i) =>
+                                    <Region
+                                    key = { i }
+                                    { ...region }
+                                    dontShowDelete
+                                    />
+                                )}
                                 </>
                             }
-                            formValues={formDetails.shippingAndOperationsData}
-                            details ={ details.shippingAndOperationsData}
+                            formValues={ formDetails?.shippingAndOperationsData }
+                            details ={ details.shippingAndOperationsData }
                             />
                         </>
                     )}
@@ -214,11 +214,11 @@ export default function ProfileImage(props) {
                 goBack = { goBack }
                 customSubmitButton = {
                     <button 
-                    onClick={ ()=> handleSubmit(user, userUpdateSuccessful, setCreatingProfile) }
+                    onClick={()=> handleSubmit(user, userUpdateSuccessful, setCreatingProfile)}
                     disabled = {creatingProfile ? true : null}
-                    className = {`${creatingProfile ? "disable-button" : ""}` }
+                    className = {`${creatingProfile ? "disable-button" : ""}`}
                     >
-                    Submit Details
+                    Submit
                     </button>
                 }
                 />
