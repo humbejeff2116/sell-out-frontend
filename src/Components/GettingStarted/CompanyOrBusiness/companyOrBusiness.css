@@ -1,7 +1,7 @@
 
 .getting-started-company-heading-container{
     min-height: 20vh;
-    display:flex;
+    display: flex;
     flex-direction: row;
     /* border: 1px solid blue; */
     margin-bottom: 2%;
@@ -24,45 +24,50 @@
 
 .getting-started-company-tabs-container{
     /* border:3px solid red; */
-    display: flex;
     margin-bottom: 2%;
+}
+
+.tabs-label{
+    font-size: 0.9rem;
+    font-weight: 510;
+    color: var(--text-color-opac-6);
 }
 
 .getting-started-company-tabs{
     /* border:1px solid purple; */
-    min-height: 7vh;
     display: flex;
     width: 100%;
-    justify-content: space-between;
+    margin-top: 1%;
 }
 
 .getting-started-company-tabs-child{
-    width: 48%;
-    border:1px solid var(--prim-border-color);
+    box-shadow: 0 0 2px var(--box-shadow-color);
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 30px;
-    color: var(--text-color);
-    transition: all 0.2s ease;
+    padding: 8px 16px;
+    margin-right: 1rem;
+    border-radius: 4px;
+    color: var(--color);
+    transition: all 0.3s ease;
     font-size: 0.9rem;
 }
 
+.getting-started-company-tabs-child:last-of-type{
+    margin-right: 0;
+}
+
 .getting-started-company-tabs-child:hover{
-    color: var(--color);
     color: var(--background-color);
-    border: none;
-    border: none;
     background-color: var(--color-opac-8);
+    /* border: 1px solid var(--color); */
+    
 }
 
 .getting-started-company-tabs-child.active{
     color: var(--background-color);
-    /* font-weight: 550; */
-    border: none;
-    border: none;
-    background-color: var(--color-opac-8);
+    background-color: var(--color);
 }
 
 /* .getting-started-company-form-inputs{
@@ -90,20 +95,23 @@
 
 .company-form-group{
     display: flex;
-    margin-bottom:1%;
+    margin-bottom: 0.4rem;
     width:100%;
-    /* border:2px solid purple; */
-    min-height: 1.3rem;
-}
-
-.company-form-group label{
-    font-size: 0.781em;
-    font-weight: bold;
+    /* border: 2px solid purple; */
+    font-size: 0.9rem;
+    font-weight: 510;
     color: var(--text-color);
 }
 
-.company-form-group label span{
-    font-size: 0.9em;
-    font-weight: bold;
+.company-form-group label{
+    color: var(--text-color-opac-6);
+}
+
+.company-form-group span{
+    margin-left: 0.3rem;
     color: var(--color);
+}
+
+@media only screen and (max-width:500px) {
+
 }
