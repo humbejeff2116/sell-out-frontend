@@ -1,20 +1,27 @@
 
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Redirect, useLocation } from 'react-router-dom';
 import useAuth from '../../Context/context';
 
 
 export default function RequireAuthentication(Component, auth, redirectTo) {
     function AuthenticatedComponent(props) {
-        const { isAuthenticated } = useAuth();
+        const { isAuthenticated, wipeToken } = useAuth();
+        const location = useLocation();
         const auth = isAuthenticated();
         const redirectPath = redirectTo ? redirectTo : "/login";
 
+        useEffect(() => {
+            if (!auth) {
+                wipeToken();
+            }
+        }, [auth, wipeToken]);
+
         if (!auth) {
-            localStorage.setItem('route-auth-message','you must be logged in to view this page');
+            sessionStorage.setItem("currentLocation", JSON.stringify(location.pathname));
 
             return (
-                <Redirect to={ redirectPath } />
+                <Redirect to={ redirectPath }/>
             )
         }
 
