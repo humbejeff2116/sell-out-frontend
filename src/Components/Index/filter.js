@@ -17,7 +17,6 @@ export default function FilterComponent({
     filterType, 
     showFilter, 
     closeFilter, 
-    ...props 
 }) {
     const indexFilterClassName = showFilter ? `${styles.container} ${styles.show}` : `${styles.container}`;
     let filterComponentChild;
@@ -128,15 +127,13 @@ function FilterLinks({ links, title, dontShowTitle }) {
         <div className={ styles.linksContainer }>
             { dontShowTitle ? '' : title  }
             <div className={ styles.categoryLinks }>
-            {
-                links.map((link, i) =>
-                    <FilterLink
-                    {...link}
-                    title = { title }
-                    key={i}
-                    />  
-                )
-            }
+            {links.map((link, i) =>
+                <FilterLink
+                {...link}
+                title = { title }
+                key={i}
+                />  
+            )}
             </div>
         </div>
     )
@@ -193,16 +190,14 @@ function FilterTabs({ title, tabs, ...props }) {
             <div className={ styles.filterTabsTop }>
                { title }
                <div className={ styles.filterTabs }>
-                {
-                    tabs.map((vals, i)=> 
-                        <Tab 
-                        key ={ i } 
-                        { ...vals } 
-                        viewedTabId ={ viewedTabId }
-                        toggleTabs = { toggleTabs }
-                        />
-                    )
-                }
+                {tabs.map((vals, i)=> 
+                    <Tab 
+                    key ={ i } 
+                    { ...vals } 
+                    viewedTabId ={ viewedTabId }
+                    toggleTabs = { toggleTabs }
+                    />
+                )}
                </div>  
             </div>
             <FilterLinks
@@ -214,7 +209,14 @@ function FilterTabs({ title, tabs, ...props }) {
     )
 }
 
-function Tab({ title, id, icon, name, viewedTabId, ...props }) {
+function Tab({ 
+    title, 
+    id, 
+    icon, 
+    name, 
+    viewedTabId, 
+    ...props 
+}) {
     const tabClassName = viewedTabId === id ? (
         `${styles.categoryLinksItem} ${styles.categoryTab} ${styles.categoryTabActive}`
     ) : (
@@ -231,12 +233,18 @@ function Tab({ title, id, icon, name, viewedTabId, ...props }) {
 }
 
 
-export function FilterButtonComponent({ filterButtonClassName, filterIconClassName, ...props }) {
+export function FilterButtonComponent({ 
+    filterButtonClassName, 
+    filterIconClassName,
+    filter,
+    toggleFilter, 
+    ...props 
+}) {
     return (
         <div 
         className={ filterButtonClassName || styles.filterButtonWrapper } 
         { ...props } 
-        onClick = { props.toggleFilterComponent }
+        onClick = {()=> toggleFilter(filter)}
         >               
             <RiListSettingsFill className={ filterIconClassName || styles.filterButtonIcon }/>
         </div>      
