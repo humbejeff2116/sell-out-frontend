@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import socket from '../Socket/socket';
 import { SearchProducts } from './searchProducts';
 import { PostProduct } from './postProduct';
-import { ErrorModal } from '../ModalBox/errorModal';
+// import { ErrorModal } from '../ModalBox/errorModal';
 import { DisplayedProduct } from '../Product/product';
-import FilterComponent from './filter'
+import FilterComponent, { FilterButtonComponent } from './filter'
+import { CartNavButtonIcon } from '../Landing/Template/template';
+import useSocketIsConnected from '../Hooks/socketHooks';
+import { useScrolledToBottom } from '../Hooks/windowScrolledToBottom';
+import useProductsContext from '../../Context/Products/context';
 import { getProducts } from '../../Utils/http.services';
-import { NavLink } from 'react-router-dom';
-import Links from '../../Data/links';
-import { RiListSettingsFill } from 'react-icons/ri'
 import './index.css';
 
 
@@ -18,7 +19,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "Humbe jeffrey",
         userEmail: "jeff@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "Denim blue shirt",
         productCategory: "furniture",
@@ -39,7 +40,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "Bottega",
         userEmail: "humbejeff@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "Fur pants",
         productCategory: "furniture",
@@ -60,7 +61,7 @@ const mockProducts = [
         userId: 2234343,
         userName: "Splash Collections",
         userEmail: "humbejeff@gmail.com",
-        userProfilePicture: "",
+        userProfileImage: "",
         productId: 232323,
         productName: "Sweat shirt",
         productCategory: "furniture",
@@ -81,89 +82,34 @@ const mockProducts = [
 
 
 export default function Index() {
-
-    const [insideLoginError, setinsideLoginError] = useState('');
-
     const [showFilter, setShowFilter] = useState(false);
-
-    const [filterType, setFilterType] = useState('')
-    
-    useEffect(()=> {
-
-        let timer = null;
-
-        let mounted = true;
-
-        if (insideLoginError && mounted) {
-
-            timer = setTimeout(() =>  setinsideLoginError(''), 12000);
-
-        }
-
-        return () => {
-
-            mounted = false;
-
-            if (timer)  clearTimeout(timer)
-
-        }  
-
-    }, [ insideLoginError ]);
+    const [filterType, setFilterType] = useState('');
 
     const toggleFilter = (filterCategory) => {
-
         if (showFilter) {
-
             setFilterType("");
-
         } else {
-
             switch (filterCategory) {
-
                 case "search" :
                     setFilterType("searchFilter");
                     break;
-
                 case "products": 
-                    setFilterType("productsFilter")
+                    setFilterType("productsFilter");
                     break;
-
                 default: 
                 throw new Error("proper filterCategory parameter is not specified");
-
             }
-
         }
-
-        setShowFilter(prevState => !prevState)
-
+        setShowFilter(prevState => !prevState);
     }
 
     const closeFilter = () => {
-
         setShowFilter(false)
-
         setFilterType("")
-
     }
     
-
-    
-
     return (
-
         <div className="index-container">
-            {
-                insideLoginError && (
-
-                    <ErrorModal 
-                    errorMessage = { insideLoginError }
-                    errorContainerClassName={"index-error-container"}
-                    panelClassName = {"index--error-modal"}
-                    />
-
-                )
-            }
            <PostProduct/>
            <FilterComponent
            filterType = { filterType }
@@ -173,367 +119,177 @@ export default function Index() {
            <SearchProducts 
            toggleFilterComponent = { toggleFilter }
            />
-           <FilterDisplayedProducts/>
+           <FilterDisplayedProducts
+           toggleFilterComponent = { toggleFilter }
+           />
         </div>
-
     )
-
 }
 
-
-function FilterDisplayedProducts(props) {
-
+export function FilterDisplayedProducts({ 
+    toggleFilterComponent
+}) {
     const [products, setProducts] = useState([]);
+    const [filterLoader, setFilterLoader] = useState(false);
+    const [lazyLoader, setLazyLoader] = useState(false);
+    const socketIsConnected = useSocketIsConnected();
+    const windowIsScrolledToBottom = useScrolledToBottom();
+    const { productsFilter } = useProductsContext(); // productsFilter -> ({type, filter})
+    const productsLimit = 18;
 
-    const [queryValues, setQueryValue] = useState({});
-
-    const [queryValueChange, setQueryValueChange] = useState(false);
-
-    const [showClothingLinks, setShowClothingLinks] = useState(false);
-
-    const [socketConnected, setSocketConnected] = useState(false);
-
-    const clothingLinks = Links.getClothingLinks()
-
-    const maleClothingLinks = Links.getMaleClothingLinks()
-
-    useEffect(()=> {
-
+    useEffect(()=> { // run effect only when there is no filter context
         let mounted = true;
-
-        async function getAllProducts() {
-
-            try {
-
-                const productsResponse = await getProducts();
-
-                const products = productsResponse.data;
-
-                setProducts(products)
-
-            } catch(err) {
-
-                console.error(err.stack)
-
-            }
-
+        if (socketIsConnected && mounted) {
+            if (!productsFilter) {
+                getIndexProducts(
+                    productsLimit, 
+                    0, 
+                    null, 
+                    setProducts
+                );
+            }    
         }
+        return ()=> mounted = false;    
+    }, [socketIsConnected, productsFilter]);
 
-        if (socket.connected) {
-
-            setSocketConnected(true)
-           
-        } else {
-
-            socket.on('connect', ()=> {
-
-                setSocketConnected(true)
-               
-            })
-
-        }
-
-        if (socketConnected && mounted) {
-           
-            getAllProducts();
-
-        }
-   
-        
-
-        return ()=> {
-
-            mounted = false;
-            
-        }
-
-    }, [socketConnected]);  
-
-    useEffect(()=> {
-
+    useEffect(()=> { // run effect only when there is filter context
         let mounted = true;
-
-        async function getAllProducts() {
-
-            try {
-
-                const productsResponse = await getProducts();
-
-                const products = productsResponse.data;
-
-                setProducts(products)
-
-            } catch(err) {
-
-                console.error(err.stack)
-
-            }
-
+        if (socketIsConnected && mounted) {
+            if (productsFilter) {
+                getIndexProducts(
+                    productsLimit, 
+                    0, 
+                    productsFilter, 
+                    setProducts, 
+                    setFilterLoader
+                );
+            }     
         }
+        return ()=> mounted = false;    
+    }, [socketIsConnected, products.length, productsFilter]); 
 
+    useEffect(()=> { // run effect when product data changes
+        let mounted = true;
         socket.on('productDataChange', function() {
-
-            if (mounted) {
-
-                getAllProducts();
-
-            } 
-
+            if (mounted) getIndexProducts(
+                productsLimit, 
+                products.length, 
+                productsFilter, 
+                setProducts, 
+                setFilterLoader
+            );
         });
+        return ()=> mounted = false;    
+    }, [products.length, productsFilter]);
 
-
-        return ()=> {
-
-            mounted = false;
-            
+    useEffect(()=> { // run effect on scroll
+        let mounted = true;
+        const setLazyLoadedProducts = (products) => {
+            setProducts(prevProducts => ([...prevProducts, ...products]));
         }
 
-    }, [])
+        if (socketIsConnected && mounted) {
+            if (windowIsScrolledToBottom) {
+                getIndexProducts(
+                    productsLimit, 
+                    products.length, 
+                    productsFilter, 
+                    setLazyLoadedProducts, 
+                    null,
+                    setLazyLoader,
+                );
+            }     
+        }
+        return ()=> mounted = false;    
+    }, [socketIsConnected, windowIsScrolledToBottom, products.length, productsFilter]);
 
-
-    useEffect(()=> {
-
-        if (queryValues?.category === "clothes") {
-
-            setQueryValue(prevValues => (prevValues.gender ? {...prevValues, gender:"female" } : {...prevValues, gender:"female"}))
-
-            setShowClothingLinks(true)
-
+    const getIndexProducts = async (limit, skip, filter, setProducts, setFilterLoader, setLazyLoader) => {
+        if (!filter) {
+            try {
+                const productsResponse = await getProducts(limit, skip);
+                const products = productsResponse.data;
+                setProducts(products);
+               
+            } catch(err) {
+                console.error(err);
+            }
         } else {
+            if (!setFilterLoader) {
+                setLazyLoader(true)
+                try {
+                    const { products } = await getProducts(limit, skip, filter).data;
+                    setProducts(products);
+                    setLazyLoader(false);
+                } catch(err) {
+                    setLazyLoader(false);
+                    console.error(err);
+                }
+                return
+            }
 
-            setShowClothingLinks(false)
-
-        } 
-
-    }, [queryValues.category])
-   
-    const queryProducts = async (queryValues) => {
-
-        try {
-
-            setQueryValueChange(false);
-
-            const productsResponse = await getProducts(queryValues);
-
-            const products = productsResponse.data;
-
-            setProducts(products)
-
-        } catch(err) {
-
-            console.error(err.stack)
-
-        } 
-
+            setFilterLoader(true);
+            try {
+                const { products } = await getProducts(limit, skip, filter).data;
+                setProducts(products);
+                setFilterLoader(false);
+            } catch(err) {
+                setFilterLoader(false);
+                console.error(err);
+            }
+        }
     }
-
-    const handleInputChange = function(e) {
-
-        setQueryValue(prevValues => ({ ...prevValues, [e.target.name] : e.target.value }))
-
-        setQueryValueChange(true) 
-
-    }
-
+ 
     return (
-
         <>
-        <div className="index-products-filter-heading">
-            <p>Products</p>
-        </div>
-
-        <FilterButtons
-        handleInputChange = { handleInputChange }
-        queryValues = { queryValues }
-        />
-
-        <FilterLinks
-        showClothingLinks = { showClothingLinks }
-        queryValues = { queryValues  }
-        clothingLinks = { clothingLinks }
-        maleClothingLinks = { maleClothingLinks }
-        />
-
-        <div className="index-products-container">
-        {
-
-            mockProducts.map((product, i) =>
-
+            <FilterButton
+            toggleFilter = { toggleFilterComponent }
+            />
+            <div className="index-products-container">
+            { filterLoader && <FilterLoader/> }
+            {mockProducts.map((product, i) =>
                 <DisplayedProduct 
                 key = { i } 
                 {...product} 
                 product = { product } 
                 panelClassName="index-product-panel"
                 />
-
-            )
-
-        }
-        </div>
+            )}
+            { lazyLoader && <FilterLoader/> }
+            </div>
         </>
-
     )
-
 }
 
-function FilterLinks({ showClothingLinks, queryValues, clothingLinks, maleClothingLinks}) {
-
+function FilterLoader({ ...props }) {
     return (
+        <div>
 
-        <div className="index-clothing-category-links-container">
-        {
-
-            showClothingLinks && (queryValues?.gender === "female" || queryValues?.gender === "all") && (
-            
-                <ClothingCategoryLinks links = { clothingLinks }/>
-            
-            )
-
-        }
-
-        {
-
-            showClothingLinks && queryValues?.gender === "male" && (
-
-                <ClothingCategoryLinks links = { maleClothingLinks }/>
-
-            )
-
-        }
         </div>
-
     )
 }
 
-
-function  FilterButtons({ handleInputChange, queryValues }) {
-
-    const filterButtons = {
-
-        usageOptions : [
-            {name:'Usage', value: 'all'},
-            {value: 'New'},
-            { value: 'Fairly used'},
-            { value: '1 year+'},
-            { value: '2 years+'},
-            { value: 'Others'},
-        ],
-
-        genderOptions : [
-            {name:'Gender', value: 'all'},
-            {value: 'Female'},
-            { value: 'Male'},
-        ],
-
-        categoryOptions : [
-            {name:'Category', value: 'all'},
-            {value: 'Electronics '},
-            { value: 'Clothes'},
-            { value: 'Accessories'},
-            { value: '2 years+'},
-            { value: 'Others'},
-        ],
-
-    }
-
+export function  FilterButton({ 
+    filterButtonContainerClass,
+    toggleFilter, 
+    showCartNavIcon,
+    dontShowTitle,
+    ...props 
+}) {
     return (
-
-        <div className="index-products-filter-buttons">
-
-            <div className="index-search-select-filter">               
-                <RiListSettingsFill className="index-search-filter-icon"/>
+        <div className={ filterButtonContainerClass || "index-products-filter-button-container" }>
+            <div className="index-products-filter-heading">
+               { dontShowTitle  ? ""  :"Products" } 
             </div>
-            {/* <div className="index-products-filter-select">
-                <Select
-                name = { 'gender' } 
-                queryValues = { queryValues } 
-                handleInputChange = { handleInputChange } 
-                options = { filterButtons.genderOptions }
+            <div className="index-products-filter-menu-container">
+                <div className="index-products-filter-menu-item-wrapper">
+                { showCartNavIcon && <CartNavButtonIcon/> }   
+                </div>
+                <FilterButtonComponent
+                toggleFilter = { toggleFilter }
+                filter ="products"
+                title="Filter Products"
                 />
             </div>
-            <div className="index-products-filter-select">
-                <Select
-                name = { 'category' } 
-                queryValues = { queryValues } 
-                handleInputChange = { handleInputChange } 
-                options = { filterButtons.categoryOptions }
-                />
-
-            </div>
-            <div className="index-products-filter-select">
-               <Select
-               name = { 'usage' } 
-               queryValues = { queryValues } 
-               handleInputChange = { handleInputChange } 
-               options = { filterButtons.usageOptions }
-               />
-            </div> */}
         </div>
     )
-}
-
-
-function Select ({ name, queryValues, handleInputChange, options, ...props }) {
-
-    return (
-
-        <select name={ name } value = { queryValues?.name } onChange = { handleInputChange }>
-        {
-
-            options.map((option, i) =>
-
-                <option 
-                key = { i } 
-                value = { option.name  ? option.name.toLowerCase() : option.value.toLowerCase() }
-                >
-
-                    { option.name  ? option.name : option.value }
-                    
-                </option>
-
-            )
-
-        }
-        </select>
-
-    )
-
-}
-
-
-function ClothingCategoryLinks({ links }) {
-
-    return (
-
-        <div className="index-clothing-category-links">
-        {
-            links.map((links, i) =>
-
-                <ClothingLinks key = { i } { ...links } />
-
-            )
-        }
-        </div>
-
-    )
-
-}
-
-function ClothingLinks({href, name, icon, ...props}) {
-
-    return (
-
-        <div classname="index-clothing-category-links-item">
-            <NavLink
-            exact 
-            to = { href } 
-            activeClassName="main-link-active"
-            className="main-nav-link" 
-            title = { name } >
-                <i>{ icon }</i><span>{ name }</span> 
-            </NavLink> 
-        </div>
-
-    )
-
 }
