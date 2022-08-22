@@ -173,21 +173,20 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
     return (
         <div className="index-search-container">
             <div className="index-search-header-panel">
-                <div className="index-search-header">
-                    <div>
-                        Search for Products or Brands
-                    </div>
-                    <p>   
-                        Have an asset in mind you would like to buy
-                        or just want to find out about a brand? <br />
-                        Use the search and and let's see what you find
-                    </p>
+                <h4>
+                    Search for Products or Brands
+                </h4>
+                <div className="index-search-header-writeup">   
+                    Have an asset in mind you would like to buy
+                    or just want to find out about a brand ?
+                    Use the search and and let's see what you find
                 </div>
             </div>
             <div className="index-search-input-wrapper">
-                <div className="index-search-select">
+                <div className="index-search-filter-container">
                     <FilterButtonComponent
-                    toggleFilterComponent = { ()=> toggleFilterComponent("search") }
+                    toggleFilter = {toggleFilterComponent}
+                    filter ="search"
                     title="Filter Search"
                     />
                 </div>
@@ -203,34 +202,27 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
                             name="searchQuery" 
                             />
                             <button type="submit" disabled = { searchingProducts ? true: false } >
-                            {
-                                searchingProducts ? (
-                                    <Loader
-                                    // loaderContainer = {"index-search-button-loader-container"}
-                                    loader = {"index-search-button-loader"}
-                                    />
-                                ) :  ( <FiSearch className="index-search-button-icon"/> )
-                            }
+                            {searchingProducts ? (
+                                <Loader loader = "index-search-button-loader"/>
+                            ) : ( 
+                                <FiSearch className = "index-search-button-icon"/> 
+                            )}
                             </button>   
                         </form>
-                        {
-                            showOmnibar && (
-                                <SearchOmniBox 
-                                returnedEmptySearch = { returnedEmptySearch }
-                                searchError={ searchProductsError }
-                                searchProducts={ getSearchProductsOmnibar }
-                                />
-                            )
-                        }
-                        {
-                            showSearchProductsResultModal && (
-                                <SearchResultModalBar
-                                searchResults ={ searchedProducts || arr }
-                                closeModal = { closeSearchProductsBar }
-                                searchResultModalBarChild= { SearchResultModalBarChildComp }
-                                /> 
-                            )
-                        }
+                        {showOmnibar && (
+                            <SearchOmniBox 
+                            returnedEmptySearch = { returnedEmptySearch }
+                            searchError={ searchProductsError }
+                            searchProducts={ getSearchProductsOmnibar }
+                            />
+                        )}
+                        {showSearchProductsResultModal && (
+                            <SearchResultModalBar
+                            searchResults ={ searchedProducts || arr }
+                            closeModal = { closeSearchProductsBar }
+                            searchResultModalBarChild= { SearchResultModalBarChildComp }
+                            /> 
+                        )}
                     </div>
                 </div>
             </div>  
