@@ -1,12 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FiSearch } from 'react-icons/fi'
-import useAuth from '../../Context/context';
 import { Loader } from '../Loader/loader';
-import socket from '../Socket/socket';
 import SearchOmniBox from './searchOmnibox';
 import { FilterButtonComponent }  from './filter';
-import { SearchResultModalBar, SearchResultModalBarChild } from './searchResultsModal';
+import { SearchResultModalBar } from './searchResultsModal';
+import socket from '../Socket/socket';
+import useAuth from '../../Context/context';
 
 
 export function SearchProducts({ toggleFilterComponent, ...props }) {
@@ -14,24 +14,23 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
     const [searchingProducts, setSearchingProducts] = useState(false);
     const [searchProductsError, setSearchProductsError] = useState(false);
     // const [searchProductsMssg,  setSearchProductsMssg] = useState('');
-    const [showOmnibar, setShowOmnibar] = useState(false)
+    const [showOmnibar, setShowOmnibar] = useState(false);
     const [searchQuery, setSearchQuery] = useState({});
-    const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(false)
-    const [returnedEmptySearch, setReturnedEmptySearch] = useState(false)
-    const [numberOfEmptySearch, setNumberOfEmptySearch] = useState(0)
+    const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(false);
+    const [returnedEmptySearch, setReturnedEmptySearch] = useState(false);
+    const [numberOfEmptySearch, setNumberOfEmptySearch] = useState(0);
     const { user } = useAuth();
-    const _searchOmnibar = React.createRef();
-    let arr = [1,2,3,4,5,6,7,8,8,8,9,8,7,6,6,76,7,7]
+    const _searchOmnibar = useRef();
     let timer = null;
 
-     useEffect(()=> {
+    useEffect(()=> {
          const closeSearchProductsOmnibar = (e) => {
-            if (_searchOmnibar.current)  closeSearchOmnibar()
+            if (_searchOmnibar.current)  closeSearchOmnibar();
             function closeSearchOmnibar() {
                 if (showOmnibar && !_searchOmnibar.current.contains(e.target)) {
                     setShowOmnibar(false);
-                    setReturnedEmptySearch(false)
-                    setSearchProductsError(false)           
+                    setReturnedEmptySearch(false);
+                    setSearchProductsError(false) ;          
                 }
             }
         }
@@ -48,35 +47,35 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
         socket.on("searchProductsSuccess", function(response) {
             if (response.data.length < 1) {
                 timer = setTimeout(() => {                   
-                    setSearchingProducts(false)
-                    setSearchProductsError(false)
-                    setReturnedEmptySearch(true)       
+                    setSearchingProducts(false);
+                    setSearchProductsError(false);
+                    setReturnedEmptySearch(true);       
                     // setSearchProductsMssg(response.message)
-                    setShowOmnibar(true)                   
+                    setShowOmnibar(true);                   
                 }, 1000)
 
                 return;
             }
 
             timer = setTimeout(() => {     
-                setSearchProductsError(false)
-                setSearchingProducts(false)
-                setShowOmnibar(false)
+                setSearchProductsError(false);
+                setSearchingProducts(false);
+                setShowOmnibar(false);
                 // setSearchProductsMssg(response.message)
-                setSearchedProducts(response.data)
+                setSearchedProducts(response.data);
             }, 1000)
    
             timer = setTimeout(() => {
-                setShowSearchProductsResultModal(true)   
+                setShowSearchProductsResultModal(true);   
             }, 1500)
         })
 
         socket.on("searchProductsError", function(response) {
             timer = setTimeout(() => {
-                setSearchingProducts(false)
-               setSearchProductsError(true)
+                setSearchingProducts(false);
+               setSearchProductsError(true);
             //    setSearchProductsMssg(response.message)
-               setShowOmnibar(true)  
+               setShowOmnibar(true);  
             }, 1000)
            return;   
         })
@@ -90,11 +89,11 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
         return ()=> {
             if (timer) clearTimeout(timer);
         }
-    }, [timer])
+    }, [timer]);
 
     
     const handleInputChange = (e) => {
-        setSearchQuery(prevState => ({ ...prevState, [e.target.name] : e.target.value }));
+        setSearchQuery({[e.target.name] : e.target.value});
         setNumberOfEmptySearch(0);
     }
 
@@ -107,49 +106,50 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
 
     const getSearchProducts = async function(e) {
         e.preventDefault();
-        if (!searchQuery.searchQuery) {
-            setNumberOfEmptySearch( prevstate => prevstate + 1 );
-            return
+        if (!searchQuery.query) {
+            setNumberOfEmptySearch(prevstate => prevstate + 1);
+            return;
         }
-        try{
-            if (user && searchQuery.searchQuery) {
-                setSearchingProducts(true);
-                setShowOmnibar(false);
-                const data = { user, query: searchQuery?.searchQuery };
+        if (user && searchQuery.query) {
+            setSearchingProducts(true);
+            setShowOmnibar(false);
+            const data = { user, query: searchQuery?.query };
+
+            try{
                 socket.emit("searchProducts", data);
-            }  
-        } catch(err) {
-            timer = setTimeout(() => {
-                setSearchingProducts(false)
-                setSearchProductsError(true)
-                // TODO... set error mssg
-                // setSearchProductsMssg("")
-                setShowOmnibar(true) 
-            }, 1000)
-        }
+            } catch(err) {
+                timer = setTimeout(() => {
+                    setSearchingProducts(false);
+                    setSearchProductsError(true);
+                    setShowOmnibar(true); 
+                }, 1000)
+            } 
+        }  
         e.stopPropagation();
     }
 
     const getSearchProductsOmnibar = async (searchQuery) => {
         if (!searchQuery.query) {
-            setNumberOfEmptySearch(prevstate => prevstate + 1)
-            return
+            setNumberOfEmptySearch(prevstate => prevstate + 1);
+            return;
         }
-        try{
-            if (user && searchQuery.query) {
-                setSearchQuery({});
-                setSearchingProducts(true);
-                setShowOmnibar(false);
-                const data = { user, query: searchQuery?.query };
+      
+        if (user && searchQuery.query) {
+            setSearchQuery({query: searchQuery.query});
+            setSearchingProducts(true);
+            setShowOmnibar(false);
+            const data = { user, query: searchQuery?.query };
+
+            try{
                 socket.emit("searchProducts", data);
+            } catch(err) {
+                timer = setTimeout(() => {
+                    setSearchingProducts(false);
+                    setSearchProductsError(true);  
+                    // setSearchProductsMssg("")
+                    setShowOmnibar(true);   
+                }, 1000)
             }
-        } catch(err) {
-            timer = setTimeout(() => {
-                setSearchingProducts(false);
-                setSearchProductsError(true);  
-                // setSearchProductsMssg("")
-                setShowOmnibar(true);   
-            }, 1000)
         }
     }
 
@@ -157,18 +157,12 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
         setShowSearchProductsResultModal(false);
     }
 
-    const removeSearchItem = (e, item )=> {
+    const removeSearchItem = (e, item ) => {
         const newsearchedProducts = searchedProducts.filter(searchItem => searchItem._id !== item._id);
         setSearchedProducts(newsearchedProducts);
         e.stopPropagation();
     }
-    const omnibarClassName = numberOfEmptySearch > 0 ? "index-search-form error" : "index-search-form"
-    const SearchResultModalBarChildComp = (
-        <SearchResultModalBarChild
-        searchResults={ searchedProducts || arr }
-        removeSearchItem={ removeSearchItem }
-        />
-    )
+    const omnibarClassName = numberOfEmptySearch > 0 ? "index-search-form error" : "index-search-form";
 
     return (
         <div className="index-search-container">
@@ -185,23 +179,22 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
             <div className="index-search-input-wrapper">
                 <div className="index-search-filter-container">
                     <FilterButtonComponent
-                    toggleFilter = {toggleFilterComponent}
-                    filter ="search"
-                    title="Filter Search"
+                    toggleFilter = { toggleFilterComponent }
+                    filter = "search"
+                    title = "Filter Search"
                     />
                 </div>
                 <div className="index-search-form-wrapper">
-                    <div className={ omnibarClassName } ref={_searchOmnibar}>
-                        <form onSubmit= { getSearchProducts }>
+                    <div className = { omnibarClassName } ref = { _searchOmnibar }>
+                        <form onSubmit = { getSearchProducts }>
                             <input 
                             type="search" 
-                            placeholder="Search for Products" 
-                            // value={ null } 
-                            onFocus=  { handleInputFocusChange } 
+                            placeholder = "Search for Products" 
+                            onFocus =  { handleInputFocusChange } 
                             onChange = { handleInputChange } 
-                            name="searchQuery" 
+                            name="query" 
                             />
-                            <button type="submit" disabled = { searchingProducts ? true: false } >
+                            <button type="submit" disabled = { searchingProducts ? true: false }>
                             {searchingProducts ? (
                                 <Loader loader = "index-search-button-loader"/>
                             ) : ( 
@@ -212,15 +205,16 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
                         {showOmnibar && (
                             <SearchOmniBox 
                             returnedEmptySearch = { returnedEmptySearch }
-                            searchError={ searchProductsError }
-                            searchProducts={ getSearchProductsOmnibar }
+                            searchError = { searchProductsError }
+                            searchProducts = { getSearchProductsOmnibar }
                             />
                         )}
                         {showSearchProductsResultModal && (
                             <SearchResultModalBar
-                            searchResults ={ searchedProducts || arr }
+                            query = { searchQuery.query }
+                            searchResults = { searchedProducts }
                             closeModal = { closeSearchProductsBar }
-                            searchResultModalBarChild= { SearchResultModalBarChildComp }
+                            removeSearchItem = { removeSearchItem }
                             /> 
                         )}
                     </div>
