@@ -1,48 +1,59 @@
-
 import React from 'react';
 import SearchResult from './searchResultProduct';
-import { ModalBox } from '../ModalComments/modalComments';
+import { ModalBox } from '../ModalReviews/modalReviews';
 
- export function SearchResultModalBar(props) {
-  
+ export function SearchResultModalBar({
+    searchResults,
+    removeSearchItem, 
+    query,
+    closeModal, 
+}) {
     return (
-
         <ModalBox 
-        handleModal = { props.closeModal }
-        modalContainerWrapperName ={"index-search-results-modal-container"} 
-        modalContainer={"index-search-results-modal-wrapper"}
+        dontUseDefaultModalChildContainer
+        handleModal = { closeModal }
         >
-
-        { props.searchResultModalBarChild }
-           
+            <SearchResultModalBarChild
+            query = { query }
+            searchResults = { searchResults }
+            removeSearchItem = { removeSearchItem }
+            />  
         </ModalBox>
-
     )
-
 }
 
-export function SearchResultModalBarChild(props) {
-
+export function SearchResultModalBarChild({ 
+    removeSearchItem, 
+    searchResults,
+    query 
+}) {
     return (
-
         <div className ="index-search-results-modal-child">
             <div className="index-search-results-header">
-            <h2>Search results for</h2>
+                Search results for <span className="index-search-query"> { query ?? "" }</span>
             </div>
-            {
-                props.searchResults.map((item, i) =>
-
+            <div className="index-search-results-body">
+            {searchResults?.length > 0  ? (
+                searchResults.map((item, i) =>
                     <SearchResult
                     key = { i }
-                    { ...item }
-                    
-                    removeSearchItem = { props.removeSearchItem }
+                    { ...item } 
+                    removeSearchItem = { removeSearchItem }
                     searchItem = { item }
                     />
-
                 )
-            }
+            ) : (
+                <EmptySearchResult/>
+            )}
+            </div>
         </div>
     )
+}
 
+function EmptySearchResult({ ...props }) {
+    return (
+        <div>
+
+        </div>
+    )
 }
