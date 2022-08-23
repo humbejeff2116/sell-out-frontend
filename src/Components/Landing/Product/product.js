@@ -15,7 +15,6 @@ export default function LandingProducts(props) {
 
     useEffect(()=> {
         let mounted = true;
-
         if (socketIsConnected && mounted) {  
             getAllProducts(setProducts);
         }
@@ -26,7 +25,6 @@ export default function LandingProducts(props) {
 
     useEffect(()=> {
         let mounted = true;
-
         socket.on('productDataChange', function() {
             if (mounted) {
                 getAllProducts(setProducts);
@@ -58,16 +56,14 @@ export default function LandingProducts(props) {
                 </div>
             </div>
             <div className="landing-product-container">
-            {
-                products.length > 0 && products.map((product, i) =>
-                    <DisplayedProduct 
-                    key={ i } 
-                    product={ product } 
-                    panelClassName = "landing-product-panel"
-                    productCommentPanelName = "landing-product-comment-panel"
-                    />
-                )
-            }
+            {products.length > 0 && products.map((product, i) =>
+                <DisplayedProduct 
+                key = { i } 
+                product = { product } 
+                productCommentPanelName = "landing-product-comment-panel"
+                productUsedOutsideLogin
+                />
+            )}
             </div>
         </>
     )
