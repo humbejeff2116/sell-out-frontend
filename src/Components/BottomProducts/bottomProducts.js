@@ -1,92 +1,97 @@
 
 import React, { useEffect, useState } from 'react';
+import { AiOutlineReload } from 'react-icons/ai';
 import { DisplayedProduct } from '../Product/product';
-import { getSellerProducts } from '../../Utils/http.services';
+import EmptyState, { EmptyStateButton }  from '../EmptyState/emptyState';
+import { LoaderSmall } from '../Loader/loader';
+import { getSimilarProducts } from '../../Utils/http.services';
+import errorImage from '../../Images/error2.png';
+import failureImage from '../../Images/failure9.jpg';
 import styles from './BottomProducts.module.css';
 
 
 const mockProducts = [
-    {
-        userId: 2234343,
-        userName: "hummbe jeffrey",
-        userEmail: "humbejeff@gmail.com",
-        userProfileImage: "",
-        productId: 232323,
-        productName: "short andres denim combat ",
-        productCategory: "furniture",
-        productCountry: "Nigeria",
-        productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
-        productPrice: "230",
-        percentageOff: 3,
-        productContactNumber: "334039438493",
-        productImages: [{},{},{}],
-        stars: [],
-        unstars: [],
-        comments: [],
-        interests: []
-    },
-    {
-        userId: 2234343,
-        userName: "hummbe jeffrey",
-        userEmail: "humbeeff@gmail.com",
-        userProfileImage: "",
-        productId: 232323,
-        productName: "blue tantarum maryland jean",
-        productCategory: "furniture",
-        productCountry: "Nigeria",
-        productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
-        productPrice: "110",
-        productContactNumber: "334039438493",
-        productImages: [{},{},{}],
-        stars: [],
-        unstars: [],
-        comments: [],
-        interests: []
-    },
-    {
-        userId: 2234343,
-        userName: "hummbe jeffrey",
-        userEmail: "humbeff@gmail.com",
-        userProfileImage: "",
-        productId: 232323,
-        productName: "short nikka",
-        productCategory: "furniture",
-        productCountry: "Nigeria",
-        productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
-        productPrice: "17.2",
-        productContactNumber: "334039438493",
-        productImages: [{},{},{}],
-        stars: [],
-        unstars: [],
-        comments: [],
-        interests: []
-    },
-    {
-        userId: 2234343,
-        userName: "hummbe jeffrey",
-        userEmail: "humbjef@gmail.com",
-        userProfileImage: "",
-        productId: 232323,
-        productName: "short nikka",
-        productCategory: "furniture",
-        productCountry: "Nigeria",
-        productState: "Benue",
-        productUsage: "never used",
-        productCurrency: "naira",
-        productPrice: "15.22",
-        productContactNumber: "334039438493",
-        productImages: [{},{},{}],
-        stars: [],
-        unstars: [],
-        comments: [],
-        interests: []
-    },
+    // {
+    //     userId: 2234343,
+    //     userName: "hummbe jeffrey",
+    //     userEmail: "humbejeff@gmail.com",
+    //     userProfileImage: "",
+    //     productId: 232323,
+    //     productName: "short andres denim combat ",
+    //     productCategory: "furniture",
+    //     productCountry: "Nigeria",
+    //     productState: "Benue",
+    //     productUsage: "never used",
+    //     productCurrency: "naira",
+    //     productPrice: "230",
+    //     percentageOff: 3,
+    //     productContactNumber: "334039438493",
+    //     productImages: [{},{},{}],
+    //     stars: [],
+    //     unstars: [],
+    //     comments: [],
+    //     interests: []
+    // },
+    // {
+    //     userId: 2234343,
+    //     userName: "hummbe jeffrey",
+    //     userEmail: "humbeeff@gmail.com",
+    //     userProfileImage: "",
+    //     productId: 232323,
+    //     productName: "blue tantarum maryland jean",
+    //     productCategory: "furniture",
+    //     productCountry: "Nigeria",
+    //     productState: "Benue",
+    //     productUsage: "never used",
+    //     productCurrency: "naira",
+    //     productPrice: "110",
+    //     productContactNumber: "334039438493",
+    //     productImages: [{},{},{}],
+    //     stars: [],
+    //     unstars: [],
+    //     comments: [],
+    //     interests: []
+    // },
+    // {
+    //     userId: 2234343,
+    //     userName: "hummbe jeffrey",
+    //     userEmail: "humbeff@gmail.com",
+    //     userProfileImage: "",
+    //     productId: 232323,
+    //     productName: "short nikka",
+    //     productCategory: "furniture",
+    //     productCountry: "Nigeria",
+    //     productState: "Benue",
+    //     productUsage: "never used",
+    //     productCurrency: "naira",
+    //     productPrice: "17.2",
+    //     productContactNumber: "334039438493",
+    //     productImages: [{},{},{}],
+    //     stars: [],
+    //     unstars: [],
+    //     comments: [],
+    //     interests: []
+    // },
+    // {
+    //     userId: 2234343,
+    //     userName: "hummbe jeffrey",
+    //     userEmail: "humbjef@gmail.com",
+    //     userProfileImage: "",
+    //     productId: 232323,
+    //     productName: "short nikka",
+    //     productCategory: "furniture",
+    //     productCountry: "Nigeria",
+    //     productState: "Benue",
+    //     productUsage: "never used",
+    //     productCurrency: "naira",
+    //     productPrice: "15.22",
+    //     productContactNumber: "334039438493",
+    //     productImages: [{},{},{}],
+    //     stars: [],
+    //     unstars: [],
+    //     comments: [],
+    //     interests: []
+    // },
 ];
 
 
@@ -107,22 +112,19 @@ export default function BottomProductsWrapper({
         const getBottomProducts = async (queryData) => {
             setLoading(true);
             try {
-                const { 
-                    status,
-                    error,
-                    message,
-                    sellerProducts, 
-                    similarProducts
-                } = await getSellerProducts(queryData);
-                if (sellerProducts.length < 1) { 
+                const { data } = await getSimilarProducts(queryData);
+                const { sellerProducts, similarProducts } = data;
+                setStoreProducts(sellerProducts);
+                setSimilarProducts(similarProducts);
+                
+                if (sellerProducts.length < 1 && similarProducts.length > 0) { 
                     setShowStoreProducts(false);
                     setShowSimilarProducts(true);
                 }
-                setStoreProducts(sellerProducts);
-                setSimilarProducts(similarProducts);
                 setLoading(false);
             } catch(err) {
                 console.error(err);
+                alert("error");
                 setError({
                     exist: true,
                     message: err.message
@@ -138,7 +140,7 @@ export default function BottomProductsWrapper({
                 userEmail,
                 productCategory,
             }
-            // get bottom component products after window has scrolled to top
+            //delay and get products after window has probably scrolled to top
             timer = setTimeout(() => {
                 return getBottomProducts(queryData);
             }); 
@@ -159,18 +161,9 @@ export default function BottomProductsWrapper({
         setShowSimilarProducts(true);
     }
 
-    const storeProductsTabHeaderClassName = showStoreProducts ? (
-        `${styles.bottomProductsTabHeader} ${styles.tabsHeaderActive}`
-    ) : (
-        `${styles.bottomProductsTabHeader}` 
-    )
-
-    const similarProductsTabHeaderClassName = showSimilarProducts ? (
-        `${styles.bottomProductsTabHeader} ${styles.tabsHeaderActive}`
-    ) : (
-        `${styles.bottomProductsTabHeader}` 
-    )
-    const { userName, brandName } = viewState
+    const storeProductsTabHeaderClassName = `${styles.bottomProductsTabHeader} ${showStoreProducts ? styles.tabsHeaderActive : "" }`;
+    const similarProductsTabHeaderClassName = `${styles.bottomProductsTabHeader} ${showSimilarProducts ? styles.tabsHeaderActive : ""}`;
+    const { userName, brandName } = viewState;
 
     return (
         <div className={ styles.bottomPoductsWrapper }>
@@ -191,24 +184,24 @@ export default function BottomProductsWrapper({
                 </div>
             </div>
             <div className={ styles.bottomPoductsContainer }>
-            {
-                loading? "loading" : showStoreProducts ? (
-                    <BottomProducts
-                    usedForUserProducts
-                    products = { storeProducts.length > 0 ? storeProducts : mockProducts }
-                    error = { error }
-                    productUsedOutsideLogin = { usedOutsideLogin }
-                    brandName = { brandName ?? userName }
-                    />
-                ) : (
-                    <BottomProducts
-                    usedForSimilarProducts
-                    products = { similarProducts }
-                    error = { error }
-                    productUsedOutsideLogin ={ usedOutsideLogin }
-                    />
-                )
-            }
+            {loading ? (
+                <LoaderSmall/>
+            ) : showStoreProducts ? (
+                <BottomProducts
+                usedForUserProducts
+                products = { storeProducts }
+                error = { error }
+                productUsedOutsideLogin = { usedOutsideLogin }
+                brandName = { brandName ?? userName }
+                />
+            ) : (
+                <BottomProducts
+                usedForSimilarProducts
+                products = { similarProducts }
+                error = { error }
+                productUsedOutsideLogin ={ usedOutsideLogin }
+                />
+            )}
             </div>           
         </div>
     )
@@ -224,43 +217,56 @@ function BottomProducts({
     ...props 
 }) {
     
-    // if (error.exist) {
-    //     return (
-    //         <div className={ styles.bottomProductsEmpty }>
-              
-    //            { error.message }
-    //         </div>
-    //     )
-    // }
+    if (error.exist) {
+        return (
+            <EmptyState
+            imageSrc = { errorImage }
+            heading="Error!"
+            writeUp={ error.message}
+            >
+                <EmptyStateButton
+                buttonIcon ={
+                    <AiOutlineReload className={ styles.reloadIcon }/>
+                }
+                emptyStateButtonText="Reload"
+                // handleClick
+                />
+            </EmptyState>
+        )
+    }
     if (products && products.length < 1 ) {
         if (usedForUserProducts) {
             return (
-                <div className={ styles.bottomProductsEmpty }>
-                    { brandName } has no other products for sale at the moment
-                    
-                </div>
+                <EmptyState
+                imageSrc = { failureImage }
+                heading="Store Products"
+                writeUp={ `${ brandName } does'nt have other products at the moment`}
+                >
+
+                </EmptyState>
             )
         }
         if (usedForSimilarProducts) {
             return (
-                <div className={ styles.bottomProductsEmpty }>
-                    {/* There are no similar products for sale at the moment */}
-                    We couldnt find any similar products at the moment
-                </div>
+                <EmptyState
+                imageSrc = { failureImage }
+                heading="Similar Products"
+                writeUp="Sorry, We couldn't find any similar products to the one you've viewed"
+                >
+
+                </EmptyState>
             )
         }
     }
     return (
         <div className={ styles.bottomProductsWrapper }>
-        {
-            products && products.map((product,i) =>
-                <DisplayedProduct 
-                key = { i }  
-                product = { product } 
-                productUsedOutsideLogin = { productUsedOutsideLogin }
-                />
-            )
-        }
+        {products && products.map((product,i) =>
+            <DisplayedProduct 
+            key = { i }  
+            product = { product } 
+            productUsedOutsideLogin = { productUsedOutsideLogin }
+            />
+        )}
         </div>
     )
 }
