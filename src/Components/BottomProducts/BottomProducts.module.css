@@ -6,7 +6,6 @@
 }
 
 .bottomPoductsHeader{
-    /* border-left: 1px solid var(--prim-border-color); */
     display: flex;
 }
 
@@ -40,11 +39,9 @@
     width: 60%;
 }
 
-
-
 .bottomPoductsContainer{
     /* border: 1px solid red; */
-    min-height: 55vh;
+    min-height: 65vh;
     display: flex;
     flex-direction: column;
     padding-top: 1rem;
@@ -61,7 +58,12 @@
     border:1px solid black;
     margin: auto;
     width: 100%;
-    min-height: 30vh;
+    min-height: 65vh;
+}
+
+.reloadIcon{
+    font-size: 1.1rem;
+    margin-right: 0.3rem;
 }
 
 @media only screen and (max-width:500px) {
