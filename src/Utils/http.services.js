@@ -27,6 +27,11 @@ export async function getSellerProducts(queryData) {
     return sellerProducts.data;
 }
 
+export async function getSimilarProducts(queryData) {
+    const bottomProducts =  await gatewayServerHTTP.get(`/similar-products/${queryData.userId}/${queryData.userEmail}/${queryData.productCategory}`);
+    return bottomProducts.data;
+}
+
 export async function createProduct(data) {
     const createProductResponse = await gatewayServerHTTP.post(`/product`, data, {headers: {"Content-Type": "multipart/form-data"}});
     return createProductResponse.data;
