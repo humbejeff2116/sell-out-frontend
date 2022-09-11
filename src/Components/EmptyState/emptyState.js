@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RiGitRepositoryLine } from 'react-icons/ri';
 import styles from './EmptyState.module.css';
+import { AiOutlineReload } from 'react-icons/ai';
 
 
 export function ErrorState({ 
@@ -12,8 +12,7 @@ export function ErrorState({
     writeUp,
     dontShowReloadButton,
     reloadContent,
-    reloadButtonText, 
-    ...props 
+    reloadButtonText
 }) {
     return (
         <EmptyState
@@ -22,14 +21,12 @@ export function ErrorState({
         heading = { heading }
         writeUp = { writeUp }
         >
-        {
-            dontShowReloadButton ? "" : (
-                <ReloadButton
-                reloadContent = { reloadContent }
-                reloadButtonText ={ reloadButtonText }
-                />
-            )
-        }
+        {dontShowReloadButton ? "" : (
+            <ReloadButton
+            handleClick = { reloadContent }
+            reloadButtonText ={ reloadButtonText }
+            />
+        )}
         </EmptyState>
     )
 }
@@ -40,20 +37,22 @@ export default function EmptyState({
     heading, 
     writeUp,
     emptyContainerClassName,
-    emptyContentWrapperClassName, 
-    children, 
-    ...props 
+    emptyContentWrapperClassName,
+    emptyImageWrapperClassName,
+    emptyHeaderclassName,
+    emptyBodyClassName, 
+    children 
 }) {
     return (
         <div className={ emptyContainerClassName || styles.emptyContainer }>
             <div className={ emptyContentWrapperClassName || styles.emptyContentWrapper }>
-                <div className={ styles.emptyImageWrapper }>
+                <div className={ emptyImageWrapperClassName || styles.emptyImageWrapper }>
                     <img src ={ imageSrc } alt ={imageAlt || ""} />
                 </div>
-                <div className={ styles.emptyHeader }>
+                <div className={ emptyHeaderclassName || styles.emptyHeader }>
                     { heading }
                 </div>
-                <div className={ styles.emptyBody }>
+                <div className={ emptyBodyClassName || styles.emptyBody }>
                     { writeUp } 
                 </div>
                 { children }
@@ -64,14 +63,13 @@ export default function EmptyState({
 
 
 export function ReloadButton({ 
-    reloadContent, 
-    reloadButtonText, 
-    ...props 
+    handleClick, 
+    reloadButtonText
 }) {
     return (
         <div className={ styles.reloadButtonWrapper }>
-            <button className={ styles.reloadButton } onClick={ reloadContent }>
-                < RiGitRepositoryLine className={ styles.reloadButtonIcon }/>
+            <button className={ styles.reloadButton } onClick={ handleClick }>
+                <AiOutlineReload className={ styles.reloadButtonIcon }/>
                 { reloadButtonText || "Reload" }
             </button>
         </div>
@@ -79,27 +77,27 @@ export function ReloadButton({
 }
 
 export function EmptyStateButton({ 
-    reloadContent, 
+    handleClick, 
     useLinkButton,
     emptyStateButtonText,
-    href,
-    ...props 
+    buttonIcon,
+    href 
 }) {
     if (useLinkButton) {
         return (
             <div className={ styles.reloadButtonWrapper }>
                 <Link className={ styles.reloadButton } to={ href }>
-                    < RiGitRepositoryLine className={ styles.reloadButtonIcon }/>
-                    { emptyStateButtonText }
+                { buttonIcon }
+                { emptyStateButtonText }
                 </Link>
             </div>
         )
     }
     return (
         <div className={ styles.reloadButtonWrapper }>
-            <button className={ styles.reloadButton } onClick={ reloadContent }>
-                < RiGitRepositoryLine className={ styles.reloadButtonIcon }/>
-                { emptyStateButtonText || "Reload" }
+            <button className={ styles.reloadButton } onClick={ handleClick }>
+            { buttonIcon }
+            { emptyStateButtonText }
             </button>
         </div>
     )
