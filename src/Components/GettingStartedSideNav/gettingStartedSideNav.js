@@ -3,12 +3,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useGetStartedContext } from '../../Context/context';
 import { IoMdCheckmarkCircle } from 'react-icons/io';
+import useNavContext from '../../Context/Navigation/context';
 import './gettingStartedSideNav.css';
 
 
 export default function GettingStartedSideNav({ 
-    links, 
-    ...props
+    links
 }) {
     const { submittedFormPaths } = useGetStartedContext();
     const submittedFormPath = (href) => {
@@ -20,9 +20,9 @@ export default function GettingStartedSideNav({
         <nav  className="getting-started-side-nav">
         {links.map((link, i) =>
             <GettingStartedNavLink 
-            key={i} 
+            key = { i } 
             {...link}
-            submittedFormPath={submittedFormPath} 
+            submittedFormPath = { submittedFormPath } 
             />
         )}
         </nav>
@@ -34,11 +34,13 @@ function GettingStartedNavLink({
     href, 
     icon, 
     name,
-    submittedFormPath, 
-    ...props
+    submittedFormPath
 }) {
+    const { showLeftSideBar, openLeftSideBar } = useNavContext();
+
     const preventLinkDefaultBehaviour = (e)=> {
         e.preventDefault();
+        if (showLeftSideBar) return openLeftSideBar(false);
         e.stopPropagation();
     }
  
@@ -46,9 +48,9 @@ function GettingStartedNavLink({
         <div className = "getting-started-side-nav-item">   
             <NavLink
             exact 
-            to = {href} 
+            to = { href } 
             activeClassName="getting-started-side-link-active"
-            className = {` getting-started-side-nav-link ${submittedFormPath(href) ? "form-data-set" : ""}`} 
+            className = {`getting-started-side-nav-link ${submittedFormPath(href) ? "form-data-set" : ""}`} 
             // onClick ={preventLinkDefaultBehaviour}
             >
             <i>
