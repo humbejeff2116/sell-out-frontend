@@ -8,8 +8,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    animation-name: animateEmptyState; /* in index.css */
-    animation-duration: 1s;
 }
 
 .emptyContentWrapper{
@@ -21,7 +19,7 @@
 
 .emptyImageWrapper{
     /* border: 1px solid blue; */
-    max-width: 9rem;
+    max-width: 7rem;
     margin: 0 auto;
 }
 
@@ -35,31 +33,28 @@
 .emptyHeader{
     /* border: 1px solid black; */
     color: var(--text-color-opac-7);
-    margin: 0.4rem 0;
-
+    margin: 0rem 0 0.4rem 0;
     font-weight: 700;
     line-height: 120%;
-    font-size: 28px;
-    font-size: clamp(20px,4vw,28px);
+    font-size: 24px;
+    font-size: clamp(20px,4vw,24px);
 }
 
 .emptyBody{
     /* border: 1px solid green; */
     color: var(--text-color-opac-5);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    max-width: 400px;
 }
 
-
 /* reload button styles */
-
 .reloadButtonContainer{
-
+    border: 1px solid green;
 }
 
 .reloadButtonWrapper{
  /* border: 1px solid red; */
-    text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
 }
 
 .reloadButton{
@@ -67,21 +62,27 @@
     justify-content: center;
     align-items: center;
     border-radius: 28px;
-    font-size: 1rem;
-    padding: 8px 16px;
+    font-size: 0.9rem;
+    padding: 7px 15px;
     background-color: var(--color-opac-6);
     color: var(--background-color);
-    line-height: 24px;
+    /* line-height: 24px; */
     cursor: pointer;
-    font-weight: 500;
+    /* font-weight: 500; */
     transition: all 0.2s ease;
     border: none;
+    /* border: 1px solid red; */
     text-decoration: none;
+}
+
+.reloadButton span{
+    /* border: 1px solid red; */
 }
 
 .reloadButtonIcon{
     font-size: 1.3rem;
     margin-right: 0.2rem;
+    /* border: 1px solid red; */
 }
 
 .reloadButton:hover{
