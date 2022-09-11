@@ -1,8 +1,8 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { GoKebabVertical } from 'react-icons/go';
-import { RiDeleteBin2Line } from 'react-icons/ri';
+import { RiDeleteBin2Line, RiEye2Line } from 'react-icons/ri';
 import {
     reduceCartProductActionPayload,
     addCartProductQuantityActionPayload,
@@ -10,46 +10,43 @@ import {
 } from '../../Context/Cart/cartPayloads';
 import { Price } from '../Product/product';
 import EmptyState, { EmptyStateButton } from '../EmptyState/emptyState';
+import { UserModalProfileWrapper } from '../ModalUserProfile/userProfile';
 import useCartContext from '../../Context/Cart/cartContext';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar4.png';
 import image2 from '../../Images/product3.webp';
-import bell from '../../Images/bell3.png';
+import failureImage from '../../Images/failure9.jpg';
 import './cart.css';
 
 
 export default function Cart({ 
     dontShowHeading,
     emptyCartHref,
-    emptyCartContainerClassName,
-    ...props 
+    emptyCartContainerClassName 
 }) {
     const { cartItems, cartState } = useCartContext();
-    let CartProductsComponent;
-    
-    if (cartItems.length > 0) {
-        CartProductsComponent = (
-           <CartProductsWrapper 
-           cartData = { cartState } 
-           dontShowHeading = { dontShowHeading }
-           />
-        )
-    } else {
-        CartProductsComponent = (
+
+    return (
+        <div className="cart-container">
+        {(cartItems.length > 0) ? (
+            <CartProductsWrapper 
+            cartData = { cartState } 
+            dontShowHeading = { dontShowHeading }
+            />
+        ) : (
             <EmptyCart
             href = { emptyCartHref }
             emptyCartContainerClassName ={ emptyCartContainerClassName }
             />
-        )
-    }
-    return (
-        <div className="cart-container">
-            { CartProductsComponent }
+        )}
         </div>
     )
 }
 
-function CartProductsWrapper({ dontShowHeading, cartData }) {
+function CartProductsWrapper({ 
+    dontShowHeading, 
+    cartData 
+}) {
     const { cartState, cartItems, totalSum } = useCartContext();
     const { user, userIsLoggedIn, setOutsideLoginPopUpMessage } = useAuth();
 
@@ -86,25 +83,21 @@ function CartProductsWrapper({ dontShowHeading, cartData }) {
     return (
         <div className="cart-products-wrapper">
             <div className="cart-products-container">
-                {
-                    dontShowHeading ? ""  : (
-                        <div className="cart-header">
-                            <h3>Cart</h3>
-                        </div>
-                    )
-                }
+                {dontShowHeading ? ""  : (
+                    <div className="cart-header">
+                        <h3>Cart</h3>
+                    </div>
+                )}
                 <div className="cart-products-panel">
-                { 
-                    cartData.map(({ products, ...rest }) => (
-                        products.map((product, i) => 
-                            <CartProduct 
-                            key={ i } 
-                            product={ product }
-                            { ...rest }
-                            />
-                        )
-                    ))
-                }
+                {cartData.map(({ products, ...rest }) => (
+                    products.map((product, i) => 
+                        <CartProduct 
+                        key={ i } 
+                        product={ product }
+                        { ...rest }
+                        />
+                    )
+                ))}
                 </div>
                 <div className="cart-products-total-panel">
                     <div className="cart-products-total-checkout">
@@ -113,7 +106,7 @@ function CartProductsWrapper({ dontShowHeading, cartData }) {
                                 Total amount: 
                             </span> 
                             <span> 
-                                { ` £${totalSum}` }
+                                {`£${totalSum}`}
                             </span>
                         </div>
                         <Link  onClick = { goToCheckout } to="/home/checkout"> 
@@ -129,7 +122,10 @@ function CartProductsWrapper({ dontShowHeading, cartData }) {
     )
 }
 
-function CartProduct({ product, ...props }) {
+function CartProduct({ 
+    product, 
+    ...props 
+}) {
     const { user } = useAuth();
     const {
         cartState,
@@ -179,13 +175,11 @@ function CartProduct({ product, ...props }) {
             <CartProductProfile { ...props } />
             <div className="cart-product-details-panel">
                 <div className="cart-product-image-container">
-                {
-                    [product.productImages[0]].map((image, i) =>
-                        <div key = { i } className="cart-product-image-wrapper">
-                            <img src = { image.src || image2 } alt="product" />
-                        </div>
-                    )
-                }
+                {[product.productImages[0]].map((image, i) =>
+                    <div key = { i } className="cart-product-image-wrapper">
+                        <img src = { image.src || image2 } alt="product" />
+                    </div>
+                )}
                 </div>
                 {/* product information */}
                 {/* TODO... extract */}
@@ -235,10 +229,40 @@ function CartProduct({ product, ...props }) {
 
 function CartProductProfile({ 
     sellerProfileImage, 
-    sellerName, 
+    sellerName,
+    sellerId,
+    sellerEmail, 
     ...props
 }) {
+    const [showUserProfileModal, setShowuserProfileModal] = useState(false);
+    const [showUserProfileModalChild, setShowUserProfileModalChild] = useState(false);
+    let timer = null;
+
+    useEffect(() => {
+        return () => {
+            if (timer) clearTimeout(timer);
+        }
+    }, [timer]);
+
+    const showUserProfile = () => {
+        setShowuserProfileModal(true);
+        timer = setTimeout(() => setShowUserProfileModalChild(true));
+    }
+
+    const closeUserProfile = () => {
+        setShowUserProfileModalChild(false);
+        timer = setTimeout(() => setShowuserProfileModal(false), 200);
+    }
     return (
+        <>
+        {showUserProfileModal && (
+            <UserModalProfileWrapper
+            handleClose = { closeUserProfile }
+            userId = { sellerId }
+            userEmail = { sellerEmail }
+            showModalChild = { showUserProfileModalChild }
+            />
+        )}
         <div className="cart-product-avatar-Wrapper">
             <div className="cart-product-avatar-left">
                 <div className="cart-product-avatar" >
@@ -250,15 +274,17 @@ function CartProductProfile({
                     </span>
                 </div>
             </div>
-
             <div className="cart-product-avatar-right">
-                <GoKebabVertical className="nav-icon"/>
+                <GoKebabVertical className="nav-icon" onClick={ showUserProfile }/>
             </div>
         </div>
+        </>
     )
 }
  
-function CartCheckoutComp({ onClick }) {
+function CartCheckoutComp({ 
+    onClick 
+}) {
     const { totalSum, cartTotalNumberOfProducts } = useCartContext();
 
     return (
@@ -284,24 +310,24 @@ function CartCheckoutComp({ onClick }) {
 
 function EmptyCart({ 
     emptyCartContainerClassName,
-    href,  
-    ...props
+    href
 }) {
-    const containerClassName = emptyCartContainerClassName ? emptyCartContainerClassName : "emptyContainer";
-    const linkTo = href ? href : "/home"
     return (    
         <EmptyState
-        emptyContainerClassName = { containerClassName }
-        imageSrc = { bell }
+        emptyContainerClassName = { emptyCartContainerClassName || "emptyContainer" }
+        imageSrc = { failureImage }
         imageAlt = "Illustration of an empty cart"
-        heading ="No Products In cart"
-        writeUp ="You have no products in your cart at the moment"
+        heading = "No Items In cart"
+        writeUp = "You currently do not have items in your cart"
         >
             <EmptyStateButton
             useLinkButton
-            emptyStateButtonText="View products"
-            href = { linkTo }
-            />
+            buttonIcon = {
+                <RiEye2Line className="empty-cart-button-icon"/>
+            }
+            emptyStateButtonText="Start Shopping"
+            href = { href || "/home" }
+            /> 
         </EmptyState>
     )
 }
