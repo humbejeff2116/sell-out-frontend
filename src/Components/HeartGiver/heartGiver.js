@@ -31,7 +31,7 @@ export default function HeartGiver({
 
     useEffect(() => {
         let mounted = true;
-        const  productId = product._id;
+        const  productId = product.productId;
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         ProductLib.getProductLikesWhenProductDataChange(
             mounted, 
@@ -57,7 +57,7 @@ export default function HeartGiver({
         {likeCount ? (
             <AiFillHeart className={ heartIconClassName || styles.heartIcon }/>
         ) : (
-            < AiOutlineHeart className={ heartIconClassName || styles.heartIcon }/>
+            <AiOutlineHeart className={ heartIconClassName || styles.heartIcon }/>
         )} 
         {showLikes ? (likesProductRecieved && likes > 0  && likes) : ""}  
         </div>
