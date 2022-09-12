@@ -1,15 +1,20 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { FiSearch } from 'react-icons/fi'
+import { FiSearch } from 'react-icons/fi';
+import {  RiFilterLine, RiSettingsLine } from 'react-icons/ri';
 import { Loader } from '../Loader/loader';
 import SearchOmniBox from './searchOmnibox';
 import { FilterButtonComponent }  from './filter';
+import { PopupMenu, PopupMenuButton } from '../UserDashboard/Store/Collections/collections';
 import { SearchResultModalBar } from './searchResultsModal';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 
 
-export function SearchProducts({ toggleFilterComponent, ...props }) {
+export function SearchProducts({ 
+    toggleFilterComponent, 
+    ...props 
+}) {
     const [searchedProducts, setSearchedProducts] = useState(null);
     const [searchingProducts, setSearchingProducts] = useState(false);
     const [searchProductsError, setSearchProductsError] = useState(false);
@@ -19,8 +24,10 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
     const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(false);
     const [returnedEmptySearch, setReturnedEmptySearch] = useState(false);
     const [numberOfEmptySearch, setNumberOfEmptySearch] = useState(0);
+    const [showFilterMenu, setShowFilterMenu] = useState(false);
     const { user } = useAuth();
     const _searchOmnibar = useRef();
+    const _searchFilter = useRef();
     let timer = null;
 
     useEffect(()=> {
@@ -162,27 +169,88 @@ export function SearchProducts({ toggleFilterComponent, ...props }) {
         setSearchedProducts(newsearchedProducts);
         e.stopPropagation();
     }
+
+    const onClickOutsideFilterMenu = (e) => { 
+        const { current } = _searchFilter;   
+        if (showFilterMenu && current && !current.contains(e.target)) {      
+            setShowFilterMenu(false);    
+        }  
+    }
+
+    const toggleFilterMenu = () => {
+        setShowFilterMenu(prevState => !prevState);
+    }
     const omnibarClassName = numberOfEmptySearch > 0 ? "index-search-form error" : "index-search-form";
 
     return (
         <div className="index-search-container">
             <div className="index-search-header-panel">
                 <h4>
-                    Search for Products or Brands
+                    Search for Products
                 </h4>
-                <div className="index-search-header-writeup">   
+                {/* <div className="index-search-header-writeup">   
                     Have an asset in mind you would like to buy
-                    or just want to find out about a brand ?
-                    Use the search and and let's see what you find
-                </div>
+                    or just want to find out about ?
+                    Hit the search and and see what you find
+                </div> */}
             </div>
             <div className="index-search-input-wrapper">
-                <div className="index-search-filter-container">
-                    <FilterButtonComponent
-                    toggleFilter = { toggleFilterComponent }
-                    filter = "search"
-                    title = "Filter Search"
+                <div className="index-search-filter-container-wrapper">
+                    <div className="index-search-filter-container">
+                        <FilterButtonComponent
+                        toggleFilter = { toggleFilterMenu }
+                        filter = "search"
+                        title = "Filter Search"
+                        />
+                    </div>
+
+                <div className="index-search-filter-popup-wrapper">
+                <PopupMenu 
+                ref = { _searchFilter} 
+                showMenu = { showFilterMenu }
+                onClickOutside = { onClickOutsideFilterMenu }
+                >
+                    <>
+                    <PopupMenuButton
+                    name="Current Location"
+                    // handleClick
+                    icon = {
+                        <RiFilterLine className="store-products-popup-icon"/>
+                    }
                     />
+                    <PopupMenuButton
+                    name="Most Sold"
+                    // handleClick
+                    icon = {
+                        <RiFilterLine className="store-products-popup-icon"/>
+                    }
+                    />
+                    <PopupMenuButton
+                    name="Least Sold"
+                    // handleClick
+                    icon = {
+                        <RiSettingsLine className="store-products-popup-icon"/>
+                    }        
+                    />
+
+                    <PopupMenuButton
+                    name="Most Expensive"
+                    // handleClick
+                    icon = {
+                        <RiSettingsLine className="store-products-popup-icon"/>
+                    }        
+                    />
+
+                    <PopupMenuButton
+                    name="Most Affordable"
+                    // handleClick
+                    icon = {
+                        <RiSettingsLine className="store-products-popup-icon"/>
+                    }        
+                    />
+                    </>
+                </PopupMenu>
+            </div>
                 </div>
                 <div className="index-search-form-wrapper">
                     <div className = { omnibarClassName } ref = { _searchOmnibar }>
