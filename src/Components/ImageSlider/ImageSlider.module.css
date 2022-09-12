@@ -23,7 +23,9 @@
     max-width: 100%;
     height: 100%; 
     object-fit: contain; 
-    cursor: pointer; 
+    cursor: pointer;
+    animation-name: animateOpacity;
+    animation-duration: 0.5s; 
 }
 
 .prevButton, .nextButton{
@@ -44,14 +46,14 @@
 
 .prevButton{
    left: 2%;
-   animation-name: animateLeft;
-   animation-duration: 1s;
+   animation-name: animateOpacity;
+   animation-duration: 0.5s;
 }
 
 .nextButton{
     right: 2%;
-    animation-name: animateRight;
-    animation-duration: 1s;
+    animation-name: animateOpacity;
+    animation-duration: 0.5s;
 }
 
 .showButton{
@@ -74,53 +76,23 @@
     border: none;
 }
 
-@keyframes animateLeft {
+@keyframes animateOpacity {
     from{
-        left: -100%;
         opacity:0;
         transition:all;
     }
     to{
-        right:0;
         opacity: 1;
         transition: all;
     }
 }
 
-@-webkit-keyframes animateLeft {
+@-webkit-keyframes animateOpacity {
     from{
-        left: -100%;
         opacity:0;
         transition:all;
     }
     to{
-        right:0;
-        opacity: 1;
-        transition: all;
-    }
-}
-
-@keyframes animateRight {
-    from{
-        right: -100%;
-        opacity:0;
-        transition:all;
-    }
-    to{
-        right:0;
-        opacity: 1;
-        transition: all;
-    }
-}
-
-@-webkit-keyframes animateRight {
-    from{
-        right: -100%;
-        opacity:0;
-        transition:all;
-    }
-    to{
-        right:0;
         opacity: 1;
         transition: all;
     }
@@ -151,6 +123,8 @@
     justify-content: center;
     cursor: pointer;
     margin: auto;
+    animation-name: animateOpacity;
+    animation-duration: 0.5s;
 }
 
 .thumbnailWrapperOverflow{
