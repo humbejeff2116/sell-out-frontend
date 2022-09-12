@@ -88,11 +88,13 @@ export default function ImageSLider({
             )}
             <div className={ styles.panel }>
                 <div className={ styles.imageWrapper }>
-                    <img 
-                    src = {viewedImage} 
-                    alt="product"
-                    onClick={onClickImage}
-                    />
+                    {viewedImage && (
+                        <img 
+                        src = { viewedImage } 
+                        alt="product"
+                        onClick = { onClickImage }
+                        />
+                    )}
                 </div>
                 {sliderImages.length > 0 && ( 
                     <button 
