@@ -1,18 +1,23 @@
 
-import React, { useState, useEffect } from  'react';
+import React, { useState, useEffect, forwardRef } from  'react';
 import { FiSearch } from 'react-icons/fi';
 import { RiCloseFill } from 'react-icons/ri';
+import { AiOutlineReload } from 'react-icons/ai';
 import { CgCalendarDates } from 'react-icons/cg';
 import { Loader } from '../Loader/loader';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 import image from '../../Images/avatar2.png';
-// stick man sad
-import notfoundImage from '../../Images/notfound8.jpg';
 import errorImage from '../../Images/error2.png';
+import failureImage from '../../Images/failure9.jpg';
 
 
- const SearchOmniBox = React.forwardRef(({prevSearches, loading, error, ...props}, ref) => {
+const SearchOmniBox = ({
+    searchError,
+    returnedEmptySearch,
+    searchProducts, 
+    ref
+}) => {
     const [userPrevSearches, setUserPrevSearches] = useState(null);
     const [loadingUserPrevSearch, setLoadingUserPrevSearch] = useState(false);
     const [userPrevSearchError, setUserPrevSearchError] = useState(false);
@@ -47,7 +52,7 @@ import errorImage from '../../Images/error2.png';
         return ()=> {
             mounted = false;
             if (timer) clearTimeout(timer);
-            socket.off("getUserPreviousSearches")
+            socket.off("getUserPreviousSearches");
         }
     }, [ user ]);
 
@@ -63,7 +68,7 @@ import errorImage from '../../Images/error2.png';
 
         return ()=> {
             mounted = false
-            socket.off("getUserPreviousSearches")
+            socket.off("getUserPreviousSearches");
         }
     }, [ user ]);
 
@@ -80,155 +85,137 @@ import errorImage from '../../Images/error2.png';
         e.stopPropagation();     
     }
 
-    if ((!userPrevSearches || loadingUserPrevSearch) && !(props?.searchError || props?.returnedEmptySearch)) {
+    if ((!userPrevSearches || loadingUserPrevSearch) && !(searchError || returnedEmptySearch)) {
         return (
-             <div ref= { ref } className="index-search-omnibar-container">
-                <div className="index-search-omnibar-wrapper">
-                    <Loader
-                    loaderContainer= "index-search-omnibar-loader-container"
-                    loader = "index-search-omnibar-loader"
-                    />
-                </div>
-            </div>
+            <SearchOmniBoxChildTemplate dontShowHeading ref= { ref }>
+                <Loader
+                loaderContainer= "index-search-omnibar-loader-container"
+                loader = "index-search-omnibar-loader"
+                />
+            </SearchOmniBoxChildTemplate>
         )
-    } else if (userPrevSearchError && !(props?.searchError || props?.returnedEmptySearch)) {
+    } else if (userPrevSearchError && !(searchError || returnedEmptySearch)) {
         return (  
-            <div ref= { ref } className="index-search-omnibar-container">
-                <div className="index-search-omnibar-wrapper">
-                    <div className="index-search-omnibar-header">
-                        Search
-                    </div>
-                    <div className="index-search-omnibar-error-container">
-                        <div className="index-search-omnibar-error-wrapper">
-                            <div className="index-search-omnibar-error-image">
-                                <div className="index-search-omnibar-error-image-wrapper">
-                                    <img src={ image } alt="" />
-                                </div>
-                            </div>
-                            <div className="index-search-omnibar-error-details">
-                                <p>
-                                    We are so sorry, looks like an error occured while getting your previous searches
-                                </p>
-                            </div>
-                            <div className="index-search-omnibar-error-button-container">
-                                <div className="index-search-omnibar-error-button-wrapper">
-                                    <button>Retry</button>
-                                </div>  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SearchOmniBoxChildTemplate ref= { ref }>
+                <SearchOmniBoxChild
+                imageSrc = { image }
+                imageAlt = ""
+                writeUp = "We are so sorry, looks like an error occured while getting your previous searches"
+                >
+                    <div className="index-search-omnibar-error-button-wrapper">
+                        <button>
+                            <AiOutlineReload className="index-search-omnibar-button-icon"/>
+                            Retry
+                        </button>
+                    </div> 
+                </SearchOmniBoxChild>
+            </SearchOmniBoxChildTemplate>
         )
-    } else if (userPrevSearches?.length < 1 && !(props?.searchError || props?.returnedEmptySearch)) {
+    } else if (userPrevSearches?.length < 1 && !(searchError || returnedEmptySearch)) {
         return (
-            <div ref= { ref } className="index-search-omnibar-container">
-                <div className="index-search-omnibar-wrapper">
-                    <div className="index-search-omnibar-header">
-                        Search
-                    </div>
-                    <div className="index-search-omnibar-error-container">
-                        <div className="index-search-omnibar-error-wrapper"> 
-                            <div className="index-search-omnibar-error-image">
-                                <div className="index-search-omnibar-error-image-wrapper">
-                                    <img src={ notfoundImage } alt="" />
-                                </div>
-                            </div>
-                            <div className="index-search-omnibar-error-details">
-                                <p>
-                                    It looks like we could not find any search made by you. 
-                                </p>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SearchOmniBoxChildTemplate ref= { ref }>
+                <SearchOmniBoxChild
+                imageSrc={ failureImage }
+                imageAlt = ""
+                writeUp = "It looks like we could not find any search made by you"
+                />
+            </SearchOmniBoxChildTemplate>
         )
-    } else if (props.searchError && !props.returnedEmptySearch) {
+    } else if (searchError && !returnedEmptySearch) {
         return (
-            <div ref= { ref } className="index-search-omnibar-container">
-                <div className="index-search-omnibar-wrapper">
-                    <div className="index-search-omnibar-header">
-                        Search
-                    </div>
-                    <div className="index-search-omnibar-error-container">
-                        <div className="index-search-omnibar-error-wrapper">
-                            <div className="index-search-omnibar-error-image">
-                                <div className="index-search-omnibar-error-image-wrapper">
-                                    <img src={ errorImage } alt="" />
-                                </div>
-                            </div>
-                            <div className="index-search-omnibar-header">
-                                Error
-                            </div>
-                            <div className="index-search-omnibar-error-details">
-                                <p> 
-                                    We are sorry, looks like an error occured while making search.
-                                </p>
-                            </div>
-                            <div className="index-search-omnibar-error-button-container">
-                                <div className="index-search-omnibar-error-button-wrapper">
-                                    <button>Retry</button>
-                                </div>  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SearchOmniBoxChildTemplate ref= { ref }>
+                <SearchOmniBoxChild
+                imageSrc={ errorImage  }
+                imageAlt = ""
+                writeUp = "We are sorry, looks like an error occured while making search"
+                >
+                    <div className="index-search-omnibar-error-button-wrapper">
+                        <button>
+                            <AiOutlineReload className="index-search-omnibar-button-icon"/>
+                            Retry
+                        </button>
+                    </div> 
+                </SearchOmniBoxChild>
+            </SearchOmniBoxChildTemplate>
         )
-
-    } else if (props.returnedEmptySearch && !props.searchError) {
+    } else if (returnedEmptySearch && !searchError) {
         return (
-            <div ref= { ref } className="index-search-omnibar-container">
-                <div className="index-search-omnibar-wrapper">
-                     <div className="index-search-omnibar-header">
-                        Search
-                    </div>
-                    <div className="index-search-omnibar-error-container">
-                        <div className="index-search-omnibar-error-wrapper">
-                            <div className="index-search-omnibar-error-image">
-                                <div className="index-search-omnibar-error-image-wrapper">
-                                    <img src={ notfoundImage } alt="" />
-                                </div>
-                            </div>
-                            <div className="index-search-omnibar-error-details">
-                                <p>
-                                    It looks like we did not find 
-                                    any product that matches your search 
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SearchOmniBoxChildTemplate ref= { ref }>
+                <SearchOmniBoxChild
+                imageSrc={ failureImage }
+                imageAlt = ""
+                writeUp = "It looks like we did not find any product that matches your search"
+                />
+            </SearchOmniBoxChildTemplate>
         )
     }
 
     return (
+        <SearchOmniBoxChildTemplate ref= { ref }>
+            <div className="index-search-omnibar-content">
+            {userPrevSearches.map((search, i) =>
+                <UserSearchedItem
+                key = { i }
+                { ...search }
+                removeSearch = { removeSearch }
+                search = { search }
+                searchProducts= { searchProducts }
+                />
+            )}
+            </div> 
+        </SearchOmniBoxChildTemplate>
+    )
+}
+
+const SearchOmniBoxChildTemplate = forwardRef(({
+    heading,
+    dontShowHeading,
+    children
+}, ref) => {
+    return (
         <div ref= { ref } className="index-search-omnibar-container">
             <div className="index-search-omnibar-wrapper">
+            {dontShowHeading ? "" : (
                 <div className="index-search-omnibar-header">
-                    Search
-                </div>
-                <div className="index-search-omnibar-content">
-                {
-                    userPrevSearches.map( (search, i) =>
-                        <UserSearchedItem
-                        key = { i }
-                        {...search}
-                        removeSearch = { removeSearch }
-                        search = { search }
-                        searchProducts= { props.searchProducts }
-                        />
-                    )
-                }
+                { heading || "Search"}
                 </div>  
+            )}
+            { children }
             </div>
         </div>
     )
 })
 
-function UserSearchedItem({ time, search, query, removeSearch, searchProducts, ...props }) {
+const SearchOmniBoxChild = ({
+    imageSrc,
+    imageAlt,
+    writeUp,
+    children
+}) => {
+    return (
+        <div className="index-search-omnibar-error-container">
+            <div className="index-search-omnibar-error-wrapper">
+                <div className="index-search-omnibar-error-image">
+                    <div className="index-search-omnibar-error-image-wrapper">
+                        <img src={ imageSrc } alt= { imageAlt }/>
+                    </div>
+                </div>
+                <div className="index-search-omnibar-error-details">
+                    { writeUp } 
+                </div>
+                { children }
+            </div>
+        </div>
+    )
+}
+
+function UserSearchedItem({ 
+    time, 
+    search, 
+    query, 
+    removeSearch, 
+    searchProducts
+}) {
     const searchTime = (new Date(Number(time))).toDateString();
 
     return (
@@ -254,4 +241,4 @@ function UserSearchedItem({ time, search, query, removeSearch, searchProducts, .
     )
 }
 
-export default SearchOmniBox
+export default SearchOmniBox;
