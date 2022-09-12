@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { RiListSettingsFill } from 'react-icons/ri';
-import { MdArrowForwardIos } from 'react-icons/md';
-import { BiFilter } from 'react-icons/bi';
+// import { MdArrowForwardIos } from 'react-icons/md';
+// import { BiFilter } from 'react-icons/bi';
 import { Sort } from '../Reviews/reviews';
 import useProductsContext from '../../Context/Products/context';
 import Links from '../../Data/links';
 import styles from './Filter.module.css';
-
-
 
 const clothingTabs = Links.getClothingTabs();
 const productUsageLinks = Links.getProductsUsage();
@@ -16,7 +14,8 @@ const productsCategoryLinks = Links.getProductsCategory();
 export default function FilterComponent({ 
     filterType, 
     showFilter, 
-    closeFilter, 
+    closeFilter,
+    onClickOutsideProducstMenu,
 }) {
     const indexFilterClassName = showFilter ? `${styles.container} ${styles.show}` : `${styles.container}`;
     let filterComponentChild;
@@ -25,31 +24,26 @@ export default function FilterComponent({
         filterComponentChild = (
             <SearchFilterMenu/>
         )
-    } else if (filterType && filterType.toLowerCase() === ("productsFilter").toLowerCase()) {
-        filterComponentChild = (
-            <ProductsFilterMenu/>
-        )
-    }
-
+    } 
     return (
         <div className= { indexFilterClassName }>
-            <div 
+            {/* <div 
             className= { styles.headerContainer }
             onClick = { closeFilter }
             >
                 <MdArrowForwardIos className={styles.closeIcon}/>
                 <div className= {styles.headerText}>
                     <BiFilter className={styles.headerTextIcon}/>
-                    FILTER
+                    Products Filter
                 </div>
-            </div>
+            </div> */}
             { filterComponentChild }
         </div>
     )
 }
 
 
-function SearchFilterMenu({ showChild,...props }) {  
+function SearchFilterMenu({ showChild }) {  
     const sortConatinerlassName = `${styles.sortContainer}`
     const sortConatinerOpenClassName = `${styles.sortContainer} ${styles.sortContainerOpen}`
     
@@ -82,12 +76,20 @@ function SearchFilterMenu({ showChild,...props }) {
     )
 }
 
-function ProductsFilterMenu({ ...props }) {
+export const ProductsFilterMenu = React.forwardRef(({
+    onClickOutside, 
+    showFilter,
+    closeFilter  
+}, ref) => {
     const [queryValueChange, setQueryValueChange] = useState(false);
     const [showClothingLinks, setShowClothingLinks] = useState(false);
     const [queryValues, setQueryValue] = useState({});
-    const sortConatinerlassName = `${styles.sortContainer}`
-    const sortConatinerOpenClassName = `${styles.sortContainer} ${styles.sortContainerOpen}`
+    const indexFilterClassName = `${styles.container} ${showFilter ? styles.show : ""}`;
+
+    useEffect(()=> {
+        window.addEventListener('click', onClickOutside);
+        return () => window.removeEventListener('click', onClickOutside);
+    }, [onClickOutside]);
 
     useEffect(()=> {
         if (queryValues?.category === "clothes") {
@@ -104,34 +106,44 @@ function ProductsFilterMenu({ ...props }) {
     }
 
     return (
-        <div className={ styles.filterWrapper }>
-            <FilterLinks
-            links = { productsCategoryLinks }
-            title = "Category"
-            />
-            <FilterLinks
-            links = { productUsageLinks }
-            title = "Usage"
-            />
-            <FilterTabs
-            title= "Clothing"
-            tabs = { clothingTabs }
-            />
+        <div className = { indexFilterClassName }>
+            <div className = { styles.filterWrapper } ref = { ref }>
+                <FilterLinks
+                links = { productsCategoryLinks }
+                title = "Category"
+                />
+                <FilterLinks
+                links = { productUsageLinks }
+                title = "Usage"
+                />
+                <FilterTabs
+                title = "Clothing"
+                tabs = { clothingTabs }
+                />
+            </div>
         </div>
     )
-}
+})
 
 
-function FilterLinks({ links, title, dontShowTitle }) {
+function FilterLinks({ 
+    links, 
+    title, 
+    dontShowTitle,
+    tag 
+}) {
     return (
         <div className={ styles.linksContainer }>
-            { dontShowTitle ? '' : title  }
+            <div className={ styles.linksTitle }>
+            { dontShowTitle ? '' : title }
+            </div>
             <div className={ styles.categoryLinks }>
-            {links.map((link, i) =>
+            {links?.map((link, i) =>
                 <FilterLink
                 {...link}
                 title = { title }
                 key={i}
+                tag = { tag }
                 />  
             )}
             </div>
@@ -143,52 +155,55 @@ function FilterLink({
     title, 
     name,
     type, 
-    icon, 
-    ...props 
+    icon,
+    tag 
 }) {
     const { productsFilter, setProductsFilter } = useProductsContext(); // productsFilter -> ({type, filter})
 
-        const linkClassName = (
-            productsFilter?.val === name && productsFilter?.type.toLowerCase() === type.toLowerCase()
-        )  ? (
-        `${styles.categoryLinksItem} ${styles.categoryLinksItemActive}`
-    ) : (
-        `${styles.categoryLinksItem}`
-    )
+    const isActiveLink = (productsFilter, name, type) => {
+        return productsFilter?.val === name && productsFilter?.type.toLowerCase() === type.toLowerCase()
+    }
+
+    const linkClassName = `${styles.categoryLinksItem} ${isActiveLink(productsFilter, name, type) ? styles.categoryLinksItemActive : ""}`
     return (
         <div 
         className={ linkClassName }
-        onClick={ ()=> setProductsFilter(title, name) }
+        onClick={ ()=> setProductsFilter(title, name, tag) }
         >
             { icon }<span>{ name }</span> 
         </div> 
     )
 }
 
-function FilterTabs({ title, tabs, ...props }) {
-    const [tabLinks, setTabLinks] = useState([]);
+function FilterTabs({ 
+    title, 
+    tabs
+}) {
     const [viewedTabId, setViewedTabId] = useState("");
+    const [viewedTabData, setViewedTabData] = useState({});
 
     useEffect(() => {
         const tabId = tabs[0].id;
-        setTabLinksData(tabId, tabs, setViewedTabId, setTabLinks);
+        setTabLinksData(tabId, tabs, setViewedTabId, setViewedTabData);
     }, [tabs]);
   
 
     const toggleTabs = (id) => {
-        setTabLinksData(id, tabs, setViewedTabId, setTabLinks);   
+        setTabLinksData(id, tabs, setViewedTabId, setViewedTabData);   
     }
 
-    const setTabLinksData = (id, clothingTabs, setViewedTabId, setTabLinks) => {
+    const setTabLinksData = (id, clothingTabs, setViewedTabId, setViewedTabData) => {
         setViewedTabId(id);
-        const { links } = clothingTabs.filter(links => links.id === id)[0];
-        setTabLinks(links);
+        const { links, name } = clothingTabs.filter(links => links.id === id)[0];
+        setViewedTabData({links, name});
     }
 
     return (
         <div className={ styles.filterTabsContainer }>
             <div className={ styles.filterTabsTop }>
-               { title }
+                <div className={ styles.linksTitle }>
+                { title }
+                </div>
                <div className={ styles.filterTabs }>
                 {tabs.map((vals, i)=> 
                     <Tab 
@@ -201,8 +216,9 @@ function FilterTabs({ title, tabs, ...props }) {
                </div>  
             </div>
             <FilterLinks
-            links = { tabLinks }
-            title= { title }
+            links = { viewedTabData?.links }
+            title = { title }
+            tag = { viewedTabData.name }
             dontShowTitle
             />
         </div>
@@ -214,18 +230,18 @@ function Tab({
     id, 
     icon, 
     name, 
-    viewedTabId, 
-    ...props 
+    viewedTabId,
+    toggleTabs 
 }) {
-    const tabClassName = viewedTabId === id ? (
-        `${styles.categoryLinksItem} ${styles.categoryTab} ${styles.categoryTabActive}`
-    ) : (
-        `${styles.categoryLinksItem} ${styles.categoryTab}`
-    )
+
+    const isViewedTab = (viewedTabId, id) => {
+        return viewedTabId === id;
+    }
+    const tabClassName =  `${styles.categoryLinksItem} ${styles.categoryTab} ${ isViewedTab(viewedTabId, id) ? styles.categoryTabActive : ""}`
     return (
         <div 
         className= { tabClassName }
-        onClick = {()=> props.toggleTabs(id) }
+        onClick = {()=> toggleTabs(id) }
         >
             { icon }<span>{ name }</span> 
         </div>
@@ -237,12 +253,18 @@ export function FilterButtonComponent({
     filterButtonClassName, 
     filterIconClassName,
     filter,
-    toggleFilter, 
+    active,
+    toggleFilter = f => f,
     ...props 
 }) {
+    const filterContainerClass = filterButtonClassName ?  (
+        `${filterButtonClassName} ${active ? styles.filterButtonActive : ""}` 
+    ) : (
+        `${styles.filterButtonWrapper} ${active ? styles.filterButtonActive : ""}`
+    )
     return (
         <div 
-        className={ filterButtonClassName || styles.filterButtonWrapper } 
+        className = { filterContainerClass } 
         { ...props } 
         onClick = {()=> toggleFilter(filter)}
         >               
