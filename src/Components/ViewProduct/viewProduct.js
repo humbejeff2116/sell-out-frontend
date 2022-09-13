@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { 
-    MdExpandMore, 
-    MdExpandLess, 
-}  from 'react-icons/md';
-import { Star, Heart } from '../Product/Fragments/productFragments';
+import { MdExpandMore, MdExpandLess }  from 'react-icons/md';
 import BackButton from '../BackButton/backButton';
 import { Price } from '../Product/product';
 import Reviews from '../Reviews/reviews';
 import ImageSLider from '../ImageSlider/imageSlider';
+import ImageViewer from '../ImageViewer/imageViewer';
 import BottomProductsWrapper from '../BottomProducts/bottomProducts';
 import { addToCartActionPayload } from '../../Context/Cart/cartPayloads';
+import StarGiver from '../StarGiver/starGiver';
 import useViewContext from '../../Context/viewContext/context';
 import useAuth from '../../Context/context';
 import useCartContext from '../../Context/Cart/cartContext';
+import useSocketIsConnected from '../Hooks/socketHooks';
+import socket from '../Socket/socket';
 import profileAvatar from '../../Images/avatar4.png';
 import styles from './ViewProduct.module.css';
 import './viewProduct.css';
@@ -27,7 +27,7 @@ export default function ViewProduct({
 }) {
     const [showAddToCartMessage, setShowAddToCartMessage] = useState(false);
     const { viewState, setViewState } = useViewContext();
-  
+
     useEffect(() => {
         let timer = null;
         let mounted = true;
@@ -45,25 +45,21 @@ export default function ViewProduct({
 
     return (
         <>
-        {
-            (showAddToCartMessage) && (
-                <PopUpMessage
-                usedForSuccess 
-                message= "Product added to cart"
+        {(showAddToCartMessage) && (
+            <PopUpMessage
+            usedForSuccess 
+            message= "Product added to cart"
+            />
+        )}
+        {dontShowbackButton ? "" : (
+            <div className="view-product-back-bttn-cntr">
+                <BackButton 
+                buttonWrapperClassName="view-product-back-bttn" 
+                clearSessionStorageWithKey = "view-product-location"
+                buttonIconClassName = "view-product-back-bttn-icon"
                 />
-            )
-        }
-        {
-            dontShowbackButton ? "" : (
-                <div className="view-product-back-bttn-cntr">
-                    <BackButton 
-                    buttonWrapperClassName="view-product-back-bttn" 
-                    clearSessionStorageWithKey = "view-product-location"
-                    buttonIconClassName = "view-product-back-bttn-icon"
-                    />
-                </div>
-            )
-        } 
+            </div>
+        )} 
         <div className="view-product-container">
             <div className="view-product-top">
                 <ProductImage { ...viewState } />
@@ -73,8 +69,10 @@ export default function ViewProduct({
                 />
             </div>
             <div className={ styles.viewProductCenter }>
-                <Reviews viewState={ viewState }/>
-                <AllProductDetails viewState={ viewState }/>
+                <Reviews 
+                viewState={ viewState }
+                />
+                <AllProductDetails product ={ viewState }/>
             </div>
             <BottomProductsWrapper
             viewState={ viewState }
@@ -85,13 +83,6 @@ export default function ViewProduct({
     )
 }
 
-
-const popUpMessageUsedFor  = {
-    success: "success",
-    error: "error"
-}
-
-
 function PopUpMessage({ 
     usedForSuccess, 
     usedForError, 
@@ -99,21 +90,17 @@ function PopUpMessage({
     children,
     ...props
 }) {
-
     if (usedForSuccess) {
         return (
             <div className="pop-up-success-container">
-                { 
-                    children ? children : (
-                        <div className="pop-up-success-child">
-                            <IoMdCheckmarkCircleOutline className="pop-up-icon"/>
-                            <div className="pop-up-text-container">
-                                <span>{ message }</span>
-                            </div>
-                            
-                        </div>
-                    )
-                }
+            {children ? children : (
+                <div className="pop-up-success-child">
+                    <IoMdCheckmarkCircleOutline className="pop-up-icon"/>
+                    <div className="pop-up-text-container">
+                        <span>{ message }</span>
+                    </div>
+                </div>
+            )}
             </div>
         )
     }
@@ -121,21 +108,18 @@ function PopUpMessage({
     if (usedForError) {
         return (
             <div className="pop-up-error-container">  
-                { 
-                    children ? children : (
-                        <div className="pop-up-success-child">
-                            <IoMdCheckmarkCircleOutline className= "pop-up-icon"/>
-                            <div>
-                                <div>Error</div>
-                                <span>{ message }</span>
-                            </div>
-                        </div>
-                    )
-                }
+            {children ? children : (
+                <div className="pop-up-success-child">
+                    <IoMdCheckmarkCircleOutline className= "pop-up-icon"/>
+                    <div>
+                        <div>Error</div>
+                        <span>{ message }</span>
+                    </div>
+                </div>
+            )}
             </div>
         )
-    }
-    
+    }  
 }
 export { PopUpMessage }
 
@@ -146,20 +130,41 @@ function ProductImage({
     product, 
     ...props 
 }) {
+    const [showImageViewer, setShowImageViewer] = useState(false);
+    
+    const viewImage = () => {
+        setShowImageViewer(true);
+    }
+
+    const closeImageViewer =() => {
+        setShowImageViewer(false);
+    }
+
     return (
-        <div className="view-product-image-wrapper">
-            <div className="view-product-profile" >
-                <div  className="view-product-profile-image">
-                    <img src={ userProfileImage || profileAvatar } alt="avatar" />
-                    <span> { userName }</span>      
+        <>
+            {showImageViewer && (
+                <ImageViewer
+                closeImageViewer={closeImageViewer}
+                />
+            )}
+            <div className="view-product-image-wrapper">
+                <div className="view-product-profile" >
+                    <div  className="view-product-profile-image">
+                        <img src={ userProfileImage || profileAvatar } alt="avatar" />
+                        <span> { userName }</span>      
+                    </div>
+                    <div className="view-product-seller-stars">
+                        <StarGiver
+                        seller = {{userId: props.userId, userEmail: props.userEmail}}
+                        />
+                    </div>
                 </div>
-                <div className="view-product-seller-stars">
-                    {/* TODO... use Star component and implement star user functionality */}
-                    seller stars
-                </div>
+                <ImageSLider 
+                images = { productImages }
+                onClickImage ={viewImage}
+                />
             </div>
-            <ImageSLider images = {  productImages }/>
-        </div>
+        </>
     )
 }
 
@@ -215,8 +220,8 @@ function ProductDetails({showAddToCartMessage, product}) {
     }
 
     const  capitalize = (s="") => {
-        let [first, ...rest] = [...s];
-       return first.toUpperCase() + rest.join("");
+        const [first, ...rest] = [...s];
+        return first.toUpperCase() + rest.join("");
     }
 
     return (
@@ -271,25 +276,75 @@ function ProductDetails({showAddToCartMessage, product}) {
 }
 
 
-// TODO>>> uncomment prodps.details
-function AllProductDetails(props) {
+// TODO>>> uncomment props.details
+function AllProductDetails({
+    // decscription,
+    product,
+    ...props
+}) {
+    const [seller, setSeller]= useState(null);
+    const [error, setError] = useState(false);
+    const{ user } = useAuth();
+    const socketIsConnected = useSocketIsConnected();
+
+    useEffect(() => {
+        let mounted = true;
+
+        if (socketIsConnected && mounted) {
+            // getSeller(product);   
+        }
+        return ()=> mounted = false;    
+    }, [socketIsConnected, product]);
+
+    useEffect(() => {
+        let mounted = true;
+
+        socket.on('getUserSuccess', function (response) {
+            if (socketIsConnected && mounted) {
+                const { data } = response;
+                setSeller(data);  
+            }
+        })
+
+        socket.on('getUserError', function (response) {
+            if (socketIsConnected && mounted) {
+                const { status, error, data } = response;
+                setError(true);  
+            }
+        })
+        
+        return ()=> mounted = false;    
+    }, [socketIsConnected, product]);
+
+    const getSeller = async ({userId, userEmail}) => {
+        socket.emit("getUser", {id: userId, userEmail});
+    }
+
     return (
         <div className = { styles.allProductDetailsContainer }>
-            {/* {
-                props.details.map((detail, i) => 
-                    <Detail key={ i } { ...detail } />
-                )
-            } */}
+            <Detail title="Description">
+                <div>
+                    {product?.decscription}
+                </div>
+            </Detail>
 
-            <Detail/>
-            <Detail/>
-             <Detail/>
-              <Detail/>
+            <Detail title="Operational regions">
+            </Detail>
+
+            <Detail title="Return & exchange">
+            </Detail>
+            
+            <Detail title="Deliveries">
+            </Detail>
         </div>
     )
 }
 
-function Detail(props) {
+function Detail({
+    title,
+    children, 
+    ...props
+}) {
     const [showMore, setShowMore] = useState(false);
     const viewMoreDetails = () => {
         setShowMore(prevState => !prevState)
@@ -317,7 +372,7 @@ function Detail(props) {
 
             <div className ={ itemHeaderClassName } onClick ={ viewMoreDetails }>
                 <div className ={ styles.allProductDetailsHeaderText }>
-                    Description
+                    {title || ""}
                 </div>
                 <div className ={ styles.allProductDetailsHeaderIconWrapper } >
                    { showMoreIcon }
@@ -325,18 +380,7 @@ function Detail(props) {
             </div>
 
             <div className ={ itemClassName }>
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
-                this is description of the product which is beign sold
+                {children}
             </div>
         </div>
     )
