@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     color: var(--sec-color);
+    cursor: pointer;
 }
 
 .heartIcon{
