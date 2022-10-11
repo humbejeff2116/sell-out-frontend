@@ -97,18 +97,19 @@ const mockProducts = [
 
 export default function BottomProductsWrapper({ 
     usedOutsideLogin,
-    viewState, 
+    viewState,
     ...props 
 }) {
     const [showStoreProducts, setShowStoreProducts] = useState(true);
     const [showSimilarProducts, setShowSimilarProducts]= useState(false);
-    const [storeProducts, setStoreProducts] = useState([]);
-    const [similarProducts, setSimilarProducts] = useState([]);
+    const [storeProducts, setStoreProducts] = useState(null);
+    const [similarProducts, setSimilarProducts] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
 
     useEffect(() => {
         let timer = null;
+
         const getBottomProducts = async (queryData) => {
             setLoading(true);
             try {
@@ -116,25 +117,26 @@ export default function BottomProductsWrapper({
                 const { sellerProducts, similarProducts } = data;
                 setStoreProducts(sellerProducts);
                 setSimilarProducts(similarProducts);
-                
+
                 if (sellerProducts.length < 1 && similarProducts.length > 0) { 
                     setShowStoreProducts(false);
                     setShowSimilarProducts(true);
                 }
                 setLoading(false);
-            } catch(err) {
+            } catch (err) {
                 console.error(err);
-                alert("error");
                 setError({
                     exist: true,
                     message: err.message
-                })
+                });
+                setStoreProducts([]);
+                setSimilarProducts([]);
                 setLoading(false);
             } 
         }
         
         if (viewState) {
-            const { userId, userEmail, productCategory } = viewState
+            const { userId, userEmail, productCategory } = viewState;
             const queryData = {
                 userId,
                 userEmail,
@@ -166,8 +168,8 @@ export default function BottomProductsWrapper({
     const { userName, brandName } = viewState;
 
     return (
-        <div className={ styles.bottomPoductsWrapper }>
-            <div className={ styles.bottomPoductsHeader }>
+        <div className = { styles.bottomPoductsWrapper }>
+            <div className = { styles.bottomPoductsHeader }>
                 <div  
                 className = { storeProductsTabHeaderClassName } 
                 onClick = { showStoreProductsTab }
@@ -176,15 +178,15 @@ export default function BottomProductsWrapper({
                 </div>
                 <div 
                 className = { similarProductsTabHeaderClassName } 
-                onClick ={ showSimilarProdcutsTab }
+                onClick = { showSimilarProdcutsTab }
                 >
                     Similar Products
                 </div>
-                <div className = { styles.bottomProductsEmptyTabHeader } >  
+                <div className = { styles.bottomProductsEmptyTabHeader }>  
                 </div>
             </div>
-            <div className={ styles.bottomPoductsContainer }>
-            {loading ? (
+            <div className = { styles.bottomPoductsContainer }>
+            {loading || !storeProducts ? (
                 <LoaderSmall/>
             ) : showStoreProducts ? (
                 <BottomProducts
@@ -199,7 +201,7 @@ export default function BottomProductsWrapper({
                 usedForSimilarProducts
                 products = { similarProducts }
                 error = { error }
-                productUsedOutsideLogin ={ usedOutsideLogin }
+                productUsedOutsideLogin = { usedOutsideLogin }
                 />
             )}
             </div>           
@@ -216,17 +218,16 @@ function BottomProducts({
     brandName, 
     ...props 
 }) {
-    
     if (error.exist) {
         return (
             <EmptyState
             imageSrc = { errorImage }
             heading="Error!"
-            writeUp={ error.message}
+            writeUp = { error.message }
             >
                 <EmptyStateButton
-                buttonIcon ={
-                    <AiOutlineReload className={ styles.reloadIcon }/>
+                buttonIcon = {
+                    <AiOutlineReload className = { styles.reloadIcon }/>
                 }
                 emptyStateButtonText="Reload"
                 // handleClick
@@ -234,13 +235,13 @@ function BottomProducts({
             </EmptyState>
         )
     }
-    if (products && products.length < 1 ) {
+    if (products && products.length < 1) {
         if (usedForUserProducts) {
             return (
                 <EmptyState
                 imageSrc = { failureImage }
                 heading="Store Products"
-                writeUp={ `${ brandName } does'nt have other products at the moment`}
+                writeUp = { `${ brandName } does'nt have other products at the moment` }
                 >
 
                 </EmptyState>
@@ -259,8 +260,8 @@ function BottomProducts({
         }
     }
     return (
-        <div className={ styles.bottomProductsWrapper }>
-        {products && products.map((product,i) =>
+        <div className = { styles.bottomProductsWrapper }>
+        {products && products.map((product, i) =>
             <DisplayedProduct 
             key = { i }  
             product = { product } 
