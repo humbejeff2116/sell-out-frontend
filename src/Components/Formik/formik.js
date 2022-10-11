@@ -1,153 +1,146 @@
 
 import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
-import { ImWarning } from 'react-icons/im';
 import { BsExclamationCircle } from 'react-icons/bs';
 import { insertCommasToNumber } from '../../Library/index';
 
-export const TextInput = ({ 
+export const TextInput = React.forwardRef(({ 
     label, 
     labelText, 
     dontCheckError, 
     labelTextClass, 
-    errorClass, 
+    errorClass,
+    inputErrorClass,
+    notEmptyClass, 
     labelClassName,
     dontShowErrorText, 
     ...props 
-}) => {
-
+}, ref) => {
     const [field, meta] = useField(props);
 
-    const textInputClassName =  (
-        (!meta.error && meta.value) ? "text-input not-empty" : 
-        (meta.touched && meta.error) ? "text-input has-error" :
+    const textInputClassName = (
+        (!meta.error && meta.value) ? `text-input ${notEmptyClass || "not-empty"}` : 
+        (meta.touched && meta.error) ? `text-input ${inputErrorClass || "has-error"}` :
         "text-input"
     )
 
     return (
-
-        <>
-        <div className={ labelClassName }>
-            <label htmlFor = { props.id ?? props.name }>
+       <>
+            <div className = { labelClassName }>
+                <label htmlFor = { props.id ?? props.name }>
                 { label }
-                <span className = { labelTextClass || "" }> { labelText || "" } </span>
-            </label>
-        </div>
-
-        <input 
-        className = { textInputClassName } 
-        {...field}
-        {...props} 
-        />
-
-        <div className = { errorClass }>
-        {  dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
-        </div>
+                </label>
+                <span className = { labelTextClass || "" }>{ labelText || "" }</span>   
+            </div>
+            <input 
+            className = { textInputClassName } 
+            { ...field }
+            { ...props }
+            ref = { ref } 
+            />
+            <div className = { errorClass }>
+            { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
+            </div>
         </>
-
     )
-
-}
+})
 
 export const TextAreaInput = ({ 
     label, 
     labelText, 
     labelTextClass, 
     errorClass, 
+    notEmptyClass,
+    inputErrorClass,
     labelClassName, 
     formatValue, 
     formatedValueClass,
     dontShowErrorText,
+    useOnlyTextArea,
     ...props 
 }) => {
-
     const [field, meta] = useField(props);
-
     const [formatedValue, setFormatedValue] = useState("");
 
-    const textAreaClassName =  (
-        (!meta.error && meta.value) ? "text-area-input not-empty" : 
-        (meta.touched && meta.error) ? "text-area-input has-error" :
+    useEffect(() => {
+        formatInputValue(formatValue, meta, setInputValue, setFormatedValue);
+    }, [formatValue, meta]);
+
+    const textAreaClassName = (
+        (!meta.error && meta.value) ? `text-area-input ${notEmptyClass || "not-empty"}` : 
+        (meta.touched && meta.error) ? `text-area-input ${inputErrorClass || "has-error"}` :
         "text-area-input"
     )
 
-    useEffect(()=> {
-
-        formatInputValue(formatValue, meta, setInputValue, setFormatedValue)
-
-    }, [formatValue, meta]);
-
-
-    const formatInputValue = (formatValue, meta, setInputValue = f => f, setFormatedValue = f => f) => {
-
+    const formatInputValue = (
+        formatValue, 
+        meta, 
+        setInputValue = f => f, 
+        setFormatedValue = f => f
+    ) => {
         if (!formatValue || isNaN(parseFloat(formatValue))) return;
-        
         if (meta.value && !meta.error) {
-
-               return setInputValue(meta.value, setFormatedValue)
-
+            return setInputValue(meta.value, setFormatedValue);
         } else if (meta.touched && meta.error) {
-
-            return setInputValue("", setFormatedValue)
-
+            return setInputValue("", setFormatedValue);
         }  
-
     }
     
     const setInputValue = (value, callback) => {
-
         const formatedValue = insertCommasToNumber(value);
-
         return callback(formatedValue);
+    }
 
+    if (useOnlyTextArea) {
+        return (
+            <textarea 
+            className = { textAreaClassName } 
+            { ...field } 
+            { ...props } 
+            />
+        )
     }
   
     return (
-  
-      <>
-        <div className = { labelClassName }>
-
-            <label htmlFor = { props.id ?? props.name }>
+        <>
+            <div className = { labelClassName }>
+                <label htmlFor = { props.id ?? props.name }>
                 { label }
+                </label>
                 <span className = { labelTextClass || "" }> { labelText || "" } </span>
-            </label>
-            {
-                (formatValue && formatedValue) && (
-
-                    <span className={ formatedValueClass || "" }>
-                        {formatedValue}
+                {(formatValue && formatedValue) && (
+                    <span className = { formatedValueClass || "" }>
+                    { formatedValue }
                     </span>
-
-                )  
-
-            }
-        </div>
-        <textarea 
-        className = { textAreaClassName } 
-        {...field} 
-        {...props} 
-        />
-        <div className= { errorClass }>
-        {  dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
-        </div>
+                )}
+            </div>
+            <textarea 
+            className = { textAreaClassName } 
+            { ...field } 
+            { ...props } 
+            />
+            <div className = { errorClass }>
+            { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
+            </div>
         </>
-  
     )
-  
 }
 
-function ErrorText({meta, ...props}) {
+function ErrorText({ 
+    meta, 
+    ...props 
+}) {
     return (
         <>
         {
             (meta.touched && meta.error ) ? (
                 <>
-                <i> {<BsExclamationCircle/>} </i> <span>{meta.error}</span>
+                    <i>{ <BsExclamationCircle/> }</i> 
+                    <span>{ meta.error }</span>
                 </>
             ) : null
         }
         </>
-
     )
 }
 
@@ -160,33 +153,29 @@ export const PasswordInput = ({
     dontShowErrorText, 
     ...props 
 }) => {
-
     const [field, meta] = useField(props);
 
-    const passwordInputClassName =  (
+    const passwordInputClassName = (
         (!meta.error && meta.value) ? "password-input not-empty" : 
         (meta.touched && meta.error) ? "password-input has-error" :
         "password-input"
     )
   
     return (
-  
         <>
-        <div className={ labelClassName || "" }>
-        <label htmlFor={ props.id || props.name }>{ label }</label>
-        <span className = { labelTextClass || "" }>{ labelText || "" }</span>
-        </div>
-
-        <input 
-        className= { passwordInputClassName }
-        {...field}
-        {...props}
-        />
-        <div className = { errorClass }>
-        {  dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
-        </div>
-      </>
-  
+            <div className = { labelClassName || "" }>
+            <label htmlFor = { props.id || props.name }>{ label }</label>
+            <span className = { labelTextClass || "" }>{ labelText || "" }</span>
+            </div>
+            <input 
+            className = { passwordInputClassName }
+            { ...field }
+            { ...props }
+            />
+            <div className = { errorClass }>
+            { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
+            </div>
+        </>
     )
 }
 
@@ -197,18 +186,16 @@ export const Checkbox = ({
     dontShowErrorText, 
     ...props 
 }) => {
-
   const [field, meta] = useField({ ...props, type: 'checkbox' });
 
     return (
-
         <div>
             <label className="checkbox-input">
-                <input type="checkbox" {...field} {...props} />
+                <input type="checkbox" { ...field } { ...props }/>
                 { children }
             </label>
             <div className = { errorClass }>
-            {  dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
+            { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
             </div> 
         </div>
     )
@@ -220,52 +207,57 @@ export const Select = ({
     labelClassName, 
     labelText,
     labelTextClass,
-    errorClass,  
+    errorClass,
+    inputErrorClass, 
+    notEmptyClass, 
     dontShowErrorText,
     selectClassName,
-    passValueUp,  
+    passValueUp,
+    useOnlySelect,  
     ...props 
 }) => {
-
     const [field, meta] = useField(props);
 
-    const selectInputClassName =  (
-        (!meta.error && meta.value) ? "select not-empty" : 
-        (meta.touched && meta.error) ? "select has-error" :
-        "select"
-    )
-
-    useEffect(()=> {
-        
+    useEffect(() => {
         if (passValueUp) {
             passValueUp(meta.value)
         }
+    }, [passValueUp, meta.value]);
 
-    }, [meta.value]);
-
-    return (
-
-        <>
-        <div className= { labelClassName || '' }>
-            <label htmlFor = { props.id ?? props.name }>{ label }</label>
-            <span className = { labelTextClass || "" }>{ labelText || "" }</span> 
-        </div>
-
-        <div  className = { selectClassName }> 
-        <select 
-        className = { selectInputClassName }
-        {...field} 
-        {...props}
-        />
-        </div>
-
-        <div className={ errorClass }>
-        {  dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
-        </div>
-        </>
-   
+    const selectInputClassName =  (
+        (!meta.error && meta.value) ? `select ${notEmptyClass || "not-empty"}` : 
+        (meta.touched && meta.error) ? `select ${inputErrorClass || "has-error"}` :
+        "select"
     )
 
+    if (useOnlySelect) {
+        return (
+            <select 
+            className = { selectInputClassName }
+            { ...field } 
+            { ...props }
+            />
+        )
+    }
+
+    return (
+        <>
+            <div className = { labelClassName || '' }>
+                <label htmlFor = { props.id ?? props.name }>{ label }</label>
+                <span className = { labelTextClass || "" }>{ labelText || "" }</span> 
+            </div>
+            <div className = { selectClassName }> 
+            <select 
+            className = { selectInputClassName }
+            { ...field } 
+            { ...props }
+            />
+            </div>
+            <div className = { errorClass }>
+            { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
+            </div>
+        </>
+    )
 }
 
 export const  AnimSelect = ({ 
@@ -279,66 +271,50 @@ export const  AnimSelect = ({
     passFieldUp,  
     ...props 
 }) => {
-
     const [showSelect, setShowSelect] = useState(false);
-
     const [field, meta] = useField(props);
 
-    const selectInputClassName =  (
+    useEffect(() => {
+        let timer;
+        timer = setTimeout(() => setShowSelect(true), 1000);
+
+        return ()=> {
+            if (timer) clearTimeout(timer);
+        }
+    }, [])
+
+    const selectInputClassName = (
         (!meta.error && meta.value) ? "select not-empty" : 
         (meta.touched && meta.error) ? "select has-error" :
         "select"
     )
 
-    useEffect(()=> {
-
-        let timer;
-
-        timer = setTimeout(() => setShowSelect(true), 1000);
-
-        return ()=> {
-
-            if (timer) clearTimeout(timer);
-    
-        }
-
-    }, [])
-
     if (!showSelect) {
-
         return (
-
             <>
-                { props.loader }
+            { props.loader }
             </>
-
         )
-
     }
 
     return (
-
         <>
-        <div className = { labelClassName || '' }>
-        <label htmlFor = {  props.id ?? props.name}>{ label }</label>
-        <span className = { labelTextClass || "" }>{ labelText || "" }</span>  
-        </div>
-
-        <div className = { selectClassName }> 
-        <select 
-        className = { selectInputClassName }
-        {...field} 
-        {...props} 
-        />  
-        </div>
-
-        <div className={ errorClass }>
-        {  dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
-        </div>
+            <div className = { labelClassName || '' }>
+            <label htmlFor = { props.id ?? props.name }>{ label }</label>
+            <span className = { labelTextClass || "" }>{ labelText || "" }</span>  
+            </div>
+            <div className = { selectClassName }> 
+            <select 
+            className = { selectInputClassName }
+            { ...field } 
+            { ...props } 
+            />  
+            </div>
+            <div className = { errorClass }>
+            { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
+            </div>
         </>
-
-    )
-    
+    ) 
 }
 
 //  file input inspired by https://codepen.io/softopia/pen/LMmJLz
@@ -354,25 +330,20 @@ export const FileInput = React.forwardRef(({
 }, ref) => {  
 
     return (
-
         <>
-        <label className={labelClassName}>
-        {(numberofimages > 0) && (
+            <label className = { labelClassName }>
+            {(numberofimages > 0) && (
+                <span className="length">{ numberofimages }</span>
+            )}
+            <i>{ props.icon }</i>
+            <span className = { labelSpanClassName }>
+            { label }
+            </span>
+            <input className = { props.inputClassName || "image-input" } ref = { ref } { ...props }/>
+            </label>
 
-            <span className="length">{ numberofimages }</span>
-
-        )}
-        <i>{ props.icon }</i>
-        <span className = { labelSpanClassName }>
-        { label }
-        </span>
-        <input className = { props.inputClassName || "image-input" } ref = {ref} {...props} />
-        </label>
-
-        <div className = { errorClass }>
-        </div>
+            <div className = { errorClass }>
+            </div>
         </>
-  
     )
-
 })
