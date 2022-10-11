@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import BackButton from '../BackButton/backButton';
 import { BottomPopUpBox, useBottomPopUpFor } from '../ModalBox/modalBox';
-import { BottomSPinner } from '../Loader/loader';
+import { BottomSpinner } from '../Loader/loader';
 import { Sort } from '../Reviews/reviews';
 import socket from '../Socket/socket';
 import useAuth from "../../Context/context";
@@ -14,7 +14,7 @@ import styles from './Checkout.module.css';
 import "./checkout.css";
 
 export default function Checkout() {
-  const [showPlacedOrderMessage, setShowPlacedOrderMessage] =  useState(false);
+  const [showPlacedOrderMessage, setShowPlacedOrderMessage] = useState(false);
   const [error, setError] = useState(false);
   const [placedOrderMessage, setPlacedOrderMessage] = useState('');
   const [placingOrder, setPlacingOrder] = useState(false);
@@ -24,9 +24,9 @@ export default function Checkout() {
   useEffect(()=> {
     let mounted = true;
 
-    socket.on('createOrderError', function(response) {
+    socket.on('createOrderError', function (response) {
       if (mounted) {
-        setPlacingOrder(false)
+        setPlacingOrder(false);
         const { message }  = response;
         setError(true);
         setPlacedOrderMessage(message);
@@ -34,25 +34,38 @@ export default function Checkout() {
       }
     })
 
-    socket.on('orderCreated', function(response) {
+    socket.on('orderCreated', function (response) {
       if (mounted) {
-        setPlacingOrder(false)
-        const { message }  = response;
-        setError(false)
+        setPlacingOrder(false);
+        const { message } = response;
+        setError(false);
         setPlacedOrderMessage(message);
         setShowPlacedOrderMessage(true);
       }
     });
 
-    return ()=> {
-      mounted  = false
+    return () => {
+      mounted = false;
     }
   }, []);
 
-  const placeOrder = async (cartState, sellerTotalSumData, user, orderId, orderTime = Date.now()) => {
+  const placeOrder = async (
+    cartState, 
+    sellerTotalSumData, 
+    user, 
+    orderId, 
+    orderTime = Date.now()
+  ) => {
     setPlacingOrder(true);
     try {
-      const buyersPreOrder = await createOrderData(cartState, sellerTotalSumData, user, orderId, orderTime);
+      // await does have an effect on this expression
+      const buyersPreOrder = await createOrderData(
+        cartState, 
+        sellerTotalSumData, 
+        user, 
+        orderId, 
+        orderTime
+      );
       alert(JSON.stringify(buyersPreOrder, null, 2)); // TODO... drop alert
       socket.emit("createOrder", buyersPreOrder);
     }  catch(err) {
@@ -73,7 +86,7 @@ export default function Checkout() {
     payment_options: "card, mobilemoney, ussd, account, banktransfer",
     customer: {
       email: user?.userEmail,
-      phonenumber: user?.contactNumber,
+      contactNumber: user?.contactNumber || 'NA',
       name: user?.fullName,
     },
     customizations: {
@@ -101,23 +114,21 @@ export default function Checkout() {
       <div className="checkout-header">
         <h3>Checkout</h3>
       </div>
-      {
-        cartState?.length > 0 ? (
-          <CheckoutWrapper
-          error ={ error }
-          showPlacedOrderMessage = { showPlacedOrderMessage }
-          placedOrderMessage = { placedOrderMessage }
-          placingOrder = { placingOrder }
-          totalSum = { totalSum }
-          fwConfig = { fwConfig }
-          setPlacingOrder = { setPlacingOrder }
-          placeOrder= { placeOrder }
-          closePopUp = { closePopUp }
-          />
-        ) : (
-          <EmptyCheckout/>
-        )
-      }
+      {cartState?.length > 0 ? (
+        <CheckoutWrapper
+        error = { error }
+        showPlacedOrderMessage = { showPlacedOrderMessage }
+        placedOrderMessage = { placedOrderMessage }
+        placingOrder = { placingOrder }
+        totalSum = { totalSum }
+        fwConfig = { fwConfig }
+        setPlacingOrder = { setPlacingOrder }
+        placeOrder = { placeOrder }  // remove prop
+        closePopUp = { closePopUp }
+        />
+      ) : (
+        <EmptyCheckout/>
+      )}
     </div>
   )
 }
@@ -129,20 +140,18 @@ function BackButtonWrapper({
 }) {
   return (
     <div className="checkout-back-button-container">
-    <BackButton buttonWrapperClassName="checkout-back-button"/>
-    {
-      showPaymentMethod ? (
-        <Sort
-        data={chekoutOptions}
-        onSelectChange ={ onSelectChange }
-        sortContainerModifyClass={styles.checkoutOptionsContainer}
-        sortContainerOpenClass = { styles.checkoutOptionsContainerOpen }
-        
-        />
-
-      ) : ""
-    }
-  </div>
+      <BackButton buttonWrapperClassName="checkout-back-button"/>
+      {
+        showPaymentMethod ? (
+          <Sort
+          data = { chekoutOptions }
+          onSelectChange = { onSelectChange }
+          sortContainerModifyClass = { styles.checkoutOptionsContainer }
+          sortContainerOpenClass = { styles.checkoutOptionsContainerOpen }
+          />
+        ) : ""
+      }
+    </div>
   )
 }
 
@@ -158,7 +167,7 @@ function CheckoutWrapper({
   showPlacedOrderMessage,
   placedOrderMessage,
   closePopUp, 
-  fwConfig, 
+  fwConfig,
   ...props 
 }) {
   const [payOnDelivery, setPayOnDelivery] = useState(false);
@@ -175,22 +184,22 @@ function CheckoutWrapper({
     <>
       <BackButtonWrapper 
       showPaymentMethod
-      onSelectChange ={ onSelectChange }
+      onSelectChange = { onSelectChange }
       />
       <div>
       {
-        <BottomSPinner
-        showLoader ={ placingOrder }
+        <BottomSpinner
+        showLoader = { placingOrder }
         >
           Placing order...
-        </BottomSPinner>
+        </BottomSpinner>
       }
       {
         <BottomPopUpBox 
-        usedFor ={ error ? useBottomPopUpFor.error : useBottomPopUpFor.success }
-        showPopUp={ showPlacedOrderMessage }
-        message={ placedOrderMessage }
-        closePopUp= { closePopUp }
+        usedFor = { error ? useBottomPopUpFor.error : useBottomPopUpFor.success }
+        showPopUp = { showPlacedOrderMessage }
+        message = { placedOrderMessage }
+        closePopUp = { closePopUp }
         />
       }
       </div>
@@ -200,18 +209,15 @@ function CheckoutWrapper({
         </div>
 
         <div className="checkout-body-child">
-          {
-            payOnDelivery ? (
-              <PayOnDeliveryCheckout 
-              />
-            ) : (
-              <CheckoutComp
-              fwConfig ={ fwConfig }
-              placeOrder ={ props.placeOrder }
-              />
-            )
-          }
-
+          {payOnDelivery ? (
+            <PayOnDeliveryCheckout 
+            />
+          ) : (
+            <CheckoutComp
+            fwConfig = { fwConfig }
+            placeOrder = { props.placeOrder } // remove prop
+            />
+          )}
         </div>
       </div>
     </>
@@ -226,7 +232,10 @@ function PayOnDeliveryCheckout({ ...props }) {
   )
 }
 
-function CheckoutComp({  fwConfig, ...props }) {
+function CheckoutComp({ 
+  fwConfig, 
+  ...props 
+}) {
   const { cartState, sellerTotalSumData } = useCartContext();
   const { user } = useAuth();
   return (
@@ -238,19 +247,17 @@ function CheckoutComp({  fwConfig, ...props }) {
       <div className="checkout-button-wrapper">
         <div className="checkout-button">
         {/* TODO... replace button with flutterwave button */}
-        { 
-          navigator.onLine ? ( 
-            <FlutterWaveButton 
-            {...fwConfig} 
-            /> 
-          ) : ( 
-            <button  // using button for test purpose only
-            onClick={() =>  props.placeOrder(cartState, sellerTotalSumData, user)}
-            >
-              Flutterwave
-            </button> 
-          ) 
-        }
+        {navigator.onLine ? ( 
+          <FlutterWaveButton 
+          { ...fwConfig } 
+          /> 
+        ) : ( 
+          <button  // using button for test purpose only
+          onClick = { () =>  props.placeOrder(cartState, sellerTotalSumData, user) }
+          >
+            Flutterwave
+          </button> 
+        )}
         </div>
       </div>
       <div className="checkout-text checkout-or">
@@ -266,16 +273,17 @@ function CheckoutComp({  fwConfig, ...props }) {
   )
 }
 
-function OrderDetails({  ...prop }) {
+function OrderDetails({ ...prop }) {
   const { totalSum, cartItems, cartTotalNumberOfProducts } = useCartContext();
-
   const calculateTotalOrderQuantity = (cartItems) => {
     let total = 0;
+
     for (let i = 0; i < cartItems.length; i++) {
-      total += cartItems[i].productQty
+      total += cartItems[i].productQty;
     }
     return total;
   }
+  const totalOrderQnty = calculateTotalOrderQuantity(cartItems);
 
   return (
     <div className="checkout-total-wrapper">
@@ -285,7 +293,7 @@ function OrderDetails({  ...prop }) {
       </div>
       <div className="checkout-total">
           Total Quantity
-          <div>{ calculateTotalOrderQuantity(cartItems) }</div>
+          <div>{ totalOrderQnty }</div>
       </div>
       <div className="checkout-total">
           Total Amount
