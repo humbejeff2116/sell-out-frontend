@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { RiListSettingsFill } from 'react-icons/ri';
-// import { MdArrowForwardIos } from 'react-icons/md';
-// import { BiFilter } from 'react-icons/bi';
-import { Sort } from '../Reviews/reviews';
 import useProductsContext from '../../Context/Products/context';
 import Links from '../../Data/links';
 import styles from './Filter.module.css';
@@ -11,80 +8,17 @@ const clothingTabs = Links.getClothingTabs();
 const productUsageLinks = Links.getProductsUsage();
 const productsCategoryLinks = Links.getProductsCategory();
 
-export default function FilterComponent({ 
-    filterType, 
-    showFilter, 
-    closeFilter,
-    onClickOutsideProducstMenu,
-}) {
-    const indexFilterClassName = showFilter ? `${styles.container} ${styles.show}` : `${styles.container}`;
-    let filterComponentChild;
-
-    if (filterType && filterType.toLowerCase() === ("searchFilter").toLowerCase()) {
-        filterComponentChild = (
-            <SearchFilterMenu/>
-        )
-    } 
-    return (
-        <div className= { indexFilterClassName }>
-            {/* <div 
-            className= { styles.headerContainer }
-            onClick = { closeFilter }
-            >
-                <MdArrowForwardIos className={styles.closeIcon}/>
-                <div className= {styles.headerText}>
-                    <BiFilter className={styles.headerTextIcon}/>
-                    Products Filter
-                </div>
-            </div> */}
-            { filterComponentChild }
-        </div>
-    )
-}
-
-
-function SearchFilterMenu({ showChild }) {  
-    const sortConatinerlassName = `${styles.sortContainer}`
-    const sortConatinerOpenClassName = `${styles.sortContainer} ${styles.sortContainerOpen}`
-    
-    return (
-        <div className={ styles.filterWrapper }>
-            {/* country */}
-            <div className={ styles.filterChildContainer }>
-                <Sort
-                sortContainerClass  = { sortConatinerlassName }
-                sortContainerOpenClass ={ sortConatinerOpenClassName }
-                >
-                </Sort>
-            </div>
-            {/* state */}
-            <div className={ styles.filterChildContainer }>
-                <Sort
-                sortContainerClass  = { sortConatinerlassName }
-                sortContainerOpenClass ={ sortConatinerOpenClassName }
-                >
-                </Sort>
-            </div>
-            {/* category */}
-            <div className={ styles.filterChildContainer }>
-                <FilterLinks
-                links = { productsCategoryLinks }
-                title = "Category"
-                />
-            </div>
-        </div>
-    )
-}
-
 export const ProductsFilterMenu = React.forwardRef(({
     onClickOutside, 
     showFilter,
+    usedOutsideLogin,
     closeFilter  
 }, ref) => {
     const [queryValueChange, setQueryValueChange] = useState(false);
     const [showClothingLinks, setShowClothingLinks] = useState(false);
     const [queryValues, setQueryValue] = useState({});
-    const indexFilterClassName = `${styles.container} ${showFilter ? styles.show : ""}`;
+
+    const indexFilterClassName = `${styles.container} ${usedOutsideLogin ? styles.usedOutsideLogin : ""} ${showFilter ? styles.show : ""}`;
 
     useEffect(()=> {
         window.addEventListener('click', onClickOutside);
@@ -94,15 +28,15 @@ export const ProductsFilterMenu = React.forwardRef(({
     useEffect(()=> {
         if (queryValues?.category === "clothes") {
             setQueryValue(prevValues => (prevValues.gender ? {...prevValues, gender:"female" } : {...prevValues, gender:"female"}))
-            setShowClothingLinks(true)
+            setShowClothingLinks(true);
         } else {
-            setShowClothingLinks(false)
+            setShowClothingLinks(false);
         } 
     }, [queryValues.category]);
 
     const handleInputChange = function(e) {
-        setQueryValue(prevValues => ({ ...prevValues, [e.target.name] : e.target.value }))
-        setQueryValueChange(true) 
+        setQueryValue(prevValues => ({ ...prevValues, [e.target.name] : e.target.value }));
+        setQueryValueChange(true);
     }
 
     return (
@@ -133,16 +67,16 @@ function FilterLinks({
     tag 
 }) {
     return (
-        <div className={ styles.linksContainer }>
-            <div className={ styles.linksTitle }>
+        <div className = { styles.linksContainer }>
+            <div className = { styles.linksTitle }>
             { dontShowTitle ? '' : title }
             </div>
-            <div className={ styles.categoryLinks }>
+            <div className = { styles.categoryLinks }>
             {links?.map((link, i) =>
                 <FilterLink
                 {...link}
                 title = { title }
-                key={i}
+                key = { i }
                 tag = { tag }
                 />  
             )}
@@ -167,8 +101,8 @@ function FilterLink({
     const linkClassName = `${styles.categoryLinksItem} ${isActiveLink(productsFilter, name, type) ? styles.categoryLinksItemActive : ""}`
     return (
         <div 
-        className={ linkClassName }
-        onClick={ ()=> setProductsFilter(title, name, tag) }
+        className = { linkClassName }
+        onClick = { ()=> setProductsFilter(title, name, tag) }
         >
             { icon }<span>{ name }</span> 
         </div> 
@@ -199,17 +133,17 @@ function FilterTabs({
     }
 
     return (
-        <div className={ styles.filterTabsContainer }>
-            <div className={ styles.filterTabsTop }>
-                <div className={ styles.linksTitle }>
+        <div className = { styles.filterTabsContainer }>
+            <div className = { styles.filterTabsTop }>
+                <div className = { styles.linksTitle }>
                 { title }
                 </div>
-               <div className={ styles.filterTabs }>
+               <div className = { styles.filterTabs }>
                 {tabs.map((vals, i)=> 
                     <Tab 
-                    key ={ i } 
+                    key = { i } 
                     { ...vals } 
-                    viewedTabId ={ viewedTabId }
+                    viewedTabId = { viewedTabId }
                     toggleTabs = { toggleTabs }
                     />
                 )}
@@ -237,17 +171,18 @@ function Tab({
     const isViewedTab = (viewedTabId, id) => {
         return viewedTabId === id;
     }
-    const tabClassName =  `${styles.categoryLinksItem} ${styles.categoryTab} ${ isViewedTab(viewedTabId, id) ? styles.categoryTabActive : ""}`
+
+    const tabClassName = `${styles.categoryLinksItem} ${styles.categoryTab} ${ isViewedTab(viewedTabId, id) ? styles.categoryTabActive : ""}`
+    
     return (
         <div 
-        className= { tabClassName }
-        onClick = {()=> toggleTabs(id) }
+        className = { tabClassName }
+        onClick = { ()=> toggleTabs(id) }
         >
             { icon }<span>{ name }</span> 
         </div>
     )
 }
-
 
 export function FilterButtonComponent({ 
     filterButtonClassName, 
@@ -262,13 +197,14 @@ export function FilterButtonComponent({
     ) : (
         `${styles.filterButtonWrapper} ${active ? styles.filterButtonActive : ""}`
     )
+
     return (
         <div 
         className = { filterContainerClass } 
         { ...props } 
-        onClick = {()=> toggleFilter(filter)}
+        onClick = { ()=> toggleFilter(filter) }
         >               
-            <RiListSettingsFill className={ filterIconClassName || styles.filterButtonIcon }/>
+            <RiListSettingsFill className = { filterIconClassName || styles.filterButtonIcon }/>
         </div>      
     )
 }

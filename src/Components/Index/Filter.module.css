@@ -1,8 +1,9 @@
 
-/* filter compiinent styles */
+/* filter component styles */
 .container{
     position: fixed;
     height: calc(100vh - var(--top));
+    top: var(--top);
     width: 22%;
     border: 1px solid var(--prim-border-color);
     border-top: none;
@@ -15,6 +16,11 @@
     overflow-x: hidden;
     scrollbar-width: thin;
     right: -100%;  
+}
+
+.usedOutsideLogin{
+    height: calc(100vh - var(--landing-header-height));
+    top: var(--landing-header-height);
 }
 
 .container::-webkit-scrollbar{
