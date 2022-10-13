@@ -17,11 +17,11 @@ export default function GettingStarted() {
     }, []);
 
     const removeGettingStartedPageAccess = () => {
-        if (sessionStorage.getItem('access-getting-started-page')) sessionStorage.removeItem('access-getting-started-page') 
+        if (sessionStorage.getItem('access-getting-started-page')) sessionStorage.removeItem('access-getting-started-page'); 
     }
 
     const startProfileSetup = (e) => {
-        setSubmittedFormPaths(prevState => [...prevState, { href: location.pathname }]);
+        setSubmittedFormPaths(prevState => [...prevState, {href: location.pathname}]);
         history.push(location.pathname);
         setRedirect('/getting-started/application/company-or-business');
         e.stopPropagation();
@@ -29,7 +29,7 @@ export default function GettingStarted() {
 
     if (redirect) {
         return (
-            <Redirect to={redirect} />
+            <Redirect to = { redirect }/>
         )
     }
 
@@ -42,7 +42,7 @@ export default function GettingStarted() {
                 <div className="welcome-body">
                     <div className="welcome-body-message-container">
                         <div className="welcome-body-message">
-                            <div>Hi, <span >{user?.fullName || ""}</span></div>
+                            <div>Hi, <span >{ user?.fullName || "" }</span></div>
                             <p> 
                                 Welcome and thank's for showing interest in being part of Fling,
                                 a digital community where people come to buy or sell different varieties of products, 
@@ -50,17 +50,17 @@ export default function GettingStarted() {
                             </p>
                             <ul>
                                 <li>Fill out a profile which identifies your company, business or brand</li>
-                                <li>Submit your profile, get approved and yeagh you are part of us. Explore and see the benefits the system has to offer you</li>      
+                                <li>Submit your profile, get approved and yeah you are part of us. Explore and see the benefits the system has to offer you.</li>      
                             </ul>
                         </div> 
                     <div className="welcome-body-bottom">
                         <div className="welcome-body-index-link">
-                            <div className="welcome-body-index-link-bttn" onClick={ removeGettingStartedPageAccess }>
+                            <div className="welcome-body-index-link-bttn" onClick = { removeGettingStartedPageAccess }>
                                 <Link to="/home">I only wish to buy products for now </Link>
                             </div>
                         </div>
                         <div className="welcome-body-bttn">
-                            <button onClick= { startProfileSetup } >
+                            <button onClick = { startProfileSetup }>
                                 Set Up Profile
                             </button>
                         </div>
