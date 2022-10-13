@@ -21,13 +21,13 @@ const details = {
         nigerianTaxId: "Nigerian Tax Id",
         taxIdClassification: "Tax Id Classification"
     },
-    unregisteredBusinessData:{
+    unregisteredBusinessData: {
         countryFoundIn: "Country Found In",
         stateFoundIn: "State Found In",
         businessOrBrandName: "Business Or Brand Name",
         YearOfFoundation: "Year Of Foundation"
     },
-    legalAddressData:{
+    legalAddressData: {
         country: "Country",
         state: "State",
         city: "City",
@@ -37,7 +37,7 @@ const details = {
         addressLine2: "Address Line2",
         companyWebsite: "Company Website"
     },
-    operationalRegions:{
+    operationalRegions: {
         state: "State",
         city: "City",
         costOfDelivery: "Cost Of Delivery"
@@ -56,7 +56,7 @@ const details = {
     }
 }
 
-export default function ProfileImage(props) {
+export default function ProfileImage() {
     const [redirect, setRedirect] = useState('');
     const [updateUserResponseMessage, setUpdateUserResponseMessage] = useState('');
     const [creatingProfile, setCreatingProfile] = useState(false);
@@ -75,38 +75,38 @@ export default function ProfileImage(props) {
     useEffect(() => {  
         window.scrollTo(0, 0);
 
-        return ()=> {
+        return () => {
             if (timer) {
-                clearTimeout(timer)
+                clearTimeout(timer);
             }
         }
     }, [timer]);
 
     const goBack = () => {
-        removePathName('/getting-started/application/profile-image')
+        removePathName('/getting-started/application/profile-image');
         history.push(location.pathname);
         setRedirect('/getting-started/application/profile-image');
     }
 
     const userUpdateSuccessful = (response) => {
         if (response?.error) {
-            setCreatingProfile(false)
-            setUpdateUserResponseMessage(response?.message)
-            setUpdateUserError(true)
+            setCreatingProfile(false);
+            setUpdateUserResponseMessage(response?.message);
+            setUpdateUserError(true);
             return;
         }
 
-        setCreatingProfile(false)
-        setUpdateUserResponseMessage(response?.message)
-        setUpdateUserError(false)
+        setCreatingProfile(false);
+        setUpdateUserResponseMessage(response?.message);
+        setUpdateUserError(false);
 
-        timer = setTimeout(()=> {
+        timer = setTimeout(() => {
             const { data, token } = response;
 
             history.push(location.pathname);
-            setUserData(data)
+            setUserData(data);
             setTokenData(token);
-            setUpdateUserResponseMessage('')
+            setUpdateUserResponseMessage('');
             // clear session storage so as user should not be able to access getting started pages
             sessionStorage.removeItem('access-getting-started-page');
             setRedirect('/home');
@@ -115,12 +115,12 @@ export default function ProfileImage(props) {
     
     if (redirect) {
         return (
-            <Redirect to={redirect} />
+            <Redirect to = { redirect }/>
         )
     }
 
     const formDetails = getDetails();
-    const responseMssgConatinerClass = updateUserError ? "getting-started-response-mssg-container error" : "getting-started-response-mssg-container no-error" 
+    const responseMssgConatinerClass = `getting-started-response-mssg-container ${updateUserError ? "error" : "no-error"}`;
 
     return (
         <div className="getting-started-application-template-container">
@@ -131,7 +131,7 @@ export default function ProfileImage(props) {
             updateUserError = { updateUserError }
             />
         )}
-        <BottomSpinner showLoader ={ creatingProfile }>
+        <BottomSpinner showLoader = { creatingProfile }>
             Submitting Details...
         </BottomSpinner>
         <div className="getting-started-application-template-panel">
@@ -155,51 +155,51 @@ export default function ProfileImage(props) {
                         <>
                             {/* Company/business */}
                             <CollectedDetail
-                            title={
+                            title = {
                                 <>
                                 <BiBuildings className="index-side-nav-icon"/> 
                                 <span>Company/Business</span>
                                 </>
                             }
-                            formValues={formDetails.registeredCompanyOrBusinessData || formDetails.unregisteredBusinessData}
-                            details ={formDetails.registeredCompanyOrBusinessData ? details.registeredCompanyOrBusinessData : details.unregisteredBusinessData}
+                            formValues = { formDetails.registeredCompanyOrBusinessData || formDetails.unregisteredBusinessData }
+                            details = { formDetails.registeredCompanyOrBusinessData ? details.registeredCompanyOrBusinessData : details.unregisteredBusinessData }
                             />
                             {/* legal Address */}
                             <CollectedDetail
-                            title={
+                            title = {
                                 <>
                                 <RiMapPinAddLine className="index-side-nav-icon"/>
                                 <span>Legal Address</span>
                                 </>
                             }
-                            formValues={formDetails.legalAddressData}
-                            details ={details.legalAddressData}
+                            formValues = { formDetails.legalAddressData }
+                            details = { details.legalAddressData }
                             />
                             {/* opertaions */}
                             <CollectedDetail
-                            title={
+                            title = {
                                 <>
                                 <FiTruck className="index-side-nav-icon"/>
                                 <span>Operations</span>
                                 </>
                             }
-                            topComponent={
+                            topComponent = {
                                 <>
-                                <div className={styles.operationLabel}>
+                                <div className = { styles.operationLabel }>
                                     Operational regions and cost of delivery
                                 </div>
                                 {formDetails?.operationalRegions.length > 0 && 
-                                formDetails?.operationalRegions.map((region, i) =>
-                                    <Region
-                                    key = { i }
-                                    { ...region }
-                                    dontShowDelete
-                                    />
+                                    formDetails?.operationalRegions.map((region, i) =>
+                                        <Region
+                                        key = { i }
+                                        { ...region }
+                                        dontShowDelete
+                                        />
                                 )}
                                 </>
                             }
-                            formValues={ formDetails?.shippingAndOperationsData }
-                            details ={ details.shippingAndOperationsData }
+                            formValues = { formDetails?.shippingAndOperationsData }
+                            details = { details.shippingAndOperationsData }
                             />
                         </>
                     )}
@@ -214,9 +214,9 @@ export default function ProfileImage(props) {
                 goBack = { goBack }
                 customSubmitButton = {
                     <button 
-                    onClick={()=> handleSubmit(user, userUpdateSuccessful, setCreatingProfile)}
-                    disabled = {creatingProfile ? true : null}
-                    className = {`${creatingProfile ? "disable-button" : ""}`}
+                    onClick = { () => handleSubmit(user, setCreatingProfile, userUpdateSuccessful) }
+                    disabled = { creatingProfile ? true : null }
+                    className = { `${creatingProfile ? "disable-button" : ""}` }
                     >
                     Submit
                     </button>
@@ -239,19 +239,19 @@ function CollectedDetail({
         return null
     }
     return (
-        <div className={ styles.detailsContainer}>
-            <div className={ styles.detailsTitle}>
-                {title}
+        <div className = { styles.detailsContainer }>
+            <div className = { styles.detailsTitle }>
+                { title }
             </div>
-            {topComponent}
-            <div className={ styles.detailsBody}>
-                <div className={styles.detailContainer}>
+            { topComponent }
+            <div className = { styles.detailsBody }>
+                <div className = { styles.detailContainer }>
                 {Object.keys(formValues).map((key, i) => {
                     if (formValues[key]) {
                         return (
-                            <div className={ styles.detail} key={i}>
-                                <div>{details[key]}</div>
-                                <span>{formValues[key] || "Nil"}</span>
+                            <div className = { styles.detail } key = { i }>
+                                <div>{ details[key] }</div>
+                                <span>{ formValues[key] || "NA" }</span>
                             </div>
                         )
                     }
@@ -265,13 +265,18 @@ function CollectedDetail({
 }
 
 
-function ModalMessage({modalContainerClass, modalMessage,  updateUserError, ...props }) {
+function ModalMessage({
+    modalContainerClass, 
+    modalMessage,  
+    updateUserError, 
+    ...props 
+}) {
     if (updateUserError) {
         return (
             <div className = { modalContainerClass }>
                 <BsExclamationCircle className="getting-started-mssg-icon"/>
                 <span>{ modalMessage  }</span>
-                {props.children ? props.children : ''}
+                { props.children || '' }
             </div>
         )
     }
@@ -280,8 +285,8 @@ function ModalMessage({modalContainerClass, modalMessage,  updateUserError, ...p
         <div className = { modalContainerClass }>
             {/* TODO... change icon to success icon */}
             <BsExclamationCircle className="getting-started-mssg-icon"/>
-            <span>{ modalMessage  }</span>
-            { props.children ? props.children : ''}
+            <span>{ modalMessage }</span>
+            { props.children || '' }
         </div>
     )
 } 
