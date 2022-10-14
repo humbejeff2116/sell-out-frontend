@@ -1,21 +1,24 @@
 
-   import React, { useState } from 'react';
-   import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
-   import { ImWarning } from 'react-icons/im';
-   import { RiUserAddLine } from 'react-icons/ri';
-   import { Formik, Form } from 'formik';
-   import * as Yup from 'yup';
-   import { TextInput, PasswordInput } from '../Formik/formik';
-   import useCartContext from '../../Context/Cart/cartContext';
-   import useAuth from '../../Context/context';
-   import { loginUser } from '../../Utils/http.services';
-   import './login.css';
+import React, { useState } from 'react';
+import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
+import { RiErrorWarningLine } from 'react-icons/ri';
+import { RiUserAddLine } from 'react-icons/ri';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { TextInput, PasswordInput } from '../Formik/formik';
+import { TopPopUpBox, BottomPopUpBox, useBottomPopUpFor } from '../ModalBox/modalBox';
+import { LoaderSmall } from '../Loader/loader';
+import useCartContext from '../../Context/Cart/cartContext';
+import useAuth from '../../Context/context';
+import { loginUser } from '../../Utils/http.services';
+import './login.css';
    //    import socket from '../Socket/socket';
 
 export default function Login() {
     const [loginIn, setLoginIn] = useState(false);
     const [loginError, setLoginError] = useState(false);
     const [loginResponseMessage, setLoginResponseMessage] = useState(null);
+    const [showMessage, setShowMessage] = useState(false);
     const [redirect, setRedirect] = useState('');
     const location = useLocation();
     const history = useHistory();
@@ -29,12 +32,13 @@ export default function Login() {
         ) : null;
 
         try {
-            const { error, message, token, data} = await loginUser(values);
+            const { error, message, token, data } = await loginUser(values);
 
             if (error) {
                 setLoginResponseMessage(message);
                 setLoginError(true);
                 setLoginIn(false);
+                setShowMessage(true);
                 return;
             }
 
@@ -46,7 +50,7 @@ export default function Login() {
             setLoginIn(false);
             setLoginResponseMessage(null);
             history.push(location.pathname);
-            return currentLocation ? setRedirect(currentLocation) : setRedirect('/home')
+            return (currentLocation && currentLocation !== "/home/logout") ? setRedirect(currentLocation) : setRedirect('/home')
         } catch(err) {
             // TODO... handle error
             setLoginIn(false);
@@ -66,24 +70,32 @@ export default function Login() {
 
         return  updateCartContextState(savedCartState?.cartState, user);
     }
+
+    const closeMessageBox = () => {
+        setShowMessage(false);
+    }
  
     if (redirect) {
         return (
-            <Redirect to={ redirect } />
+            <Redirect to = { redirect }/>
         )
     }
 
     return (
         <>
+            <TopPopUpBox
+            closePopUp = { closeMessageBox }
+            message= { loginResponseMessage }
+            showPopUp = { showMessage }
+            usedFor = { loginError ? useBottomPopUpFor.error : useBottomPopUpFor.success }
+            />
             <div className="login-container">
                 <div className="login-panel ">
                     <div className="login-panel-heading">
                         <h2>Login </h2>
                     </div>
                     <div className="login-panel-error">
-                        {
-                            <span>{ loginResponseMessage || ''  }</span>
-                        }
+                        <span>{ loginResponseMessage || ''  }</span> 
                     </div>
                     <div className="login-panel-body">                            
                         <Formik
@@ -124,15 +136,22 @@ export default function Login() {
 
                                 <div className="login-button">
                                     <button type="submit" >
-                                    {
-                                        loginIn ? ( 
-                                            <span>Loging in...</span>
-                                        ) : loginError ? (
-                                            <><ImWarning/><span>Log in</span></>
-                                        ) : ( 
-                                            <span>Log in</span>
-                                        )
-                                    }
+                                    {loginIn ? ( 
+                                        <span>
+                                            <LoaderSmall unsetMarginTop/>
+                                        </span>
+                                    ) : loginError ? (
+                                        <>
+                                            <RiErrorWarningLine className="login-button-icon"/>
+                                            <span>
+                                                Log in
+                                            </span>
+                                        </>
+                                    ) : ( 
+                                        <span>
+                                            Log in
+                                        </span>
+                                    )}
                                     </button>
                                 </div>
                             </Form>
