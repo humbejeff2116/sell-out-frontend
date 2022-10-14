@@ -241,7 +241,17 @@ function calculateTotalNumberOfProductsInCart(state = []) {
     return totalProducts;
 }
 
-async function createOrderData(productsUserBought, sellerPaymentData, user, orderId, orderTime) {
+async function createOrderData(
+    productsUserBought, 
+    sellerPaymentData, 
+    user, 
+    orderId, 
+    orderTime
+) {
+    if (!sellerPaymentData) {
+        sellerPaymentData = createSellerPaymentData(productsUserBought, user);
+    }
+
     const newCartState = productsUserBought.filter(({ products }) => products.length > 0);
     let i = 0;
     let newCartStateLen = newCartState.length;
