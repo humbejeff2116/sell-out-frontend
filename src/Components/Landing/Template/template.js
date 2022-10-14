@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, Redirect, useLocation, useHistory  } from 'react-router-dom'
+import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { BiCartAlt } from "react-icons/bi";
 import socket from '../../Socket/socket';
 import Header from '../Header/header';
@@ -9,6 +9,7 @@ import { BottomErrorPopUpBox } from '../../ModalBox/modalBox';
 import LoginModal from '../../LoginModal/loginModal';
 import { NotificationAlert } from '../../NotificationsDropdown/notifications';
 import BackButton from '../../BackButton/backButton';
+import MobileNav from '../../OutsideLoginMobileNav/mobileNav';
 import useCartContext from '../../../Context/Cart/cartContext'
 import useAuth from '../../../Context/context';
 import styles from './Template.module.css';
@@ -57,13 +58,14 @@ export function LandingTemplate({
     useEffect(()=> {
         let mounted = true;
         let timer = null;
-        socket.on('unRegisteredUser', function(response) {
+
+        socket.on('unRegisteredUser', function (response) {
             if (mounted) {
                 setErrorMessage(response.message);
                 setError(true);
             }
         })
-        if (error) timer = setTimeout(()=> setError(false), 9000);
+        if (error) timer = setTimeout(()  => setError(false), 9000);
         return ()=> {
             if (timer) clearTimeout(timer);
             mounted = false;
@@ -72,6 +74,7 @@ export function LandingTemplate({
 
     useEffect(()=> {
         let timer = null;
+
         if (outsideLoginPopUpMessage?.show) setErrorMessage(outsideLoginPopUpMessage?.message);
         if (outsideLoginPopUpMessage?.show) timer = setTimeout(()=> setOutsideLoginPopUpMessage({}), 9000);
         return ()=> {
@@ -82,11 +85,17 @@ export function LandingTemplate({
 
     const goToLogin = () => {
         const userIsAuthenticated = isAuthenticated();
+
         if (userIsAuthenticated) {
             history.push(location.pathname);
             setRedirect('/home');
             return;
         }
+
+        if (location.pathname === '/login') {
+            return;
+        }
+
         history.push(location.pathname);
         setRedirect('/login');
         setShowLoginDropdown(true);
@@ -103,17 +112,18 @@ export function LandingTemplate({
 
     if (redirect) {
         return (
-            <Redirect to={ redirect } />
+            <Redirect to = { redirect }/>
         )
     }
 
     return (
-        <section className="landing-template-container">   
-            <div className="landing-top">    
+        <section className="landing-template-container"> 
             <Header 
             showLogin = { goToLogin }
             stickToTop = { stickHeaderToTop }
             />
+            <MobileNav/>  
+            <div className="landing-top">    
             {showLoginDropdown && (
                 <LoginModal 
                 show = { showLoginDropdown } 
@@ -151,15 +161,15 @@ export function LandingTemplate({
 function CartNavButton({ 
     usedInCart,
     showBackButton,
-     ...props 
+    ...props 
 }) {
     return (
-        <div className={styles.cartNavButtonContainer}>
+        <div className = { styles.cartNavButtonContainer }>
             {showBackButton && (
                 <BackButton 
-                buttonWrapperClassName = {styles.backButtonWrapper} 
+                buttonWrapperClassName = { styles.backButtonWrapper } 
                 clearSessionStorageWithKey = "view-product-location"
-                buttonIconClassName = {styles.backButtonIcon}
+                buttonIconClassName = { styles.backButtonIcon }
                 />
             )}
             <CartNavButtonIcon 
@@ -171,18 +181,18 @@ function CartNavButton({
 }
 
 export function CartNavButtonIcon({ usedInCart, ...props }) {
-    const {  cartTotalNumberOfProducts } = useCartContext();
+    const { cartTotalNumberOfProducts } = useCartContext();
     const cartButtonItemClassName = usedInCart ? `${styles.cartNavButtonItem} ${styles.cart}` : `${styles.cartNavButtonItem}`
     
     return (
-        <div className={cartButtonItemClassName}>
-            {cartTotalNumberOfProducts > 0  && ( 
+        <div className = { cartButtonItemClassName }>
+            {cartTotalNumberOfProducts > 0 && ( 
                 <NotificationAlert 
-                className={styles.notification}
+                className = { styles.notification }
                 /> 
             )}
-            <Link className={styles.cartNavButton} to="/cart" >
-                <BiCartAlt className={styles.cartNavButtonItemIcon}/>
+            <Link className = { styles.cartNavButton } to="/cart">
+                <BiCartAlt className = { styles.cartNavButtonItemIcon }/>
             </Link>
         </div>
     )
