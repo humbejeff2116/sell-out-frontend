@@ -36,7 +36,7 @@ export default function Cart({
         ) : (
             <EmptyCart
             href = { emptyCartHref }
-            emptyCartContainerClassName ={ emptyCartContainerClassName }
+            emptyCartContainerClassName = { emptyCartContainerClassName }
             />
         )}
         </div>
@@ -66,24 +66,22 @@ function CartProductsWrapper({
         }
     },[cartState, cartItems, user]);
 
-    const goToCheckout =(e) => {
+    const goToCheckout = (e) => {
         if (!userIsLoggedIn) {
             e.preventDefault();
             const message = {
                 type: "unAuthenticated",
                 show: true,
-                // message: "Hi, kindly login to checkout in a more secured environment"
                 message: "Hi, kindly login to perform checkout"
             }
-            setOutsideLoginPopUpMessage(message, true);
-            return;
+            setOutsideLoginPopUpMessage(message, true);  
         }
     }
 
     return (
         <div className="cart-products-wrapper">
             <div className="cart-products-container">
-                {dontShowHeading ? ""  : (
+                {dontShowHeading ? "" : (
                     <div className="cart-header">
                         <h3>Cart</h3>
                     </div>
@@ -92,8 +90,8 @@ function CartProductsWrapper({
                 {cartData.map(({ products, ...rest }) => (
                     products.map((product, i) => 
                         <CartProduct 
-                        key={ i } 
-                        product={ product }
+                        key = { i } 
+                        product = { product }
                         { ...rest }
                         />
                     )
@@ -106,7 +104,7 @@ function CartProductsWrapper({
                                 Total amount: 
                             </span> 
                             <span> 
-                                {`£${totalSum}`}
+                                { `£${totalSum}` }
                             </span>
                         </div>
                         <Link  onClick = { goToCheckout } to="/home/checkout"> 
@@ -136,20 +134,46 @@ function CartProduct({
         updateCartContextState,
     } = useCartContext();
 
-    const addProductQuantity = async (cartState, sellerEmail, productId, user) => {
+    const addProductQuantity = async (
+        cartState, 
+        sellerEmail, 
+        productId, 
+        user
+    ) => {
         // setQuantity(prevState => (parseInt(prevState) + 1).toString());
-        const updatedState = await addCartProductQuantity(cartState, addCartProductQuantityActionPayload(sellerEmail, productId));
+        // NOTE: await has an effect on expression
+        const updatedState = await addCartProductQuantity(
+            cartState, 
+            addCartProductQuantityActionPayload(sellerEmail, productId)
+        );
         updateCartContextState(updatedState, user);
     }
 
-    const reduceProductQuantity = async (cartState, sellerEmail, productId, user) => {
+    const reduceProductQuantity = async (
+        cartState, 
+        sellerEmail, 
+        productId, 
+        user
+    ) => {
         // setQuantity(prevState => (prevState - 1).toString());
-        const updatedState = await  reduceCartProductQuantity(cartState,  reduceCartProductActionPayload(sellerEmail, productId));
+        const updatedState = await reduceCartProductQuantity(
+            cartState,  
+            reduceCartProductActionPayload(sellerEmail, productId)
+        );
         updateCartContextState(updatedState, user);
     }
 
-    const removeProduct = async (cartState, cartItems, sellerEmail, productId, user) => {
-        const updatedState = await removeProductFromCart(cartState, removeFromCartActionPayload(sellerEmail, productId));
+    const removeProduct = async (
+        cartState, 
+        cartItems, 
+        sellerEmail, 
+        productId, 
+        user
+    ) => {
+        const updatedState = await removeProductFromCart(
+            cartState, 
+            removeFromCartActionPayload(sellerEmail, productId)
+        );
         const updatedCartItems = updatedState.flatMap(item => item.productsUserBoughtFromSeller);
         if (updatedCartItems.length < 1) {
             return updateCartContextState([], user);
@@ -157,27 +181,34 @@ function CartProduct({
         updateCartContextState(updatedState, user);
 
         if (cartItems.length > 0) {
-            window.scrollTo(0,0)
+            window.scrollTo(0,0);
         }
     }
 // TODO... move code to library to avoid duplication
-    const calculateProductSubTotal = ({ percentageOff, productPrice, productQty }) => {
+    const calculateProductSubTotal = ({ 
+        percentageOff, 
+        productPrice, 
+        productQty 
+    }) => {
         if (percentageOff) {
-            const percentOffPrice = (percentageOff / 100) * Number(productPrice)
+            const percentOffPrice = (percentageOff / 100) * Number(productPrice);
             const newPrice = Number(productPrice) - percentOffPrice;
-            return ( newPrice *  productQty).toFixed(2, 10)    
+
+            return (newPrice * productQty).toFixed(2, 10);    
         } 
-        return (productPrice *  productQty).toFixed(2, 10)
+
+        return (productPrice * productQty).toFixed(2, 10);
     }
 
     return (
         <div className="cart-product-panel">
-            <CartProductProfile { ...props } />
+            <CartProductProfile { ...props }/>
             <div className="cart-product-details-panel">
                 <div className="cart-product-image-container">
-                {[product.productImages[0]].map((image, i) =>
+                {/*TODO... return random image */}
+                {[product.productImages[0] || {}].map((image, i) => 
                     <div key = { i } className="cart-product-image-wrapper">
-                        <img src = { image.src || image2 } alt="product" />
+                        <img src = { image?.src || image2 } alt="product"/>
                     </div>
                 )}
                 </div>
@@ -187,36 +218,52 @@ function CartProduct({
                     <div className="cart-product-details-child">
                         <div>{ product.productName }</div>
                     </div>
-                    <Price {...product} className="cart-product-details-child cart-product-details-price"/>
+                    <Price { ...product } className="cart-product-details-child cart-product-details-price"/>
                     <div className="cart-product-details-child">
                         <div>Quantity: <span>{ product.productQty }</span></div>
                     </div>
                     <div className="cart-product-details-child">
-                        <div>Sub total: <span>{ `£${ calculateProductSubTotal(product) }` }</span></div>
+                        <div>Sub total: <span>{ `£${calculateProductSubTotal(product)}` }</span></div>
                     </div>
    
-                    <div className="cart-product-details-child cart-product-buttons" >
+                    <div className="cart-product-details-child cart-product-buttons">
                         <button 
                         className="cart-product-button-icon"
-                        onClick={() =>reduceProductQuantity(cartState, props.sellerEmail, product.productId, user)}
+                        onClick = {() => reduceProductQuantity(
+                            cartState, 
+                            props.sellerEmail, 
+                            product.productId, 
+                            user
+                        )}
                         >
                             -
                         </button>                     
                         <input  
-                        value = {product.productQty}
-                        onChange = {f => f}
+                        value = { product.productQty }
+                        onChange = { f => f }
                         className="cart-product-input" type="text" 
                         />
                         <button 
                         className="cart-product-button-icon"
-                        onClick = {()=> addProductQuantity(cartState, props.sellerEmail, product.productId, user) }
+                        onClick = {()=> addProductQuantity(
+                            cartState, 
+                            props.sellerEmail, 
+                            product.productId, 
+                            user
+                        )}
                         >
                             +
                         </button>
                     </div>
                     <div className="cart-product-details-child cart-product-remove-button">
                         <button 
-                        onClick={()=> removeProduct(cartState, cartItems, props.sellerEmail, product.productId, user)}>
+                        onClick = {()=> removeProduct(
+                            cartState, 
+                            cartItems, 
+                            props.sellerEmail, 
+                            product.productId, 
+                            user
+                        )}>
                             <RiDeleteBin2Line className="cart-delete-icon"/>
                             Remove
                         </button>
@@ -266,7 +313,7 @@ function CartProductProfile({
         <div className="cart-product-avatar-Wrapper">
             <div className="cart-product-avatar-left">
                 <div className="cart-product-avatar" >
-                    <img src = { sellerProfileImage || image } alt="avatar" />{/* TODO... remove image */}
+                    <img src = { sellerProfileImage || image } alt="avatar"/>{/* TODO... remove image */}
                 </div>
                 <div className="cart-product-avatar-user-name">
                     <span>
@@ -275,7 +322,7 @@ function CartProductProfile({
                 </div>
             </div>
             <div className="cart-product-avatar-right">
-                <GoKebabVertical className="nav-icon" onClick={ showUserProfile }/>
+                <GoKebabVertical className="nav-icon" onClick = { showUserProfile }/>
             </div>
         </div>
         </>
