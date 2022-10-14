@@ -24,7 +24,7 @@ export  function CartContextProvider({ children }) {
         const user = localStorage.getItem(`user`) ? JSON.parse(localStorage.getItem(`user`)) : null;
         const savedCartState =  localStorage.getItem(`${user?.userEmail}-cart`) ? (
             JSON.parse(localStorage.getItem(`${user?.userEmail}-cart`))
-        ) :( 
+        ) : ( 
             null
         );
 
@@ -42,16 +42,33 @@ export  function CartContextProvider({ children }) {
 
     // function used to update context useState hooks after cart state changes
     const updateCartContextState = (state, user) => {
-        const totalSum = state.length ? calculateCartTotalPrice(state) : null;
-        const sellerPaymentData = state.length ? createSellerPaymentData(state, user) : null;
-        const cartTotalNumberOfProducts = state.length ? calculateTotalNumberOfProductsInCart(state) : null;
-        const cartItems =state.length ?  state.flatMap(item => item.products) : [];
+        const isArray = (item) => {
+            return Array.isArray(item);
+        }
 
+        if (!isArray(state)) {
+            throw new Error("state must be an array");
+        }
+
+        if (state.length < 1) {
+            setCartState([]);
+            setCartItems([]);
+            setCartTotalNumberOfProducts(null);
+            setTotatSum(null);
+            setSellerPaymentData(null);
+            return;
+        }
+
+        const cartItems = state.flatMap(item => item.products);
+        const cartTotalNumberOfProducts = calculateTotalNumberOfProductsInCart(state);
+        const totalSum = calculateCartTotalPrice(state);
+        const sellerPaymentData = user ? createSellerPaymentData(state, user) : null;
+        
         setCartState(state);
         setCartItems(cartItems);
-        setTotatSum(totalSum);
-        setSellerPaymentData(sellerPaymentData);
         setCartTotalNumberOfProducts(cartTotalNumberOfProducts);
+        setTotatSum(totalSum);
+        setSellerPaymentData(sellerPaymentData);  
     }
 
     const values = {
@@ -70,7 +87,7 @@ export  function CartContextProvider({ children }) {
     }
 
     return (
-        <CartContext.Provider value={values} >
+        <CartContext.Provider value = { values }>
             { children }
         </CartContext.Provider>
     )
