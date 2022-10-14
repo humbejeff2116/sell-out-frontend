@@ -14,7 +14,7 @@ export function PostProduct(props) {
                     let our systems handle the sales for you. 
                 </div>
                 <div className="index-post-getting-started">
-                    <Link to="/home/dashboard/store/upload-product">
+                    <Link to="/home/dashboard/store/sell-product">
                         Get Started
                     </Link>
                 </div>
