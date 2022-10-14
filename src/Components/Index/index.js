@@ -1,16 +1,20 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { RiUpload2Line } from 'react-icons/ri';
 import socket from '../Socket/socket';
 import { SearchProducts } from './searchProducts';
 import { PostProduct } from './postProduct';
-// import { ErrorModal } from '../ModalBox/errorModal';
+import EmptyState, { EmptyStateButton } from '../EmptyState/emptyState';
+import { LoaderSmall } from '../Loader/loader';
 import { DisplayedProduct } from '../Product/product';
-import FilterComponent, { FilterButtonComponent } from './filter'
+import { FilterButtonComponent, ProductsFilterMenu } from './filter'
 import { CartNavButtonIcon } from '../Landing/Template/template';
+import hrefs from '../../Data/hrefs';
 import useSocketIsConnected from '../Hooks/socketHooks';
 import { useScrolledToBottom } from '../Hooks/windowScrolledToBottom';
 import useProductsContext from '../../Context/Products/context';
 import { getProducts } from '../../Utils/http.services';
+import failureImage from '../../Images/failure9.jpg';
 import './index.css';
 
 
@@ -80,56 +84,72 @@ const mockProducts = [
     },
 ];
 
+export const filterTypes =  {
+    productsFilter: "productsFilter",
+    searchFilter: "searchFilter"
+}
+
 
 export default function Index() {
     const [showFilter, setShowFilter] = useState(false);
-    const [filterType, setFilterType] = useState('');
+    const [filterType, setFilterType] = useState(filterTypes.productsFilter);
+    const _productsFilterMenu = useRef();
 
     const toggleFilter = (filterCategory) => {
-        if (showFilter) {
-            setFilterType("");
-        } else {
+        if (!showFilter) {
             switch (filterCategory) {
-                case "search" :
-                    setFilterType("searchFilter");
+                case "search":
+                    setFilterType(filterTypes.searchFilter);
                     break;
                 case "products": 
-                    setFilterType("productsFilter");
+                    setFilterType(filterTypes.productsFilter);
                     break;
                 default: 
-                throw new Error("proper filterCategory parameter is not specified");
+                throw new Error("proper filter Category parameter is not specified");
             }
         }
         setShowFilter(prevState => !prevState);
     }
 
     const closeFilter = () => {
-        setShowFilter(false)
-        setFilterType("")
+        setShowFilter(false);
+    }
+
+    const onClickOutsideProductsMenu = (e) => { 
+        const { current } = _productsFilterMenu;   
+        if (showFilter && current && !current.contains(e.target)) {      
+            setShowFilter(false);    
+        }  
     }
     
     return (
         <div className="index-container">
            <PostProduct/>
-           <FilterComponent
-           filterType = { filterType }
-           showFilter = { showFilter }
-           closeFilter = { closeFilter }
-           />
+            {(filterType && filterType === filterTypes.productsFilter) && (
+                <ProductsFilterMenu 
+                onClickOutside = { onClickOutsideProductsMenu }
+                ref = { _productsFilterMenu }
+                showFilter = { showFilter }
+                closeFilter = { closeFilter }
+                />   
+            )}
            <SearchProducts 
            toggleFilterComponent = { toggleFilter }
            />
            <FilterDisplayedProducts
            toggleFilterComponent = { toggleFilter }
+           setShowFilter= { setShowFilter }
            />
         </div>
     )
 }
 
 export function FilterDisplayedProducts({ 
-    toggleFilterComponent
+    toggleFilterComponent,
+    setShowFilter
 }) {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [filterLoader, setFilterLoader] = useState(false);
     const [lazyLoader, setLazyLoader] = useState(false);
     const socketIsConnected = useSocketIsConnected();
@@ -154,33 +174,43 @@ export function FilterDisplayedProducts({
 
     useEffect(()=> { // run effect only when there is filter context
         let mounted = true;
+        let timer = null;
         if (socketIsConnected && mounted) {
             if (productsFilter) {
-                getIndexProducts(
-                    productsLimit, 
-                    0, 
-                    productsFilter, 
-                    setProducts, 
-                    setFilterLoader
-                );
+                setShowFilter(false);
+                timer = setTimeout(() => {
+                    getIndexProducts(
+                        productsLimit, 
+                        0, 
+                        productsFilter, 
+                        setProducts, 
+                        setFilterLoader
+                    )
+                }, 700)
             }     
         }
-        return ()=> mounted = false;    
-    }, [socketIsConnected, products.length, productsFilter]); 
+
+        return () => {
+            mounted = false; 
+            if (timer) {
+                clearTimeout(timer);
+            }
+        }   
+    }, [socketIsConnected, productsFilter, setShowFilter]); 
 
     useEffect(()=> { // run effect when product data changes
         let mounted = true;
-        socket.on('productDataChange', function() {
+        socket.on('productDataChange', function () {
             if (mounted) getIndexProducts(
                 productsLimit, 
-                products.length, 
+                products?.length - productsLimit, 
                 productsFilter, 
                 setProducts, 
                 setFilterLoader
             );
         });
         return ()=> mounted = false;    
-    }, [products.length, productsFilter]);
+    }, [products, productsFilter]);
 
     useEffect(()=> { // run effect on scroll
         let mounted = true;
@@ -192,7 +222,7 @@ export function FilterDisplayedProducts({
             if (windowIsScrolledToBottom) {
                 getIndexProducts(
                     productsLimit, 
-                    products.length, 
+                    products?.length, 
                     productsFilter, 
                     setLazyLoadedProducts, 
                     null,
@@ -201,36 +231,45 @@ export function FilterDisplayedProducts({
             }     
         }
         return ()=> mounted = false;    
-    }, [socketIsConnected, windowIsScrolledToBottom, products.length, productsFilter]);
+    }, [socketIsConnected, windowIsScrolledToBottom, products, productsFilter]);
 
-    const getIndexProducts = async (limit, skip, filter, setProducts, setFilterLoader, setLazyLoader) => {
+    const getIndexProducts = async (
+        limit, 
+        skip, 
+        filter, 
+        setProducts, 
+        setFilterLoader, 
+        setLazyLoader
+    ) => {
         if (!filter) {
             try {
+                setLoading(true)
                 const productsResponse = await getProducts(limit, skip);
                 const products = productsResponse.data;
                 setProducts(products);
-               
+                setLoading(false);
             } catch(err) {
+                setLoading(false);
                 console.error(err);
             }
         } else {
             if (!setFilterLoader) {
-                setLazyLoader(true)
+                setLazyLoader(true);
                 try {
-                    const { products } = await getProducts(limit, skip, filter).data;
-                    setProducts(products);
+                    const { data } = await getProducts(limit, skip, filter);
+                    setProducts(data);
                     setLazyLoader(false);
                 } catch(err) {
                     setLazyLoader(false);
                     console.error(err);
                 }
-                return
+                return;
             }
 
             setFilterLoader(true);
             try {
-                const { products } = await getProducts(limit, skip, filter).data;
-                setProducts(products);
+                const { data } = await getProducts(limit, skip, filter);
+                setProducts(data);
                 setFilterLoader(false);
             } catch(err) {
                 setFilterLoader(false);
@@ -242,28 +281,59 @@ export function FilterDisplayedProducts({
     return (
         <>
             <FilterButton
+            disableFilterToggle = { (!products || products.length < 0) || false }
             toggleFilter = { toggleFilterComponent }
             />
-            <div className="index-products-container">
-            { filterLoader && <FilterLoader/> }
-            {mockProducts.map((product, i) =>
-                <DisplayedProduct 
-                key = { i } 
-                {...product} 
-                product = { product } 
-                panelClassName="index-product-panel"
-                />
+            {!products || loading ? (
+                <LoaderSmall/>
+            ) : 
+            products.length > 0 ? (
+                <div>
+                    { filterLoader && <FilterLoader/> }
+                    <div className="index-products-container">
+                    {products.map((product, i) =>
+                        <DisplayedProduct 
+                        key = { i } 
+                        {...product} 
+                        product = { product } 
+                        />
+                    )}
+                    { lazyLoader && <FilterLoader/> }
+                    </div>
+                </div>
+            ) : 
+            (
+                <div className="index-products-empty-container">
+                    <EmptyState
+                    imageSrc = { failureImage }
+                    imageAlt = "Illustration representing no products"
+                    heading = "No products yet"
+                    writeUp = {`
+                        We have no products for sale at the moment. 
+                        Why not be our first seller and let our systems help you 
+                        sell your product('s)
+                    `}
+                    >
+                        <EmptyStateButton
+                        useLinkButton
+                        buttonIcon = {
+                            <RiUpload2Line className="empty-store-products-icon"/>
+                        }
+                        emptyStateButtonText= "Upload Product"
+                        href = { hrefs.sellProduct }
+                        />
+                        
+                    </EmptyState>
+                </div>
             )}
-            { lazyLoader && <FilterLoader/> }
-            </div>
         </>
     )
 }
 
-function FilterLoader({ ...props }) {
+export function FilterLoader({ ...props }) {
     return (
         <div>
-
+            <LoaderSmall/>
         </div>
     )
 }
@@ -273,10 +343,11 @@ export function  FilterButton({
     toggleFilter, 
     showCartNavIcon,
     dontShowTitle,
+    disableFilterToggle,
     ...props 
 }) {
     return (
-        <div className={ filterButtonContainerClass || "index-products-filter-button-container" }>
+        <div className = { filterButtonContainerClass || "index-products-filter-button-container" }>
             <div className="index-products-filter-heading">
                { dontShowTitle  ? ""  :"Products" } 
             </div>
@@ -284,11 +355,13 @@ export function  FilterButton({
                 <div className="index-products-filter-menu-item-wrapper">
                 { showCartNavIcon && <CartNavButtonIcon/> }   
                 </div>
-                <FilterButtonComponent
-                toggleFilter = { toggleFilter }
-                filter ="products"
-                title="Filter Products"
-                />
+                {/* {disableFilterToggle ? "" : ( */}
+                    <FilterButtonComponent
+                    toggleFilter = { disableFilterToggle ? f=> f : toggleFilter }
+                    filter ="products"
+                    title="Filter Products"
+                    />
+                {/* )} */}
             </div>
         </div>
     )
