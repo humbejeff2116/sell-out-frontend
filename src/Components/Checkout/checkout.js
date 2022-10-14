@@ -1,15 +1,18 @@
 
 import React, { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
+import { RiEye2Line } from 'react-icons/ri';
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import BackButton from '../BackButton/backButton';
 import { BottomPopUpBox, useBottomPopUpFor } from '../ModalBox/modalBox';
+import EmptyState, { EmptyStateButton } from '../EmptyState/emptyState';
 import { BottomSpinner } from '../Loader/loader';
 import { Sort } from '../Reviews/reviews';
 import socket from '../Socket/socket';
 import useAuth from "../../Context/context";
 import useCartContext from "../../Context/Cart/cartContext";
 import { chekoutOptions, checkoutPaymentMethods } from '../../Data/data';
+import failureImage from '../../Images/failure9.jpg';
 import styles from './Checkout.module.css';
 import "./checkout.css";
 
@@ -57,15 +60,16 @@ export default function Checkout() {
     orderTime = Date.now()
   ) => {
     setPlacingOrder(true);
+    // TODO... check and ensure user (buyer) sets shipping address (delivery address) 
+    // await does have an effect on this expression
+    const buyersPreOrder = await createOrderData(
+      cartState, 
+      sellerTotalSumData, 
+      user, 
+      orderId, 
+      orderTime
+    );
     try {
-      // await does have an effect on this expression
-      const buyersPreOrder = await createOrderData(
-        cartState, 
-        sellerTotalSumData, 
-        user, 
-        orderId, 
-        orderTime
-      );
       alert(JSON.stringify(buyersPreOrder, null, 2)); // TODO... drop alert
       socket.emit("createOrder", buyersPreOrder);
     }  catch(err) {
@@ -172,7 +176,7 @@ function CheckoutWrapper({
 }) {
   const [payOnDelivery, setPayOnDelivery] = useState(false);
 
-  const onSelectChange= (value) => {
+  const onSelectChange = (value) => {
     if (value === checkoutPaymentMethods.default) {
       setPayOnDelivery(false);
       return;
@@ -236,8 +240,9 @@ function CheckoutComp({
   fwConfig, 
   ...props 
 }) {
-  const { cartState, sellerTotalSumData } = useCartContext();
+  const { cartState, sellerTotalSumData } = useCartContext(); //TODO... remove when removing test button
   const { user } = useAuth();
+
   return (
     <div className="checkout-content-wrapper">
       <OrderDetails/>
@@ -253,7 +258,7 @@ function CheckoutComp({
           /> 
         ) : ( 
           <button  // using button for test purpose only
-          onClick = { () =>  props.placeOrder(cartState, sellerTotalSumData, user) }
+          onClick = { () => props.placeOrder(cartState, sellerTotalSumData, user) }
           >
             Flutterwave
           </button> 
@@ -303,32 +308,48 @@ function OrderDetails({ ...prop }) {
   )
 }
 
-function ProductsSellers({ ...props }) {
-  const [loading, setLoading] = useState(false);
-  const { sellerTotalSumData } = useCartContext();
+// function ProductsSellers({ ...props }) {
+//   const [loading, setLoading] = useState(false);
+//   const { sellerTotalSumData } = useCartContext();
 
-  // TODO... get users from API using data from sellerTotalSumdata 
-  useEffect(() => {
+//   // TODO... get users from API using data from sellerTotalSumdata 
+//   useEffect(() => {
 
-  }, [])
+//   }, [])
 
-  const getUsers = (users) => {
+//   const getUsers = (users) => {
 
-  }
-  return (
-    <div>
+//   }
+//   return (
+//     <div>
 
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
-function EmptyCheckout(props) {
+function EmptyCheckout({
+  emptyCartContainerClassName,
+  href
+}) {
   return (
     <>
       <BackButtonWrapper/>
-      <div>
-        No itesm in your checkout
-      </div>
+      <EmptyState
+      emptyContainerClassName = { emptyCartContainerClassName || "emptyCheckoutContainer" }
+      imageSrc = { failureImage }
+      imageAlt = "Illustration of an empty checkout"
+      heading = "No Items In checkout"
+      writeUp = "You currently do not have items in your checkout"
+      >
+        <EmptyStateButton
+        useLinkButton
+        buttonIcon = {
+            <RiEye2Line className="empty-cart-button-icon"/>
+        }
+        emptyStateButtonText="Start Shopping"
+        href = { href || "/home" }
+        /> 
+      </EmptyState>
     </>
   )
 }
