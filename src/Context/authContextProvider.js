@@ -13,36 +13,31 @@ export function AuthContextProvider(props) {
     const [tokenExpiration, setTokenExpiration] = useState(null);
    
     useEffect(()=> {
-        socket.on('connect', function() {
+        socket.on('connect', function () {
             setStateOnload();
         })
     }, [user, token, tokenExpiration]);
 
-    const setStateOnload = ( ) => {
+    const setStateOnload = () => {
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         const token = localStorage.getItem('x-access-token') ? localStorage.getItem('x-access-token') : null;
         const tokenExpiration = localStorage.getItem('x-access-token-expiration') ? 
         localStorage.getItem('x-access-token-expiration') : null;
 
-        if (!token) return false;
+        if (!token || (tokenExpiration < Date.now())) { 
+            setUser(null);
+            setUserIsLoggedIn(false);
+            setToken(null);
+            setTokenExpiration(null);
+        }
+
         if (token && (tokenExpiration > Date.now())) {
             setUser(user);
             setUserIsLoggedIn(true);
             setToken(token);
             setTokenExpiration(tokenExpiration);
             return;
-        }
-        if (user && !token) {
-            setUser(user);
-            setUserIsLoggedIn(false);
-            setToken(null);
-            setTokenExpiration(null);
-            return 
-        }
-        setUser(null);
-        setUserIsLoggedIn(false);
-        setToken(null);
-        setTokenExpiration(null); 
+        } 
     }
 
     const setUserData = (user) => {
@@ -51,7 +46,7 @@ export function AuthContextProvider(props) {
         setUserIsLoggedIn(true);
     }
 
-    const setTokenData = ( token ) => {
+    const setTokenData = (token) => {
         localStorage.setItem('x-access-token', token);
         const expirationTime = Date.now() + 2 * 60 * 60 * 1000
         localStorage.setItem('x-access-token-expiration', expirationTime);
@@ -63,28 +58,42 @@ export function AuthContextProvider(props) {
         const token = localStorage.getItem('x-access-token') ? localStorage.getItem('x-access-token') : null;
         const tokenExpiration = localStorage.getItem('x-access-token-expiration') ? 
         localStorage.getItem('x-access-token-expiration') : null;
-        if (!token) return false;
-        if (token && (tokenExpiration > Date.now())) return true;
-        return false; 
+
+        if (token && (tokenExpiration > Date.now())) {
+            return true;
+        }
+        return false;
+    }
+
+    const wipeToken = () => {
+        setUser(null);
+        setUserIsLoggedIn(false);
+        setToken(null);
+        setTokenExpiration(null);
     }
 
     const logOut = () => {
         setUser(null);
         setUserIsLoggedIn(false);
-        setOutsideLoginPopUpMessage(null);
+        setOutsideLoginPopUp(null);
         setViewUserProfileData({});
         setToken(null);
         setTokenExpiration(null);
         localStorage.removeItem('user');
         localStorage.removeItem('x-access-token');
         localStorage.removeItem('x-access-token-expiration');
+        sessionStorage.removeItem('currentLocation');
     }
 
-    const setOutsideLoginPopUpMessage = ({ type, show, message }, showMessage = false) => {
+    const setOutsideLoginPopUpMessage = ({ type, show, message }, showMessage) => {
         if (!showMessage) {
             setOutsideLoginPopUp(prevState => ({ ...prevState, show: false }));
             return;
         }
+        if (outsideLoginPopUpMessage?.show) {
+            return;
+        }
+
         setOutsideLoginPopUp({ type, show, message });
     }
    
@@ -101,12 +110,13 @@ export function AuthContextProvider(props) {
         setTokenData: setTokenData,
         isAuthenticated: isAuthenticated,
         setViewUserProfileData: setViewUserProfileData,
-        logOut: logOut
+        logOut: logOut,
+        wipeToken: wipeToken
     }
 
     return(
-        <AuthContext.Provider value={values} >
-            {props.children}
+        <AuthContext.Provider value = { values }>
+            { props.children }
         </AuthContext.Provider>
     )  
 }
