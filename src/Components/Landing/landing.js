@@ -12,8 +12,9 @@ import './landing.css';
 export default function LandingComponent() {
     return (
         <LandingTemplate
-        landingTopChild ={ <TopInfoCardComponent/> }
-        landingCenterChild ={ <AboutFling/> }
+        landingTopChild = { <TopInfoCardComponent/> }
+        landingCenterChild = { <AboutFling/> }
+        stickHeaderToTop
         >
             <LandingProducts/>
             <HowItWorks/>    
