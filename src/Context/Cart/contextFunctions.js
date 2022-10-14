@@ -212,7 +212,11 @@ function createSellerPaymentData(state = [], buyer) {
     const sellersProductSoldTotalAmount = state.map(cartProduct => {
         const total = calculateSellerProductsSoldTotalAmount(cartProduct);
         const { sellerName, sellerId, sellerEmail, products } = cartProduct;
-        const { fullName, id, userEmail }  = buyer;
+        
+        if (!buyer) {
+            throw new Error("buyer must not be falsy");
+        }
+        const { fullName, id, userEmail } = buyer;
 
         return ({
             sellerName,
