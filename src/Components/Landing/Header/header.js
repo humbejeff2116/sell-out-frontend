@@ -3,13 +3,20 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { BiMenu } from "react-icons/bi";
 import Links from '../../../Data/links';
+import useNavContext from '../../../Context/Navigation/context';
 import fling from '../../../Images/fling8.png';
 import './header.css';
 
 const landingMainLinks = Links.getLandingMainLinks();
 
-export default function Header({ stickToTop, showLogin, ...props }) {
+export default function Header({ 
+    stickToTop, 
+    showLogin,
+    containerModificationClass, 
+    ...props 
+}) {
     const [scrolled, setScrolled] = useState(false);
+
     useEffect(()=> {
         window.addEventListener('scroll', handleScroll);
         return ()=> {
@@ -17,42 +24,37 @@ export default function Header({ stickToTop, showLogin, ...props }) {
         }
     });
 
-    const handleScroll = ( ) => {
+    const handleScroll = () => {
         const offset = window.scrollY;
+
         if (offset > 50) {
-           setScrolled(true)
+           setScrolled(true);
         } else {
-           setScrolled(false)
+           setScrolled(false);
         }
     }
 
-    const headerClassName = stickToTop && scrolled ? (
-        "landing-header scrolled"
-    ) : (
-        "landing-header"
-    )
+    const headerClassName = `landing-header ${containerModificationClass || ""} ${stickToTop && scrolled ? "scrolled" : ""}`;
    
     return (
-        <header className={headerClassName}>
+        <header className = { headerClassName }>
             <div className="landing-header-logo">
                 <div  className="landing-header-logo-img">
                     <Link to="/">
-                        <img src={ fling } alt="Fling"/>
+                        <img src = { fling } alt="Fling"/>
                     </Link>
                 </div>
             </div>
             <div className="landing-header-navigation">
                 <nav>
-                {
-                    landingMainLinks.map((link, i) =>
-                        <NavLinks key={ i } { ...link }/>
-                    )
-                }
+                {landingMainLinks.map((link, i) =>
+                    <NavLinks key = { i } { ...link }/>
+                )}
                 </nav>
             </div>
             <div className="landing-header-login">
                 <div className="landing-login-item" >
-                    <button onClick={ showLogin }>Login</button>
+                    <button onClick = { showLogin }>Login</button>
                     <MobileNavIcon/>
                 </div>
             </div>
@@ -60,32 +62,34 @@ export default function Header({ stickToTop, showLogin, ...props }) {
     )
 }
 
-export function MobileNavIcon({ ...props }) {
+export function MobileNavIcon() {
+    const { showOutsideLoginNav, toggleOutsideLoginNav } = useNavContext();
+    
     return (
-
-        <div className="landing-header-mobile-nav-container">
-            <div className="landing-header-mobile-nav-icon">
-                <BiMenu className="nav-icon"/>
-            </div>
+        <div 
+        className = {`landing-header-mobile-nav-icon ${showOutsideLoginNav ? "landing-header-mobile-nav-open" : ""}`}
+        onClick = { toggleOutsideLoginNav }
+        >
+            <BiMenu className="nav-icon"/>
         </div>
-
     )
 }
 
-function NavLinks({ href, name, ...props }) {
+function NavLinks({ 
+    href, 
+    name, 
+    ...props 
+}) {
     return (
-
         <div className="landing-nav-item" >
             <NavLink
             exact 
-            to={ href } 
+            to = { href } 
             activeClassName="landing-nav-link-active"
-            className="landing-nav-link" 
-            // title={ name } 
+            className="landing-nav-link"  
             >
                 { name } 
             </NavLink> 
-        </div>
-        
+        </div>  
     ) 
 }
