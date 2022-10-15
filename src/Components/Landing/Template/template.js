@@ -76,7 +76,7 @@ export function LandingTemplate({
         let timer = null;
 
         if (outsideLoginPopUpMessage?.show) setErrorMessage(outsideLoginPopUpMessage?.message);
-        if (outsideLoginPopUpMessage?.show) timer = setTimeout(()=> setOutsideLoginPopUpMessage({}), 9000);
+        if (outsideLoginPopUpMessage?.show) timer = setTimeout(()=> setOutsideLoginPopUpMessage({}), 7000);
         return ()=> {
             if (outsideLoginPopUpMessage?.show) setOutsideLoginPopUpMessage({});
             if (timer) clearTimeout(timer); 
