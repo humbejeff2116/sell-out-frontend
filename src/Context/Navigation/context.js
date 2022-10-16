@@ -4,7 +4,9 @@ import { createContext, useContext } from 'react';
 
 const initialContext = {
     showLeftSideBar: false,
-    openLeftSideBar: ()=> {},
+    showOutsideLoginNav: false,
+    toggleOutsideLoginNav: () => {},
+    openLeftSideBar: () => {},
 }
 
 
