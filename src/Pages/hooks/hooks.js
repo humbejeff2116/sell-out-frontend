@@ -1,14 +1,31 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export function usePageScrollTo() {
     const location = useLocation(); 
+    const [cords, setCords] = useState({x: 0, y: 0});
+
+    const setScrollPoints = () => {
+        const scrollCords = {
+           x: window.pageXOffset || document.documentElement.scrollLeft, 
+           y: window.pageYOffset || document.documentElement.scrollTop
+        }
+        setCords(scrollCords);
+    }
+
+    useEffect(()=> {
+        window.addEventListener("scroll", setScrollPoints);
+        return () =>{ 
+            window.removeEventListener("scroll", setScrollPoints);
+            sessionStorage.setItem(`${location.pathname}-pageScroll`, JSON.stringify(cords));
+        }
+    }, [location.pathname, cords]);
 
     useEffect(()=> {
         const { x, y } = sessionStorage.getItem(`${location.pathname}-pageScroll`) ? (
             JSON.parse(sessionStorage.getItem(`${location.pathname}-pageScroll`))
-        ) : {} 
+        ) : {}; 
 
         if (!x && !y) {
             window.scrollTo({
@@ -20,16 +37,6 @@ export function usePageScrollTo() {
                 top: y,
                 behavior: "smooth",
             }); 
-        }
-
-        return () => {
-            const scrollCords = {
-                pathname: location.pathname,
-               x: window.pageXOffset || document.documentElement.scrollLeft, 
-               y: window.pageYOffset || document.documentElement.scrollTop
-            }
-
-            sessionStorage.setItem(`${location.pathname}-pageScroll`, JSON.stringify(scrollCords))
         }
     }, [location.pathname]);
 }
