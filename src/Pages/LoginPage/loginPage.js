@@ -1,22 +1,18 @@
 
-
-
-import React, {useEffect} from 'react';
-import {LoginAndSignupTemplate} from '../../Components/Template/template';
-import Login from '../../Components/Login/login'
-
+import React, { useEffect } from 'react';
+import { LoginAndSignupTemplate } from '../../Components/Template/template';
+import Login from '../../Components/Login/login';
 
 
 
-export default function LoginPage(){
+export default function LoginPage() {  
     useEffect(()=> {
-        window.scrollTo(0,0);
-    },[]);
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
-        <LoginAndSignupTemplate>
+        <LoginAndSignupTemplate stickHeaderToTop>
             <Login/>
         </LoginAndSignupTemplate>
     )
-
 }
