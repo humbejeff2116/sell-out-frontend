@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { OrderContext } from './context';
 
-export function OrderContextProvider({children}) {
+export function OrderContextProvider({ children }) {
     const [placedOrders, setUserPlacedOrders] = useState(null);
     const [placedOrdersSet, setPlacedOrdersSet] = useState(false);
     const [sellerOrderDeliveries, setSellerOrderDeliveries] = useState({});
@@ -12,7 +12,7 @@ export function OrderContextProvider({children}) {
     const [paymentsSet, setPaymentsSet] = useState(false);
     const [buyerPayments, setBuyerPayments] = useState({});
 
-    const setPlacedOrders = ({ placedOrders }) => {
+    const setPlacedOrders = (placedOrders) => {
         if (!placedOrders) {
             setUserPlacedOrders(null);
             setPlacedOrdersSet(false);
@@ -26,12 +26,12 @@ export function OrderContextProvider({children}) {
         if (!sellerPayments || !buyerPayments) {
             setSellerPayments({});
             setBuyerPayments({});
-            setPaymentsSet(false)
+            setPaymentsSet(false);
             return;
         }
         setSellerPayments(sellerPayments);
         setBuyerPayments(buyerPayments);
-        setPaymentsSet(true)
+        setPaymentsSet(true);
     }
 
      const setSalesDelivery = ({ sellerOrderDeliveries, buyerOrderDeliveries }) => {
@@ -61,7 +61,7 @@ export function OrderContextProvider({children}) {
     }
 
     return (
-        <OrderContext.Provider value={ values }>
+        <OrderContext.Provider value = { values }>
             { children }
         </OrderContext.Provider>
     )
