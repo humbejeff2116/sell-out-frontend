@@ -30,7 +30,7 @@ const dashboardRoutes = [
     {path: "/home/dashboard/payments",  Component:  Payments},
     // store
     {path: "/home/dashboard/store/products", Component:  Products},
-    {path: "/home/dashboard/store/upload-product", Component:  UploadProduct},
+    {path: "/home/dashboard/store/sell-product", Component:  UploadProduct},
     {path: "/home/dashboard/store/edit-product", Component: EditProduct},
     {path: "/home/dashboard/store/settings", Component: StoreSettings}, 
     {path: "/home/dashboard/*", usedForHomeRoutes: true, Component: NotFound},
