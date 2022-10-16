@@ -5,9 +5,14 @@ import { ProductsContext } from './context';
 export function ProductsContextProvider({ children }) {
     const [productsFilter, setFilter] = useState(null);
 
-    const setProductsFilter = (type, val) => {
-        // alert(filter);
-        setFilter({ type, val });
+    const setProductsFilter = (type, val, tag) => {
+        if (!type || !val) {
+            return setFilter(null);
+        }
+        if (!tag) {
+           return  setFilter({ type, val });
+        }
+        setFilter({ type, val, tag });
     }
 
     const values = {
@@ -16,7 +21,7 @@ export function ProductsContextProvider({ children }) {
     }
 
     return(
-        <ProductsContext.Provider value={values} >
+        <ProductsContext.Provider value = { values }>
             {children}
         </ProductsContext.Provider>
     )
