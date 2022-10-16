@@ -1,11 +1,12 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import Header from '../Header/header';
 import Footer from '../Footer/footer';
 import LeftSideBar from '../LeftSideBar/leftSideBar';
 import RightSideBar from '../RightSideBar/rightSideBar';
 import LandingFooter from '../Landing/Footer/landingFooter';
+import LandingHeader from '../Landing/Header/header';
 import ProfileAvatar from '../Profile/profileAvatar';
 import IndexSideNav from '../IndexSideNav/indexSideNav';
 import IndexFooter from '../IndexFooter/indexFooter';
@@ -13,8 +14,10 @@ import SlimFooter from '../Footer/SlimFooter/slimFooter'
 import Notifications from '../NotificationsDropdown/notifications';
 import Connections from '../Connections/connections';
 import BottomNavigation from '../BottomNavigation/bottomNavigation';
+import MobileNav from '../OutsideLoginMobileNav/mobileNav';
 import GettingStartedSideNav from '../GettingStartedSideNav/gettingStartedSideNav';
 import RequireAuthentication from '../Authentication/requireAuthentication';
+import useAuth from '../../Context/context';
 import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
 import './template.css';
@@ -38,9 +41,9 @@ export  function IndexPageTemplateComp({
             <div className="inside-login-template-panel">
                 <LeftSideBar 
                 fixed
-                top={ leftSideBarTop ? leftSideBarTop : <ProfileAvatar/> } 
-                center={ leftSideBarCenter ? leftSideBarCenter : <IndexSideNav/> } 
-                bottom={ leftSideBarBottom ? leftSideBarBottom : <IndexFooter /> } 
+                top = { leftSideBarTop ? leftSideBarTop : <ProfileAvatar/> } 
+                center = { leftSideBarCenter ? leftSideBarCenter : <IndexSideNav/> } 
+                bottom = { leftSideBarBottom ? leftSideBarBottom : <IndexFooter /> } 
                 />
                 { children }
             </div>
@@ -64,8 +67,8 @@ export function IndexTemplateChildrenWithRightSideBar({
                 { children }
             </IndexPageTemplateChildren>
             <RightSideBar 
-            topComponent={ rightSideBarTop ?  rightSideBarTop : <Notifications/> } 
-            bottomComponent={ rightSideBarBottom ?  rightSideBarBottom  : <Connections/> } 
+            topComponent = { rightSideBarTop ? rightSideBarTop : <Notifications/> } 
+            bottomComponent = { rightSideBarBottom ? rightSideBarBottom : <Connections/> } 
             />
         </>
     )
@@ -94,14 +97,52 @@ export default function Template({ children, ...props }) {
     )
 }
 
-export function LoginAndSignupTemplate({ children, ...props }) {
+export function LoginAndSignupTemplate({
+    stickHeaderToTop,
+    children, 
+    ...props 
+}) {
+    const [redirect, setRedirect] = useState('');
+    const location = useLocation();
+    const history = useHistory();
+    const { isAuthenticated } = useAuth();
+
+    const goToLogin = () => {
+        const userIsAuthenticated = isAuthenticated();
+        
+        if (userIsAuthenticated) {
+            history.push(location.pathname);
+            setRedirect('/home');
+            return;
+        }
+
+        if (location.pathname === '/login') {
+            return;
+        }
+
+        history.push(location.pathname);
+        setRedirect('/login');
+    }
+
+    if (redirect) {
+        return (
+            <Redirect to = { redirect }/>
+        )
+    }
+
     return (
         <div className="login-template-container">
+            <LandingHeader
+            showLogin = { goToLogin }
+            stickToTop = { stickHeaderToTop }
+            containerModificationClass = "login-template-header"
+            />
+            <MobileNav/> 
             <div className="login-template-left">
                 <section className="login-template-logo">
-                    <div  className="login-template-logo-img">
+                    <div className="login-template-logo-img">
                         <Link to="/">
-                            <img src={ fling } alt="Fling"/>
+                            <img src = { fling } alt="Fling"/>
                         </Link>
                     </div>
                 </section>
@@ -139,14 +180,14 @@ export function SettingsPageTemplate({
             <Header/>
             <LeftSideBar 
             fixed
-            top={ leftSideBarTop ?  leftSideBarTop : <ProfileAvatar/> } 
-            center={  leftSideBarCenter ?  leftSideBarCenter : <IndexSideNav links={settingsSideNavLinks}/> } 
-            bottom={ leftSideBarBottom ?  leftSideBarBottom : <IndexFooter links ={settingsSideNavFooterLinks}/> } 
+            top = { leftSideBarTop ?  leftSideBarTop : <ProfileAvatar/> } 
+            center = { leftSideBarCenter ? leftSideBarCenter : <IndexSideNav links = { settingsSideNavLinks }/> } 
+            bottom = { leftSideBarBottom ? leftSideBarBottom : <IndexFooter links = { settingsSideNavFooterLinks }/> } 
             />
             <SettingsTemplateChildren>
                 { children }
             </SettingsTemplateChildren>
-            <LandingFooter footerClassName={'gettingStarted-footer'} />
+            <LandingFooter footerClassName = { 'gettingStarted-footer' }/>
         </>
     )
 }
@@ -170,18 +211,18 @@ export function GettingStartedTemplate({
 }) {
     return (
         <>
-            <Header dontShowMainNav />
+            <Header dontShowMainNav/>
             <LeftSideBar 
-            fixed={true}
+            fixed
             // className = "getting-started-left-side-bar-container"
-            top={ leftSideBarTop ?  leftSideBarTop : <ProfileAvatar/> } 
-            center={ leftSideBarCenter  ?  leftSideBarCenter : <GettingStartedSideNav links ={gettingStartedSideNavLinks}/> } 
-            bottom={ leftSideBarBottom ?  leftSideBarBottom : <IndexFooter/> } 
+            top = { leftSideBarTop ? leftSideBarTop : <ProfileAvatar/> } 
+            center = { leftSideBarCenter  ? leftSideBarCenter : <GettingStartedSideNav links = { gettingStartedSideNavLinks }/> } 
+            bottom = { leftSideBarBottom ? leftSideBarBottom : <IndexFooter/> } 
             />
             <GettingStartedTemplateChildren>
-                {children}
+                { children }
             </GettingStartedTemplateChildren>
-            <LandingFooter footerClassName='gettingStarted-footer'/>
+            <LandingFooter footerClassName='getting-started-footer'/>
         </>
     )
 }
