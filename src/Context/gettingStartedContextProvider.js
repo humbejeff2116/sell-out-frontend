@@ -23,7 +23,7 @@ export function GetStartedContextProvider(props) {
         })
     }
 
-    const handleSubmit = async (user, updateUserCallback, setCreatingProfile) => {
+    const handleSubmit = async (user, setCreatingProfile, updateUserCallback) => {
         setCreatingProfile(true);
         const companyOrBusinessData = registeredCompanyOrBusinessData ? 
         {...registeredCompanyOrBusinessData, registered: true} : {...unregisteredBusinessData, registered: true}
