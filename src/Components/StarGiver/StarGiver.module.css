@@ -1,10 +1,10 @@
 
 .container{
     display:flex;
-    justify-content: flex-end;
     align-items: center;
     color: var(--sec-color);
     /* border: 1px solid red; */
+    cursor: pointer;
 }
 
 .starIcon{
