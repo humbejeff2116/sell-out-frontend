@@ -1,11 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { ImWarning } from 'react-icons/im';
+import { RiErrorWarningLine } from 'react-icons/ri';
 import { BiLogIn } from 'react-icons/bi';
 import { TextInput, PasswordInput } from '../Formik/formik';
+import { BottomPopUpBox, useBottomPopUpFor } from '../ModalBox/modalBox';
+import { LoaderSmall } from '../Loader/loader';
 import useAuth from '../../Context/context';
 import { signupUser } from '../../Utils/http.services';
 import './signup.css';
@@ -14,16 +16,27 @@ export default function Signup() {
     const [creatingAccount, setCreatingAccount] = useState(false);
     const [creatingAccountError, setCreatingAccountError] = useState(false);
     const [signingUpResponseMessage, setSigningUpResponseMessage] = useState(null);
+    const [showMessage, setShowMessage] = useState(false);
     const [redirect, setRedirect] = useState('');
     const location = useLocation();
     const history = useHistory();
     const { setUserData, setTokenData } = useAuth();
+
+    useEffect(() => {
+        let timer = null;
+        if (showMessage) {
+            timer = setTimeout(() => setShowMessage(false), 7000);
+        }
+
+        return () => {
+            if (timer) clearTimeout(timer);
+        }
+    }, [showMessage]);
     
     async function handleSubmit (values) {
+        setCreatingAccount(true);
+        setCreatingAccountError(false);
         try {
-            setCreatingAccount(true);
-            setCreatingAccountError(false);
-
             const { token, userAlreadyExist, message, data } = await signupUser(values);
             const TOKEN = token;
 
@@ -31,39 +44,48 @@ export default function Signup() {
                 setCreatingAccountError(true);
                 setSigningUpResponseMessage(message);
                 setCreatingAccount(false);
+                setShowMessage(true);
                 return;
             }
             setCreatingAccountError(false);
-            // allow user access to getting started pages
-            sessionStorage.setItem('access-getting-started-page', JSON.stringify({ user: data, canAccessGettingStarted: true }))
-            setUserData(data)
+            // sessionStorage.setItem(
+            //     'access-getting-started-page', 
+            //     JSON.stringify({ user: data, canAccessGettingStarted: true })
+            // )
+            setUserData(data);
             setTokenData(TOKEN);
             setCreatingAccount(false);
             history.push(location.pathname);
             setRedirect('/getting-started');
         } catch(err) {
-            
-
+            console.error(err);
         }  
+    }
+
+    const closeMessageBox = () => {
+        setShowMessage(false);
     }
  
     if (redirect) {
         return (
-            <Redirect to={redirect} />
+            <Redirect to = { redirect }/>
         )
     }
 
     return (
         <div className="signup-container">
+            <BottomPopUpBox
+            closePopUp = { closeMessageBox }
+            message = { signingUpResponseMessage }
+            showPopUp = { showMessage }
+            usedFor = { creatingAccountError ? useBottomPopUpFor.error : useBottomPopUpFor.success }
+            />
             <div className="signup-panel ">
                 <div className="signup-panel-heading">
                     <h2> Create Account </h2>
                 </div>
-                <div className="signup-panel-error">
-                {signingUpResponseMessage && (
-                    <span> {signingUpResponseMessage} </span>
-                )}
-                </div>
+                {/* <div className="signup-panel-error">
+                </div> */}
                 <div className="signup-panel-body">
                     <Formik
                     initialValues = {{
@@ -76,7 +98,7 @@ export default function Signup() {
                         fullname: Yup.string().required('Full name is required'),
                         password: Yup.string().required('Password is required'),
                     })}
-                    onSubmit = {handleSubmit}
+                    onSubmit = { handleSubmit }
                     >
                     <Form>
                         <TextInput
@@ -102,11 +124,22 @@ export default function Signup() {
                         />
                         <div className="signup-button">
                             <button type="submit" >
-                            {
-                                creatingAccount ? <span>Creating Account...</span> : 
-                                creatingAccountError ? <><ImWarning/> <span>Create account</span></> : 
-                                <span>Create account</span>
-                            }
+                            {creatingAccount ? (
+                                <span>
+                                    <LoaderSmall unsetMarginTop/>
+                                </span>
+                            ) : creatingAccountError ? (
+                                <>
+                                    <RiErrorWarningLine className="signup-button-icon"/>
+                                    <span>
+                                        Create account
+                                    </span>
+                                </>
+                            ) : (
+                                <span>
+                                    Create account
+                                </span>
+                            )}
                             </button>
                         </div>
                     </Form>
