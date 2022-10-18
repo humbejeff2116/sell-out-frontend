@@ -17,7 +17,7 @@ UserLib.prototype.getSellerStarsAndSetStarCount = async function(
 }
 
 UserLib.prototype.starSeller = function(
-    product, 
+    seller, 
     user, 
     starCount, 
     setStarsUserRecieved, 
@@ -32,12 +32,12 @@ UserLib.prototype.starSeller = function(
                 userFullName: user.fullName
             }
 
-            setStarsUserRecieved(currentState => [...currentState, addeStar]);
+            setStarsUserRecieved(currentState => currentState ? [...currentState, addeStar] : [addeStar]);
             setStarCount(++starCount);
         }
 
         const data = {
-            product,
+            seller,
             user,
             starCount: starCount
         }
@@ -51,7 +51,7 @@ UserLib.prototype.starSeller = function(
     }
 
     const data = {
-        product,
+        seller,
         user,
         starCount: starCount
     }
