@@ -122,6 +122,9 @@
     border: none;
     background-color: var(--color-opac-7);
     color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .signup-panel button:hover{
@@ -131,6 +134,11 @@
 
 .signup-panel button:focus{
     outline: 2px solid var(--prim-border-color);   
+}
+
+.signup-button-icon{
+    margin-right: 0.4rem;
+    font-size: 1.2rem;
 }
 
 .signup-login-panel{
@@ -145,7 +153,6 @@
 
 .login-link{
     display:flex;
-    flex-direction: row;
     justify-content: flex-end;
     /* border:1px solid green; */
 }
@@ -191,6 +198,18 @@
     text-decoration: underline;
 }
 
+@media only screen  and (max-width: 910px) {
+    .signup-container{
+        min-height: 75vh;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .signup-panel{
+        width: 60%;
+    }
+}
+
 @media only screen  and (max-width: 800px) {
    
 }
@@ -200,15 +219,27 @@
 }
 
 @media only screen  and (max-width: 600px) {
+
+}
+
+@media only screen  and (max-width: 600px) {
     .signup-container{
-        margin-top:10%;
-        margin-bottom: 10%;
+        width: 100%;
+    }
+    
+    .signup-panel{
+        width: 100%;
+    }
+
+    .login-link{
+        justify-content: unset;
     }
 }
 
 @media only screen  and (max-width:480px) {
     
 }
+
 @media only screen  and (max-width:320px) {
 
 }
