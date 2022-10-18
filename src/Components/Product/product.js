@@ -8,7 +8,7 @@ import HeartGiver from '../HeartGiver/heartGiver';
 import './product.css';
 
 
-export  function DisplayedProduct({ 
+export function DisplayedProduct({ 
     product,
     panelClassName,
     dontShowModal,
@@ -53,9 +53,9 @@ export  function DisplayedProduct({
             )}
             <div className = { panelClassName || "index-product-panel" }>
                 <div className="index-product-profile-panel">
-                    <ProfileAvatar product = { product } />
+                    <ProfileAvatar product = { product }/>
                     <StarGiver
-                    product = { product }
+                    seller = { product }
                     />
                 </div>
                 <div className="index-product-image-wrapper">
@@ -89,26 +89,33 @@ export  function DisplayedProduct({
 }
 
 
-export function Price({ percentageOff, productPrice, className, showPriceTag }) {
-    const priceContainerClass = className ? className : "index-product-details-price";
+export function Price({ 
+    percentageOff, 
+    productPrice, 
+    className, 
+    showPriceTag 
+}) {
+    const priceContainerClass = className || "index-product-details-price";
 
     if (percentageOff) {
-        const percentOffPrice = (percentageOff / 100) * parseFloat(productPrice)
+        const percentOffPrice = (percentageOff / 100) * parseFloat(productPrice);
         const newPrice = (parseFloat(productPrice) - percentOffPrice).toFixed(2, 10);
 
         if (!showPriceTag) {
             return (
-                <div className={ priceContainerClass }>
+                <div className = { priceContainerClass }>
                     <div> 
-                        <span className="price"> £{ newPrice } {`(${ percentageOff }% OFF)` }</span> <span className="original-price">£{ parseFloat( productPrice).toFixed(2, 10) }</span>
+                        <span className="price"> £{ newPrice } {`(${ percentageOff }% OFF)` }</span> 
+                        <span className="original-price">£{ parseFloat(productPrice).toFixed(2, 10) }</span>
                     </div>
                 </div>
             )
         } else {
             return (
-                <div className={ priceContainerClass }>
+                <div className = { priceContainerClass }>
                     <div>
-                        Price: <span className="price"> £{ newPrice } {`(${ percentageOff }% OFF)` }</span> <span className="original-price">£{ parseFloat( productPrice).toFixed(2, 10) }</span>
+                        Price: <span className="price"> £{ newPrice } {`(${ percentageOff }% OFF)` }</span> 
+                        <span className="original-price">£{ parseFloat(productPrice).toFixed(2, 10) }</span>
                     </div>
                 </div>
             )
@@ -118,17 +125,17 @@ export function Price({ percentageOff, productPrice, className, showPriceTag }) 
     if (!percentageOff) {
         if (showPriceTag) {
              return (
-                <div className={ priceContainerClass }>
+                <div className = { priceContainerClass }>
                     <div>
-                        Price: <span className="price"> £{parseFloat(productPrice).toFixed(2, 10)}</span> 
+                        Price: <span className="price"> £{ parseFloat(productPrice).toFixed(2, 10) }</span> 
                     </div>
                 </div>
             )
         } else {
             return (
-                <div className={ priceContainerClass }>
+                <div className = { priceContainerClass }>
                     <div> 
-                        <span className="price"> £{parseFloat(productPrice).toFixed(2, 10)}</span>
+                        <span className="price"> £{ parseFloat(productPrice).toFixed(2, 10) }</span>
                     </div>
                 </div>
             )
