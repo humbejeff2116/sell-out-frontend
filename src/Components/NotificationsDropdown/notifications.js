@@ -2,9 +2,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RiNotification3Line } from 'react-icons/ri';
 import socket from '../Socket/socket';
-import {  getUserNotifications } from '../../Utils/http.services';
+import { getUserNotifications } from '../../Utils/http.services';
 import profileAvatar from '../../Images/avatar4.png';
-import bell from '../../Images/bell3.png';
+import bell from '../../Images/bell5.png';
 import styles from './Notifications.module.css';
 import './notifications.css';
 
@@ -12,6 +12,7 @@ import './notifications.css';
 export default function Notifications(props) {
     const [notifications, setNotifications] = useState([]);
     const [showNotifications, setShowNotifications] = useState(false);
+    const [error, setError] = useState(false);
     const notificationContainer = useRef();
     let timer = null;
 
@@ -22,12 +23,12 @@ export default function Notifications(props) {
         if (user && mounted ) {
             getNotifications(user, setNotifications);
         }
-        socket.on('userDataChange', function() {
+        socket.on('userDataChange', function () {
             if (mounted) {
                 getNotifications(user, setNotifications);
             } 
         });
-        socket.on('seenNotificationsSuccess', function() {
+        socket.on('seenNotificationsSuccess', function () {
             if (mounted) {
                 getNotifications(user, setNotifications);
             } 
@@ -46,19 +47,18 @@ export default function Notifications(props) {
 
     const getNotifications = async (user, setNotifications) => {
         try {
-            const { data } = await getUserNotifications(user)
+            const { data } = await getUserNotifications(user);
             setNotifications(data);
         } catch(err) {
-
+            setError(true);
         }  
     }
 
     const toggleNotifications = () => {
-        setShowNotifications(prevState => !prevState)
+        setShowNotifications(prevState => !prevState);
     }
 
     const onBlurHandler = () => { 
-        alert(true)   
         timer = setTimeout(() => setShowNotifications(false));  
     }
     // If a child receives focus, do not close the popover.  
@@ -77,24 +77,22 @@ export default function Notifications(props) {
         <>
             <div className="notifications-container">
                 <NotificationIcon
-                openNotifications= { toggleNotifications }
-                notifications={ notifications }
-                notificationOpen={showNotifications}
+                openNotifications = { toggleNotifications }
+                notifications = { notifications }
+                notificationOpen = { showNotifications }
                 />
             </div>
             <div className="notifications-dropdown-container-wrapper">
-            {
-                showNotifications && (
-                    <NotificationsDropDown
-                    notifications ={ notifications }
-                    onBlur = { onBlurHandler }
-                    onFocus = { onFocusHandler }
-                    onClickOutside = { onClickOutsideHandler }
-                    ref = { notificationContainer }
-                    show = { showNotifications }
-                    /> 
-                )
-            }
+            {showNotifications && (
+                <NotificationsDropDown
+                notifications = { notifications }
+                onBlur = { onBlurHandler }
+                onFocus = { onFocusHandler }
+                onClickOutside = { onClickOutsideHandler }
+                ref = { notificationContainer }
+                show = { showNotifications }
+                /> 
+            )}
             </div>
         </>
     )
@@ -105,8 +103,7 @@ const  NotificationsDropDown = React.forwardRef(({
     onClickOutside,
     onBlur,
     onFocus, 
-    show,
-    ...props 
+    show
 }, ref) => {   
     useEffect(()=> {
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
@@ -114,7 +111,7 @@ const  NotificationsDropDown = React.forwardRef(({
         checkIfNotificationsIsSeen(notifications)
         .then(notSeen => {
             if (notSeen) {
-               return  socket.emit('seenNotifications', user);
+               return socket.emit('seenNotifications', user);
             }  
         })
     }, [notifications]);
@@ -127,6 +124,7 @@ const  NotificationsDropDown = React.forwardRef(({
 
     const checkIfNotificationsIsSeen = async (notifications) => {
         let notSeen = false;
+        
         for (let i = 0; i < notifications.length; i++) {
             if (notifications[i].seen === false) {
                notSeen = true;
@@ -144,22 +142,20 @@ const  NotificationsDropDown = React.forwardRef(({
 
     return (
         <div 
-        className= { dropdownContainer }
-        onBlur={ onBlur }           
-        onFocus={ onFocus }
-        ref={ ref }
+        className = { dropdownContainer }
+        onBlur = { onBlur }           
+        onFocus = { onFocus }
+        ref = { ref }
         > 
             <div className="notifications-dropdown-header">
                 Notifications
             </div> 
             <div className="notifications-dropdown-wrapper">
-            {
-                notifications.length > 0 ? notifications.map((notification, i) =>   
-                    <NotificationsBox key = { i }  { ...notification } />
-                ) : (
-                   <EmptyNotifications/>
-                ) 
-            }
+            {notifications.length > 0 ? notifications.map((notification, i) =>   
+                <NotificationsBox key = { i }  { ...notification }/>
+            ) : (
+                <EmptyNotifications/>
+            )}
             </div> 
         </div> 
     )
@@ -167,15 +163,15 @@ const  NotificationsDropDown = React.forwardRef(({
 
 function EmptyNotifications(props) {
     return (
-        <div className={ styles.emptyContainer }>
-            <div className={ styles.emptyWrapper }>
-                <div className={ styles.emptyImage }>
-                    <img src ={ bell } alt ="" />
+        <div className = { styles.emptyContainer }>
+            <div className = { styles.emptyWrapper }>
+                <div className = { styles.emptyImage }>
+                    <img src = { bell } alt =""/>
                 </div>
-                <div className={ styles.emptyHeader }>
+                <div className = { styles.emptyHeader }>
                     No Notifications
                 </div>
-                <div className={ styles.emptyBody }>
+                <div className = { styles.emptyBody }>
                     You currently do not have any notification at the moment. 
                 </div>
             </div>
@@ -204,28 +200,33 @@ function NotificationIcon({
 
     return (
         <div 
-        className={`notifications-icon-wrapper ${notificationOpen ? "notifications-open" : ""}`} 
+        className = { `notifications-icon-wrapper ${notificationOpen ? "notifications-open" : ""}` } 
         onClick = { openNotifications }
         >
-            <RiNotification3Line className="notification-icon" />
-            {
-                notifications && (
-                    notSeenNotificationsCount(notifications) > 0  ?
-                    ( <NotificationAlert className="notifications-icon-alert"/> ) : ''
-                ) 
-            }
+            <RiNotification3Line className="notification-icon"/>
+            {notifications && (
+                notSeenNotificationsCount(notifications) > 0  ? ( 
+                    <NotificationAlert className="notifications-icon-alert"/> 
+                ) : ''
+            )}
         </div>
     )
 }
 
 export function NotificationAlert({ className, ...props }) {
     return(
-        <div className={ className }>
+        <div className = { className }>
         </div>
     )
 }
 
-function NotificationsBox({ userName, userId, userProfileImage, action, ...props }) {
+function NotificationsBox({ 
+    userName, 
+    userId, 
+    userProfileImage, 
+    action, 
+    ...props 
+}) {
     // TODO... implement view profile functionality
     const viewProfile =() => {
 
@@ -235,7 +236,7 @@ function NotificationsBox({ userName, userId, userProfileImage, action, ...props
         <div className="notification-container">
             <div className="notification-header">
                 <div className="notification-image">
-                    <img src={  userProfileImage || profileAvatar } alt="profile" /> 
+                    <img src = {  userProfileImage || profileAvatar } alt="profile"/> 
                 </div>
                 <div className="notification-name">
                     <span onClick = { ()=> viewProfile(userId) }>{ userName }</span>
@@ -248,7 +249,7 @@ function NotificationsBox({ userName, userId, userProfileImage, action, ...props
                 </div>
             </div>
             <div className="notification-details">
-                <span> { action } </span>
+                <span>{ action }</span>
             </div>    
         </div>
     )
