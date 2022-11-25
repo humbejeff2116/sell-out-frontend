@@ -5,11 +5,35 @@ import {  RiFilterLine, RiSettingsLine } from 'react-icons/ri';
 import { Loader } from '../Loader/loader';
 import SearchOmniBox from './searchOmnibox';
 import { FilterButtonComponent }  from './filter';
-import { PopupMenu, PopupMenuButton } from '../UserDashboard/Store/Collections/collections';
+import { PopupMenuWrapper } from '../UserDashboard/Store/Collections/collections';
 import { SearchResultModalBar } from './searchResultsModal';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
 
+const popupMenu = {
+    search: [
+        {
+            name: "Current Location",
+            icon: <RiFilterLine className="store-products-popup-icon"/>    
+        },
+        {
+            name: "Most Sold",
+            icon: <RiSettingsLine className="store-products-popup-icon"/>    
+        },
+        {
+            name: "Least Sold",
+            icon: <RiSettingsLine className="store-products-popup-icon"/>    
+        },
+        {
+            name: "Most Expensive",
+            icon: <RiSettingsLine className="store-products-popup-icon"/>    
+        },
+        {
+            name: "Most Affordable",
+            icon: <RiSettingsLine className="store-products-popup-icon"/>    
+        }
+    ]
+}
 
 export function SearchProducts({ 
     toggleFilterComponent, 
@@ -18,13 +42,14 @@ export function SearchProducts({
     const [searchedProducts, setSearchedProducts] = useState(null);
     const [searchingProducts, setSearchingProducts] = useState(false);
     const [searchProductsError, setSearchProductsError] = useState(false);
-    // const [searchProductsMssg,  setSearchProductsMssg] = useState('');
     const [showOmnibar, setShowOmnibar] = useState(false);
     const [searchQuery, setSearchQuery] = useState({});
     const [showSearchProductsResultModal, setShowSearchProductsResultModal] = useState(false);
+    const [showSearchProductsResultModalChild, setShowSearchProductsResultModalChild] = useState(false);
     const [returnedEmptySearch, setReturnedEmptySearch] = useState(false);
     const [numberOfEmptySearch, setNumberOfEmptySearch] = useState(0);
     const [showFilterMenu, setShowFilterMenu] = useState(false);
+    const [popupMenuFilter, setPopupMenuFilter] = useState({});
     const { user } = useAuth();
     const _searchOmnibar = useRef();
     const _searchFilter = useRef();
@@ -51,7 +76,7 @@ export function SearchProducts({
     useEffect(()=> {
         let timer = null;
 
-        socket.on("searchProductsSuccess", function(response) {
+        socket.on("searchProductsSuccess", function (response) {
             if (response.data.length < 1) {
                 timer = setTimeout(() => {                   
                     setSearchingProducts(false);
@@ -60,7 +85,6 @@ export function SearchProducts({
                     // setSearchProductsMssg(response.message)
                     setShowOmnibar(true);                   
                 }, 1000)
-
                 return;
             }
 
@@ -70,14 +94,19 @@ export function SearchProducts({
                 setShowOmnibar(false);
                 // setSearchProductsMssg(response.message)
                 setSearchedProducts(response.data);
-            }, 1000)
+            }, 1000);
    
             timer = setTimeout(() => {
                 setShowSearchProductsResultModal(true);   
-            }, 1500)
+            }, 1500);
+
+            timer = setTimeout(() => {
+                setShowSearchProductsResultModalChild(true);   
+            }, 2000);
+         
         })
 
-        socket.on("searchProductsError", function(response) {
+        socket.on("searchProductsError", function (response) {
             timer = setTimeout(() => {
                 setSearchingProducts(false);
                setSearchProductsError(true);
@@ -161,7 +190,10 @@ export function SearchProducts({
     }
 
     const closeSearchProductsBar = () => {
-        setShowSearchProductsResultModal(false);
+        setShowSearchProductsResultModalChild(false);
+        timer = setTimeout(() => {
+            setShowSearchProductsResultModal(false);
+        }, 800);
     }
 
     const removeSearchItem = (e, item ) => {
@@ -180,6 +212,11 @@ export function SearchProducts({
     const toggleFilterMenu = () => {
         setShowFilterMenu(prevState => !prevState);
     }
+
+    const setPopupFilter = (filter) => {
+        setPopupMenuFilter({filter: filter});
+    }
+
     const omnibarClassName = numberOfEmptySearch > 0 ? "index-search-form error" : "index-search-form";
 
     return (
@@ -188,11 +225,6 @@ export function SearchProducts({
                 <h4>
                     Search for Products
                 </h4>
-                {/* <div className="index-search-header-writeup">   
-                    Have an asset in mind you would like to buy
-                    or just want to find out about ?
-                    Hit the search and and see what you find
-                </div> */}
             </div>
             <div className="index-search-input-wrapper">
                 <div className="index-search-filter-container-wrapper">
@@ -203,54 +235,16 @@ export function SearchProducts({
                         title = "Filter Search"
                         />
                     </div>
-
-                <div className="index-search-filter-popup-wrapper">
-                <PopupMenu 
-                ref = { _searchFilter} 
-                showMenu = { showFilterMenu }
-                onClickOutside = { onClickOutsideFilterMenu }
-                >
-                    <>
-                    <PopupMenuButton
-                    name="Current Location"
-                    // handleClick
-                    icon = {
-                        <RiFilterLine className="store-products-popup-icon"/>
-                    }
-                    />
-                    <PopupMenuButton
-                    name="Most Sold"
-                    // handleClick
-                    icon = {
-                        <RiFilterLine className="store-products-popup-icon"/>
-                    }
-                    />
-                    <PopupMenuButton
-                    name="Least Sold"
-                    // handleClick
-                    icon = {
-                        <RiSettingsLine className="store-products-popup-icon"/>
-                    }        
-                    />
-
-                    <PopupMenuButton
-                    name="Most Expensive"
-                    // handleClick
-                    icon = {
-                        <RiSettingsLine className="store-products-popup-icon"/>
-                    }        
-                    />
-
-                    <PopupMenuButton
-                    name="Most Affordable"
-                    // handleClick
-                    icon = {
-                        <RiSettingsLine className="store-products-popup-icon"/>
-                    }        
-                    />
-                    </>
-                </PopupMenu>
-            </div>
+                    <div className="index-search-filter-popup-wrapper">
+                        <PopupMenuWrapper 
+                        menus = { popupMenu.search }
+                        ref = { _searchFilter } 
+                        showMenu = { showFilterMenu }
+                        onClickOutsideMenu = { onClickOutsideFilterMenu }
+                        setMenuFilter = { setPopupFilter }
+                        filter = { popupMenuFilter?.filter }
+                        />
+                    </div>
                 </div>
                 <div className="index-search-form-wrapper">
                     <div className = { omnibarClassName } ref = { _searchOmnibar }>
@@ -262,7 +256,7 @@ export function SearchProducts({
                             onChange = { handleInputChange } 
                             name="query" 
                             />
-                            <button type="submit" disabled = { searchingProducts ? true: false }>
+                            <button type="submit" disabled = { searchingProducts ? true : false }>
                             {searchingProducts ? (
                                 <Loader loader = "index-search-button-loader"/>
                             ) : ( 
@@ -283,6 +277,8 @@ export function SearchProducts({
                             searchResults = { searchedProducts }
                             closeModal = { closeSearchProductsBar }
                             removeSearchItem = { removeSearchItem }
+                            searchFilter = { popupMenuFilter }
+                            showModalChild = { showSearchProductsResultModalChild }
                             /> 
                         )}
                     </div>
