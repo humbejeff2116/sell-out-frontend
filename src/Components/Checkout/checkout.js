@@ -6,6 +6,7 @@ import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import BackButton from '../BackButton/backButton';
 import { BottomPopUpBox, useBottomPopUpFor } from '../ModalBox/modalBox';
 import EmptyState, { EmptyStateButton } from '../EmptyState/emptyState';
+import {  getShippingAddress } from '../ViewProduct/FormikComponents/formik';
 import { BottomSpinner } from '../Loader/loader';
 import { Sort } from '../Reviews/reviews';
 import socket from '../Socket/socket';
@@ -21,6 +22,7 @@ export default function Checkout() {
   const [error, setError] = useState(false);
   const [placedOrderMessage, setPlacedOrderMessage] = useState('');
   const [placingOrder, setPlacingOrder] = useState(false);
+  const [shippingAddressError, setShippingAddressError] = useState(false);
   const { cartState, totalSum, sellerTotalSumData, createOrderData } = useCartContext();
   const { user } = useAuth();
 
@@ -111,6 +113,44 @@ export default function Checkout() {
       closePaymentModal(); // this will close the modal programmatically
     },
     onClose: () => {},
+  }
+
+  // TODO... refactor funtionality
+  const isValidShippingAddress = () => {
+    const sessionStoredShippingAddress = getShippingAddress();
+
+    if (!sessionStoredShippingAddress && !userShippingAddressIsSet(user)) {
+      setShippingAddressError(true);
+      return;
+    }
+    if (sessionStoredShippingAddress) {
+      const { state, city, shippingAddress } = sessionStoredShippingAddress;
+      if (!(state && city && shippingAddress)) {
+          setShippingAddressError(true);
+          return;
+      }
+    }
+  }
+
+  // TODO... refactor funtionality
+  const userShippingAddressIsSet = (user) => {
+    if (!user) {
+      return;
+    }
+    const { legalAddress, state, city } = user?.shippingAddress || {};
+    const { shippingAddress } = user?.shippingAndOperations || {};
+
+    if (!legalAddress && !state && !city) {
+      if (hasShippingAddress(shippingAddress)) {
+        return true;
+      }
+      return false;
+    }
+    return true;
+    
+    function hasShippingAddress(address) {
+      return address ? true: false;
+    }
   }
 
   return (
