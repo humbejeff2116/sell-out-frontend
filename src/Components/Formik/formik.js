@@ -13,7 +13,8 @@ export const TextInput = React.forwardRef(({
     inputErrorClass,
     notEmptyClass, 
     labelClassName,
-    dontShowErrorText, 
+    dontShowErrorText,
+    useOnlyTextInput, 
     ...props 
 }, ref) => {
     const [field, meta] = useField(props);
@@ -23,6 +24,17 @@ export const TextInput = React.forwardRef(({
         (meta.touched && meta.error) ? `text-input ${inputErrorClass || "has-error"}` :
         "text-input"
     )
+
+    if (useOnlyTextInput) {
+        return (
+            <input 
+            className = { textInputClassName } 
+            { ...field }
+            { ...props }
+            ref = { ref } 
+            />
+        )
+    }
 
     return (
        <>
