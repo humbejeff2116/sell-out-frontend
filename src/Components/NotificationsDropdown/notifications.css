@@ -17,7 +17,7 @@
     overflow-y: scroll; 
     top: 0.5rem;
     right: -1rem;
-    width: 310px;
+    width: 330px;
     background-color: var(--background-color);
     box-shadow: 0px 3px 5px var(--box-shadow-color);
     border-radius: 4px;
@@ -29,7 +29,7 @@
     font-weight: 510;
     color: var(--color);
     display: flex;
-    box-shadow: 2px 0 4px var(--box-shadow-color);
+    box-shadow: 0px 0 3px var(--box-shadow-color);
     border-bottom: 1px solid var(--prim-border-color);
     padding: 0.8rem;
     background-color: var(--background-color);
@@ -39,10 +39,11 @@
 .notifications-dropdown-wrapper{
     border-radius: 4px;
     /* border: 1px solid red; */
-    padding: 0 0.8rem;
+    padding: 1rem;
     min-height: 68vh;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    row-gap: 1rem;
+    /* flex-direction: column; */
 }
 
 .notifications-icon-wrapper{
@@ -90,11 +91,11 @@
 }
 
 .notification-container{
-    /* border:1px solid var(--prim-border-color); */
-    box-shadow: 0px 0px 3px var(--box-shadow-color);
+    border:1px solid var(--prim-border-color);
+    /* box-shadow: 0px 0px 2px var(--box-shadow-color); */
     background-color: var(--background-color);
-    margin-top: 4%;
-    margin-bottom: 3%;
+    /* margin-top: 0.7rem;
+    margin-bottom: 0.7rem; */
     border-radius: 6px;
     padding: 4%;
     position: relative;
@@ -104,7 +105,7 @@
     border-bottom:1px solid var(--prim-border-color);
     display:flex;
     flex-direction: row;
-    color: var(--text-color);
+    color: var(--text-color-opac-8);
     padding-bottom: 2%;
 }
 
@@ -137,7 +138,7 @@
 
 .notification-details{
     /* border:1px solid black; */
-    color: var(--text-color);
+    color: var(--text-color-opac-5);
     font-size: 0.95rem;
 }
 

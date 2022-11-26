@@ -19,7 +19,7 @@
 
 .emptyImage{
     /* border: 1px solid blue; */
-    max-width: 8rem;
+    max-width: 5rem;
     margin: 0 auto;
 }
 
@@ -34,7 +34,7 @@
     /* border: 1px solid black; */
     font-weight: 510;
     color: var(--text-color);
-    margin: 0.4rem 0;
+    margin: 0.3rem 0;
 }
 
 .emptyBody{
