@@ -4,21 +4,20 @@
     /* border: 2px solid green; */
     width:70%;
 }
-.productReviewsContainer{
-    /* border: 3px solid red; */
-}
+
+/* .productReviewsContainer{
+    border: 3px solid red;
+} */
 
 .productReviewsHeader{
     /* border: 3px solid red; */
     display: flex;
     justify-content: space-between;
     min-height: 3.2rem;
-    /* margin-bottom: 1%; */
 }
 
 .productReviewsHeaderText {
     display: flex;
-    /* align-items: center; */
     font-size: 1.2rem;
     color: var(--text-color);
 }
@@ -52,11 +51,9 @@
     box-shadow: 0 0 4px var(--box-shadow-color);
 }
 
-
-.reviewsSortWrapper{
-    /* border: 1px solid black; */
-    /* padding: 0 0.5rem; */
-}
+/* .reviewsSortWrapper{
+    border: 1px solid black;
+} */
 
 .reviewsSortHeader{
     width: 100%;
@@ -70,6 +67,7 @@
     position: relative;
     transition: all 0.2s ease-in-out;
 }
+
 .reviewsSortHeaderOpen{
     border: 1px solid var(--background-color);
 }
@@ -119,32 +117,31 @@
 }
 
 .sortmarker{
-    /* color: var(--success-color); */
     font-size: 1.3rem;
 }
 
 /* product reviews styles */
-.productReviews{
+/* .productReviews{
 
-}
+} */
 
 .reviewContainer{
     display: flex;
     border: 1px solid var(--prim-border-color);
     border-radius: 3px;
     margin: 1rem 0 1.7rem 0; 
-    padding: 1rem; 
+    padding: 1rem 1rem 1rem 0; 
 }
 
 .reviewAvatarContainer{
-    min-width: 8%;
+    padding: 0 0.5rem; 
     /* border: 1px solid green; */
     display: flex;
 }
 
-.reviewAvatarWrapper{
-    /* border: 1px solid red; */
-}
+/* .reviewAvatarWrapper{
+    border: 1px solid red;
+} */
 
 .reviewAvatarWrapper img{ 
     border-radius: 50%; 
@@ -157,7 +154,8 @@
 
 .reviewContentContainer{
     min-width: 80%;
-    /* border: 2px solid yellow; */
+    padding-left: 1rem;
+    border-left: 1px solid var(--prim-border-color);
 }
 
 .reviewContent{
@@ -190,14 +188,13 @@
 }
 
 /* reply review */
-
 .reviewReply{
     border: 1px solid var(--prim-border-color);
-    box-shadow: 0 0 2px var(--box-shadow-color);
+    /* box-shadow: 0 0 2px var(--box-shadow-color); */
     border-radius: 4px;
     padding: 1rem;
     margin-bottom: 1rem;
-    color: var(--text-color-opac-5);
+    color: var(--text-color-opac-6);
 }
 
 .reviewReplyAvatarContainer{
@@ -220,7 +217,6 @@
 }
 
 /* review product item */
-
 .reviewItemContainer{
     /* border: 1px solid black; */
     margin-bottom: 1rem;
@@ -254,7 +250,6 @@
 }
 
 /* review helpful */
-
 .reviewHelpfulContainer{
     /* border: 1px solid red; */
     display: flex;
@@ -264,10 +259,9 @@
     font-size: 0.9rem;
 }
 
-.reviewHelpfulButtons{
-    /* border: 1px solid black; */
-    /* margin-left: 1rem; */
-}
+/* .reviewHelpfulButtons{
+    border: 1px solid black;
+} */
 
 .reviewHelpfulButtons button{
     border: 1px solid var(--prim-border-color);
@@ -284,10 +278,18 @@
 .reviewHelpfulButtons button:hover{
     /* border: 1px solid var(--color); */
     background-color: var(--button-background-color1);
-    
 }
 
 .reviewHelpfulIcon{
     font-size: 1.1rem;
     color: var(--text-color);
+}
+
+@media only screen and (max-width:500px) {
+    .productReviewsContainer{
+        width: 100%;
+    }
+    .productReviewsHeaderText {
+        font-size: 1.1rem;
+    }
 }
