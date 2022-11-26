@@ -15,10 +15,16 @@
     color: var(--text-color-opac-5);
     box-shadow: 2px 2px 3px var(--box-shadow-color);
     background-color: var(--background-color);
-    z-index: 2;
+    z-index: 30;
     right: -100%;
     opacity: 0;
     transition: all 1s ease-in-out;
+}
+
+.popupContainerTop{
+    bottom: 0;
+    right: 2%;
+    top: calc(var(--top) + 1rem);
 }
 
 .showPopUp{
