@@ -5,7 +5,11 @@ import styles from './Loader.module.css';
 import './loader.css';
 
 
-export function Loader({loaderContainer, loader, ...props}) {
+export function Loader({
+    loaderContainer, 
+    loader, 
+    ...props
+}) {
     return (
         <div className={loaderContainer} >
             <div className={loader}> </div>
@@ -13,7 +17,39 @@ export function Loader({loaderContainer, loader, ...props}) {
     ) 
 }
 
-export function BottomSPinner({ 
+export function LoaderSmall({
+    loaderContainer, 
+    loader, 
+    unsetMarginTop, 
+    ...props
+}) {
+    return (
+        <div className={`loader-small-container ${unsetMarginTop ? "unsetMarginTop" : ""}`} >
+            <div className={"loader-small"}> </div>
+        </div>
+    ) 
+}
+
+export function LoaderSmallWithText({
+    loaderContainer, 
+    loader, 
+    unsetMarginTop,
+    loadingText
+}) {
+    return (
+        <div className= { styles.loaderSmallWrapper }>
+            <LoaderSmall
+            loaderContainer = { loaderContainer }
+            loader = { loader }
+            unsetMarginTop = { unsetMarginTop }
+            />
+            <div className= { styles.loaderSmallTextWrapper }>
+            { loadingText }
+            </div>
+        </div>
+    ) 
+}
+export function BottomSpinner({ 
     showLoader, 
     loaderContainerClass, 
     spinnerContainerClass, 
@@ -37,7 +73,7 @@ export function BottomSPinner({
     )
 }
 
-BottomSPinner.propTypes = {
+BottomSpinner.propTypes = {
     showLoader: PropTypes.bool, 
     loaderContainerClass: PropTypes.string, 
     spinnerContainerClass: PropTypes.string, 
