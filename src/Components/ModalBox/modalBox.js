@@ -137,3 +137,79 @@ BottomErrorPopUpBox.propTypes = {
     showPopUp: PropTypes.bool,
     props: PropTypes.object
 }
+
+
+export function TopPopUpBox({ 
+    usedFor, 
+    errorContainerClassName,
+    messageWrapperClassName,
+    closeClassName,
+    closeIconClassName, 
+    message,
+    closePopUp,
+    showPopUp,
+    ...props 
+}) {
+    const { success, error } = useBottomPopUpFor;
+
+    if (usedFor === success) {
+        return (
+            <div className={ 
+                showPopUp ? (
+                    `${styles.popupContainer} ${styles.popupContainerTop} ${styles.success} ${styles.showPopUp}`
+                ) : (
+                    `${styles.popupContainer} ${styles.popupContainerTop} ${styles.success}`
+                )
+            }>
+                <div className={ messageWrapperClassName || styles.popupTextWrapper }>
+                    <IoMdCheckmarkCircleOutline className={
+                        `${styles.icon} ${styles.successIcon}`
+                    }/>
+                    { message }
+                </div>
+                <div className={ closeClassName || styles.closeContainer } onClick={ closePopUp } >
+                    <RiCloseFill className={ closeIconClassName || styles.closeIconWrapper }/>
+                </div>
+            </div> 
+        )
+    }
+
+    if (usedFor === error) {
+        return (
+            <div className={ 
+                showPopUp ? (
+                    `${styles.popupContainer} ${styles.error} ${styles.showPopUp}`
+                ) :(
+                     `${styles.popupContainer} ${styles.error}`
+                )
+            }>
+                <div className={ messageWrapperClassName || styles.popupTextWrapper }>
+                <IoMdCheckmarkCircleOutline className={
+                    `${styles.icon} ${styles.erroIcon}`
+                }/>
+                    { message }
+                </div>
+                <div className={ closeClassName || styles.closeContainer } onClick={ closePopUp } >
+                    <RiCloseFill className={ closeIconClassName || styles.closeIconWrapper }/>
+                </div>
+            </div> 
+        )
+    }
+
+    return (
+        <div className={ 
+            showPopUp ? (
+                `${styles.popupContainer} ${styles.showPopUp}`
+            ) : (
+                `${styles.popupContainer}`
+            )
+        }>
+            <div className={ messageWrapperClassName || styles.popupTextWrapper }>
+                { message }
+            </div>
+            <div className={ closeClassName || styles.closeContainer } onClick={ closePopUp } >
+                <RiCloseFill className={ closeIconClassName || styles.closeIconWrapper }/>
+            </div>
+        </div> 
+    )  
+}
