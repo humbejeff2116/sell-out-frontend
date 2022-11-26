@@ -1,21 +1,19 @@
 
 .container{
     border: 1px solid red;
-    padding: 1rem;
+    padding:  2rem;
 }
 
 .top{
-    /* min-height: 100vh;
-    justify-content: center; */
-    /* border: 2px solid blue; */
+    min-height: 100vh;
     border: 1px solid red;
-    margin-bottom: 1rem;
+    display: grid;
+    grid-template-rows: 1fr;
 }
 
 .containerChild{
-    border: 2px solid blue;
+    border: 2px solid purple;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 1fr;
 }
