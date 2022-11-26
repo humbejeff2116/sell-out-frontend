@@ -1,20 +1,15 @@
 
-
-
 .settings-container{
     /* border:1px solid red; */
-    width:80%;
-    min-height:92vh;
-    padding:1%;
-    margin-left: auto;
-    margin-right: auto;  
+    width: 75%;
+    min-height: 92vh;  
 }
-.profile-settings-wrapper{
-    /* border:3px solid blue; */
 
-}
+/* .profile-settings-wrapper{
+    border:3px solid blue;
+} */
+
 .settings-header{
-    /* border-bottom:1px solid var(--prim-border-color); */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,46 +17,52 @@
 }
 
 .profile-settings-panel{
-    border:1px solid var(--prim-border-color);
+    border: 1px solid var(--prim-border-color);
     border-radius: 6px;
-    display: flex;
-    flex-direction:row;
-    padding:0% 0 2% 2%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 1rem;
+    padding: 2rem;
 }
+
 .profile-settings-form-panel{
-    /* border:1px solid red; */
-    width:60%
+    /* border: 1px solid red; */
+    /* width: 60% */
 }
 .profile-settings-form-panel form{
     /* border:1px solid blue; */
     
 }
-.profile-settings-form-panel form input{
-    width:97%;
-    height:35px;
+.profile-settings-form-panel input{
+    width: 100%;
+    height: 40px;
     border-radius: 4px;
-    outline:none;
-    border:1px solid var(--prim-border-color);
+    border: 1px solid var(--prim-border-color);
     transition: border-color 0.3s ease;
     color: var(--text-color);
-    caret-color: var(--prim-color);
-    padding-left:1%;
+    caret-color: var(--caret-color);
+    padding-left: 0.3rem;
+    margin-bottom: 0.7rem;
 }
-.profile-settings-form-panel form input:focus{
-    border:1px solid var(--text-color);  
+.profile-settings-form-panel input:focus{
+    outline: 2px solid var(--color);  
 }
-.profile-settings-form-panel form input.not-empty{
-    border-color:var(--text-color);
+.profile-settings-form-panel input.not-empty{
+    outline: 2px solid var(--color);
+}
+
+.profile-settings-form-panel input.has-error{
+    outline: 2px solid var(--error-color);
 }
 
 .settings-form-group{
-    width:99%;
-    /* border:2px solid yellow; */
-    margin-top:4%;
-    margin-bottom: 1%;
+    width: 100%;
+    /* border: 2px solid yellow; */
+    margin-bottom: 0.3rem;
 }
+
 .settings-form-group label{
-    font-size: 0.9em;
+    font-size: 0.9rem;
     font-weight: bold;
     color: var(--text-color);
 }
@@ -73,98 +74,101 @@
     /* border:2px solid red; */
     min-height: 25px;
 }
+
 .settings-form-error span{
-    color:red;  
+    color:var(--error-color);  
 }
 
 .profile-settings-button-wrapper{
     /* border:1px solid red; */
 }
+
 .profile-settings-button-consent{
-    margin-top:2%;
-    margin-bottom:1%;
+    margin: 0.3rem 0;
     /* border:1px solid red; */
 }
+
 .profile-settings-button-consent span{
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: var(--text-color); 
 }
+
 .profile-settings-button-consent span a{
     color: var(--color);
     text-decoration: none;  
 }
+
 .profile-settings-button-consent span a:hover{
     text-decoration: underline;  
 }
+
 .profile-settings-button{
     /* border:1px solid red; */
-    width:92%;
-}
-.profile-settings-button button{
-    height:40px;
-    min-width:30%;
-    border-radius: 4px;
-    border:1px solid var(--prim-color);
-    color: #ffffff;
-    background-color: var(--prim-color);
-    font-weight: bold;
-    cursor:pointer; 
-}
-.profile-settings-button button:hover{
-    border:1px solid var(--opaque-prim-color);
-    color: #ffffff;
-    background-color: var(--opaque-prim-color);
-    font-weight: bold;
-    cursor:pointer; 
+    display: flex;
 }
 
+.profile-settings-button button{
+    height: 40px;
+    margin-left: auto;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    color: var(--background-color);
+    background-color: var(--prim-color-opac-8);
+    font-weight: bold;
+    cursor: pointer; 
+    transition: all 0.3s ease;
+}
+
+.profile-settings-button button:hover{
+    background-color: var(--prim-color);
+}
 
 .profile-settings-image-panel{
     /* border:1px solid red; */
-    width:40%;
-    margin-left:auto;
+    /* width: 40%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-settings-image{
     /* border: 1px solid red; */
-    /* width:20%; */
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top:4%;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
 }
 
-.profile-settings-image.button button{
-    height:40px;
-    min-width:50%;
-    font-size: 0.9rem;
-    font-weight: bold;
-    transition:all 0.3s ease;
-    cursor:pointer;
-    border-radius: 30px;
-    border:1px solid var(--color);
-    background-color: var(--bg-color);
-    color: var(--color);
-}
-
-.profile-settings-image.button button:hover{
-    border:1px solid var(--color);
-   background-color: var(--color);
-   color: #ffffff; 
-}
-
-.profile-settings-image.button button:focus{
-    outline: 1px solid var(--outline-color); 
-}
-
-.profile-settings-image img{ 
-    border-radius: 50%; 
-    height:150px;
-    width:150px;
+.profile-settings-image img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
     object-fit: cover;
     object-position: center;
-    border:1px solid red;
+}
+
+.profile-settings-image-button button{
+    height: 40px;
+    padding: 8px 16px;
+    /* font-size: 0.9rem; */
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 28px;
+    border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
+    color: var(--color);
+    margin-top: 1rem;
+}
+
+.profile-settings-image-button button:hover{
+    border:1px solid var(--color);
+   background-color: var(--color);
+   color: var(--background-color); 
+}
+
+.profile-settings-image-button button:focus{
+    outline: 1px solid var(--outline-color); 
 }
 
 
@@ -172,17 +176,19 @@
 .account-settings-wrapper{
 
 }
+
 .account-settings-header{
     min-height:10vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-
 }
+
 .account-settings-panel{
     /* margin-top:2%; */
     /* border:1px solid green; */
 }
+
 .account-settings-group{
     border:1px solid var(--prim-border-color);
     border-radius: 6px;
@@ -190,14 +196,17 @@
     margin-bottom: 3%;
     min-height:20vh;
 }
+
 .account-settings-group-header{
     color: var(--text-color);
     display: flex;
     justify-content: center;
 }
+
 .account-settings-form-panel{
 
 }
+
 .account-settings-form-panel form{
     /* border:1px solid var(--prim-border-color); */
     display:flex;
@@ -205,41 +214,43 @@
     flex-wrap: wrap; 
     padding:0.5% 0;
 }
+
 .account-settings-form-panel form input{ 
-    width:97%;
-    height:35px;
-    outline:none;
-    font-weight: bold;
+    width: 100%;
+    height: 35px;
     border-radius: 4px;
-    border:1px solid var(--prim-border-color);
+    border: 1px solid var(--prim-border-color);
     transition: border-color 0.3s ease;
     color: var(--text-color);
-    caret-color: var(--prim-color);
-    padding-left:1%;
-    transition: all 0.3s ease;
+    caret-color: var(--caret-color);
+    padding-left: 0.3rem;
 }
+
 .account-settings-form-panel form input:focus{
-    border:1px solid var(--text-color);  
+    outline: 2px solid var(--color);  
 }
+
 .account-settings-form-panel form input.not-empty{
-    border-color:var(--text-color);
+    outline: 2px solid var(--color);
 }
+
 .account-settings-form-group{
     /* border:1px solid red; */
     width:30%;
 }
+
 .account-settings-form-group.password-button{
     display:flex;
     flex-direction: column;
     justify-content: flex-end; 
     align-items: center;
-
 }
+
 .account-settings-password-button{
     /* border:1px solid blue; */
     min-width:100%;
-
 }
+
 .account-settings-password-button button{
     min-width:100%;
     height:40px;
@@ -249,18 +260,20 @@
     cursor:pointer;
     border-radius: 4px;
     border:1px solid var(--color);
-    background-color: var(--bg-color);
+    background-color: var(--background-color);
     color: var(--color);
 }
+
 .account-settings-password-button button:hover{
     border:1px solid var(--color);
    background-color: var(--color);
-   color: #ffffff; 
+   color: var(--background-color); 
 }
 
 .account-settings-password-button button:focus{
     outline: 1px solid var(--outline-color); 
 }
+
 .account-remove-settings-panel{
     display:flex;
     flex-direction: row;
@@ -274,6 +287,7 @@
     margin-top:2%;
     margin-bottom: 2%;
 }
+
 .account-remove-settings-button{
     /* border:1px solid green; */
     width:50%;
@@ -281,7 +295,6 @@
     margin-right: auto;
     margin-top:2%;
     margin-bottom: 2%;
-
 }
 
 .account-remove-settings-button.disable button{ 
@@ -291,14 +304,15 @@
     border-radius: 4px;
     border:1px solid rgb(255, 44, 44);
     background-color: rgb(255, 44, 44);
-    color: #ffffff; 
+    color: var(--background-color); 
     font-weight:bold;
     transition:all 0.3s ease;
 }
+
 .account-remove-settings-button.disable button:hover{
     border:1px solid rgb(252, 87, 87);
    background-color: rgb(252, 87, 87);
-   color: #ffffff; 
+   color: var(--background-color); 
 }
 
 .account-remove-settings-button.disable button:focus{
@@ -319,11 +333,36 @@
 
 .account-remove-settings-button.delete button:hover{
     background-color: rgb(255, 44, 44);
-    color: #ffffff; 
+    color: var(--background-color); 
 }
  
- .account-remove-settings-button.delete button:focus{
-     outline: 1px solid rgb(255, 44, 44);
- }
+.account-remove-settings-button.delete button:focus{
+    outline: 1px solid rgb(255, 44, 44);
+}
 
 
+@media only screen and (max-width:500px) {
+    .settings-container{
+        width: 100%;
+        margin: 0;  
+    }
+
+    .profile-settings-panel{
+       flex-wrap: wrap-reverse;
+    }
+
+    .profile-settings-form-panel{
+        /* border: 1px solid red; */
+        width: 100%
+    }
+
+    .profile-settings-image-panel{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    .profile-settings-image{
+        height: 110px;
+        width: 110px;
+    }
+}
