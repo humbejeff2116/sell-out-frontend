@@ -1,16 +1,16 @@
 
 .login-template-container{
-    border:1px solid black;
+    /* border: 4px solid black; */
     display:flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
     min-height: 100vh;
+    position: relative;
 }
 
 .inside-login-template-panel{
     display:flex;
     position: relative;
-    /* border:1px solid black; */
+    /* border: 1px solid black; */
 }
 
 .index-template-children-with-footer-panel{
@@ -19,16 +19,17 @@
 }
 
 .login-template-left{
-    border:1px solid black;
-    width:20%
+    /* border:1px solid black; */
+    width: 20%;
+    background-color: var(--background-color);
 }
 
 .login-template-logo{
     /* border:1px solid red; */
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:15%;
+    margin-top: 15%;
     width: 100%;
 }
 
@@ -45,14 +46,18 @@
 }
 
 .login-template-center{
-    border:1px solid black;
-    width:60%;
-    display:flex;
+    /* border: 1px solid red; */
+    width: 60%;
+    display: flex;
     flex-direction: column;
 }
 
+.login-template-header{
+    display: none;
+}
+
 .login-template-right{
-    border:1px solid black;
+    /* border:1px solid black; */
     width:20%
 }
 
@@ -94,10 +99,9 @@
     margin-left: 18%;
 }
 
-.gettingStarted-footer{
+.getting-started-footer{
     margin-left: 18%;
     border: 1px solid var(--prim-border-color);
-    /* margin-top: 1%; */
     padding: 1rem;
 }
 .getting-started-template-nav{
@@ -107,27 +111,60 @@
 
 
 @media only screen and (max-width:500px) {
-    .inside-login-template-container{
+
+    .login-template-left,
+    .login-template-center,
+    .login-template-right{
+        width: 100%
+    }
+
+    .login-template-left{
+        height: var(--top);
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        border-bottom: 1px solid var(--prim-border-color);
+        padding-left: 1rem;
+        position: sticky;
+        top: 0;
+        box-shadow: 0 0 4px var(--box-shadow-color);
+        z-index: 1;
+        display: none;
+    }
+
+    .login-template-center{
+        padding: 1rem;
+    }
+
+    .login-template-header{
+        display: flex;
+    }
+
+    .login-template-logo{
+        /* border:1px solid red; */
+        margin-top: 0;
+        width: unset;
+    }
+
+    .getting-started-footer{
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .inside-login-template-container,
+    .settings-template-container,
+    .getting-started-template-container{
         /* border: 1px solid blue; */
         margin-left: 0;
         margin-right: 0;
         width: 100%;
         padding: 0 0.8rem;
-        margin-bottom: var(--top);
     }
 
+    .inside-login-template-container,
     .settings-template-container{
-        /* border: 1px solid blue; */
-        margin-left: 0;
-        margin-right: 0;
-        width: 100%;
-        padding: 0 0.8rem;
         margin-bottom: var(--top);
-    }
-
-    .gettingStarted-footer{
-        margin-left:0;
-    }  
+    } 
 }
 
 @media only screen and (max-width:414px) {
