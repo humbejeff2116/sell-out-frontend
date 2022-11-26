@@ -4,9 +4,8 @@
     display: flex;
     justify-content: flex-end;
     position: sticky;
-    top: 4rem;
-    margin: 1rem 0;
-    padding: 0 1rem;
+    top: var(--landing-header-height);
+    padding: 0.4rem 1rem;
 }
 
 .cartNavButtonItem{
