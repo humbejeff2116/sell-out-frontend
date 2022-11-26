@@ -1,4 +1,21 @@
 
+.loader-small-container{
+  margin-top: 0.4rem;
+  position: relative;
+  /* border: 1px solid red; */
+}
 
+.unsetMarginTop{
+  margin-top: 0;
+}
 
-
+.loader-small{
+  border: 3px solid var(--prim-border-color);
+  border-radius: 50%;
+  border-bottom: 3px solid var(--color);
+  width: 22px;
+  height: 22px;
+  margin: auto;
+  -webkit-animation: suspense-spin 0.8s linear infinite;/* index.css*/
+  animation: suspense-spin 0.8s linear infinite;
+}

@@ -46,9 +46,27 @@
 @-webkit-keyframes suspense-spin {
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
-  }
+}
   
-  @keyframes suspense-spin {
+@keyframes suspense-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
+
+.loaderSmallWrapper{
+    padding: 0.5rem;
+    margin: auto;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+    /* box-shadow: 0 0 4px var(--box-shadow-color); */
+    min-width: 20%;
+    border: 1px solid var(--prim-border-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loaderSmallTextWrapper{
+    margin-left: 0.4rem;
+    color: var(--text-color-opac-5);
+}
