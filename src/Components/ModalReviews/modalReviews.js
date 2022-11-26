@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { RiCloseFill } from "react-icons/ri";
 import { DisplayedProduct } from '../Product/product';
@@ -13,6 +12,7 @@ export default function ModalReviews({
     ...props 
 }) {
     const [getReviews, setGetReviews] = useState(false);
+    const modalChildClassName = `${styles.wrapper} ${showModalChild ? styles.show : ""}`;
 
     useEffect(() => {
         let timer = null;
@@ -22,20 +22,14 @@ export default function ModalReviews({
         }
     }, [getReviews]);
 
-    const modalChilldClassName = showModalChild ? (
-        `${styles.wrapper} ${styles.show}`
-    ) :(
-        `${styles.wrapper}`
-    )
-
     return(
         <div className={ styles.reviewsContainer }>
             <div className={ styles.bttnWrapper }>
-                <RiCloseFill className="nav-icon"  onClick={ handleClose }/>
+                <RiCloseFill className = "nav-icon"  onClick = { handleClose }/>
             </div> 
-            <div className={ modalChilldClassName }>
-                <div className={ styles.panel }> 
-                    <div className={ styles.productWrapper }>
+            <div className = { modalChildClassName }>
+                <div className = { styles.panel }> 
+                    <div className = { styles.productWrapper }>
                         <DisplayedProduct 
                         product = { product }
                         dontShowModal
@@ -58,7 +52,8 @@ export default function ModalReviews({
 
 export function ModalBox({ 
     modalContainerWrapperName, 
-    handleModal, 
+    handleModal,
+    placeCloseButtonLeft, 
     dontUseDefaultModalChildContainer,
     dontShowCloseButton, 
     modalContainer, 
@@ -66,21 +61,20 @@ export function ModalBox({
     ...props 
 }) {  
     return(
-        <div className={ modalContainerWrapperName || styles.reviewsContainer }>  
-        {
-            dontShowCloseButton  ? children : (
-                <div className={ styles.modalBoxBttnWrapper }>
-                    <RiCloseFill className="nav-icon"  onClick={ handleModal }/>
-                </div>
-            )
-        }
-        {
-            dontUseDefaultModalChildContainer  ? children : (
-                <div className={ modalContainer || styles.modalBoxContainer }>
-                    { children }
-                </div> 
-            )
-        }
+        <div className = { modalContainerWrapperName || styles.reviewsContainer }>  
+        {dontShowCloseButton ? children : (
+            <div className = {`
+            ${styles.modalBoxBttnWrapper} 
+            ${placeCloseButtonLeft ? styles.modalBoxBttnLeftWrapper : ""}
+            `}>
+                <RiCloseFill className="nav-icon"  onClick = { handleModal }/>
+            </div>
+        )}
+        {dontUseDefaultModalChildContainer ? children : (
+            <div className = { modalContainer || styles.modalBoxContainer }>
+                { children }
+            </div> 
+        )}
         </div>
     )
 }

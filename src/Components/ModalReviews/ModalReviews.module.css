@@ -105,6 +105,11 @@
     top: 2%;
 }
 
+.modalBoxBttnLeftWrapper{
+    left: 2%;
+    right: unset; 
+}
+
 
 @media screen and (max-width:600px){
 
