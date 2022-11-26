@@ -25,7 +25,7 @@ function MessageWrapper({ ...props }) {
                 </div>
 
                 <div className={ styles.chatAreaCenter }>
-                    chat body
+                    {/* chat body */}
                     <div className= {styles.mssg}>hfdjfhdjfhdjfh</div>
                     <div className= {styles.mssg}>hfdjfhdjfhdjfh</div>
                     <div className= {styles.mssg}>hfdjfhdjfhdjfh</div>

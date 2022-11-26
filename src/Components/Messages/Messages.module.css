@@ -1,62 +1,74 @@
 
-
 .chatContainer{
-    border: 1px solid red;
+    border: 1px solid var(--prim-border-color);
+    border-top: none;
     /* box-sizing: border-box; */
-    min-height: 85vh;
+    min-height: calc(100vh - var(--top));
     width: 100%;
     position: relative;
     /* top: 9vh; */
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
 }
+
 .leftBar{
-    border: 1px solid green;
+    border-right: 1px solid var(--prim-border-color);
+    /* border: 1px solid var(--prim-border-color); */
     min-width: 18%;
     /* position: fixed; */
     top: 0;
+    padding: 1rem;
 }
 
 .chatAreaContainer{
-    border: 2px solid yellow;
+    /* border: 2px solid yellow; */
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: 85vh;
+    min-height: calc(100vh - var(--top));
     
 }
 
 .chatAreaTop{
-    min-height: 6rem;
+    min-height: 4rem;
     min-height: 15vh;
-    border: 1px solid purple;
+    border-bottom: 1px solid var(--prim-border-color);
+    /* box-shadow: 0px 2px 3px var(--box-shadow-color); */
     /* max-height: 4rem;  */
 }
 
 .chatAreaCenter{
     height: 25rem;
-    border: 1px solid red;
+    border: 2px solid red;
     overflow-y: auto;
     scrollbar-width:  thin;
-    padding: 1.5rem;
+    padding: 1rem;
+    display: grid;
+    row-gap: 1rem;
+    /* box-shadow: inset 0px 0px 3px var(--box-shadow-color); */
 }
 .mssg{
-    height: 20vh;
-    border: 1px solid red;
+    /* height: 20vh; */
+    border: 1px solid var(--prim-border-color);
+    border-radius: 6px;
+    padding: 1rem;
 }
 
 .chatAreaBottom{
     min-height: 6rem;
     min-height: 15vh;
     margin-top: auto;
-    border: 1px solid green;
+    /* border-top: 1px solid var(--prim-border-color); */
 }
 
 .rightBar{
-    border: 1px solid blue;
+    border-left: 1px solid var(--prim-border-color);
+    /* border: 1px solid var(--prim-border-color); */
     min-width: 18%;
     /* margin-left:auto; */
     /* position:fixed; */
     right:0;
     /* overflow-x: none; */
     transition: width 0.3s ease;
+    padding: 1rem;
 }
