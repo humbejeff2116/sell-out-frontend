@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FiArrowRight }  from 'react-icons/fi'
 import { LandingTemplate } from '../Landing/Template/template';
-import { RiUserAddLine } from 'react-icons/ri';
+import shopping from '../../Images/Illustrations/draw-kit/SVG/shopping6.svg';
 import styles from './SellProducts.module.css';
 
 
@@ -21,14 +22,18 @@ function SellProductsComponent(props) {
         <div className = { styles.container }>
             <div className={ styles.contentWrapper }>
                 <div className = { styles.left }>
-                    {/* <div className={ styles.contentImage }>
-                        <img src ={ bell } alt ="" />
-                    </div> */}
-                    sell products illustration
+                    <div className={ styles.contentImageWrapper }>
+                        <img 
+                        className= { styles.contentImage }
+                        loading="lazy" 
+                        src = { shopping } 
+                        alt =""
+                        />
+                    </div>
                 </div>
                 <div className = { styles.right }>
                     <div className={ styles.contentHeader }>
-                        <h2>Sell your products on Fling</h2>
+                        Sell your products on Fling
                     </div>
                     <div className={ styles.contentBody }>
                         With our modernized systems and enhanced tooling,
@@ -39,9 +44,11 @@ function SellProductsComponent(props) {
                         we fit into your business model
                     </div>
                     <div className={ styles.contentButtonContainer }>
-                        <Link to="/login" className={ styles.loginButton }>
-                            <RiUserAddLine className={ styles.loginButtonIcon }/>
-                            Login
+                        <Link to="/login">
+                            <button className={ styles.loginButton }>
+                                Login
+                                <FiArrowRight className={ styles.loginButtonIcon }/>  
+                            </button>
                         </Link>
                     </div>
                 </div>
@@ -59,7 +66,6 @@ export function OutsideloginChildTemplateIllustrationLeft({
     rightChild, 
     ...props
 }) {
-
     if (rightChild) {
         return (           
             <div className={ styles.contentWrapper }>
@@ -79,18 +85,16 @@ export function OutsideloginChildTemplateIllustrationLeft({
             </div>
             <div className = { styles.right }>
                 <div className={ styles.contentHeader }>
-                    <h2>{heading}</h2>
+                    {heading}
                 </div>
                 <div className={ styles.contentBody }>
                     {writeup}
                 </div>
-                {
-                    rightBottomChild && (
-                        <div className={ styles.contentButtonContainer }>
-                            {rightBottomChild}
-                        </div>
-                    )
-                }
+                {rightBottomChild && (
+                    <div className={ styles.contentButtonContainer }>
+                        {rightBottomChild}
+                    </div>
+                )}
             </div>
         </div>
     )
@@ -104,7 +108,6 @@ export function OutsideloginChildTemplateIllustrationRight({
     rightChild, 
     ...props
 }) {
-
     if (rightChild) {
         return (           
             <div className={ styles.contentWrapperIllustrationRight }>
@@ -117,24 +120,23 @@ export function OutsideloginChildTemplateIllustrationRight({
             </div>   
         )
     }
+
     return (
         <div className={ styles.contentWrapperIllustrationRight }>
-            <div className = { styles.left }>
+            <div className = { styles.right }>
                 <div className={ styles.contentHeader }>
-                    <h2>{heading}</h2>
+                    {heading}
                 </div>
                 <div className={ styles.contentBody }>
                     {writeup}
                 </div>
-                {
-                    rightBottomChild && (
-                        <div className={ styles.contentButtonContainer }>
-                            {rightBottomChild}
-                        </div>
-                    )
-                }
+                {rightBottomChild && (
+                    <div className={ styles.contentButtonContainer }>
+                        {rightBottomChild}
+                    </div>
+                )}
             </div>
-            <div className = { styles.right }>
+            <div className = { styles.left }>
                 {leftChild}
             </div>
         </div>
