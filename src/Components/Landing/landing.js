@@ -6,7 +6,7 @@ import {
     LandingTemplate 
 } from './Template/template';
 import AboutFling from './AboutFling/aboutFling';
-import HowItWorks from './HowItWorks/howItWorks';
+// import HowItWorks, { SignUpOnFling } from './HowItWorks/howItWorks';
 import './landing.css';
 
 export default function LandingComponent() {
@@ -16,8 +16,9 @@ export default function LandingComponent() {
         landingCenterChild = { <AboutFling/> }
         stickHeaderToTop
         >
-            <LandingProducts/>
-            <HowItWorks/>    
+            {/* <LandingProducts/> */}
+            {/* <HowItWorks/>     */}
+            {/* <SignUpOnFling/> */}
         </LandingTemplate>
     )
 }
