@@ -5,11 +5,11 @@ import {
 } from "react-icons/bi";
 
 import {
-    RiBookOpenLine, RiContactsBookLine, RiMapPinAddLine, RiListSettingsLine
+    RiBookOpenLine, RiContactsBookLine, RiMapPinAddLine, RiListSettingsLine, RiCompassFill, RiPhoneFill, RiBookFill, RiTableFill, RiTvFill, RiGlobalFill, RiFireFill, RiDrizzleFill, RiArchiveFill, RiHistoryFill, RiWomenFill, RiMenFill, RiShirtFill, RiPantoneFill, RiHandbagFill
 } from "react-icons/ri";
 
 import { 
-    FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare 
+    FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare, FaUtensils, FaShoePrints 
 } from 'react-icons/fa';
 
 import {
@@ -40,15 +40,22 @@ const LinksData = {
         { name: "About Fling", href: "/about", icon: <BiUser className="nav-icon"/> },
         // { name: "Contact", href: "/contact", icon: <BiCart className="nav-icon"/> }
     ],
-
-    mainLinks : [
+    landingMobileMainLinks: [
+        { name: "Fling", href: "/", icon: <BiHome className="nav-icon" /> },
+        { name: "Buy Products", href: "/products", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Sell Products", href: "/sell-products", icon: <BiFolder className="nav-icon"/> },
+        { name: "About Fling", href: "/about", icon: <BiUser className="nav-icon"/> },
+        { name: "Cart", href: "/cart", icon: <BiUser className="nav-icon"/> },
+        { name: "Sign Up", href: "/signup", icon: <BiUser className="nav-icon"/> },
+    ],
+    mainLinks: [
         { name: "Home", href: "/home", icon: <BiHome className="main-nav-icon" /> },
         { name: "Store", href: "/home/dashboard/store/products", icon: <BiStore className="main-nav-icon"/> },
         { name: "Orders", href: "/home/dashboard/orders/placed-orders", icon: <IoMdTimer className="main-nav-icon"/> },
         { name: "Cart", href: "/home/cart", icon: <BiCartAlt className="main-nav-icon"/> },
     ],
 
-    indexSideNavLinks : [
+    indexSideNavLinks: [
         { 
             name: "Home", 
             href: "/home", 
@@ -65,7 +72,7 @@ const LinksData = {
             icon: <BiStore className="index-side-nav-icon"/>,
             links: [
                 {href:"/home/dashboard/store/products", name:"Products", icon:""},
-                {href:"/home/dashboard/store/upload-product", name:"Upload product", icon:""},
+                {href:"/home/dashboard/store/sell-product", name:"Sell product", icon:""},
                 {href:"/home/dashboard/store/edit-product", name:"Edit product", icon:""},
                 {href:"/home/dashboard/store/settings", name:"Store settings", icon:""},
             ]
@@ -193,20 +200,20 @@ const LinksData = {
     ],
 
     productsUsage: [
-        { name: "Default", type: "usage", href: "/", icon: <BiHome className="index-filter-icon"/> },
-        { name: "New", type: "usage", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-        { name: "Used", type: "usage", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-        { name: "Vintage", type: "usage", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-        { name: "Junk", type: "usage", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
+        { name: "Default", type: "usage", href: "/", icon: <RiCompassFill className="index-filter-icon"/> },
+        { name: "New", type: "usage", href: "/community", icon: <RiFireFill className="index-filter-icon"/> },
+        { name: "Used", type: "usage", href: "/about", icon: <RiDrizzleFill className="index-filter-icon"/> },
+        { name: "Vintage", type: "usage", href: "/community", icon: <RiArchiveFill className="index-filter-icon"/> },
+        { name: "Junk", type: "usage", href: "/community", icon: <RiHistoryFill className="index-filter-icon"/> },
     ],
 
         productsCategory: [
-        { name: "Default", type: "category", href: "/", icon: <BiHome className="index-filter-icon"/> },
-        { name: "Electronics", type: "category", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-        { name: "Books", type: "category", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-        { name: "Furniture", type: "category", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-        { name: "Kitchen", type: "category", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-        { name: "Others", type: "category", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
+        { name: "Default", type: "category", href: "/", icon: <RiCompassFill className="index-filter-icon"/> },
+        { name: "Electronics", type: "category", href: "/community", icon: <RiTvFill className="index-filter-icon"/> },
+        { name: "Books", type: "category", href: "/community", icon: <RiBookFill className="index-filter-icon"/> },
+        { name: "Furniture", type: "category", href: "/about", icon: <RiTableFill className="index-filter-icon"/> },
+        { name: "Kitchen", type: "category", href: "/community", icon: <FaUtensils className="index-filter-icon"/> },
+        { name: "Others", type: "category", href: "/community", icon: <RiGlobalFill className="index-filter-icon"/> },
     ],
 
     clothingTabs: [
@@ -214,32 +221,32 @@ const LinksData = {
             id: "1",
             name: "Female", 
             links: [
-                { name: "Default", type: "clothing", href: "/", icon: <BiHome className="index-filter-icon" /> },
-                { name: "Tops", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Trousers", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Bags", type: "clothing", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-                { name: "Shoes", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Heels", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Gowns", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Inners", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Jewelries", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Others", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> }
+                { name: "Default", type: "clothing", href: "/", icon: <RiCompassFill className="index-filter-icon" /> },
+                { name: "Tops", type: "clothing", href: "/about", icon: <RiShirtFill className="index-filter-icon"/> },
+                { name: "Trousers", type: "clothing", href: "/about", icon: <RiPantoneFill className="index-filter-icon"/> },
+                { name: "Bags", type: "clothing", href: "/community", icon: <RiHandbagFill className="index-filter-icon"/> },
+                { name: "Shoes", type: "clothing", href: "/about", icon: <FaShoePrints className="index-filter-icon"/> },
+                { name: "Heels", type: "clothing", href: "/about", icon: <FaShoePrints className="index-filter-icon"/> },
+                { name: "Gowns", type: "clothing", href: "/about", icon: <RiShirtFill className="index-filter-icon"/> },
+                // { name: "Inners", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
+                // { name: "Jewelries", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
+                { name: "Others", type: "clothing", href: "/about", icon: <RiGlobalFill className="index-filter-icon"/> }
             ],
-            icon: <RiBookOpenLine className="index-filter-icon"/> 
+            icon: <RiWomenFill className="index-filter-icon"/> 
         },
         { 
             id: "2",
             name: "Male", 
             links: [
-                { name: "Default", type: "clothing", href: "/", icon: <BiHome className="index-filter-icon" /> },
-                { name: "Shirts", type: "clothing", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-                { name: "Pants", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Shorts", type: "clothing", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
-                { name: "Shoes", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Jewelries", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> },
-                { name: "Others", type: "clothing", href: "/about", icon: <BiUser className="index-filter-icon"/> }
+                { name: "Default", type: "clothing", href: "/", icon: <RiCompassFill className="index-filter-icon" /> },
+                { name: "Shirts", type: "clothing", href: "/community", icon: <RiShirtFill className="index-filter-icon"/> },
+                { name: "Pants", type: "clothing", href: "/about", icon: <RiPantoneFill className="index-filter-icon"/> },
+                // { name: "Shorts", type: "clothing", href: "/community", icon: <Short className="index-filter-icon"/> },
+                { name: "Shoes", type: "clothing", href: "/about", icon: <FaShoePrints className="index-filter-icon"/> },
+                // { name: "Jewelries", type: "clothing", href: "/about", icon: <Ri className="index-filter-icon"/> },
+                { name: "Others", type: "clothing", href: "/about", icon: <RiGlobalFill className="index-filter-icon"/> }
             ],
-            icon: <BiHome className="index-filter-icon"/> 
+            icon: <RiMenFill className="index-filter-icon"/> 
         },
     ],
 
@@ -250,70 +257,60 @@ const LinksData = {
         { name: "Shoes", href: "/community", icon: <RiBookOpenLine className="index-filter-icon"/> },
         { name: "Accessories", href: "/support", icon: <BiFolder className="index-filter-icon"/> },
     ]
-
 }
 
  function Links() { }
-Links.prototype.data = LinksData;
 
-Links.prototype.getLandingMainLinks = function() {
-    return this.data.landingMainLinks;
-}
-
-Links.prototype.getMainLinks = function() {
-    return this.data.mainLinks;
-}
-
-Links.prototype.getIndexSidenavLinks = function() {
-    return this.data.indexSideNavLinks;
-}
-
-Links.prototype.getIndexSideNavFooterLinks = function() {
-    return this.data.indexSideNavFooterLinks;
-}
-
-Links.prototype.getDashboardSideNavLinks = function() {
-    return this.data.dashboardSideNavLinks;
-}
-
-Links.prototype.getSettingsSideNavLinks = function() {
-    return this.data.settingsSideNavLinks;
-}
-
-Links.prototype.getSettingsSideNavFooterLinks = function() {
-    return this.data.settingsSideNavFooterLinks;
-}
-
-Links.prototype.getGettingStartedSideNavLinks = function() {
-    return this.data.gettingStartedSideNavLinks;
-}
-
-Links.prototype.getFooterMainLinks = function() {
-    return this.data.footerMainLinks;
-}
-
-Links.prototype.getFooterSocialLinks = function() {
-    return this.data.footerSocialLinks;
-}
-
-Links.prototype.getClothingLinks = function() {
-    return this.data.clothingLinks;
-}
-
-Links.prototype.getMaleClothingLinks = function() {
-    return this.data.maleClothingLinks;
-}
-
-Links.prototype.getClothingTabs = function() {
-    return this.data.clothingTabs;
-}
-
-Links.prototype.getProductsUsage = function() {
-    return this.data.productsUsage;
-}
-
-Links.prototype.getProductsCategory = function() {
-    return this.data.productsCategory;
+ Links.prototype = {
+    data: LinksData,
+    getLandingMainLinks() {
+        return this.data.landingMainLinks;
+    },
+    getMainLinks() {
+        return this.data.mainLinks;
+    },
+    getIndexSidenavLinks() {
+        return this.data.indexSideNavLinks;
+    },
+    getIndexSideNavFooterLinks() {
+        return this.data.indexSideNavFooterLinks;
+    },
+    getDashboardSideNavLinks() {
+        return this.data.dashboardSideNavLinks;
+    },
+    getSettingsSideNavLinks() {
+        return this.data.settingsSideNavLinks;
+    },
+    getSettingsSideNavFooterLinks() {
+        return this.data.settingsSideNavFooterLinks;
+    },
+    getGettingStartedSideNavLinks() {
+        return this.data.gettingStartedSideNavLinks;
+    },
+    getFooterMainLinks() {
+        return this.data.footerMainLinks;
+    },
+    getFooterSocialLinks () {
+        return this.data.footerSocialLinks;
+    },
+    getClothingLinks() {
+        return this.data.clothingLinks;
+    },
+    getMaleClothingLinks() {
+        return this.data.maleClothingLinks;
+    },
+    getClothingTabs () {
+        return this.data.clothingTabs;
+    },
+    getProductsUsage() {
+        return this.data.productsUsage;
+    },
+    getProductsCategory() {
+        return this.data.productsCategory;
+    },
+    getLandingMobileMainLinks() {
+        return this.data.landingMobileMainLinks;
+    }
 }
 
 export default new Links();
