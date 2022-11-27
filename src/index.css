@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,6 +31,7 @@ code {
   --color-opac-2: rgba(26, 115, 232, 0.2);
 
   --prim-color: rgb(19, 182, 19);
+  --prim-color-opac-9: rgb(19, 182, 19, 0.9);
   --prim-color-opac-8: rgb(19, 182, 19, 0.8);
   --prim-color-opac-7: rgb(19, 182, 19, 0.7);
   --prim-color-opac-6: rgb(19, 182, 19, 0.6);
@@ -101,6 +102,7 @@ code {
   --prim-button-border-color: #005ab4;
 
   --top: 3.8rem;
+  --landing-header-height: 4.5rem;
   --sidebar-width: 15%;
   --left-sidebar-width: 18%;
 
