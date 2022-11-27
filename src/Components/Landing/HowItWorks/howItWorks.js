@@ -38,9 +38,20 @@ export default function HowItWorks(props) {
                     </a>
                 </div>
             </div>
-            <div className = { `${styles.panel} ${styles.bottom}` }>
-                <TrustedBrands/>
+        </div>
+    )
+}
+
+export function SignUpOnFling() {
+    return (
+        <div className = { styles.signUpContainer }>
+            <div className = { styles.signUpHeader }>
+                Become part of this community
             </div>
+            <a href="/signup" className = { styles.signUpButton }>
+            <RiUserAddLine className = { styles.signUpButtonIcon }/>
+                Signup on Fling
+            </a>
         </div>
     )
 }

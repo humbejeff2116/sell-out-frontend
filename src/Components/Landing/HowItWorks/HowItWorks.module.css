@@ -66,26 +66,22 @@
 }
 
 .signUpContainer{
-    border: 2px solid green;
-    /* -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column; */
+    min-height: 40vh;
+    /* border: 2px solid green; */
     display: flex;
     flex-direction: column;
-    /* -webkit-box-align: center;
-    -ms-flex-align: center; */
     align-items: center;
     justify-content: center;
-    /* -ms-flex-wrap: wrap; */
     flex-wrap: wrap;
     position: relative;
 }
 
 .signUpHeader{
-    font-weight: 600;
-    font-size: 32px;
-    border: 2px solid green;
+    font-weight: 700;
+    font-size: 40px;
+    /* border: 2px solid green; */
     color: var(--text-color);
+    margin-bottom: 2rem;
 }
 
 .signUpButton{
@@ -100,8 +96,12 @@
     cursor: pointer;
     font-weight: 500;
     align-items: center;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     text-decoration: none;
+}
+
+.signUpButton:hover{
+   background-color: var(--color-opac-8);
 }
 
 .signUpButtonIcon{
@@ -146,7 +146,6 @@
 .trustedBrand:last-of-type{
     margin-right: 0;
 }
-
 
 @media only screen and (max-width:1440px) {
 
