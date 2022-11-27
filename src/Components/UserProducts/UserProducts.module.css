@@ -1,0 +1,22 @@
+
+
+
+.container{
+
+}
+
+.containerTop{
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 12px;
+    min-height: 50vh;
+}
+
+.containerTopLeft{
+    border: 1px solid blue;
+}
+
+.containerTopRight{
+    border: 1px solid bluered;
+}
