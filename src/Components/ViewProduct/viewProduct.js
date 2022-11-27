@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { MdExpandMore, MdExpandLess }  from 'react-icons/md';
+import { BottomPopUpBox, useBottomPopUpFor } from '../ModalBox/modalBox';
 import BackButton from '../BackButton/backButton';
 import { Price } from '../Product/product';
 import Reviews from '../Reviews/reviews';
@@ -9,6 +12,11 @@ import ImageViewer from '../ImageViewer/imageViewer';
 import BottomProductsWrapper from '../BottomProducts/bottomProducts';
 import { addToCartActionPayload } from '../../Context/Cart/cartPayloads';
 import StarGiver from '../StarGiver/starGiver';
+import { 
+    ShippingAddressInput, 
+    ShippingAddressSelect,
+    getShippingAddress 
+} from './FormikComponents/formik';
 import useViewContext from '../../Context/viewContext/context';
 import useAuth from '../../Context/context';
 import useCartContext from '../../Context/Cart/cartContext';
@@ -19,32 +27,42 @@ import styles from './ViewProduct.module.css';
 import './viewProduct.css';
 
 
-
 export default function ViewProduct({ 
     usedOutsideLogin, 
     dontShowbackButton, 
-    ...props 
 }) {
     const [showAddToCartMessage, setShowAddToCartMessage] = useState(false);
+    const [shippingAddressError, setShippingAddressError] = useState(false);
     const { viewState, setViewState } = useViewContext();
 
     useEffect(() => {
         let timer = null;
         let mounted = true;
-
-        if (showAddToCartMessage && mounted) timer = setTimeout(() => setShowAddToCartMessage(false) ,4000);
+        if (showAddToCartMessage && mounted) {
+            timer = setTimeout(() => setShowAddToCartMessage(false), 4000);
+        } 
         return () => {
             mounted = false;
-            if (timer) clearTimeout(timer)
+            if (timer) clearTimeout(timer);
         }
-    }, [showAddToCartMessage, setViewState])
+    }, [showAddToCartMessage, setViewState]);
 
     const handleAddToCartMessage = (bool) => {
         setShowAddToCartMessage(bool);
     }
 
+    const closeBottomPopUpBox = () => {
+        setShippingAddressError(false);
+    }
+
     return (
         <>
+        <BottomPopUpBox 
+        usedFor = { useBottomPopUpFor.error }
+        showPopUp = { shippingAddressError }
+        message = "Please enter a shipping address"
+        closePopUp = { closeBottomPopUpBox }
+        />
         {(showAddToCartMessage) && (
             <PopUpMessage
             usedForSuccess 
@@ -62,21 +80,24 @@ export default function ViewProduct({
         )} 
         <div className="view-product-container">
             <div className="view-product-top">
-                <ProductImage { ...viewState } />
+                <ProductImage { ...viewState }/>
                 <ProductDetails 
                 product = { viewState } 
                 showAddToCartMessage = { handleAddToCartMessage }
+                setShippingAddressError = { setShippingAddressError }
                 />
             </div>
-            <div className={ styles.viewProductCenter }>
+            <div className = { styles.viewProductCenter }>
                 <Reviews 
-                viewState={ viewState }
+                viewState = { viewState }
                 />
-                <AllProductDetails product ={ viewState }/>
+                <AllProductDetails 
+                product = { viewState }
+                />
             </div>
             <BottomProductsWrapper
-            viewState={ viewState }
-            usedOutsideLogin ={ usedOutsideLogin }
+            viewState = { viewState }
+            usedOutsideLogin = { usedOutsideLogin }
             />
         </div>
         </>
@@ -110,7 +131,7 @@ function PopUpMessage({
             <div className="pop-up-error-container">  
             {children ? children : (
                 <div className="pop-up-success-child">
-                    <IoMdCheckmarkCircleOutline className= "pop-up-icon"/>
+                    <IoMdCheckmarkCircleOutline className="pop-up-icon"/>
                     <div>
                         <div>Error</div>
                         <span>{ message }</span>
@@ -136,7 +157,7 @@ function ProductImage({
         setShowImageViewer(true);
     }
 
-    const closeImageViewer =() => {
+    const closeImageViewer = () => {
         setShowImageViewer(false);
     }
 
@@ -144,34 +165,38 @@ function ProductImage({
         <>
             {showImageViewer && (
                 <ImageViewer
-                closeImageViewer={closeImageViewer}
+                closeImageViewer = { closeImageViewer }
                 />
             )}
             <div className="view-product-image-wrapper">
-                <div className="view-product-profile" >
+                <div className="view-product-profile">
                     <div  className="view-product-profile-image">
-                        <img src={ userProfileImage || profileAvatar } alt="avatar" />
+                        <img src = { userProfileImage || profileAvatar } alt="avatar"/>
                         <span> { userName }</span>      
                     </div>
                     <div className="view-product-seller-stars">
                         <StarGiver
-                        seller = {{userId: props.userId, userEmail: props.userEmail}}
+                        seller = { {userId: props.userId, userEmail: props.userEmail} }
                         />
                     </div>
                 </div>
                 <ImageSLider 
                 images = { productImages }
-                onClickImage ={viewImage}
+                onClickImage = { viewImage }
                 />
             </div>
         </>
     )
 }
 
-function ProductDetails({showAddToCartMessage, product}) {
+function ProductDetails({
+    setShippingAddressError,
+    showAddToCartMessage, 
+    product
+}) {
     const [quantity, setQuantity] = useState("");
     const [productSize, setProductSize] = useState(null);
-    const{ user } = useAuth();
+    const { user } = useAuth();
     const { 
         cartState, 
         addProductToCart, 
@@ -189,15 +214,16 @@ function ProductDetails({showAddToCartMessage, product}) {
         setQuantity(prevState => (parseInt(prevState) + 1).toString());
     }
 
-    const reduceProductQuantity =  () => {
-        if (!quantity)  return  setQuantity("1");
+    const reduceProductQuantity = () => {
+        if (!quantity)  return setQuantity("1");
         
-        if (quantity <= 1)return;
+        if (quantity === "1") return;
         setQuantity(prevState => (prevState - 1).toString());
     }
     
     const handleInputChange = (e) => {
         let value = e.target.value.split("");
+
         if (isNaN(e.target.value)) return;
         if (e.target.value < 1) return setQuantity("");
         
@@ -207,15 +233,27 @@ function ProductDetails({showAddToCartMessage, product}) {
         setQuantity(e.target.value); 
     }
 
-    const addToCart = async (cartState, product, quantity, productSize, user) => {
+    const addToCart = async (
+        cartState, 
+        product, 
+        quantity, 
+        productSize, 
+        user
+    ) => {
         if (productSize) {
-            const addedProduct = await addProductToCart(cartState, addToCartActionPayload(product, quantity, productSize));
-            updateCartContextState(addedProduct, user);
+            const addProduct = await addProductToCart(
+                cartState, 
+                addToCartActionPayload(product, quantity, productSize)
+            );
+            updateCartContextState(addProduct, user);
             return;
         }
 
-        const addedProduct = await addProductToCart(cartState, addToCartActionPayload(product, quantity));
-        updateCartContextState(addedProduct, user);
+        const addProduct = await addProductToCart(
+            cartState, 
+            addToCartActionPayload(product, quantity)
+        );
+        updateCartContextState(addProduct, user);
         showAddToCartMessage(true);
     }
 
@@ -227,15 +265,15 @@ function ProductDetails({showAddToCartMessage, product}) {
     return (
         <div className="view-product-details-container">
             <div className="view-product-details-child view-product-details-name">
-                <div>{capitalize(product.productName)}</div>
+                <div>{ capitalize(product.productName) }</div>
                 <div className="view-product-details-code">
-                    Product code: <span>{product.productId}</span>
+                    Product code: <span>{ product.productId }</span>
                 </div> 
             </div>
-            <Price {...product} className="view-product-details-child view-product-details-price" />
+            <Price { ...product } className="view-product-details-child view-product-details-price"/>
             <div className="view-product-details-child view-product-details-usage">
                 <div>
-                    Usage: <span>{product.productUsage}</span>
+                    Usage: <span>{ product.productUsage }</span>
                 </div>
             </div>
             <div className="view-product-details-child view-product-details-usage">
@@ -246,36 +284,39 @@ function ProductDetails({showAddToCartMessage, product}) {
             <div className="view-product-details-child view-product-details-qnty-wrpper">
                 <button 
                 className="view-product-add-button-icon"
-                onClick={()=> reduceProductQuantity()}
+                onClick={ ()=> reduceProductQuantity() }
                 >
                     -
                 </button>
                 <input 
-                value={quantity} 
-                onChange={handleInputChange}
+                value = { quantity } 
+                onChange = { handleInputChange }
                 className="view-product-input" type="text" 
                 />
-                
                 <button 
                 className="view-product-add-button-icon"
-                onClick={()=> addProductQuantity()}
+                onClick = { ()=> addProductQuantity() }
                 >
                     +
                 </button>
             </div>
             <div className="view-product-details-child view-product-details-add-to-cart">
                 <button 
-                onClick={()=> addToCart(cartState, product, parseInt(quantity), productSize, user)}
+                onClick = { ()=> addToCart(cartState, product, parseInt(quantity), productSize, user) }
                 >
                     Add to cart
                 </button>
             </div>  
         </div>
     )
-
 }
 
 
+
+const operationRegions = [
+    {state: "Benue", city: "makurdi", costOfDelivery: 200},
+    {state: "Lagos", city: "Ikeja", costOfDelivery: 700},
+]
 // TODO>>> uncomment props.details
 function AllProductDetails({
     // decscription,
@@ -284,7 +325,6 @@ function AllProductDetails({
 }) {
     const [seller, setSeller]= useState(null);
     const [error, setError] = useState(false);
-    const{ user } = useAuth();
     const socketIsConnected = useSocketIsConnected();
 
     useEffect(() => {
@@ -322,19 +362,72 @@ function AllProductDetails({
 
     return (
         <div className = { styles.allProductDetailsContainer }>
-            <Detail title="Description">
+            <Detail 
+            title="Description"
+            showDetails
+            >
                 <div>
-                    {product?.decscription}
+                    {product?.description || `
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        cet cat feit de nu lo ra pen t dala
+                        rep sert tu la dress ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        cet cat feit de nu lo ra pen t dala
+                        rep sert tu la dress ra pen t dala
+                    `}
                 </div>
             </Detail>
 
-            <Detail title="Operational regions">
+            <Detail 
+            title="Operational Regions"
+            showDetails
+            >
+            {/* {seller?.operationalRegions.map((region, i) =>
+                <OperationalRegion key = { i } {...region}/> 
+            )} */}
+
+            {operationRegions.map((region, i) =>
+                <OperationalRegion key = { i } {...region}/> 
+            )}
             </Detail>
 
-            <Detail title="Return & exchange">
+            <Detail title="Return & Exchange">
+                {/* {seller.shippingAndOperations?.acceptReturns} */}
+                {/* {seller.shippingAndOperations?.conditionsForReturn} */}
+                <ReturnAndExchange
+                acceptReturns
+                // conditionsForReturn
+                />
             </Detail>
-            
-            <Detail title="Deliveries">
+
+            {/* shipping and operations */}
+            <Detail title="Delivery Strategy">
+                {/* {seller.shippingAndOperations?.modeOfDelivery} */}
+                {/* {seller.shippingAndOperations?.estimatedDeliveryDuration} */}
+                {/* {seller.shippingAndOperations?.operationalTime} */}
+                <DeliveryStrategy
+                />
+            </Detail>
+
+
+            {/* get user location  */}
+            <Detail 
+            title={`Deliver to ${"Nigeria"}`}
+            showDetails
+            >
+                {/* state */}
+                {/* shipping addres */}
+                {/* dispatch from */}
+
+                <DeliverTo
+                />
             </Detail>
         </div>
     )
@@ -342,80 +435,224 @@ function AllProductDetails({
 
 function Detail({
     title,
+    showDetails,
     children, 
     ...props
 }) {
     const [showMore, setShowMore] = useState(false);
+
+    useEffect(() => {
+        if (showDetails) {
+            setShowMore(true);
+        }
+    },[showDetails])
+
     const viewMoreDetails = () => {
-        setShowMore(prevState => !prevState)
+        setShowMore(prevState => !prevState);
     }
+
     const showMoreIcon = showMore ? ( 
-        <MdExpandLess className={ styles.showMoreIcon }/>
+        <MdExpandLess className = { styles.showMoreIcon }/>
     ) : (
-        <MdExpandMore className={ styles.showMoreIcon } />
+        <MdExpandMore className = { styles.showMoreIcon } />
     )
 
-    const itemClassName = showMore ? (
-        `${styles.allProductDetailsBody} ${styles.showMoreText}`
-    ) : (
-        `${styles.allProductDetailsBody}` 
-    )
-
-    const itemHeaderClassName = showMore ? (
-        `${styles.allProductDetailsheader} ${styles.detailsOpen}`
-    ) : (
-        `${styles.allProductDetailsheader}` 
-    )
+    const itemClassName = `${styles.allProductDetailsBody} ${showMore ? styles.showMoreText : ""}`
+    const itemHeaderClassName = `${styles.allProductDetailsheader} ${showMore ? styles.detailsOpen : ""}`
 
     return (
-        <div className ={ styles.allProductDetailsItem }>
-
-            <div className ={ itemHeaderClassName } onClick ={ viewMoreDetails }>
-                <div className ={ styles.allProductDetailsHeaderText }>
-                    {title || ""}
+        <div className = { styles.allProductDetailsItem }>
+            <div className = { itemHeaderClassName } onClick ={ viewMoreDetails }>
+                <div className = { styles.allProductDetailsHeaderText }>
+                    { title || "" }
                 </div>
-                <div className ={ styles.allProductDetailsHeaderIconWrapper } >
+                <div className = { styles.allProductDetailsHeaderIconWrapper } >
                    { showMoreIcon }
                 </div>
             </div>
-
-            <div className ={ itemClassName }>
-                {children}
+            <div className = { itemClassName }>
+                { children }
             </div>
         </div>
     )
 }
 
-function DeliveryRegions({ loading, error, deliveryRegions, reloadDeliveryRegions, product }) {
-    let DeliveryRegionsComp;
+function DeliverTo({
+    // state,
+    // city,
+    // shippingAddress,
+    setShippingAddress,
+    handleSubmit
+}) {
+    const [sessionStoredShippingAddress, setSessionStoredShippingAddress] = useState(null);
+    const { user } = useAuth();
+    const { legalAddress, state, city } = user || {}; //user?.shippingAddress
+    const { shippingAddress } = user || {}; //user?.shippingAndOperations;
 
-    if (loading) {
-        DeliveryRegionsComp = (
-            <div className="view-product-details-usage">
-                <p>Supply Region('s): <span>Loading...</span></p>
-            </div> 
-        )
-    } else if (error) {
-        DeliveryRegionsComp = (
-            // TODO... return error icon with functionality to reload delivery regions
-             <div className="view-product-details-usage">
-                <p>Supply Region('s): <span onClick = {() => reloadDeliveryRegions(product.userId) }>Error</span></p>
-            </div> 
-        )
-    } else {
-         DeliveryRegionsComp = (
-            <div className="view-product-details-usage">
-                <p>Supply Region('s): 
-                    <span>
-                    {
-                        deliveryRegions.map((region, i) =>
-                            <span key={i}> { region } </span>
-                        )
-                    }
-                    </span>
-                </p>
-            </div> 
-        )
-    }
-    return ( <> { DeliveryRegionsComp } </> )
+    useEffect(() => {
+        const sessionStoredShippingAddress = getShippingAddress();
+
+        if (sessionStoredShippingAddress) {
+            setSessionStoredShippingAddress(prevState => ({...prevState, ...sessionStoredShippingAddress}));
+            return;
+        }
+        setSessionStoredShippingAddress({});
+    }, []);
+ 
+    return (
+        <div className = { styles.operationalRegionContainer }>
+            {sessionStoredShippingAddress && (
+                <Formik
+                initialValues = {{
+                    state: state || sessionStoredShippingAddress?.state || '',
+                    city: city || sessionStoredShippingAddress?.city || '',
+                    shippingAddress: shippingAddress || legalAddress || sessionStoredShippingAddress?.shippingAddress || '',
+                }}
+                validationSchema = {Yup.object({ 
+                    state: Yup.string().required('State is required'),
+                    city: Yup.string().required('City is required'),
+                    shippingAddress: Yup.string().required('Shipping Address is required'),
+                })}
+                onSubmit = { handleSubmit }
+                >
+                <Form id="contactForm">
+                    <div className = {`${styles.operationalRegionChild} ${styles.noBorder}`}>
+                        State
+                        <div className = {`${styles.operationalRegionText}`}>
+                            <ShippingAddressSelect
+                            shippingAddresskey = "state"
+                            name = "state"
+                            inputErrorClass = { styles.error }
+                            notEmptyClass = { styles.notEmpty }
+                            >
+                                <option value="">Select</option>
+                                <option>Benue</option>
+                                <option>Abuja</option>
+                                <option>Lagos</option>
+                            </ShippingAddressSelect>
+                        </div>
+                    </div>
+                    <div className = {`${styles.operationalRegionChild} ${styles.noBorder}`}>
+                        City
+                        <div className = {`${styles.operationalRegionText}`}>
+                            <ShippingAddressSelect
+                            shippingAddresskey = "city"
+                            name = "city"
+                            inputErrorClass = { styles.error }
+                            notEmptyClass = { styles.notEmpty }
+                            >
+                                <option value="">Select</option>
+                                <option>Makurdi</option>
+                                <option>Ikeja</option>
+                                <option>Benue</option>
+                            </ShippingAddressSelect>
+                        </div>
+                    </div>
+                    <div className = {`${styles.operationalRegionChild} ${styles.noBorder}`}>
+                        Shipping Address
+                        <div className = {`${styles.operationalRegionText}`}>
+                            <ShippingAddressInput
+                            name="shippingAddress"
+                            type="text"
+                            inputErrorClass = { styles.error }
+                            notEmptyClass = { styles.notEmpty }
+                            />
+                        </div>
+                    </div>
+                </Form>
+                </Formik>
+            )} 
+        </div>
+    )
 }
+
+function DeliveryStrategy({
+    modeOfDelivery,
+    estimatedDeliveryDuration,
+    operationalTime
+}) {
+    return (
+        <div className = { styles.operationalRegionContainer }> 
+            <div className = { styles.operationalRegionChild }>
+                Mode Of Delivery
+                <div className = { `${styles.operationalRegionText}` }>
+                    { modeOfDelivery }
+                    lorem ispium lo ra pen t dala
+                    lorem ispium lo ra pen t dala
+                </div>
+            </div>
+            <div className = { styles.operationalRegionChild }>
+                Estimated Delivery Duration
+                <div className = { `${styles.operationalRegionText}` }>
+                    { estimatedDeliveryDuration }
+                    lorem ispium lo ra pen t dala
+                </div>
+            </div>
+            <div className = { styles.operationalRegionChild }>
+                Operational Time
+                <div className = { `${styles.operationalRegionText}` }>
+                    { operationalTime }
+                    lorem ispium lo ra pen t dala
+                </div>
+            </div>
+        </div>
+    )
+}
+
+function ReturnAndExchange({
+    acceptReturns,
+    conditionsForReturn
+}) {
+    return (
+        <div className = { styles.operationalRegionContainer }>
+            <div className = { styles.operationalRegionChild }>
+                Returns and exchanges
+                <div className = { `${styles.operationalRegionText} ${styles.textLarger}` }>
+                    { acceptReturns ? "Accepted" : "Not Accepted" }
+                </div>
+            </div>
+            {acceptReturns && (
+                <div className = { styles.operationalRegionChild }>
+                    Conditions 
+                    <div className = { styles.operationalRegionText }>
+                    { conditionsForReturn }
+                    lorem ispium lo ra pen t dala
+                        cet cat feit de nu lo ra pen t dala
+                        rep sert tu la dress ra pen t dala
+                        lorem ispium lo ra pen t dala
+                        lorem ispium lo ra pen t dala
+                    </div>
+                </div>
+            )} 
+        </div>
+    )
+}
+
+function OperationalRegion({
+    state,
+    city,
+    costOfDelivery
+}) {
+    return (
+        <div className = { styles.operationalRegionContainer }>
+            <div className = { styles.operationalRegionChild }>
+                State
+                <div className = { styles.operationalRegionText }>
+                    { state }
+                </div>
+            </div>
+            <div className = { styles.operationalRegionChild }>
+                City
+                <div className = { styles.operationalRegionText }>
+                    { city } 
+                </div>
+            </div>
+            <div className = { styles.operationalRegionChild }>
+                Cost of Delivery
+                <div className = { styles.operationalRegionText }>
+                    £{ costOfDelivery } 
+                </div>
+            </div>
+        </div>
+    )
+}           
