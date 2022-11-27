@@ -30,6 +30,7 @@
     justify-content: space-between;
     padding: 0.6rem;
     transition: all 0.2s ease-in-out;
+    /* font-weight: 510; */
 }
 
 .allProductDetailsheader:hover{
@@ -38,7 +39,8 @@
 }
 
 .detailsOpen{
-    border-bottom: 1px solid var(--background-color);    
+    border-bottom: 1px solid var(--background-color); 
+    color: var(--color);   
 }
 .detailsOpen:hover{
     border-bottom: 1px solid var(--background-color);    
@@ -67,7 +69,7 @@
 }
 
 .allProductDetailsBody{
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
     transition: all 0.2s ease-in-out;
     -webkit-transition: all 0.2s ease-in-out;
     overflow: hidden;
@@ -76,14 +78,92 @@
 
 .showMoreText{
     height: 15rem;
-    padding: 0.8rem 1rem;
+    padding: 1rem;
     overflow-y: auto;
     scrollbar-width: thin;
     border: 1px solid var(--prim-border-color);
     box-shadow: inset -4px 0 6px var(--box-shadow-color);
     line-height: 1.6;
+    display: grid;
+    row-gap: 1rem;
 }
 
 .showMoreText::-webkit-scrollbar{
     width:0.25rem;
+}
+
+
+/* styles for operational regions */
+.operationalRegionContainer{
+    border: 1px solid var(--prim-border-color);
+    border-radius: 4px;
+    padding: 1rem;
+    color: var(--text-color-opac-5);
+}
+
+.operationalRegionChild{
+    border-bottom: 1px solid var(--prim-border-color);
+    padding: 0.2rem 0;
+}
+
+.operationalRegionChild:last-of-type{
+    border-bottom: none;
+}
+
+.noBorder{
+    border-bottom: none;
+}
+
+.operationalRegionText{
+    color: var(--text-color);
+}
+
+.textLarger{
+ font-size: 1.3rem;
+}
+
+.operationalRegionText select, textarea{
+    width: 100%;
+    border: none;
+    background-color: var(--background-color);
+    cursor: pointer;
+    color: var(--text-color);
+    border: 1px solid var(--prim-border-color);
+    padding: 0.6rem;
+    border-radius: 4px;
+}
+
+.operationalRegionText textarea{
+   resize: vertical;
+   cursor: text;
+   padding: 4px;
+}
+
+.operationalRegionText select:focus,
+.operationalRegionText textarea:focus{
+    outline: 1px solid var(--color);
+}
+
+.operationalRegionText select.error,
+.operationalRegionText textarea.error{
+    outline: 1px solid var(--error-color);
+
+}
+
+.operationalRegionText select.notEmpty,
+.operationalRegionText textarea.notEmpty{
+    outline: 1px solid var(--color);
+}
+
+@media only screen and (max-width:500px) {
+    .viewProductCenter{
+        flex-wrap: wrap-reverse;
+        min-height: 50vh;
+        margin: 1rem 0;
+    }
+
+    .allProductDetailsContainer{
+        /* border: 1px solid red; */
+        width: 100%;
+    }
 }
