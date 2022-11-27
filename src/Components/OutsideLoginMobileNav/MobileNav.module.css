@@ -1,0 +1,82 @@
+
+
+.container{
+    display: none;  
+}
+
+@media only screen and (max-width:500px) {
+    .container{
+        position: fixed;
+        top: var(--landing-header-height);
+        /* border: 1px solid red; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        width: 50%;
+        height: calc(100vh - var(--landing-header-height));
+        box-shadow: 0 0 4px var(--box-shadow-color);
+        left: -50%;
+        transition: all 0.3s ease;
+        border-right: 1px solid var(--prim-border-color);
+        overflow-x: none;
+        overflow-y: auto;
+        background-color: var(--background-color);
+        z-index: 2;
+        padding: 0 0.5rem;   
+    }
+    
+    .show{
+        left: 0
+    }
+    
+    .wrapper{
+        /* border: 1px solid green; */
+        margin: auto 0;
+    }
+    
+    .link{
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.1s ease;
+        color: var(--text-color-opac-8);
+        padding: 0.5rem 0.2rem;
+        border-radius: 0 28px 28px 0;
+        height: 100%;
+        width: 100%;
+        min-height: 7vh;
+        font-size: 0.9rem;
+        font-weight: 510;
+        border: 1px solid var(--background-color);
+        border-left: 2px solid var(--background-color);
+    }
+    
+    .link:hover {
+        background-color: var(--hover-link-bg-color);
+        border-left: 2px solid var(--color);
+        color: var(--color);
+    }
+    
+    .link i{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding: 0.2rem;
+        /* border:1px solid green;  */
+        margin-right: 0.8rem;
+        color: var(--text-color);
+    }
+    
+    .linkIcon{
+        font-size: 1.3rem;
+        
+    }
+    
+    .activeLink{
+        color: var(--color);
+        background-color: var(--active-link-bg-color);
+        border: 1px solid var(--prim-border-color);
+        border-left: 2px solid var(--color);
+        font-weight: 550;
+    }  
+}
