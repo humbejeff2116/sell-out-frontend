@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
 import { BsExclamationCircle } from 'react-icons/bs';
 import { insertCommasToNumber } from '../../Library/index';
+import './formik.css';
 
 export const TextInput = React.forwardRef(({ 
     label, 
@@ -21,7 +22,7 @@ export const TextInput = React.forwardRef(({
 
     const textInputClassName = (
         (!meta.error && meta.value) ? `text-input ${notEmptyClass || "not-empty"}` : 
-        (meta.touched && meta.error) ? `text-input ${inputErrorClass || "has-error"}` :
+        (meta.error) ? `text-input ${inputErrorClass || "has-error"}` :
         "text-input"
     )
 
@@ -44,12 +45,17 @@ export const TextInput = React.forwardRef(({
                 </label>
                 <span className = { labelTextClass || "" }>{ labelText || "" }</span>   
             </div>
-            <input 
-            className = { textInputClassName } 
-            { ...field }
-            { ...props }
-            ref = { ref } 
-            />
+            <div className='input-wrapper'>
+                <input 
+                className = { textInputClassName } 
+                { ...field }
+                { ...props }
+                ref = { ref } 
+                />
+                {(meta.error) && (
+                    <BsExclamationCircle className='error-icon'/>
+                )}
+            </div>
             <div className = { errorClass }>
             { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
             </div>
@@ -144,14 +150,9 @@ function ErrorText({
 }) {
     return (
         <>
-        {
-            (meta.touched && meta.error ) ? (
-                <>
-                    <i>{ <BsExclamationCircle/> }</i> 
-                    <span>{ meta.error }</span>
-                </>
-            ) : null
-        }
+        {(meta.error) && (
+            <span>{ meta.error }</span>
+        )}
         </>
     )
 }
@@ -169,7 +170,7 @@ export const PasswordInput = ({
 
     const passwordInputClassName = (
         (!meta.error && meta.value) ? "password-input not-empty" : 
-        (meta.touched && meta.error) ? "password-input has-error" :
+        (meta.error) ? "password-input has-error" :
         "password-input"
     )
   
@@ -179,11 +180,16 @@ export const PasswordInput = ({
             <label htmlFor = { props.id || props.name }>{ label }</label>
             <span className = { labelTextClass || "" }>{ labelText || "" }</span>
             </div>
-            <input 
-            className = { passwordInputClassName }
-            { ...field }
-            { ...props }
-            />
+            <div className='input-wrapper'>
+                <input 
+                className = { passwordInputClassName }
+                { ...field }
+                { ...props }
+                />
+                {(meta.error) && (
+                    <BsExclamationCircle className='error-icon'/>
+                )}
+            </div>
             <div className = { errorClass }>
             { dontShowErrorText ? "" : <ErrorText meta = { meta }/> }
             </div>
