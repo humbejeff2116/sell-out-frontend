@@ -4,15 +4,22 @@
     justify-content: space-between;
     height: var(--landing-header-height);
     width: 100%;
-    background-color: var(--background-color);
     z-index: 4;
     transition: all 0.3s ease;
+    transition: all 0.2s ease-in;
+}
+
+.header-absolute {
+    /* border: 1px solid red; */
+    position: absolute;
+    top: 0;
 }
 
 .scrolled{
     position: sticky;
     top: 0;
-    box-shadow: 0 0 8px var(--box-shadow-color);
+    background-color: var(--background-color);
+    box-shadow: 0 0 5px var(--box-shadow-color);
 }
 
 .landing-header-logo{
@@ -63,10 +70,10 @@
     align-items: center;
     text-decoration: none;
     transition: all 0.3s ease;
-    border-bottom: 2px solid var(--background-color);
+    /* border-bottom: 2px solid var(--background-color); */
     color: var(--text-color);
-    text-shadow: 0 1px 1px var(--text-color);
-    font-size: 16.4px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .landing-nav-link:hover{   
