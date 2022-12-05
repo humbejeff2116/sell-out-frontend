@@ -1,0 +1,42 @@
+
+
+.loginAndSignupContainer {
+    /* border: 1px solid red; */
+    text-align: center;
+}
+
+.loginAndSignupCopy {
+    color: var(--text-color-opac-5);
+}
+
+.loginAndSignupLinksContainer {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginAndSignupLinksContainer ul {
+    display: flex;
+    /* border: 1px solid red; */
+    margin: 0;
+    padding: 0;
+}
+
+.loginAndSignupLinksContainer li {
+    /* border: 1px solid green; */
+    list-style-type: none;
+    padding: 1rem;
+}
+
+.loginAndSignupLinksContainer a {
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    color: var(--color);
+}
+
+.loginAndSignupLinksContainer a:hover {
+    text-decoration: underline;
+    /* color: var(--color); */
+}
+
