@@ -33,6 +33,7 @@ export function LandingSuspenseTemplate({ children, ...props }) {
 
 export function LandingTemplate({ 
     stickHeaderToTop,
+    headerContainerModificationClass,
     showCartMenuItem,
     usedCartIconInCart, 
     landingTopChild, 
@@ -119,6 +120,7 @@ export function LandingTemplate({
     return (
         <section className="landing-template-container"> 
             <Header 
+            containerModificationClass = { headerContainerModificationClass }
             showLogin = { goToLogin }
             stickToTop = { stickHeaderToTop }
             />
