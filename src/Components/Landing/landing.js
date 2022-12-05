@@ -15,6 +15,7 @@ export default function LandingComponent() {
         landingTopChild = { <TopInfoCardComponent/> }
         landingCenterChild = { <AboutFling/> }
         stickHeaderToTop
+        headerContainerModificationClass = "header-absolute"
         >
             {/* <LandingProducts/> */}
             {/* <HowItWorks/>     */}
