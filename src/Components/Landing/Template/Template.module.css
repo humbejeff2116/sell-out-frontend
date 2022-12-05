@@ -6,6 +6,8 @@
     position: sticky;
     top: var(--landing-header-height);
     padding: 0.4rem 1rem;
+    z-index: 1;
+    /* background: #f8f8ff; */
 }
 
 .cartNavButtonItem{
