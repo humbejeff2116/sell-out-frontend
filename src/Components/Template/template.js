@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import Header from '../Header/header';
@@ -6,7 +5,7 @@ import Footer from '../Footer/footer';
 import LeftSideBar from '../LeftSideBar/leftSideBar';
 import RightSideBar from '../RightSideBar/rightSideBar';
 import LandingFooter from '../Landing/Footer/landingFooter';
-import LandingHeader from '../Landing/Header/header';
+// import LandingHeader from '../Landing/Header/header';
 import ProfileAvatar from '../Profile/profileAvatar';
 import IndexSideNav from '../IndexSideNav/indexSideNav';
 import IndexFooter from '../IndexFooter/indexFooter';
@@ -14,12 +13,15 @@ import SlimFooter from '../Footer/SlimFooter/slimFooter'
 import Notifications from '../NotificationsDropdown/notifications';
 import Connections from '../Connections/connections';
 import BottomNavigation from '../BottomNavigation/bottomNavigation';
-import MobileNav from '../OutsideLoginMobileNav/mobileNav';
+// import MobileNav from '../OutsideLoginMobileNav/mobileNav';
 import GettingStartedSideNav from '../GettingStartedSideNav/gettingStartedSideNav';
 import RequireAuthentication from '../Authentication/requireAuthentication';
+import { LoginAndSignupFooter } from '../Footer/footer';
 import useAuth from '../../Context/context';
 import Links from '../../Data/links';
 import fling from '../../Images/fling8.png';
+import birdsBackground from '../../Images/Illustrations/IRA/bg-23.svg';
+import styles from './Template.module.css';
 import './template.css';
 
 const settingsSideNavLinks = Links.getSettingsSideNavLinks();
@@ -97,6 +99,14 @@ export default function Template({ children, ...props }) {
     )
 }
 
+
+const footerLinks = [
+    {id: '1', name: 'Terms', href: '/#'},
+    {id: '2', name: 'Privacy', href: '/#'},
+    {id: '3', name: 'About', href: '/#'},
+    {id: '3', name: 'Invest', href: '/#'}
+]
+
 export function LoginAndSignupTemplate({
     stickHeaderToTop,
     children, 
@@ -132,31 +142,51 @@ export function LoginAndSignupTemplate({
 
     return (
         <div className="login-template-container">
-            <LandingHeader
+            <LoginAndSignupBackgroundImages/>
+            {/* <LandingHeader
             showLogin = { goToLogin }
             stickToTop = { stickHeaderToTop }
             containerModificationClass = "login-template-header"
             />
-            <MobileNav/> 
-            <div className="login-template-left">
-                <section className="login-template-logo">
-                    <div className="login-template-logo-img">
-                        <Link to="/">
-                            <img src = { fling } alt="Fling"/>
-                        </Link>
+            <MobileNav/>  */}
+            <div className="login-template-child-wrapper">
+                <div className="login-template-top">
+                    <section className="login-template-logo">
+                        <div className="login-template-logo-img">
+                            <Link to="/">
+                                <img src = { fling } alt="Fling"/>
+                            </Link>
+                        </div>
+                    </section>
+
+                    <div className="login-template-center">
+                        { children }
                     </div>
-                </section>
-            </div>
-            <div className="login-template-center">
-                { children }
-            </div>
-            <div className="login-template-right">
-               <section> </section>
+                </div>
+                <div className="login-template-bottom">
+                    <LoginAndSignupFooter links = { footerLinks }/>
+                </div>
             </div>
         </div>
     )
 }
 
+function LoginAndSignupBackgroundImages() {
+    return (
+        <div className = { styles.loginBackgrndImagesContr } aria-hidden="true">
+            <img 
+            className = { styles.loginBackgrndImageRight }
+            src = { birdsBackground } 
+            alt=""
+            />
+            <img 
+            className = { styles.loginBackgrndImageLeft }
+            src = { birdsBackground } 
+            alt=""
+            />
+        </div>
+    )
+}
 
 function IndexPageTemplateChildren({ children, ...props }) {
     return (
