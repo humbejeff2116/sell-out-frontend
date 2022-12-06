@@ -90,7 +90,7 @@ code {
   --lighter-prim-border-color: #e0e0e0;
   --select-background-color: #e9e9ed;
   --sec-border-color: #005ab4;
-  --box-shadow-color: rgba(117, 116, 116, 0.6);
+  --box-shadow-color: rgba(117, 116, 116, 0.2);
   --close-icon-color:rgba(117, 116, 116, 0.6); 
 
   --button-color: rgb(8, 8, 73);
@@ -102,7 +102,7 @@ code {
   --prim-button-border-color: #005ab4;
 
   --top: 3.8rem;
-  --landing-header-height: 4.5rem;
+  --landing-header-height: 4rem;
   --sidebar-width: 15%;
   --left-sidebar-width: 18%;
 
