@@ -1,0 +1,48 @@
+
+.loginBackgrndImagesContr  {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* border: 2px solid green; */
+    /* background-color: #f8f8f8; */
+    /* background: #ccc; */
+    background: #f8f8ff;
+}
+
+.loginBackgrndImageLeft {
+    display: block;
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 70%;
+    transform: none;
+    z-index: 1;
+    /* -webkit-transform: scaleX(-1);
+    transform: scaleX(-1); */
+    /* border: 1px solid purple; */
+    opacity: 0.9;
+}
+
+.loginBackgrndImageRight {
+    display: block;
+    top: 0;
+    right: 0;
+    position: absolute;
+    height: 100%;
+    width: 70%;
+    transform: none;
+    z-index: 1;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    /* border: 1px solid purple; */
+}
