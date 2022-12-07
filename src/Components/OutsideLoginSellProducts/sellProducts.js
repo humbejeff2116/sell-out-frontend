@@ -7,6 +7,22 @@ import shopping from '../../Images/Illustrations/draw-kit/SVG/shopping6.svg';
 import styles from './SellProducts.module.css';
 
 
+const sellProductsComponentData = {
+    imgSrc: shopping,
+    imgAlt: '',
+    headerText: `
+        Sell your products on Fling
+    `,
+    bodyText: `
+        With our modernized systems and enhanced tooling,
+        Fling is definitely the best and easiest place to 
+        sell your products and the fun part is we handle 
+        most of this process for you, and let you do just 
+        little. Why not login and find out where 
+        we fit into your business model
+    `
+}
+
 export default function SellProducts() {
     return (
         <LandingTemplate 
@@ -17,37 +33,34 @@ export default function SellProducts() {
     )
 }
 
+const { imgSrc, imgAlt, headerText, bodyText } = sellProductsComponentData;
+
 function SellProductsComponent(props) {
     return (
         <div className = { styles.container }>
-            <div className={ styles.contentWrapper }>
+            <div className = { styles.contentWrapper }>
                 <div className = { styles.left }>
-                    <div className={ styles.contentImageWrapper }>
+                    <div className = { styles.contentImageWrapper }>
                         <img 
-                        className= { styles.contentImage }
+                        className = { styles.contentImage }
                         loading="lazy" 
-                        src = { shopping } 
-                        alt =""
+                        src = { imgSrc } 
+                        alt = { imgAlt }
                         />
                     </div>
                 </div>
                 <div className = { styles.right }>
-                    <div className={ styles.contentHeader }>
-                        Sell your products on Fling
+                    <div className = { styles.contentHeader }>
+                        { headerText }
                     </div>
-                    <div className={ styles.contentBody }>
-                        With our modernized systems and enhanced tooling,
-                        Fling is definitely the best and easiest place to 
-                        sell your products and the fun part is we handle 
-                        most of this process for you, and let you do just 
-                        little. Why not login and find out where 
-                        we fit into your business model
+                    <div className = { styles.contentBody }>
+                        { bodyText }
                     </div>
-                    <div className={ styles.contentButtonContainer }>
+                    <div className = { styles.contentButtonContainer }>
                         <Link to="/login">
-                            <button className={ styles.loginButton }>
+                            <button className = { styles.loginButton }>
                                 Login
-                                <FiArrowRight className={ styles.loginButtonIcon }/>  
+                                <FiArrowRight className = { styles.loginButtonIcon }/>  
                             </button>
                         </Link>
                     </div>
@@ -57,88 +70,74 @@ function SellProductsComponent(props) {
     )
 }
 
-
-export function OutsideloginChildTemplateIllustrationLeft({ 
-    leftChild, 
-    heading,
-    writeup,
-    rightBottomChild,
-    rightChild, 
-    ...props
-}) {
-    if (rightChild) {
-        return (           
-            <div className={ styles.contentWrapper }>
-                <div className = { styles.left }>
-                    {leftChild}
-                </div>
-                <div className = { styles.right }>
-                    {rightChild}
-                </div>
-            </div>   
-        )
-    }
-    return (
-        <div className={ styles.contentWrapper }>
-            <div className = { styles.left }>
-                {leftChild}
-            </div>
-            <div className = { styles.right }>
-                <div className={ styles.contentHeader }>
-                    {heading}
-                </div>
-                <div className={ styles.contentBody }>
-                    {writeup}
-                </div>
-                {rightBottomChild && (
-                    <div className={ styles.contentButtonContainer }>
-                        {rightBottomChild}
-                    </div>
-                )}
-            </div>
-        </div>
-    )
+export const illustrationPosition = {
+    left: 'left',
+    right: 'right'
 }
 
-export function OutsideloginChildTemplateIllustrationRight({ 
-    leftChild, 
-    heading,
-    writeup,
+export function TwoColWithIllustration({
+    headerText,
+    bodyText,
     rightBottomChild,
-    rightChild, 
-    ...props
+    imgSrc,
+    imgAlt,
+    illustrationPos
 }) {
-    if (rightChild) {
-        return (           
-            <div className={ styles.contentWrapperIllustrationRight }>
-                <div className = { styles.left }>
-                    {leftChild}
-                </div>
-                <div className = { styles.right }>
-                    {rightChild}
-                </div>
-            </div>   
-        )
-    }
-
     return (
-        <div className={ styles.contentWrapperIllustrationRight }>
-            <div className = { styles.right }>
-                <div className={ styles.contentHeader }>
-                    {heading}
-                </div>
-                <div className={ styles.contentBody }>
-                    {writeup}
-                </div>
-                {rightBottomChild && (
-                    <div className={ styles.contentButtonContainer }>
-                        {rightBottomChild}
+        <div className = { styles.contentWrapper }>
+            {illustrationPos === illustrationPosition.left ? (
+                <>
+                    <div className = { styles.left }>
+                        <div className = { styles.contentImageWrapper }>
+                            <img 
+                            className = { styles.contentImage }
+                            loading="lazy" 
+                            src = { imgSrc } 
+                            alt = { imgAlt }
+                            />
+                        </div>
                     </div>
-                )}
-            </div>
-            <div className = { styles.left }>
-                {leftChild}
-            </div>
+                    <div className = { styles.right }>
+                        <div className = { styles.contentHeader }>
+                            { headerText  }
+                        </div>
+                        <div className = { styles.contentBody }>
+                            { bodyText }
+                        </div>
+                        {rightBottomChild && (
+                            <div className = { styles.contentButtonContainer }>
+                                { rightBottomChild }
+                            </div>
+                        )}
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className = { styles.right }>
+                        <div className = { styles.contentHeader }>
+                            { headerText }
+                        </div>
+                        <div className = { styles.contentBody }>
+                            { bodyText }
+                        </div>
+                        {rightBottomChild && (
+                            <div className = { styles.contentButtonContainer }>
+                                { rightBottomChild }
+                            </div>
+                        )}
+                    </div>
+                    <div className = { `${styles.left} ${styles.illustRight}` }>
+                        <div className = { styles.contentImageWrapper }>
+                            <img 
+                            className = { `${styles.contentImage} ${styles.illusRightImage}` }
+                            loading="lazy" 
+                            src = { imgSrc } 
+                            alt = { imgAlt }
+                            />
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     )
 }
