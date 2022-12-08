@@ -1,15 +1,50 @@
 
 import {
-    BiHome, BiUser, BiFolder, BiCart, BiCartAlt, BiLogOut, BiStore, BiCog, 
-    BiMessageDetail, BiCoinStack, BiBuildings, BiHelpCircle, BiWallet,
+    BiHome, 
+    BiUser, 
+    BiFolder, 
+    BiCart, 
+    BiCartAlt, 
+    BiLogOut, 
+    BiStore, 
+    BiCog, 
+    BiMessageDetail, 
+    BiCoinStack, 
+    BiBuildings, 
+    BiHelpCircle, 
+    BiWallet,
 } from "react-icons/bi";
 
 import {
-    RiBookOpenLine, RiContactsBookLine, RiMapPinAddLine, RiListSettingsLine, RiCompassFill, RiPhoneFill, RiBookFill, RiTableFill, RiTvFill, RiGlobalFill, RiFireFill, RiDrizzleFill, RiArchiveFill, RiHistoryFill, RiWomenFill, RiMenFill, RiShirtFill, RiPantoneFill, RiHandbagFill
+    RiBookOpenLine, 
+    RiContactsBookLine, 
+    RiMapPinAddLine, 
+    RiListSettingsLine, 
+    RiCompassFill, 
+    RiPhoneFill, 
+    RiBookFill, 
+    RiTableFill, 
+    RiTvFill, 
+    RiGlobalFill, 
+    RiFireFill, 
+    RiDrizzleFill, 
+    RiArchiveFill, 
+    RiHistoryFill, 
+    RiWomenFill, 
+    RiMenFill, 
+    RiShirtFill, 
+    RiPantoneFill, 
+    RiHandbagFill
 } from "react-icons/ri";
 
 import { 
-    FaTwitter,FaFacebookSquare,FaLinkedinIn,FaGithubSquare, FaUtensils, FaShoePrints 
+    FaTwitter,
+    FaInstagramSquare,
+    FaFacebookSquare,
+    FaLinkedinIn,
+    FaGithubSquare, 
+    FaUtensils, 
+    FaShoePrints 
 } from 'react-icons/fa';
 
 import {
@@ -183,10 +218,10 @@ const LinksData = {
     footerMainLinks: [],
 
     footerSocialLinks:[
-        { name:"Li",title:"Linkedin", href:"linkedin.com/jeffrey123", icon:< FaLinkedinIn className="landing-footer-social-nav-icon"/> },
-        { name:"Gi",title:"Github", href:"linkedin.com/jeffrey123", icon:< FaGithubSquare className="landing-footer-social-nav-icon"/> },
-        { name:"Fa",title:"Facebook", href:"linkedin.com/jeffrey123", icon:< FaFacebookSquare className="landing-footer-social-nav-icon"/> },
-        { name:"Tw",title:"Twitter", href:"linkedin.com/jeffrey123", icon:< FaTwitter className="landing-footer-social-nav-icon"/> }
+        // { name:"Li",title:"Linkedin", href:"linkedin.com/jeffrey123", icon:<FaLinkedinIn className="landing-footer-social-nav-icon"/> },
+        { name:"In",title:"Instagram", href:"instagram.com/fling", icon:<FaInstagramSquare className="landing-footer-social-nav-icon"/> },
+        { name:"Fa",title:"Facebook", href:"facebook.com/fling", icon:<FaFacebookSquare className="landing-footer-social-nav-icon"/> },
+        { name:"Tw",title:"Twitter", href:"twitter.com/fling", icon:<FaTwitter className="landing-footer-social-nav-icon"/> }
     ],
 
     clothingLinks: [
