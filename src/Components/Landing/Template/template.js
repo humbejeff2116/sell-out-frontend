@@ -184,7 +184,7 @@ function CartNavButton({
 
 export function CartNavButtonIcon({ usedInCart, ...props }) {
     const { cartTotalNumberOfProducts } = useCartContext();
-    const cartButtonItemClassName = usedInCart ? `${styles.cartNavButtonItem} ${styles.cart}` : `${styles.cartNavButtonItem}`
+    const cartButtonItemClassName = usedInCart ? `${styles.cartNavButtonItem} ${styles.cartButtonActive}` : `${styles.cartNavButtonItem}`
     
     return (
         <div className = { cartButtonItemClassName }>
