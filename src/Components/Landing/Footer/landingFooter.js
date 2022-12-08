@@ -7,106 +7,106 @@ import './landingFooter.css';
 
 const landingSocialLinks = Links.getFooterSocialLinks();
 
-export default function LandingFooter({ footerClassName, ...props }) {
+
+const footerMainLinks = [
+    {
+        headerText: 'Fling',
+        links: [
+            {name: 'About', href: '/#'}, 
+            {name: 'Investors', href: '/#'}, 
+            {name: 'Jobs', href: '/#'}
+        ]
+    },
+    {
+        headerText: 'Resources',
+        links: [
+            {name: 'Community', href: '/#'}, 
+            {name: 'Blog', href: '/#'}, 
+            {name: 'Support', href: '/#'}
+        ]
+    },
+    {
+        headerText: 'Policies',
+        links: [
+            {name: 'Terms', href: '/#'}, 
+            {name: 'Privacy', href: '/#'}, 
+            {name: 'Cookies', href: '/#'}
+        ]
+    },
+    {
+        headerText: 'Help',
+        links: [
+            {name: 'Using Fling', href: '/#'}, 
+            {name: 'Manage Account', href: '/#'}, 
+            {name: 'Contact Us', href: '/#'}
+        ]
+    }
+]
+
+export default function LandingFooter({ 
+    footerClassName, 
+    ...props 
+}) {
     return (
         <footer className = { footerClassName ? footerClassName : 'landing-footer-container' }>
             <div className="landing-footer-top">
                 <div className="landing-footer-top-left">
-                    <div  className="landing-footer-logo">
+                    <div className="landing-footer-logo">
                         <Link to="/">
                             <img src = { fling } alt="Fling"/>
                         </Link>
                     </div>
+                    <div className="landing-footer-logo-text">
+                        A marketplace built for you.
+                    </div>
+                    {/* social */}
+                    <section className="landing-footer-social-section">
+                        <nav className="landing-footer-social-nav" >              
+                        {landingSocialLinks.map((link, i) =>
+                            <SocailLinks  key={i} {...link}/>
+                        )}
+                        </nav>
+                    </section>
                 </div>
                 <div className="landing-footer-top-right">
-                    <section className="landing-footer-main-section">
-                        <Fling/>
-                    </section>
-                    <section className="landing-footer-main-section">
-                        <Resources/>
-                    </section>
-                    <section className="landing-footer-main-section">
-                        <Policies/>
-                    </section>
-                    <section className="landing-footer-main-section">
-                        <Help/>
-                    </section> 
+                {footerMainLinks.map((link, i) =>
+                    <FooterNavLinks { ...link } key = { i }/> 
+                )}
                 </div>
             </div>
             <div className="landing-footer-bottom">
-                <section className="landing-footer-copyright-section">
-                    <div className="landing-footer-copyright"> 
-                        <div className ="landing-footer-copyright-list">
-                            <span>
-                                <a href='/#'>&copy;{ new Date().getFullYear() } @jeff.codes</a>
-                            </span>
-                        </div>  
-                    </div>
+                <section className="landing-footer-bottom-child">
+                    <a href='/#'>&copy;{ new Date().getFullYear() } @jeff.codes</a>  
                 </section>
-                {/* copyright */}
-                <section className="landing-footer-copyright-section">
-                    <div className="landing-footer-developer"> 
-                        <div className ="landing-footer-developer-list">
-                            <span>
-                                <a href="/humbe-jeffrey.netlify.app" target="_blank">Developed by Humbe Jeffrey</a>
-                            </span> 
-                        </div>
-                    </div>
-                </section>
-                {/* social */}
-                <section className="landing-footer-social-section">
-                    <nav className="landing-footer-social-nav" >              
-                    {landingSocialLinks.map((link, i) =>
-                        <SocailLinks  key={i} {...link}/>
-                    )}
-                    </nav>
+                <section className="landing-footer-bottom-child">
+                    <a href="/humbe-jeffrey.netlify.app" target="_blank">Developed by Humbe Jeffrey</a>
                 </section>
             </div>
         </footer>
     )
 }
 
-function Fling(props) {
+function FooterNavLinks({ 
+    headerText, 
+    links
+}) {
     return (
         <div className="landing-footer-main-content">
-            <span className="landing-footer-content-header">Fling</span>
-            <span>About</span>
-            <span>Investors </span>
-            <span>Jobs</span> 
+            <div className="landing-footer-content-header">{ headerText }</div>
+            <ul>
+            {links.map((link, i) => 
+                <FooterLinks { ...link } key = { i }/>
+            )}
+            </ul>
         </div>
     )
 }
 
-function Resources(props) {
+function FooterLinks({ name, href }) {
     return (
-        <div className="landing-footer-main-content">
-            <span className="landing-footer-content-header">Resources</span>
-            <span>Community</span>
-            <span>Blog</span>
-            <span>Support</span>
-        </div>
-    )
-}
-
-function Policies(props) {
-    return (
-        <div className="landing-footer-main-content">
-            <span className="landing-footer-content-header">Policies</span>
-            <span>Terms</span>
-            <span>Privacy</span>
-            <span>Cookies</span>
-        </div>
-    )
-}
-
-function Help(props) {
-    return (
-        <div className="landing-footer-main-content">
-            <span className="landing-footer-content-header">Help</span> 
-            <span>Using Fling</span>
-            <span>Manage Account</span>
-            <span>Contact Us</span>    
-        </div>
+        <li>
+            <a href = { href }>{ name }</a>
+        </li>
     )
 }
 
