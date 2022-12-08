@@ -1,5 +1,4 @@
 
-
 .input-wrapper {
     /* border: 1px solid red; */
     position: relative;
@@ -10,7 +9,7 @@
 
 .error-icon {
     position: absolute;
-    top: 1rem;
+    top: 30%;
     right: 16px;
     color: var(--error-color);
     background-color: var(--background-color);

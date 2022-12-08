@@ -21,19 +21,24 @@ export const TextInput = React.forwardRef(({
     const [field, meta] = useField(props);
 
     const textInputClassName = (
-        (!meta.error && meta.value) ? `text-input ${notEmptyClass || "not-empty"}` : 
-        (meta.error) ? `text-input ${inputErrorClass || "has-error"}` :
+        (meta.value && !meta.error) ? `text-input ${notEmptyClass || "not-empty"}` : 
+        (meta.touched && meta.error) ? `text-input ${inputErrorClass || "has-error"}` :
         "text-input"
     )
 
     if (useOnlyTextInput) {
         return (
-            <input 
-            className = { textInputClassName } 
-            { ...field }
-            { ...props }
-            ref = { ref } 
-            />
+            <div className='input-wrapper'>
+                <input 
+                className = { textInputClassName } 
+                { ...field }
+                { ...props }
+                ref = { ref } 
+                />
+                {(meta.touched && meta.error) && (
+                    <BsExclamationCircle className='error-icon'/>
+                )}
+            </div>
         )
     }
 
@@ -52,7 +57,7 @@ export const TextInput = React.forwardRef(({
                 { ...props }
                 ref = { ref } 
                 />
-                {(meta.error) && (
+                {(meta.touched && meta.error) && (
                     <BsExclamationCircle className='error-icon'/>
                 )}
             </div>
@@ -150,7 +155,7 @@ function ErrorText({
 }) {
     return (
         <>
-        {(meta.error) && (
+        {(meta.touched && meta.error) && (
             <span>{ meta.error }</span>
         )}
         </>
