@@ -119,14 +119,14 @@
 
 .landing-footer-main-content a {
     text-decoration: none;
-    /* transition: all 0.3s ease-in-out; */
+    transition: all 0.3s ease-in-out;
     color: var(--text-color-opac-8);
 }
 
 .landing-footer-main-content a:hover {
     text-decoration: underline;
-    text-decoration-color: var(--color);
-    /* color: var(--color); */
+    /* text-decoration-color: var(--color); */
+    color: var(--color);
 }
 
 .landing-footer-bottom {
