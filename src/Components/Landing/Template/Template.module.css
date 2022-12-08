@@ -25,9 +25,10 @@
     cursor: pointer;
 }
 
-.cart{
-    box-shadow: 0 0 5px var(--box-shadow-color);
+.cartButtonActive{
+    box-shadow: 0 0 4px var(--box-shadow-color);
     background-color:var(--active-link-bg-color);
+    border: none;
 }
 
 .cartNavButtonItem:hover{
