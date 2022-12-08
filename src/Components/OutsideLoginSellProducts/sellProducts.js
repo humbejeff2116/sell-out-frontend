@@ -28,14 +28,17 @@ export default function SellProducts() {
         <LandingTemplate 
         showCartMenuItem
         stickHeaderToTop
-        landingTopChild = { <SellProductsComponent/> }
+        landingTopChild = { <SellProductsComponent { ...sellProductsComponentData }/> }
         />
     )
 }
 
-const { imgSrc, imgAlt, headerText, bodyText } = sellProductsComponentData;
-
-function SellProductsComponent(props) {
+function SellProductsComponent({ 
+    imgSrc, 
+    imgAlt, 
+    headerText, 
+    bodyText 
+}) {
     return (
         <div className = { styles.container }>
             <div className = { styles.contentWrapper }>
