@@ -58,17 +58,14 @@ const threeColData = [
         splitIntoTwoEqualRows: true
     },
 ]
-
 const singleColPosition = {
     left: 'left',
     right: 'right'
 }
-
 const singleColPositionClass = {
     [singleColPosition.left]: "leftPos",
     [singleColPosition.right]: "rightPos"
 }
-
 const singleColData = [
     {
         imgSrc: shopping,
@@ -80,7 +77,6 @@ const singleColData = [
         position: singleColPosition.right
     }
 ]
-
 const twoColWithIllustrationData = [
     {
         illustrationPosition: illustrationPosition.right,
@@ -110,21 +106,27 @@ const twoColWithIllustrationData = [
 
     }
 ]
+const firstTwoColWithIllustrationData = twoColWithIllustrationData[0];
+const secondTwoColWithIllustrationData = twoColWithIllustrationData[1];
 
 export default function ABout() {
     return (
         <LandingTemplate 
         showCartMenuItem
         stickHeaderToTop
-        landingTopChild = { <AboutComponent/> }
+        landingTopChild = { 
+            <AboutComponent 
+            { ...{firstTwoColWithIllustrationData, secondTwoColWithIllustrationData} }
+            /> 
+        }
         />
     )
 }
 
-const firstTwoColWithIllustrationData = twoColWithIllustrationData[0];
-const secondTwoColWithIllustrationData = twoColWithIllustrationData[1];
-
-function AboutComponent(props) {
+function AboutComponent({
+    firstTwoColWithIllustrationData,
+    secondTwoColWithIllustrationData
+}) {
     return (
         // TODO... return cart nav here
         <div className = { styles.container }>
@@ -132,10 +134,7 @@ function AboutComponent(props) {
                 <div className = { styles.containerChild }>
                     <TwoColWithIllustration
                     illustrationPos = { firstTwoColWithIllustrationData.illustrationPosition }
-                    imgSrc = { firstTwoColWithIllustrationData.imgSrc }
-                    imgAlt = { firstTwoColWithIllustrationData.imgAlt }
-                    headerText = { firstTwoColWithIllustrationData.headerText }
-                    bodyText = { firstTwoColWithIllustrationData.bodyText }
+                    { ...firstTwoColWithIllustrationData }
                     />
                 </div>
            </div>
@@ -145,15 +144,11 @@ function AboutComponent(props) {
            <div className = { styles.containerChildWrapper }>
                 <ThreeColumnComponent compData = { threeColData }/>
            </div>
-
             <div className = { styles.containerChildWrapper }>
                 <div className = { styles.containerChild }>
                     <TwoColWithIllustration
                     illustrationPos = { secondTwoColWithIllustrationData.illustrationPosition }
-                    imgSrc = { secondTwoColWithIllustrationData.imgSrc }
-                    imgAlt = { secondTwoColWithIllustrationData.imgAlt }
-                    headerText = { secondTwoColWithIllustrationData.headerText }
-                    bodyText = { secondTwoColWithIllustrationData.bodyText }
+                    { ...secondTwoColWithIllustrationData }
                     />
                 </div>
             </div>
@@ -191,7 +186,6 @@ function SingleColChild({
         </div>
     )
 }
-
 
 function ThreeColumnComponent({ compData }) {
     return (
