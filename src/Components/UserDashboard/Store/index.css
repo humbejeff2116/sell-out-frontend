@@ -1,4 +1,3 @@
-
 .store-collection-products-modal-container{
     position: fixed;
     top: 0;
@@ -10,7 +9,7 @@
     z-index: 20;
     display: flex;
     flex-direction: column;
-    /* border: 2px solid green;    */
+    /* border: 2px solid green; */
 }
 
 .store-collection-products-modal-container-wrapper{

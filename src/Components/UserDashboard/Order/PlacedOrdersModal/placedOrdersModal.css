@@ -1,0 +1,241 @@
+
+.placed-order-products-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid green;*/
+}
+
+
+.placed-order-products-modal-wrapper{
+    width: 80%;
+    height: 100vh;
+    /* border: 1px solid yellow; */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 5px var(--box-shadow-color);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transition: transform 0.2s ease-in-out;
+    background-color: var(--background-color);
+    /* margin: 2% auto; */
+    /* top: 50%;
+    left: 50%; */
+    /* transform:translate(-50%, -50%); */
+    transform: scale(0.98);
+    overflow-y: auto;
+}
+
+.transform{
+    transform: none;
+}
+
+/* placed orders modal child component styles */
+.placed-order-products-modal-child-container{
+    /* border: 1px solid black; */
+    /* position: relative; */
+    /* overflow-y: auto; */
+    
+}
+
+.placed-order-products-modal-child-header-container{
+    /* border: 5px solid green; */
+    /* position: sticky; */
+    top: 0;
+    /* box-shadow: 0 0 2px var(--box-shadow-color); */
+    background-color: var(--background-color);
+    z-index: 2;
+    overflow: auto;
+    padding: 0.2rem 1rem 0 1rem;
+}
+
+.placed-order-products-modal-child-header-top{
+    /* border: 1px solid black; */
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.placed-order-products-modal-child-heading{
+    font-size: 1rem;
+}
+
+.placed-order-products-modal-child-header-bottom{
+    /* border: 1px solid red; */
+    bottom: 0;
+    display: flex;
+}
+
+.placed-order-products-modal-child-body-wrapper{
+    /* border: 3px solid red; */
+    overflow-y: auto;
+    display: grid;
+    row-gap: 1rem;
+    padding: 1rem;
+}
+
+.placed-order-products-modal-child-confirm-bttn-cntr{
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+.placed-order-products-modal-child-confirm-bttn-cntr button{
+    border: none;
+    padding: 9px 14px;
+    border-radius: 28px;
+    font-weight: bold;
+    color: var(--background-color);
+    background-color: var(--color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.placed-order-products-modal-child-confirm-bttn-cntr button:hover{
+    background-color: var(--color-opac-8);
+}
+
+
+/* .upload-product-editor-header-top-close{
+    margin-right: 2%;
+    color: #6d6d6d;
+}
+
+.upload-product-editor-close-icon{
+    font-size: 1.2rem;
+    font-weight: bold;
+} */
+
+.placed-order-product-template-container{
+    border: 1px solid var(--prim-border-color);
+    border-radius: 4px;
+    display: flex;
+    padding: 2%;
+}
+
+.placed-order-product-template-left{
+    border-right: 1px solid var(--prim-border-color);
+    /* border: 1px solid red; */
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.placed-order-product-template-right{
+    /* border: 1px solid purple; */
+    width: 30%;
+    padding-left: 1rem;
+}
+
+/* pre order confirmation modal */
+.placed-order-modal-body-container{
+    /* border: 3px solid purple; */
+    position: fixed;
+    top: 50%;
+    min-height: 7vh;
+    width: 33%;
+    padding: 1.5%;
+    border-radius: 4px;
+    box-shadow: 0 0 5px var(--box-shadow-color);
+    z-index: 2;
+    transition: right 0.8s;
+    -webkit-transition: right 0.8s;
+    background-color: var(--background-color);
+}
+
+.placed-order-modal-body-container.hide{
+    right: -40%;  
+}
+
+.placed-order-modal-body-container.show{
+    right: 17%;   
+}
+
+.placed-order-modal-confirm-delivery-close-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.placed-order-modal-confirm-delivery-close-wrapper{
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--prim-border-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-color-opac-8);
+    transition: box-shadow 0.3s ease;
+}
+
+.placed-order-modal-confirm-delivery-close-wrapper:hover{
+    box-shadow: 0 0 3px var(--box-shadow-color);
+    color: var(--text-color);
+}
+
+.placed-order-modal-content{
+    /* border:1px solid green; */
+    margin: 2% 0 0 0;
+    color: var(--text-color);
+}
+
+.placed-order-modal-note{
+    margin: 2% 0;
+    font-size: 0.8rem;
+    color: var(--text-color-opac-5);
+    /* border:1px solid green; */
+}
+
+.placed-order-modal-buttons-container{
+    /* border:3px solid blue; */
+    margin-top: 3%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.placed-order-modal-button{
+    /* border:1px solid red; */
+    width: 30%;
+}
+
+.placed-order-modal-button button{
+    width: 100%;
+    height: 40px;
+    border: 1px solid var(--color);
+    border-radius: 4px;
+    font-weight: bold;
+    color: var(--background-color);
+    background-color: var(--color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.placed-order-modal-button button a{
+    color: var(--background-color);
+    text-decoration: none;
+}
+
+.placed-order-modal-button.cancel button{
+    width: 100%;
+    height: 42px;
+    border: 1px solid var(--button-border-color1);
+    background-color: var(--button-background-color1);
+    border-radius: 4px;
+    color: var(--color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
