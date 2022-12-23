@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     border-top: 1px solid var(--prim-border-color);
-    margin-top: 1%;
+    /* margin-top: 1%; */
     min-height: 75vh;
 }
 
@@ -23,14 +23,15 @@
 
 .landing-footer-logo{
     /* border:1px solid red; */
-    width: 70px;
-    height: 30px;
+    width: 90px;
+    /* height: 30px; */
     display: flex;
 }
 
 .landing-footer-logo img{
     width: 100%;
     height: 100%;
+    /* border:1px solid red; */
 }
 
 .landing-footer-logo-text {
