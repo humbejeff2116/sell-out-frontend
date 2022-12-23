@@ -1,16 +1,14 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Links from '../../../Data/links';
-import fling from '../../../Images/fling8.png';
+import Freefall from '../../../Images/Logos/free_fall1.svg';
 import './landingFooter.css';
 
 const landingSocialLinks = Links.getFooterSocialLinks();
 
-
 const footerMainLinks = [
     {
-        headerText: 'Fling',
+        headerText: 'Freefall',
         links: [
             {name: 'About', href: '/#'}, 
             {name: 'Investors', href: '/#'}, 
@@ -36,7 +34,7 @@ const footerMainLinks = [
     {
         headerText: 'Help',
         links: [
-            {name: 'Using Fling', href: '/#'}, 
+            {name: 'Using Freefall', href: '/#'}, 
             {name: 'Manage Account', href: '/#'}, 
             {name: 'Contact Us', href: '/#'}
         ]
@@ -53,7 +51,7 @@ export default function LandingFooter({
                 <div className="landing-footer-top-left">
                     <div className="landing-footer-logo">
                         <Link to="/">
-                            <img src = { fling } alt="Fling"/>
+                            <img src = { Freefall } alt="Freefall"/>
                         </Link>
                     </div>
                     <div className="landing-footer-logo-text">
