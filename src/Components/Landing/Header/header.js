@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { BiMenu } from "react-icons/bi";
 import Links from '../../../Data/links';
 import useNavContext from '../../../Context/Navigation/context';
-import fling from '../../../Images/fling8.png';
+import freeFall from '../../../Images/Logos/free_fall1.svg';
 import './header.css';
 
 const landingMainLinks = Links.getLandingMainLinks();
@@ -41,7 +40,7 @@ export default function Header({
             <div className="landing-header-logo">
                 <div  className="landing-header-logo-img">
                     <Link to="/">
-                        <img src = { fling } alt="Fling"/>
+                        <img src = { freeFall } alt="Freefall"/>
                     </Link>
                 </div>
             </div>
