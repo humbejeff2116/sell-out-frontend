@@ -1,11 +1,8 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { RiUserAddLine } from 'react-icons/ri';
 import { FiArrowRight }  from 'react-icons/fi'
-import stickmansad from '../../../Images/notfound8.jpg';
 import vaseCollection from '../../../Images/Illustrations/unDraw/vase-collections.svg';
-import shoppingg from '../../../Images/Illustrations/unDraw/undraw_gone_shopping_re_2lau.svg';
 import birdsBackground from '../../../Images/Illustrations/IRA/bg-12.svg';
 import shopping from '../../../Images/Illustrations/draw-kit/SVG/shopping11.svg';
 
@@ -23,11 +20,11 @@ export  function TopInfoCard() {
         <div className="landing-info-card-contr" >
             <div className="landing-info-card-text-container" >
                 <div className="landing-info-card-text-heading">
-                    Buying and selling easy and fun again...
+                    Buying and selling made easy and fun again
                 </div>
                 <div className="landing-info-card-text-paragraph">
-                    All the tools you need to buy or sell "anything". I call it 
-                    a market place built just for you.  
+                    All the tools you need to buy or sell in one place. 
+                    A market place built just for you.  
                 </div>  
             </div>
             <div className="landing-info-card-button">
@@ -58,10 +55,9 @@ function TopInfoCardBackgroundImage() {
             {/* <img className="landing-top-foreground-image-left bottom" src={stickmansad} alt="dsds" /> */}
             <img 
             className="landing-top-foreground-image-right top" 
-            src={ birdsBackground  } 
+            src = { birdsBackground } 
             alt=""
             />
-
             <svg 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 1440 320" 
