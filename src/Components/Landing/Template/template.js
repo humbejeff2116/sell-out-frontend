@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { BiCartAlt } from "react-icons/bi";
@@ -35,7 +34,8 @@ export function LandingTemplate({
     stickHeaderToTop,
     headerContainerModificationClass,
     showCartMenuItem,
-    usedCartIconInCart, 
+    usedCartIconInCart,
+    landingTopContainerModificationClass, 
     landingTopChild, 
     landingCenterChild,
     showBackButton, 
@@ -125,7 +125,7 @@ export function LandingTemplate({
             stickToTop = { stickHeaderToTop }
             />
             <MobileNav/>  
-            <div className="landing-top">    
+            <div className = { `landing-top ${landingTopContainerModificationClass || ""}` }>    
             {showLoginDropdown && (
                 <LoginModal 
                 show = { showLoginDropdown } 
