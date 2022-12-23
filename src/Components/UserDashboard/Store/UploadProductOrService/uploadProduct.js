@@ -4,6 +4,7 @@ import { RiEyeLine } from 'react-icons/ri';
 import ProductImagesSelector from './ImageSelector/imageSelector';
 import UploadProductDetailsForm from './ProductDetailsForm/productDetailsForm';
 import ImageEditor from './ImageEditor/imageEditor';
+import { BottomSpinner } from '../../../Loader/loader';
 import useUploadProductContext from '../../../../Context/UploadProductContext/context';
 import useAuth from '../../../../Context/context';
 import { createProduct } from '../../../../Utils/http.services';
@@ -12,14 +13,14 @@ import './uploadProduct.css';
 export default function UploadProduct() {
     const [uploadingProduct , setUploadingProduct ] = useState(false);
     const [uploadingError , setUploadingError] = useState(false);
-    const [response, setResponse] = useState('');
+    const [message, setMessage] = useState('');
     const [redirect, setRedirect] = useState('');
     const [formValues, setFormValues] = useState({});
     const [resizedImages, setResizedImages] = useState([]);
     const [noProductImageHasBeenSelected, setNoProductImageHasBeenSelected] = useState(false);
     const [showImageEditorModal, setShowImageEditorModal] = useState(false);
     const { user } = useAuth();
-    const { productValues, setProductFormValues } = useUploadProductContext();
+    // const { productValues, setProductFormValues } = useUploadProductContext();
     const location = useLocation();
     const history = useHistory();
     let isMounted = useRef(false);
@@ -31,28 +32,8 @@ export default function UploadProduct() {
             isMounted.current = false;
         }
     }, []);
-   
-    useEffect(() => {
-        let timer = null;
 
-        if (response && isMounted.current) {
-            timer = setTimeout(() => {
-                setResponse('');
-                history.push(location.pathname);
-                setRedirect("/home/dashboard/store/products");
-            }, 3000);
-        }
-
-        return () => {
-            if (timer) {
-                clearTimeout(timer);
-            }
-        }
-    }, [response, history, location]);
-
-
-    const handleImageInputChange = (e) =>  setFormValues({ [e.target.name] : [...e.target.files ] }); 
-
+    const handleImageInputChange = (e) =>  setFormValues({[e.target.name] : [...e.target.files ]}); 
 
     const handleSubmit = async (values) => {
         const { productImages:files } = formValues;
@@ -71,38 +52,27 @@ export default function UploadProduct() {
 
         setUploadingError(false);
         setUploadingProduct(true);
-        setResponse('');
-        // TODO... remove console.log
-        console.log("files are", files)
-
+        setMessage('');
+        formData.append("user", JSON.stringify(user));
+        formData.append("productValues", JSON.stringify(values));  
         for (let i = 0; i < files.length; i++) { 
-            formData.append(`file${i}`, files[i]) 
-        }
-
-        for (let keys in user) { 
-            formData.append(keys, user[keys]) 
-        }
-
-        for (let keys in values) { 
-            formData.append(keys, values[keys]) 
+            formData.append(`file${i}`, files[i]); 
         }
 
         try {
-            const { error } = await createProduct(formData);
+            const { error, status, message } = await createProduct(formData);
 
-            if (error) {
+            if (status !== 200 ) {
                 setUploadingError(true);
-                setResponse("An error occured while uploading product details. Please wait and try again");
+                setMessage(message);
                 return;
             } 
-
-            setResponse("Product added successfully");
-            return;
+            setMessage(message);
+            // TODO... redirect functionality here
         } catch(err) {
-            // TODO... remove console.log
             console.error(err)
             setUploadingError(true);
-            setResponse("An error occured please wait and try again"); 
+            setMessage("An error occured please wait and try again"); 
         }
     }
 
@@ -133,14 +103,15 @@ export default function UploadProduct() {
                 <h3> Upload Product</h3>
             </div>
             <div className="upload-form-container">
-                {
-                    showImageEditorModal && (
-                        <ImageEditor
-                        closeModal = { closeModal }
-                        images = { formValues?.productImages }
-                        />
-                    )
-                }
+                <BottomSpinner showLoader={uploadingProduct}>
+                    Uploading...
+                </BottomSpinner>
+                {showImageEditorModal && (
+                    <ImageEditor
+                    closeModal = { closeModal }
+                    images = { formValues?.productImages }
+                    />
+                )}
                 <UploadFormTemplate
                 formComponent = {
                     <UploadProductDetailsForm 

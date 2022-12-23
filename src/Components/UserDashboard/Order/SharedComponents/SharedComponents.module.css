@@ -1,0 +1,154 @@
+
+
+.storeUserAvatarWrapper{
+    /* border: 1px solid red; */
+    box-shadow: 0 0 1px var(--box-shadow-color);
+    border-radius: 6px;
+    padding: 0.5rem  1%;
+    margin: 1% 0;
+    width: 100%;
+}
+
+.storeUserAvatrDetailsWrapper{
+    display: flex;
+    /* border:1px solid purple; */
+    padding: 0.5%;
+}
+
+.storeUserAvatrDetailsWrapper img{
+    border-radius: 50%; 
+    height:40px;
+    width:40px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.storeUserAvatarDetails{
+    display:flex;
+    align-items: center;
+    flex-wrap: wrap;
+    /* border:1px solid red; */
+    min-width: 60%;
+    margin-left: 3%;
+    margin-left: 0.5rem;
+}
+
+.storeUserAvatarDetails div{
+    padding: 0.2rem 0.4rem;
+    border-radius: 30px;
+    /* border:1px solid var(--no-color); */
+    background-color: #f0f0f0;
+    color: var(--color-opac-9);
+    font-size: 1rem;
+}
+
+.storeUserAvatarKebabIcon{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    /* border: 1px solid green; */
+    color: var(--text-color);
+    min-width: 10%;
+    cursor: pointer;
+}
+
+/* delivery confirmation buttons */
+
+.confirmationButtonsContainer{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2%;
+}
+
+.confirmationButtonWrapper{
+    /* border: 1px solid green; */
+    min-width: 15%;
+    margin-left: 2.5%;
+}
+
+.confirmationButtonWrapper button{
+    border: 1px solid var(--prim-border-color);
+    background-color: var(--background-color);
+    width: 100%;
+    height: 40px;
+    border-radius: 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color);
+    transition: all 0.3s ease;
+    padding: 6px 12px;
+}
+.confirmationButtonWrapper button:hover{
+    background-color: var(--color); 
+    color: var(--background-color);
+    border: 1px solid var(--color); 
+}
+
+.confirmationButtonWrapper button:focus{
+    outline: 1px solid var(--color);
+}
+
+.confirmationButtonWrapper.confirm button{
+    background-color: var(--color-opac-8);
+    color: var(--background-color);
+    border: none;   
+}
+
+.confirmationButtonWrapper.confirm button:hover{
+    background-color: var(--color);
+}
+
+.confirmationButtonWrapper.confirm button:focus{
+    outline: 1px solid var(--opaque-text-color);
+}
+
+.confirmButtonIcon{
+    /* color: var(--background-color); */
+    margin-right: 0.4rem;
+    font-size: 1.1rem;
+}
+
+
+/* order confirmation modal */
+
+
+.modalWrapper{
+    position: absolute;
+    /* width: 28rem; */
+    width: 32%;
+    padding: 1% 1.5%;
+    border-radius: 4px;
+    box-shadow: 0 0 5px var(--box-shadow-color);
+    transition: transform 0.2s ease-in-out;
+    -webkit-transition: transform 0.2s ease-in-out;
+    background-color: var(--background-color);
+    top: 50%;
+    left: 50%;
+    transform: scale(0.98) translate(-50%, -50%);
+}
+
+.transform{
+    transform: scale(1) translate(-50%, -50%);
+}
+.placedOrderModalWith{
+    width: 44%;
+    border: 3px solid purple;
+}
+
+.modalWrapperChildContainer{
+    /* border: 3px solid purple; */
+    min-height: 11rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+@media only screen and (max-width:500px) {
+
+
+}

@@ -127,7 +127,7 @@
 .upload-product-editor-image{
     width: 400px;
     height: 420px;
-    border: 1px solid purple;
+    border: 1px solid var(--prim-border-color);
 }
 
 .upload-product-editor-button{

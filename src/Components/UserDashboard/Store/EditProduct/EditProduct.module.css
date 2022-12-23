@@ -1,0 +1,60 @@
+
+
+
+
+.imageBody{
+    /* border: 1px solid red; */
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    height: 80%;
+    width: 80%;
+}
+
+.imageBody img{
+    /* border: 2px solid red; */
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.imageInputWrapper{ /* label */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    /* border: 1px solid red; */
+    color: var(--color);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.imageInputIconWrapper{
+    width: 45px;
+    height: 45px;
+    border: 2px dashed var(--prim-border-color);
+    /* border: 1px solid red; */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transition: border 0.1s ease;
+    cursor: pointer;
+    color: var(--color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    margin-left: 1rem;
+}
+
+.imageInputWrapper input[type="file"]{
+    display: none; 
+}
+
+.imageInputIcon{
+    font-size: 1.5rem;
+}

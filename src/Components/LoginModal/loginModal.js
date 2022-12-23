@@ -47,9 +47,10 @@ function LoginModalTemplate(props) {
 
 
 
- function Login() {
+ export function Login() {
     const [loginIn, setLoginIn] = useState(false);
     const [ showForm, setShowForm] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(false);
     const [loginError, setLoginError] = useState(false);
     const [loginResponse, setLoginResponse] = useState({});
     const [redirect, setRedirect] = useState('');
@@ -60,8 +61,13 @@ function LoginModalTemplate(props) {
         let timer;
         let isMounted = true;
         timer = setTimeout(()=> {
-            return setShowForm(true)
-        }, 1000);
+            return setShowSpinner(true)
+        }, 100);
+
+        timer = setTimeout(()=> {
+            setShowSpinner(false)
+            setShowForm(true)
+        }, 3000);
 
 
         socket.on('userNotFound', function(response) {
@@ -89,18 +95,18 @@ function LoginModalTemplate(props) {
         });
 
         socket.on('userFound', function(response) {
-                    const TOKEN = response.token;
-                    if(isMounted) {
-                        setUserData(response.data)
-                        setTokenData(TOKEN);
-                        setLoginError(false);
-                        setLoginIn(false);
-                        setLoginResponse({});
-                        setRedirect('/home');
-                    } 
+            const TOKEN = response.token;
+            if(isMounted) {
+                setUserData(response.data)
+                setTokenData(TOKEN);
+                setLoginError(false);
+                setLoginIn(false);
+                setLoginResponse({});
+                setRedirect('/home');
+            } 
         });
 
-        return ()=>{
+        return ()=> {
             isMounted = false
             if(timer) {
                 clearTimeout(timer);
@@ -122,16 +128,21 @@ function LoginModalTemplate(props) {
             <Redirect to={redirect} />
         )
     }
-
-    if(!showForm ) {
+    if(!showSpinner && !showForm) {
         return (
-        <div className="login-modal-loader-form-container">
-           <Loader 
-           loaderContainer={"login-modal-loader-container"}
-           loader={"login-modal-loader"} 
-           /> 
-        </div>
-
+            <div className="login-modal-loader-form-container">
+            
+            </div>
+        )
+    }
+    if (showSpinner) {
+        return (
+            <div className="login-modal-loader-form-container">
+            <Loader 
+            loaderContainer={"login-modal-loader-container"}
+            loader={"login-modal-loader"} 
+            /> 
+            </div>
         )
     }
     return (
@@ -141,10 +152,8 @@ function LoginModalTemplate(props) {
                     <h2>Login </h2>
                 </div>
                 <div className="login-panel-error">
-                    {
-                        ( <span>{loginResponse.message || '' }</span> )
-                    }
-            </div>
+                    { loginResponse.message || '' } 
+                </div>
                 <div className="login-modal-panel-body">
                 <Formik
                     initialValues = {{

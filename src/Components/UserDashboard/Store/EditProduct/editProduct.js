@@ -1,9 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BiPencil } from "react-icons/bi";
-import { RiAddFill, RiCameraLine, RiCloseFill,  RiDeleteBin7Fill, RiUpload2Line } from "react-icons/ri";
-import { BsHandIndex } from 'react-icons/bs';
+import { BiPencil, BiSelection } from "react-icons/bi";
+import { RiAddFill, RiCameraLine, RiCloseFill,  RiCursorLine,  RiDeleteBin7Fill, RiUpload2Line } from "react-icons/ri";
+import { BsCursorFill, BsHandIndex } from 'react-icons/bs';
 import * as Yup from 'yup';
 import BackButton from '../../../BackButton/backButton';
 import EmptyState, { EmptyStateButton } from '../../../EmptyState/emptyState';
@@ -15,6 +15,7 @@ import bell from '../../../../Images/bell3.png';
 import image2 from '../../../../Images/product3.webp';
 import styles from './EditProduct.module.css';
 import './editProduct.css';
+import { AiOutlineSelect } from 'react-icons/ai';
 
 
 const categoryDataSet = [
@@ -535,8 +536,6 @@ function EmptyEditProductComp({
     href ,
     ...props
 }) {
-    // const containerClassName = emptyCartContainerClassName ? emptyCartContainerClassName : "emptyContainer";
-    const linkTo = href ? href : "/home/dashboard/store/products"
     return (
         <div className="store-product-empty-edit-container">
             <EmptyState
@@ -544,12 +543,16 @@ function EmptyEditProductComp({
             imageSrc = { bell }
             imageAlt = "Edit product illustration"
             heading ="Edit your Product"
-            writeUp ="Make changes or updates to any of your product in order give it a fresh look"
+            writeUp ="Make changes to any of your product and give it a fresh look"
+            // writeUp ="Please select any of your product you would like to edit"
             >
                 <EmptyStateButton
                 useLinkButton
+                buttonIcon = {
+                    <AiOutlineSelect className="empty-edit-button-icon"/>
+                }
                 emptyStateButtonText="Select Product"
-                href = { linkTo }
+                href = { href || "/home/dashboard/store/products" }
                 />
             </EmptyState>
         </div>   
