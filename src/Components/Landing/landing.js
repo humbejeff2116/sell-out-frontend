@@ -5,21 +5,18 @@ import {
     LandingSuspenseTemplate, 
     LandingTemplate 
 } from './Template/template';
-import AboutFling from './AboutFling/aboutFling';
-// import HowItWorks, { SignUpOnFling } from './HowItWorks/howItWorks';
+import LandingChildren from './Partials/partials';
 import './landing.css';
 
 export default function LandingComponent() {
     return (
         <LandingTemplate
-        landingTopChild = { <TopInfoCardComponent/> }
-        landingCenterChild = { <AboutFling/> }
+        useChildrenWrapper
         stickHeaderToTop
-        headerContainerModificationClass = "header-absolute"
+        headerContainerModificationClass="header-absolute"
+        landingTopChild = { <TopInfoCardComponent/> }
         >
-            {/* <LandingProducts/> */}
-            {/* <HowItWorks/>     */}
-            {/* <SignUpOnFling/> */}
+            <LandingChildren/>
         </LandingTemplate>
     )
 }
