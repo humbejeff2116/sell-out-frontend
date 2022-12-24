@@ -40,7 +40,8 @@ export function LandingTemplate({
     landingCenterChild,
     showBackButton, 
     popUp,
-    children, 
+    children,
+    useChildrenWrapper, 
     ...props 
 }) {
     const [showLoginDropdown, setShowLoginDropdown] = useState(false);
@@ -145,15 +146,16 @@ export function LandingTemplate({
             )}
             { landingTopChild }
             </div>
-            {
-                (landingCenterChild) ? (
-                    <div className="landing-center">
-                        { landingCenterChild }
-                    </div>
-                ) : ""
-            }
-            { children }
-            <div className="landing-footer" >
+            {useChildrenWrapper ? (
+                <div className="landing-children-wrapper">
+                    { children }
+                </div>
+            ) : (
+                <>
+                { children }
+                </>
+            )}
+            <div className="landing-footer">
                 <LandingFooter/>
             </div>
         </section>
@@ -174,10 +176,7 @@ function CartNavButton({
                 buttonIconClassName = { styles.backButtonIcon }
                 />
             )}
-            <CartNavButtonIcon 
-            { ...props }
-            usedInCart = { usedInCart }
-            />
+            <CartNavButtonIcon { ...props } usedInCart = { usedInCart }/>
         </div>
     )
 }
