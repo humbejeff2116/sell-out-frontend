@@ -61,6 +61,7 @@
     align-items: center;
     width: 100%;
     /* border: 2px solid red; */
+    margin-bottom: 0.4rem;
     min-height: 25px;
     color: var(--error-color); 
 }
