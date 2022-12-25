@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import {
     LoginAndSignupTemplate, 
@@ -10,71 +9,54 @@ import useAuth from '../../Context/context';
 import './suspenseLoader.css';
 
 
-
 export function InsideLoginSuspenseLoader() {
-
     useEffect(()=> {
         window.scrollTo(0,0);
     },[]);
 
     return (
-      
-        <div  className="suspense-container">
-        <Loader
-            loaderContainer={"index-suspense-loader-container"}
-            loader={"index-suspense-loader"}
+       <SuspenseLoader/>
+    )
+}
+
+function SuspenseLoader() {
+    return (
+        <div className="suspense-container">
+            <Loader
+            loaderContainer="index-suspense-loader-container"
+            loader="index-suspense-loader"
             />
         </div>
-
     )
 }
 
 export function SettingsSuspenseLoader(props) {
-   
     return (
-       
-        <div  className="suspense-container">
-            <Loader
-            loaderContainer={"index-suspense-loader-container"}
-            loader={"index-suspense-loader"}
-            />
-        </div>
+        <SuspenseLoader/>
     )
 
 }
 // outside index, about, contact etc suspense
 export function OutsideLoginSuspenseLoader() {
-
     useEffect(()=> {
         window.scrollTo(0,0);
     },[]);
 
     return (
         <LandingSuspenseTemplate>
-            <div  className="suspense-container">
-                <Loader
-                loaderContainer={"index-suspense-loader-container"}
-                loader={"index-suspense-loader"}
-                />
-            </div>
+            <SuspenseLoader/>
         </LandingSuspenseTemplate>
     )
 }
 // login, signup suspense
 export function LoginAndSignupSuspenseLoader() {
-
     useEffect(()=> {
         window.scrollTo(0,0);
     },[]);
     
     return (
-        <LoginAndSignupTemplate>
-            <div  className="suspense-container">
-                <Loader
-                loaderContainer={"index-suspense-loader-container"}
-                loader={"index-suspense-loader"}
-                />  
-            </div> 
+        <LoginAndSignupTemplate usedInSuspenseloader>
+           <SuspenseLoader/>
         </LoginAndSignupTemplate>
     )
 }
@@ -90,23 +72,13 @@ export function GettingStartedSuspenseLoader() {
     if (!auth) {
         return(
             <LoginAndSignupTemplate>
-                <div  className="suspense-container">
-                    <Loader
-                    loaderContainer={"index-suspense-loader-container"}
-                    loader={"index-suspense-loader"}
-                    />  
-                </div> 
+                <SuspenseLoader/>
             </LoginAndSignupTemplate>
         )
     }
     return (
         <GettingStartedTemplate>
-            <div  className="suspense-container">
-                <Loader
-                loaderContainer={"index-suspense-loader-container"}
-                loader={"index-suspense-loader"}
-                />  
-            </div> 
+            <SuspenseLoader/>
         </GettingStartedTemplate>
     )
 }
