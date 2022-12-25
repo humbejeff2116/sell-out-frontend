@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LandingTemplate } from '../Landing/Template/template';
 import ViewProductComp from '../ViewProduct/viewProduct';
@@ -11,6 +10,7 @@ export default function ViewProduct() {
         stickHeaderToTop
         showCartMenuItem
         showBackButton
+        landingTopContainerModificationClass = { styles.wrapper }
         landingTopChild = { <ViewProductWrapper/> }
         />
     )
