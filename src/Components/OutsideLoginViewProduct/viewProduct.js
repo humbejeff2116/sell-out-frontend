@@ -8,6 +8,7 @@ export default function ViewProduct() {
     return (
         <LandingTemplate 
         stickHeaderToTop
+        showHeaderShadow
         showCartMenuItem
         showBackButton
         landingTopContainerModificationClass = { styles.wrapper }
