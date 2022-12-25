@@ -1,9 +1,8 @@
-
 import {
     BiHome, 
     BiUser, 
     BiFolder, 
-    BiCart, 
+    // BiCart, 
     BiCartAlt, 
     BiLogOut, 
     BiStore, 
@@ -12,7 +11,7 @@ import {
     BiCoinStack, 
     BiBuildings, 
     BiHelpCircle, 
-    BiWallet,
+    // BiWallet,
 } from "react-icons/bi";
 
 import {
@@ -21,7 +20,7 @@ import {
     RiMapPinAddLine, 
     RiListSettingsLine, 
     RiCompassFill, 
-    RiPhoneFill, 
+    // RiPhoneFill, 
     RiBookFill, 
     RiTableFill, 
     RiTvFill, 
@@ -41,8 +40,8 @@ import {
     FaTwitter,
     FaInstagramSquare,
     FaFacebookSquare,
-    FaLinkedinIn,
-    FaGithubSquare, 
+    // FaLinkedinIn,
+    // FaGithubSquare, 
     FaUtensils, 
     FaShoePrints 
 } from 'react-icons/fa';
@@ -69,17 +68,17 @@ import {
 
 const LinksData = {
     landingMainLinks : [
-        { name: "Fling", href: "/", icon: <BiHome className="nav-icon" /> },
-        { name: "Buy Products", href: "/products", icon: <RiBookOpenLine className="nav-icon"/> },
-        { name: "Sell Products", href: "/sell-products", icon: <BiFolder className="nav-icon"/> },
-        { name: "About Fling", href: "/about", icon: <BiUser className="nav-icon"/> },
+        { name: "Freefall", href: "/", icon: <BiHome className="nav-icon" /> },
+        { name: "Buy", href: "/products", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Sell", href: "/sell-products", icon: <BiFolder className="nav-icon"/> },
+        { name: "About", href: "/about", icon: <BiUser className="nav-icon"/> },
         // { name: "Contact", href: "/contact", icon: <BiCart className="nav-icon"/> }
     ],
     landingMobileMainLinks: [
-        { name: "Fling", href: "/", icon: <BiHome className="nav-icon" /> },
-        { name: "Buy Products", href: "/products", icon: <RiBookOpenLine className="nav-icon"/> },
-        { name: "Sell Products", href: "/sell-products", icon: <BiFolder className="nav-icon"/> },
-        { name: "About Fling", href: "/about", icon: <BiUser className="nav-icon"/> },
+        { name: "Freefall", href: "/", icon: <BiHome className="nav-icon" /> },
+        { name: "Buy", href: "/products", icon: <RiBookOpenLine className="nav-icon"/> },
+        { name: "Sell", href: "/sell-products", icon: <BiFolder className="nav-icon"/> },
+        { name: "About", href: "/about", icon: <BiUser className="nav-icon"/> },
         { name: "Cart", href: "/cart", icon: <BiUser className="nav-icon"/> },
         { name: "Sign Up", href: "/signup", icon: <BiUser className="nav-icon"/> },
     ],
@@ -219,9 +218,9 @@ const LinksData = {
 
     footerSocialLinks:[
         // { name:"Li",title:"Linkedin", href:"linkedin.com/jeffrey123", icon:<FaLinkedinIn className="landing-footer-social-nav-icon"/> },
-        { name:"In",title:"Instagram", href:"instagram.com/fling", icon:<FaInstagramSquare className="landing-footer-social-nav-icon"/> },
-        { name:"Fa",title:"Facebook", href:"facebook.com/fling", icon:<FaFacebookSquare className="landing-footer-social-nav-icon"/> },
-        { name:"Tw",title:"Twitter", href:"twitter.com/fling", icon:<FaTwitter className="landing-footer-social-nav-icon"/> }
+        { name:"In",title:"Instagram", href:"instagram.com/Freefall", icon:<FaInstagramSquare className="landing-footer-social-nav-icon"/> },
+        { name:"Fa",title:"Facebook", href:"facebook.com/Freefall", icon:<FaFacebookSquare className="landing-footer-social-nav-icon"/> },
+        { name:"Tw",title:"Twitter", href:"twitter.com/Freefall", icon:<FaTwitter className="landing-footer-social-nav-icon"/> }
     ],
 
     clothingLinks: [
