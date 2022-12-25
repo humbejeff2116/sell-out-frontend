@@ -33,15 +33,16 @@
 }
 
 .login-template-logo-img{
-    /* border:1px solid red; */
-    width: 59px;
-    height: 24px;
+    /* border: 1px solid red; */
+    width: 120px;
+    /* height: auto; */
     display: flex;
 }
 
 .login-template-logo img{
    width: 100%;
    height: 100%;
+   /* border: 1px solid blue; */
 }
 
 .login-template-center{
