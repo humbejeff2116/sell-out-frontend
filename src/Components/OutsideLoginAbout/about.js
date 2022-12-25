@@ -3,7 +3,7 @@ import { LandingTemplate } from '../Landing/Template/template';
 import { 
     AboutFlingThreeColumnChild, 
     threeColumnChildPosition 
-} from '../Landing/AboutFling/aboutFling';
+} from '../Landing/Partials/partials';
 import { 
     TwoColWithIllustration, 
     illustrationPosition 
