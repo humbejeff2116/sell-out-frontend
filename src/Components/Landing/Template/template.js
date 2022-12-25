@@ -33,6 +33,7 @@ export function LandingSuspenseTemplate({ children, ...props }) {
 export function LandingTemplate({ 
     stickHeaderToTop,
     headerContainerModificationClass,
+    showHeaderShadow,
     showCartMenuItem,
     usedCartIconInCart,
     landingTopContainerModificationClass, 
@@ -124,6 +125,7 @@ export function LandingTemplate({
             containerModificationClass = { headerContainerModificationClass }
             showLogin = { goToLogin }
             stickToTop = { stickHeaderToTop }
+            showBoxShadow = { showHeaderShadow }
             />
             <MobileNav/>  
             <div className = { `landing-top ${landingTopContainerModificationClass || ""}` }>    

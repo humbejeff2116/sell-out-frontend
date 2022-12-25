@@ -11,7 +11,8 @@ const landingMainLinks = Links.getLandingMainLinks();
 export default function Header({ 
     stickToTop, 
     showLogin,
-    containerModificationClass, 
+    containerModificationClass,
+    showBoxShadow, 
     ...props 
 }) {
     const [scrolled, setScrolled] = useState(false);
@@ -33,7 +34,7 @@ export default function Header({
         }
     }
 
-    const headerClassName = `landing-header ${containerModificationClass || ""} ${stickToTop && scrolled ? "scrolled" : ""}`;
+    const headerClassName = `landing-header ${containerModificationClass || ""} ${stickToTop && (scrolled || showBoxShadow) ? "scrolled" : ""}`;
    
     return (
         <header className = { headerClassName }>
