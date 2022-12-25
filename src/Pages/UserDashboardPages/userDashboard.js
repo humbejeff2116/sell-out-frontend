@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { IndexTemplateChildrenWithRightSideBar } from '../../Components/Template/template';
 import RequireAuthentication from '../../Components/Authentication/requireAuthentication';
@@ -22,15 +21,12 @@ import NotFound from '../../Components/NotFound/notFound';
 import { usePageScrollTo } from '../hooks/hooks';
 
 const dashboardRoutes = [
-    // orders
     {path: "/home/dashboard", exact: true, Component: DashboardIndex},
     {path: "/home/dashboard/orders/placed-orders", Component: PlacedOrdersComponent},
     {path: "/home/dashboard/orders/deliveries", Component: Deliveries},
-    // payments
-    {path: "/home/dashboard/payments",  Component:  Payments},
-    // store
-    {path: "/home/dashboard/store/products", Component:  Products},
-    {path: "/home/dashboard/store/sell-product", Component:  UploadProduct},
+    {path: "/home/dashboard/payments", Component: Payments},
+    {path: "/home/dashboard/store/products", Component: Products},
+    {path: "/home/dashboard/store/sell-product", Component: UploadProduct},
     {path: "/home/dashboard/store/edit-product", Component: EditProduct},
     {path: "/home/dashboard/store/settings", Component: StoreSettings}, 
     {path: "/home/dashboard/*", usedForHomeRoutes: true, Component: NotFound},
@@ -41,7 +37,7 @@ function UserDashboardPageComp({match}) {
 
     return (
         <IndexTemplateChildrenWithRightSideBar>
-            <Router routes={dashboardRoutes}/>
+            <Router routes = { dashboardRoutes }/>
         </IndexTemplateChildrenWithRightSideBar>   
     )  
 }
