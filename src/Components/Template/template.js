@@ -19,7 +19,7 @@ import RequireAuthentication from '../Authentication/requireAuthentication';
 import { LoginAndSignupFooter } from '../Footer/footer';
 import useAuth from '../../Context/context';
 import Links from '../../Data/links';
-import fling from '../../Images/fling8.png';
+import freefall from '../../Images/Logos/free_fall1.svg';
 import birdsBackground from '../../Images/Illustrations/IRA/bg-23.svg';
 import styles from './Template.module.css';
 import './template.css';
@@ -109,6 +109,7 @@ const footerLinks = [
 
 export function LoginAndSignupTemplate({
     stickHeaderToTop,
+    usedInSuspenseloader,
     children, 
     ...props 
 }) {
@@ -143,29 +144,26 @@ export function LoginAndSignupTemplate({
     return (
         <div className="login-template-container">
             <LoginAndSignupBackgroundImages/>
-            {/* <LandingHeader
-            showLogin = { goToLogin }
-            stickToTop = { stickHeaderToTop }
-            containerModificationClass = "login-template-header"
-            />
-            <MobileNav/>  */}
             <div className="login-template-child-wrapper">
+            {usedInSuspenseloader ? (
+                children
+            ) : (
                 <div className="login-template-top">
                     <section className="login-template-logo">
                         <div className="login-template-logo-img">
                             <Link to="/">
-                                <img src = { fling } alt="Fling"/>
+                                <img src = { freefall } alt="Freefall"/>
                             </Link>
                         </div>
                     </section>
-
                     <div className="login-template-center">
                         { children }
                     </div>
                 </div>
-                <div className="login-template-bottom">
-                    <LoginAndSignupFooter links = { footerLinks }/>
-                </div>
+            )}    
+            <div className="login-template-bottom">
+                <LoginAndSignupFooter links = { footerLinks }/>
+            </div>
             </div>
         </div>
     )
