@@ -1,4 +1,3 @@
-
 .viewProductCenter{
     display: flex;
     /* border: 3px solid purple; */
@@ -21,7 +20,12 @@
     margin-bottom: 2rem;
     cursor: pointer;
     position: relative;
-    color: var(--text-color);  
+    color: var(--text-color); 
+    background-color: var(--background-color); 
+}
+
+.allProductDetailsItem:last-of-type{
+    margin-bottom: 0;
 }
 
 .allProductDetailsheader{
@@ -30,7 +34,7 @@
     justify-content: space-between;
     padding: 0.6rem;
     transition: all 0.2s ease-in-out;
-    /* font-weight: 510; */
+    /* border-radius: 4px; */
 }
 
 .allProductDetailsheader:hover{
@@ -40,8 +44,10 @@
 
 .detailsOpen{
     border-bottom: 1px solid var(--background-color); 
-    color: var(--color);   
+    color: var(--color);
+    /* border-radius: 4px 4px 0 0;    */
 }
+
 .detailsOpen:hover{
     border-bottom: 1px solid var(--background-color);    
 }
@@ -81,17 +87,17 @@
     padding: 1rem;
     overflow-y: auto;
     scrollbar-width: thin;
-    border: 1px solid var(--prim-border-color);
-    box-shadow: inset -4px 0 6px var(--box-shadow-color);
+    /* border: 1px solid var(--box-shadow-color); */
+    box-shadow: inset 0 0 6px var(--box-shadow-color);
     line-height: 1.6;
     display: grid;
     row-gap: 1rem;
+    border-radius: 4px;
 }
 
 .showMoreText::-webkit-scrollbar{
-    width:0.25rem;
+    width: 0.25rem;
 }
-
 
 /* styles for operational regions */
 .operationalRegionContainer{
