@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { Redirect, useLocation, useHistory  } from 'react-router-dom';
 import { RiEyeLine } from 'react-icons/ri';

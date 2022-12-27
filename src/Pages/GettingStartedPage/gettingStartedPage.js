@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { GettingStartedTemplate } from '../../Components/Template/template';
 import { Route, Switch } from 'react-router-dom';

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { RiListSettingsFill } from 'react-icons/ri';
 import useProductsContext from '../../Context/Products/context';
@@ -32,7 +33,7 @@ export const ProductsFilterMenu = React.forwardRef(({
         } else {
             setShowClothingLinks(false);
         } 
-    }, [queryValues.category]);
+    }, [queryValues?.category, setShowClothingLinks]);
 
     const handleInputChange = function(e) {
         setQueryValue(prevValues => ({ ...prevValues, [e.target.name] : e.target.value }));

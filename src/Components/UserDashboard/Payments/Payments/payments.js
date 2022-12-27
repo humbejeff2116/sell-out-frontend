@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { LoaderSmall } from '../../../Loader/loader';
 import { PaymentWrapper } from '../MadePayments/paymentsMade';
@@ -94,6 +94,7 @@ export default function Payments(props) {
                 clearTimeout(timer)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     const handleUserContextChange = (e) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import Header from '../Header/header';

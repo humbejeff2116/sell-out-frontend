@@ -1,12 +1,9 @@
-
-
-
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { getUser} from '../../Utils/http.services';
 import useAuth from '../../Context/context';
 import './viewProfile.css';
 import image from '../../Images/avatar.jpg';
-
 
 
 

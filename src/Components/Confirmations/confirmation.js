@@ -1,8 +1,4 @@
-
-
-
-
-
+/* eslint-disable no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import socket from '../Socket/socket';
 import useAuth from '../../Context/context';
@@ -14,20 +10,23 @@ import './confirmation.css';
 
 
 export default function Confirmations() {
-   
     const [confirmations, setConfirmations] = useState([]);
     const { user } = useAuth();
+
     useEffect(() => {
         let mounted = true;
+
         if (user && mounted) {
             socket.emit('getConfirmations', user);
         }
+
         socket.on('getConfirmationsSuccess', function (response) {
             const { data } = response;
             if (mounted) {
                 setConfirmations(data);   
             }
         });
+        
         return () => {
             mounted = false;
         }

@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { RiListSettingsFill } from 'react-icons/ri'
 import { LoaderSmall } from '../../../Loader/loader';
@@ -78,6 +78,7 @@ export default function Deliveries() {
                 clearTimeout(timer)
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user, deliveriesSet, setSalesDelivery]);
 
     const handleUserContextChange = (e) => {

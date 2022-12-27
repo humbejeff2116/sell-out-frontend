@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { AiOutlineReload } from 'react-icons/ai';
 import { DisplayedProduct } from '../Product/product';

@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { RiUpload2Line } from 'react-icons/ri';
 import socket from '../Socket/socket';

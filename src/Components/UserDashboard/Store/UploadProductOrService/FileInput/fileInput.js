@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 
@@ -13,31 +12,21 @@ export const FileInput = React.forwardRef(({
     previewImagesButton, 
     ...props
 }, ref) => {  
-
     return (
-
         <>
-        <label className={labelClassName}>
-        {
-            (numberofimages > 0) && (
-
-                <span className="length">{ numberofimages }</span>
-
-            )
-
-        }
-        <i>{ props.icon }</i>
-        <span className = { labelSpanClassName }>
-        { label }
-        </span>
-        <input className = { props.inputClassName || "product-images" } ref = {ref} {...props} />
-        { (numberofimages > 0) &&  previewImagesButton }
-        </label>
-
-        <div className = { errorClass }>
-        </div>
+            <label className={labelClassName}>
+                {(numberofimages > 0) && (
+                    <span className="length">{ numberofimages }</span>
+                )}
+                <i>{ props.icon }</i>
+                <span className = { labelSpanClassName }>
+                { label }
+                </span>
+                <input className = { props.inputClassName || "product-images" } ref = {ref} {...props} />
+                { (numberofimages > 0) &&  previewImagesButton }
+            </label>
+            <div className = { errorClass }>
+            </div>
         </>
-  
     )
-
 })

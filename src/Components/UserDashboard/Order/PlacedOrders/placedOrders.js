@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
 import { MdExpandMore, MdExpandLess }  from 'react-icons/md';
 import { RiEyeLine } from 'react-icons/ri';
@@ -67,6 +68,7 @@ export default function PlacedOrdersComponent(props) {
             mounted = false;
             if (timer) clearTimeout(timer);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [placedOrdersSet, setPlacedOrders, user]);
    
     return (

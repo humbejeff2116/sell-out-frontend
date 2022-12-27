@@ -1,4 +1,5 @@
-
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { AiOutlineStar, AiFillStar } from 'react-icons/ai';
 import UserLib from '../../Library/user/userLib';

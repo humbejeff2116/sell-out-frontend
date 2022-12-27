@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
 import { BiTrash, BiPencil } from "react-icons/bi";
@@ -638,6 +638,7 @@ export default function StoreProducts() {
         })
 
         return ()=> mounted = false    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socketIsConnected, user]);
 
     useEffect(()=> {

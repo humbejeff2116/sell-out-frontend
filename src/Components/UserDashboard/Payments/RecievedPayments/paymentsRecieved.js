@@ -6,15 +6,13 @@ import './paymentsRecieved.css';
 export function RecievedPaymentsCompWrapper({ payments }) {
     return (
         <>
-            {
-                payments.map((payment, i) =>
-                    <PaymentComp 
-                    key = { i } 
-                    { ...payment } 
-                    useBuyerOrderProfile= { true }
-                    />
-                )
-            }
+            {payments.map((payment, i) =>
+                <PaymentComp 
+                key = { i } 
+                { ...payment } 
+                useBuyerOrderProfile= { true }
+                />
+            )}
         </>
     )
 }

@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import { RiNotification3Line } from 'react-icons/ri';
 import socket from '../Socket/socket';

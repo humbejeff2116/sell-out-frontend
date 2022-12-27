@@ -1,4 +1,4 @@
-
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from 'react';
 import { RiUpload2Line } from 'react-icons/ri';
 import { LandingTemplate } from '../Landing/Template/template';
