@@ -102,6 +102,8 @@ export default function Signup() {
         {showFullNamesAndPassword ? (
             <FullNamesAndPassword 
             handleSubmit = { handleSubmit }
+            creatingAccount = { creatingAccount }
+            creatingAccountError = { creatingAccountError }
             goBack = { goBack }
             />
         ) : (
