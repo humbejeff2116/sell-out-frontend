@@ -6,7 +6,7 @@ import { NotificationAlert } from '../NotificationsDropdown/notifications';
 import useCartContext from '../../Context/Cart/cartContext';
 import useNavContext from '../../Context/Navigation/context';
 import Links from '../../Data/links';
-import fling from '../../Images/fling8.png';
+import freeFall from '../../Images/Logos/free_fall1.svg';
 import './header.css';
 
 const mainLinks = Links.getMainLinks();
@@ -20,7 +20,7 @@ export default function Header({
             <section className="header-logo">
                 <div className="header-logo-img">
                     <Link to="/">
-                        <img src={ fling } alt="Fling"/>
+                        <img src={ freeFall } alt="Freefall"/>
                     </Link>
                 </div>
             </section>
