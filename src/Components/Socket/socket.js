@@ -1,15 +1,16 @@
 import socketIOClient from "socket.io-client";
-const APIENDPOINT = "http://localhost:4000";
+import { API_DOMAIN } from '../../Config/config';
 
-const socket  = socketIOClient(APIENDPOINT,{reconnection: true, reconnectionDelay: 10000});
+const APIENDPOINT = `https://${API_DOMAIN}`;
+const socket  = socketIOClient(APIENDPOINT, {reconnection: true, reconnectionDelay: 10000});
 
 socket.on('connect', function () {
     socket.sendBuffer = [];
-    console.log("conneted now");
+    console.log("socket connection status: SUCCESS");
 });
 
 socket.on('disconnect', function () {
-    console.log("socket has disconnected");
+    console.log("socket connection status: DISCONNECTED");
 })
 
 export default socket;

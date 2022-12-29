@@ -1,8 +1,8 @@
-
 import httpBase from './http.config';
+import { API_DOMAIN }from '../Config/config';
 
 
-const GATEWAY_SERVER_URI = `http://localhost:4000`;
+const GATEWAY_SERVER_URI = `https://${API_DOMAIN}`;
 const gatewayServerHTTP = httpBase(GATEWAY_SERVER_URI);
 // const gatewayServerMultipartHTTP = httpBase(GATEWAY_SERVER_URI, "multipart/form-data");
 
