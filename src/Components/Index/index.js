@@ -186,7 +186,7 @@ export function FilterDisplayedProducts({
                         setProducts, 
                         setFilterLoader
                     )
-                }, 700)
+                }, 700);
             }     
         }
 
@@ -243,10 +243,14 @@ export function FilterDisplayedProducts({
     ) => {
         if (!filter) {
             try {
-                setLoading(true)
+                setLoading(true);
                 const productsResponse = await getProducts(limit, skip);
                 const products = productsResponse.data;
-                setProducts(products);
+                if (!products) {
+                    setProducts([]);
+                } else {
+                    setProducts(products);
+                }
                 setLoading(false);
             } catch(err) {
                 setLoading(false);
@@ -257,7 +261,11 @@ export function FilterDisplayedProducts({
                 setLazyLoader(true);
                 try {
                     const { data } = await getProducts(limit, skip, filter);
-                    setProducts(data);
+                    if (!data) {
+                        setProducts([]);
+                    } else {
+                        setProducts(data);
+                    }
                     setLazyLoader(false);
                 } catch(err) {
                     setLazyLoader(false);
@@ -269,7 +277,11 @@ export function FilterDisplayedProducts({
             setFilterLoader(true);
             try {
                 const { data } = await getProducts(limit, skip, filter);
-                setProducts(data);
+                if (!data) {
+                    setProducts([]);
+                } else {
+                    setProducts(data);
+                }
                 setFilterLoader(false);
             } catch(err) {
                 setFilterLoader(false);
@@ -310,8 +322,8 @@ export function FilterDisplayedProducts({
                     heading = "No products yet"
                     writeUp = {`
                         We have no products for sale at the moment. 
-                        Why not be our first seller and let our systems help you 
-                        sell your product('s)
+                        Why not be our first seller and let our systems help with 
+                        selling your product('s)
                     `}
                     >
                         <EmptyStateButton
