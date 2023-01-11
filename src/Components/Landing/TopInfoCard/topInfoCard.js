@@ -23,7 +23,7 @@ export  function TopInfoCard() {
                     Buying and selling made easy and fun again
                 </div>
                 <div className="landing-info-card-text-paragraph">
-                    All the tools you need to buy or sell in one place. 
+                    All the tools you need to buy and sell in one place. 
                     A market place built just for you.  
                 </div>  
             </div>
