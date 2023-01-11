@@ -1,6 +1,5 @@
 import httpBase from './http.config';
-import { API_DOMAIN }from '../Config/config';
-
+import { API_DOMAIN } from '../Config/config';
 
 const GATEWAY_SERVER_URI = `https://${API_DOMAIN}`;
 const gatewayServerHTTP = httpBase(GATEWAY_SERVER_URI);
